@@ -57,7 +57,7 @@ lazy val refined4s = (project in file("."))
 
 lazy val core = module("core", crossProject(JVMPlatform, JSPlatform))
 lazy val coreJvm = core.jvm
-lazy val coreJs = core.js
+lazy val coreJs = core.js.settings(jsSettingsForFuture)
 
 lazy val props =
   new {
@@ -168,3 +168,11 @@ def module(projectName: String, crossProject: CrossProject.Builder): CrossProjec
     )
     .settings(mavenCentralPublishSettings)
 }
+
+lazy val jsSettingsForFuture: SettingsDefinition = List(
+  Test / fork := false,
+  Test / scalacOptions ++= (if (scalaVersion.value.startsWith("3")) List.empty
+  else List("-P:scalajs:nowarnGlobalExecutionContext")),
+  Test / compile / scalacOptions ++= (if (scalaVersion.value.startsWith("3")) List.empty
+  else List("-P:scalajs:nowarnGlobalExecutionContext")),
+)
