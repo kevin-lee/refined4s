@@ -1,6 +1,6 @@
 name: Task
 description: For any non-bug task ticket
-title: ''
+title: 'Task'
 labels: ["task"]
 assignees:
   - Kevin-Lee
