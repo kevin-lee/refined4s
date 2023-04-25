@@ -1,0 +1,46 @@
+name: Task
+description: For any non-bug task ticket
+title: ''
+labels: ["task"]
+assignees:
+  - Kevin-Lee
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # Task
+        Add task details
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: The summary of ths task
+      placeholder: Add abcdef ... for blah
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ----
+        
+        # Project Details
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Please provide the refined4s version
+      placeholder: 0.1.0
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: The description of ths task
+      placeholder: Add more detailed description of the task
+    validations:
+      required: false
