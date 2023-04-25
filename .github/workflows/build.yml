@@ -71,3 +71,5 @@ jobs:
 
       - if: ${{ github.event_name == 'pull_request' && matrix.scala.report == 'report' }}
         uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
