@@ -14,6 +14,7 @@ object RefinedSpec extends Properties {
     property("test Refined.unsafeFrom(valid)", testUnsafeFromValid),
     example("test Refined.unsafeFrom(invalid)", testUnsafeFromInvalid),
     property("test Refined.value", testValue),
+    property("test Refined.unapply", testUnapplyWithPatternMatching),
   )
 
   def testApply: Result = {
@@ -66,6 +67,18 @@ object RefinedSpec extends Properties {
       val expected = s
       val actual   = MyType.unsafeFrom(s)
       actual.value ==== expected
+    }
+
+  def testUnapplyWithPatternMatching: Property =
+    for {
+      s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+    } yield {
+      val expected = s
+      val myType   = MyType.unsafeFrom(s)
+      myType match {
+        case MyType(actual) =>
+          actual ==== expected
+      }
     }
 
   type MyType = MyType.Type
