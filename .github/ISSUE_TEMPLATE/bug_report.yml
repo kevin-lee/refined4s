@@ -1,6 +1,5 @@
 name: Bug
 description: For a bug report
-title: 'Bug Report'
 labels: ["bug"]
 assignees:
 - Kevin-Lee
