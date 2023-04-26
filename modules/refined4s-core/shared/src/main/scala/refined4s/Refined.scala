@@ -29,6 +29,6 @@ trait Refined[A] {
   def predicate(a: A): Boolean
 
   extension (typ: Type) {
-    def value: A = typ
+    inline def value: A = typ
   }
 }
