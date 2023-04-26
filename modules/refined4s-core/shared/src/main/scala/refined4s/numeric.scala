@@ -27,5 +27,17 @@ trait numeric {
 
   }
 
+  type NonNegInt = NonNegInt.Type
+  object NonNegInt extends Numeric[Int] {
+    override inline def invalidReason(a: Int): String =
+      "It should be a non-negative Int value but got " + a + " instead"
+
+    override inline def predicate(a: Int): Boolean = a >= 0
+
+    override given numericOrdering: Ordering[NonNegInt] =
+      (x, y) => scala.math.Numeric.IntIsIntegral.compare(x.value, y.value)
+
+  }
+
 }
 object numeric extends numeric
