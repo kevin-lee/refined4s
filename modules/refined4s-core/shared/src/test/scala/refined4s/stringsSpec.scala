@@ -1,0 +1,106 @@
+package refined4s
+
+import hedgehog.*
+import hedgehog.runner.*
+
+/** @author Kevin Lee
+  * @since 2023-04-25
+  */
+object stringsSpec extends Properties {
+  override def tests: List[Test] = NonEmptyStringSpec.tests
+
+  object NonEmptyStringSpec {
+    import strings.NonEmptyString
+
+    def tests: List[Test] = List(
+      example("test NonEmptyString.apply", testApply),
+      property("test NonEmptyString.from(valid)", testFromValid),
+      example("test NonEmptyString.from(invalid)", testFromInvalid),
+      property("test NonEmptyString.unsafeFrom(valid)", testUnsafeFromValid),
+      example("test NonEmptyString.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test NonEmptyString.value", testValue),
+      property("test NonEmptyString.unapply", testUnapplyWithPatternMatching),
+      property("test NonEmptyString ++ NonEmptyString", testNonEmptyStringPlusNonEmptyString),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected = NonEmptyString("blah")
+      val actual   = NonEmptyString("blah")
+      actual ==== expected
+    }
+
+    def testFromValid: Property =
+      for {
+        s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+      } yield {
+        val expected = NonEmptyString.unsafeFrom(s)
+        val actual   = NonEmptyString.from(s)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Result = {
+      val expected = "Invalid value: []. It should be a non-empty String value but got []"
+      val actual   = NonEmptyString.from("")
+      actual ==== Left(expected)
+    }
+
+    def testUnsafeFromValid: Property =
+      for {
+        s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+      } yield {
+        val expected = NonEmptyString.unsafeFrom(s)
+        val actual   = NonEmptyString.unsafeFrom(s)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Result = {
+      val expected = "Invalid value: []. It should be a non-empty String value but got []"
+      try {
+        NonEmptyString.unsafeFrom("")
+        Result
+          .failure
+          .log("""IllegalArgumentException was expected from NonEmptyString.unsafeFrom(""), but it was not thrown.""")
+      } catch {
+        case ex: IllegalArgumentException =>
+          ex.getMessage ==== expected
+
+      }
+    }
+
+    def testValue: Property =
+      for {
+        s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+      } yield {
+        val expected = s
+        val actual   = NonEmptyString.unsafeFrom(s)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+      } yield {
+        val expected = s
+        val nes      = NonEmptyString.unsafeFrom(s)
+        nes match {
+          case NonEmptyString(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testNonEmptyStringPlusNonEmptyString: Property =
+      for {
+        s1 <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s1")
+        s2 <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s2")
+
+        expected <- Gen.constant(s1 + s2).map(NonEmptyString.unsafeFrom).log("expected")
+      } yield {
+        val nes1   = NonEmptyString.unsafeFrom(s1)
+        val nes2   = NonEmptyString.unsafeFrom(s2)
+        val actual = nes1 ++ nes2
+        actual ==== expected
+      }
+
+  }
+}
