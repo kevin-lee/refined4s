@@ -85,9 +85,10 @@ object RefinedSpec extends Properties {
   @SuppressWarnings(Array("org.wartremover.warts.Equals"))
   object MyType extends Refined[String] {
 
-    override transparent inline def invalidReason(a: String): String =
+    override inline def invalidReason(a: String): String =
       "It has to be nonEmptyString but got [" + a + "]"
 
     override inline def predicate(a: String): Boolean = a != ""
   }
+
 }
