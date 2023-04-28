@@ -15,7 +15,6 @@ trait numeric {
   }
 
   type NegInt = NegInt.Type
-
   object NegInt extends Numeric[Int] {
     override inline def invalidReason(a: Int): String =
       "It should be a negative Int value but got " + a + " instead"
@@ -35,6 +34,18 @@ trait numeric {
     override inline def predicate(a: Int): Boolean = a >= 0
 
     override given numericOrdering: Ordering[NonNegInt] =
+      (x, y) => scala.math.Numeric.IntIsIntegral.compare(x.value, y.value)
+
+  }
+
+  type PosInt = PosInt.Type
+  object PosInt extends Numeric[Int] {
+    override inline def invalidReason(a: Int): String =
+      "It should be a positive Int value but got " + a + " instead"
+
+    override inline def predicate(a: Int): Boolean = a > 0
+
+    override given numericOrdering: Ordering[PosInt] =
       (x, y) => scala.math.Numeric.IntIsIntegral.compare(x.value, y.value)
 
   }
