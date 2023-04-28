@@ -40,7 +40,7 @@ object stringsSpec extends Properties {
       }
 
     def testFromInvalid: Result = {
-      val expected = "Invalid value: []. It should be a non-empty String value but got []"
+      val expected = "Invalid value: []. It must be a non-empty String"
       val actual   = NonEmptyString.from("")
       actual ==== Left(expected)
     }
@@ -55,7 +55,7 @@ object stringsSpec extends Properties {
       }
 
     def testUnsafeFromInvalid: Result = {
-      val expected = "Invalid value: []. It should be a non-empty String value but got []"
+      val expected = "Invalid value: []. It must be a non-empty String"
       try {
         NonEmptyString.unsafeFrom("")
         Result

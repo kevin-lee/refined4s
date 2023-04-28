@@ -44,7 +44,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.int(Range.linear(0, Int.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It should be a negative Int value but got $n instead"
+        val expected = s"Invalid value: [${n.toString}]. It must be a negative Int"
         val actual   = NegInt.from(n)
         actual ==== Left(expected)
       }
@@ -62,7 +62,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.int(Range.linear(0, Int.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It should be a negative Int value but got $n instead"
+        val expected = s"Invalid value: [$n]. It must be a negative Int"
         try {
           NegInt.unsafeFrom(n)
           Result
@@ -146,7 +146,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.int(Range.linear(Int.MinValue, -1)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It should be a non-negative Int value but got $n instead"
+        val expected = s"Invalid value: [${n.toString}]. It must be a non-negative Int"
         val actual   = NonNegInt.from(n)
         actual ==== Left(expected)
       }
@@ -164,7 +164,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.int(Range.linear(-1, Int.MinValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It should be a non-negative Int value but got $n instead"
+        val expected = s"Invalid value: [$n]. It must be a non-negative Int"
         try {
           NonNegInt.unsafeFrom(n)
           Result
@@ -248,7 +248,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.int(Range.linear(Int.MinValue, 0)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It should be a positive Int value but got $n instead"
+        val expected = s"Invalid value: [${n.toString}]. It must be a positive Int"
         val actual   = PosInt.from(n)
         actual ==== Left(expected)
       }
@@ -266,7 +266,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.int(Range.linear(Int.MinValue, 0)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It should be a positive Int value but got $n instead"
+        val expected = s"Invalid value: [$n]. It must be a positive Int"
         try {
           PosInt.unsafeFrom(n)
           Result
@@ -357,7 +357,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.int(Range.linear(1, Int.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It should be a non-positive Int value but got $n instead"
+        val expected = s"Invalid value: [${n.toString}]. It must be a non-positive Int"
         val actual   = NonPosInt.from(n)
         actual ==== Left(expected)
       }
@@ -375,7 +375,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.int(Range.linear(1, Int.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It should be a non-positive Int value but got $n instead"
+        val expected = s"Invalid value: [$n]. It must be a non-positive Int"
         try {
           NonPosInt.unsafeFrom(n)
           Result
