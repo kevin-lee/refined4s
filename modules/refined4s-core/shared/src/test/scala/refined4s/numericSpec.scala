@@ -7,7 +7,7 @@ import hedgehog.runner.*
   * @since 2023-04-26
   */
 object numericSpec extends Properties {
-  override def tests: List[Test] = NegIntSpec.tests ++ NonNegIntSpec.tests ++ PosIntSpec.tests
+  override def tests: List[Test] = NegIntSpec.tests ++ NonNegIntSpec.tests ++ PosIntSpec.tests ++ NonPosIntSpec.tests
 
   object NegIntSpec {
 
@@ -311,6 +311,115 @@ object numericSpec extends Properties {
         val input1 = PosInt.unsafeFrom(n1)
         val input2 = PosInt.unsafeFrom(n2)
         Ordering[PosInt].compare(input1, input2) ==== Ordering[Int].compare(input1.value, input2.value)
+      }
+
+  }
+
+  object NonPosIntSpec {
+
+    import numeric.NonPosInt
+
+    def tests: List[Test] = List(
+      example("test NonPosInt.apply", testApply),
+      property("test NonPosInt.from(valid)", testFromValid),
+      property("test NonPosInt.from(invalid)", testFromInvalid),
+      property("test NonPosInt.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test NonPosInt.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test NonPosInt.value", testValue),
+      property("test NonPosInt.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[NonPosInt]", testOrdering),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected  = NonPosInt(0)
+      val actual    = NonPosInt(0)
+      val expected2 = NonPosInt(Int.MinValue)
+      val actual2   = NonPosInt(Int.MinValue)
+      Result.all(
+        List(
+          actual ==== expected,
+          actual2 ==== expected2,
+        )
+      )
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.int(Range.linear(Int.MinValue, 0)).log("n")
+      } yield {
+        val expected = NonPosInt.unsafeFrom(n)
+        val actual   = NonPosInt.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.int(Range.linear(1, Int.MaxValue)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It should be a non-positive Int value but got $n instead"
+        val actual   = NonPosInt.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.int(Range.linear(Int.MinValue, 0)).log("n")
+      } yield {
+        val expected = NonPosInt.unsafeFrom(n)
+        val actual   = NonPosInt.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.int(Range.linear(1, Int.MaxValue)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It should be a non-positive Int value but got $n instead"
+        try {
+          NonPosInt.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from NonPosInt.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.int(Range.linear(Int.MinValue, 0)).log("n")
+      } yield {
+        val expected = n
+        val actual   = NonPosInt.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.int(Range.linear(Int.MinValue, 0)).log("n")
+      } yield {
+        val expected = n
+        val nes      = NonPosInt.unsafeFrom(n)
+        nes match {
+          case NonPosInt(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.int(Range.linear(Int.MinValue, 0)).log("n1")
+        n2 <- Gen.int(Range.linear(Int.MinValue, 0)).log("n2")
+      } yield {
+        import scala.math.Numeric.IntIsIntegral
+        val input1 = NonPosInt.unsafeFrom(n1)
+        val input2 = NonPosInt.unsafeFrom(n2)
+        Ordering[NonPosInt].compare(input1, input2) ==== Ordering[Int].compare(input1.value, input2.value)
       }
 
   }
