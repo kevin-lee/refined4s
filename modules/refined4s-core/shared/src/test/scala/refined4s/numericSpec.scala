@@ -7,7 +7,7 @@ import hedgehog.runner.*
   * @since 2023-04-26
   */
 object numericSpec extends Properties {
-  override def tests: List[Test] = NegIntSpec.tests ++ NonNegIntSpec.tests
+  override def tests: List[Test] = NegIntSpec.tests ++ NonNegIntSpec.tests ++ PosIntSpec.tests
 
   object NegIntSpec {
 
@@ -209,6 +209,108 @@ object numericSpec extends Properties {
         val input1 = NonNegInt.unsafeFrom(n1)
         val input2 = NonNegInt.unsafeFrom(n2)
         Ordering[NonNegInt].compare(input1, input2) ==== Ordering[Int].compare(input1.value, input2.value)
+      }
+
+  }
+
+  object PosIntSpec {
+
+    import numeric.PosInt
+
+    def tests: List[Test] = List(
+      example("test PosInt.apply", testApply),
+      property("test PosInt.from(valid)", testFromValid),
+      property("test PosInt.from(invalid)", testFromInvalid),
+      property("test PosInt.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test PosInt.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test PosInt.value", testValue),
+      property("test PosInt.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[PosInt]", testOrdering),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected = PosInt(1)
+      val actual   = PosInt(1)
+      actual ==== expected
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.int(Range.linear(1, Int.MaxValue)).log("n")
+      } yield {
+        val expected = PosInt.unsafeFrom(n)
+        val actual   = PosInt.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.int(Range.linear(Int.MinValue, 0)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It should be a positive Int value but got $n instead"
+        val actual   = PosInt.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.int(Range.linear(1, Int.MaxValue)).log("n")
+      } yield {
+        val expected = PosInt.unsafeFrom(n)
+        val actual   = PosInt.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.int(Range.linear(Int.MinValue, 0)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It should be a positive Int value but got $n instead"
+        try {
+          PosInt.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from PosInt.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.int(Range.linear(1, Int.MaxValue)).log("n")
+      } yield {
+        val expected = n
+        val actual   = PosInt.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.int(Range.linear(1, Int.MaxValue)).log("n")
+      } yield {
+        val expected = n
+        val nes      = PosInt.unsafeFrom(n)
+        nes match {
+          case PosInt(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.int(Range.linear(1, Int.MaxValue)).log("n1")
+        n2 <- Gen.int(Range.linear(1, Int.MaxValue)).log("n2")
+      } yield {
+        import scala.math.Numeric.IntIsIntegral
+        val input1 = PosInt.unsafeFrom(n1)
+        val input2 = PosInt.unsafeFrom(n2)
+        Ordering[PosInt].compare(input1, input2) ==== Ordering[Int].compare(input1.value, input2.value)
       }
 
   }
