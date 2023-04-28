@@ -24,6 +24,9 @@ trait Refined[A] {
   def unsafeFrom(a: A): Type =
     from(a).fold(err => throw new IllegalArgumentException(err), identity) // scalafix:ok DisableSyntax.throw
 
+  inline def expectedMessage(expected: String): String =
+    "It must be " + expected
+
   def invalidReason(a: A): String
 
   def predicate(a: A): Boolean

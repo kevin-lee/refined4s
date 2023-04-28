@@ -12,7 +12,7 @@ trait strings {
   object NonEmptyString extends Refined[String] {
 
     override inline def invalidReason(a: String): String =
-      "It should be a non-empty String value but got [" + a + "]"
+      expectedMessage("a non-empty String")
 
     override inline def predicate(a: String): Boolean = a != ""
 

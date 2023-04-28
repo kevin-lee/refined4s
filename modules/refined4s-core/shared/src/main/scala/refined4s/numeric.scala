@@ -16,8 +16,7 @@ trait numeric {
 
   type NegInt = NegInt.Type
   object NegInt extends Numeric[Int] {
-    override inline def invalidReason(a: Int): String =
-      "It should be a negative Int value but got " + a + " instead"
+    override inline def invalidReason(a: Int): String = expectedMessage("a negative Int")
 
     override inline def predicate(a: Int): Boolean = a < 0
 
@@ -28,8 +27,7 @@ trait numeric {
 
   type NonNegInt = NonNegInt.Type
   object NonNegInt extends Numeric[Int] {
-    override inline def invalidReason(a: Int): String =
-      "It should be a non-negative Int value but got " + a + " instead"
+    override inline def invalidReason(a: Int): String = expectedMessage("a non-negative Int")
 
     override inline def predicate(a: Int): Boolean = a >= 0
 
@@ -40,8 +38,7 @@ trait numeric {
 
   type PosInt = PosInt.Type
   object PosInt extends Numeric[Int] {
-    override inline def invalidReason(a: Int): String =
-      "It should be a positive Int value but got " + a + " instead"
+    override inline def invalidReason(a: Int): String = expectedMessage("a positive Int")
 
     override inline def predicate(a: Int): Boolean = a > 0
 
@@ -52,8 +49,7 @@ trait numeric {
 
   type NonPosInt = NonPosInt.Type
   object NonPosInt extends Numeric[Int] {
-    override inline def invalidReason(a: Int): String =
-      "It should be a non-positive Int value but got " + a + " instead"
+    override inline def invalidReason(a: Int): String = expectedMessage("a non-positive Int")
 
     override inline def predicate(a: Int): Boolean = a <= 0
 
