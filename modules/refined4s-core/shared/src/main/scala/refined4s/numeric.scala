@@ -50,5 +50,17 @@ trait numeric {
 
   }
 
+  type NonPosInt = NonPosInt.Type
+  object NonPosInt extends Numeric[Int] {
+    override inline def invalidReason(a: Int): String =
+      "It should be a non-positive Int value but got " + a + " instead"
+
+    override inline def predicate(a: Int): Boolean = a <= 0
+
+    override given numericOrdering: Ordering[NonPosInt] =
+      (x, y) => scala.math.Numeric.IntIsIntegral.compare(x.value, y.value)
+
+  }
+
 }
 object numeric extends numeric
