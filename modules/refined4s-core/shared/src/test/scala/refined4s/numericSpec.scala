@@ -8,7 +8,7 @@ import hedgehog.runner.*
   */
 object numericSpec extends Properties {
   override def tests: List[Test] =
-    NegIntSpec.tests ++ NonNegIntSpec.tests ++ PosIntSpec.tests ++ NonPosIntSpec.tests ++ NegLongSpec.tests
+    NegIntSpec.tests ++ NonNegIntSpec.tests ++ PosIntSpec.tests ++ NonPosIntSpec.tests ++ NegLongSpec.tests ++ NonNegLongSpec.tests
 
   object NegIntSpec {
 
@@ -522,6 +522,114 @@ object numericSpec extends Properties {
         val input1 = NegLong.unsafeFrom(n1)
         val input2 = NegLong.unsafeFrom(n2)
         Ordering[NegLong].compare(input1, input2) ==== Ordering[Long].compare(input1.value, input2.value)
+      }
+
+  }
+
+  object NonNegLongSpec {
+
+    import numeric.NonNegLong
+
+    def tests: List[Test] = List(
+      example("test NonNegLong.apply", testApply),
+      property("test NonNegLong.from(valid)", testFromValid),
+      property("test NonNegLong.from(invalid)", testFromInvalid),
+      property("test NonNegLong.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test NonNegLong.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test NonNegLong.value", testValue),
+      property("test NonNegLong.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[NonNegLong]", testOrdering),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected  = NonNegLong(1L)
+      val actual    = NonNegLong(1L)
+      val expected2 = NonNegLong(0L)
+      val actual2   = NonNegLong(0L)
+      Result.all(
+        List(
+          actual ==== expected,
+          actual2 ==== expected2,
+        )
+      )
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n")
+      } yield {
+        val expected = NonNegLong.unsafeFrom(n)
+        val actual   = NonNegLong.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.long(Range.linear(Long.MinValue, -1L)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a non-negative Long"
+        val actual   = NonNegLong.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n")
+      } yield {
+        val expected = NonNegLong.unsafeFrom(n)
+        val actual   = NonNegLong.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.long(Range.linear(Long.MinValue, -1L)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a non-negative Long"
+        try {
+          NonNegLong.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from NonNegLong.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n")
+      } yield {
+        val expected = n
+        val actual   = NonNegLong.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n")
+      } yield {
+        val expected = n
+        val nes      = NonNegLong.unsafeFrom(n)
+        nes match {
+          case NonNegLong(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n1")
+        n2 <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n2")
+      } yield {
+        val input1 = NonNegLong.unsafeFrom(n1)
+        val input2 = NonNegLong.unsafeFrom(n2)
+        Ordering[NonNegLong].compare(input1, input2) ==== Ordering[Long].compare(input1.value, input2.value)
       }
 
   }
