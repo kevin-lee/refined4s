@@ -58,5 +58,16 @@ trait numeric {
 
   }
 
+  type NegLong = NegLong.Type
+  object NegLong extends Numeric[Long] {
+    override inline def invalidReason(a: Long): String = expectedMessage("a negative Long")
+
+    override inline def predicate(a: Long): Boolean = a < 0L
+
+    override given numericOrdering: Ordering[NegLong] =
+      (x, y) => scala.math.Numeric.LongIsIntegral.compare(x.value, y.value)
+
+  }
+
 }
 object numeric extends numeric
