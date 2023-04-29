@@ -7,7 +7,8 @@ import hedgehog.runner.*
   * @since 2023-04-26
   */
 object numericSpec extends Properties {
-  override def tests: List[Test] = NegIntSpec.tests ++ NonNegIntSpec.tests ++ PosIntSpec.tests ++ NonPosIntSpec.tests
+  override def tests: List[Test] =
+    NegIntSpec.tests ++ NonNegIntSpec.tests ++ PosIntSpec.tests ++ NonPosIntSpec.tests ++ NegLongSpec.tests
 
   object NegIntSpec {
 
@@ -420,6 +421,107 @@ object numericSpec extends Properties {
         val input1 = NonPosInt.unsafeFrom(n1)
         val input2 = NonPosInt.unsafeFrom(n2)
         Ordering[NonPosInt].compare(input1, input2) ==== Ordering[Int].compare(input1.value, input2.value)
+      }
+
+  }
+
+  object NegLongSpec {
+
+    import numeric.NegLong
+
+    def tests: List[Test] = List(
+      example("test NegLong.apply", testApply),
+      property("test NegLong.from(valid)", testFromValid),
+      property("test NegLong.from(invalid)", testFromInvalid),
+      property("test NegLong.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test NegLong.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test NegLong.value", testValue),
+      property("test NegLong.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[NegLong]", testOrdering),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected = NegLong(-1L)
+      val actual   = NegLong(-1L)
+      actual ==== expected
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.long(Range.linear(Long.MinValue, -1L)).log("n")
+      } yield {
+        val expected = NegLong.unsafeFrom(n)
+        val actual   = NegLong.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a negative Long"
+        val actual   = NegLong.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.long(Range.linear(Long.MinValue, -1L)).log("n")
+      } yield {
+        val expected = NegLong.unsafeFrom(n)
+        val actual   = NegLong.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a negative Long"
+        try {
+          NegLong.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from NegLong.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.long(Range.linear(Long.MinValue, -1L)).log("n")
+      } yield {
+        val expected = n
+        val actual   = NegLong.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.long(Range.linear(Long.MinValue, -1L)).log("n")
+      } yield {
+        val expected = n
+        val nes      = NegLong.unsafeFrom(n)
+        nes match {
+          case NegLong(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.long(Range.linear(Long.MinValue, -1L)).log("n1")
+        n2 <- Gen.long(Range.linear(Long.MinValue, -1L)).log("n2")
+      } yield {
+        val input1 = NegLong.unsafeFrom(n1)
+        val input2 = NegLong.unsafeFrom(n2)
+        Ordering[NegLong].compare(input1, input2) ==== Ordering[Long].compare(input1.value, input2.value)
       }
 
   }
