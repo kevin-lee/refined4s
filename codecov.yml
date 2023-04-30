@@ -1,0 +1,5 @@
+comment:
+  layout: "reach, diff, flags, files"
+  behavior: default
+  require_head: no     # default yes
+  require_base: no     # default yes
