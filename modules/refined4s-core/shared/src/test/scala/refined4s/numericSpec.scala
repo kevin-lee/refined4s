@@ -24,6 +24,7 @@ object numericSpec extends Properties {
       property("test NegInt.value", testValue),
       property("test NegInt.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NegInt]", testOrdering),
+      property("test Ordered[NegInt]", testNumericOrdered),
     )
 
     def testApply: Result = {
@@ -105,10 +106,19 @@ object numericSpec extends Properties {
         n1 <- Gen.int(Range.linear(Int.MinValue, -1)).log("n1")
         n2 <- Gen.int(Range.linear(Int.MinValue, -1)).log("n2")
       } yield {
-        import scala.math.Numeric.IntIsIntegral
         val input1 = NegInt.unsafeFrom(n1)
         val input2 = NegInt.unsafeFrom(n2)
         Ordering[NegInt].compare(input1, input2) ==== Ordering[Int].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.int(Range.linear(Int.MinValue, -1)).log("n1")
+        n2 <- Gen.int(Range.linear(Int.MinValue, -1)).log("n2")
+      } yield {
+        val input1: Ordered[NegInt] = NegInt.unsafeFrom(n1)
+        val input2: NegInt          = NegInt.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
       }
 
   }
@@ -126,6 +136,7 @@ object numericSpec extends Properties {
       property("test NonNegInt.value", testValue),
       property("test NonNegInt.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NonNegInt]", testOrdering),
+      property("test Ordered[NonNegInt]", testNumericOrdered),
     )
 
     def testApply: Result = {
@@ -207,10 +218,19 @@ object numericSpec extends Properties {
         n1 <- Gen.int(Range.linear(0, Int.MaxValue)).log("n1")
         n2 <- Gen.int(Range.linear(0, Int.MaxValue)).log("n2")
       } yield {
-        import scala.math.Numeric.IntIsIntegral
         val input1 = NonNegInt.unsafeFrom(n1)
         val input2 = NonNegInt.unsafeFrom(n2)
         Ordering[NonNegInt].compare(input1, input2) ==== Ordering[Int].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.int(Range.linear(0, Int.MaxValue)).log("n1")
+        n2 <- Gen.int(Range.linear(0, Int.MaxValue)).log("n2")
+      } yield {
+        val input1: Ordered[NonNegInt] = NonNegInt.unsafeFrom(n1)
+        val input2: NonNegInt          = NonNegInt.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
       }
 
   }
@@ -228,6 +248,7 @@ object numericSpec extends Properties {
       property("test PosInt.value", testValue),
       property("test PosInt.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[PosInt]", testOrdering),
+      property("test Ordered[PosInt]", testNumericOrdered),
     )
 
     def testApply: Result = {
@@ -309,10 +330,19 @@ object numericSpec extends Properties {
         n1 <- Gen.int(Range.linear(1, Int.MaxValue)).log("n1")
         n2 <- Gen.int(Range.linear(1, Int.MaxValue)).log("n2")
       } yield {
-        import scala.math.Numeric.IntIsIntegral
         val input1 = PosInt.unsafeFrom(n1)
         val input2 = PosInt.unsafeFrom(n2)
         Ordering[PosInt].compare(input1, input2) ==== Ordering[Int].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.int(Range.linear(0, Int.MaxValue)).log("n1")
+        n2 <- Gen.int(Range.linear(0, Int.MaxValue)).log("n2")
+      } yield {
+        val input1: Ordered[PosInt] = PosInt.unsafeFrom(n1)
+        val input2: PosInt          = PosInt.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
       }
 
   }
@@ -330,6 +360,7 @@ object numericSpec extends Properties {
       property("test NonPosInt.value", testValue),
       property("test NonPosInt.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NonPosInt]", testOrdering),
+      property("test Ordered[NonPosInt]", testNumericOrdered),
     )
 
     def testApply: Result = {
@@ -418,10 +449,19 @@ object numericSpec extends Properties {
         n1 <- Gen.int(Range.linear(Int.MinValue, 0)).log("n1")
         n2 <- Gen.int(Range.linear(Int.MinValue, 0)).log("n2")
       } yield {
-        import scala.math.Numeric.IntIsIntegral
         val input1 = NonPosInt.unsafeFrom(n1)
         val input2 = NonPosInt.unsafeFrom(n2)
         Ordering[NonPosInt].compare(input1, input2) ==== Ordering[Int].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.int(Range.linear(Int.MinValue, 0)).log("n1")
+        n2 <- Gen.int(Range.linear(Int.MinValue, 0)).log("n2")
+      } yield {
+        val input1: Ordered[NonPosInt] = NonPosInt.unsafeFrom(n1)
+        val input2: NonPosInt          = NonPosInt.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
       }
 
   }
@@ -439,6 +479,7 @@ object numericSpec extends Properties {
       property("test NegLong.value", testValue),
       property("test NegLong.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NegLong]", testOrdering),
+      property("test Ordered[NegLong]", testNumericOrdered),
     )
 
     def testApply: Result = {
@@ -525,6 +566,16 @@ object numericSpec extends Properties {
         Ordering[NegLong].compare(input1, input2) ==== Ordering[Long].compare(input1.value, input2.value)
       }
 
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.long(Range.linear(Long.MinValue, -1L)).log("n1")
+        n2 <- Gen.long(Range.linear(Long.MinValue, -1L)).log("n2")
+      } yield {
+        val input1: Ordered[NegLong] = NegLong.unsafeFrom(n1)
+        val input2: NegLong          = NegLong.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
   }
 
   object NonNegLongSpec {
@@ -540,6 +591,7 @@ object numericSpec extends Properties {
       property("test NonNegLong.value", testValue),
       property("test NonNegLong.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NonNegLong]", testOrdering),
+      property("test Ordered[NonNegLong]", testNumericOrdered),
     )
 
     def testApply: Result = {
@@ -633,6 +685,16 @@ object numericSpec extends Properties {
         Ordering[NonNegLong].compare(input1, input2) ==== Ordering[Long].compare(input1.value, input2.value)
       }
 
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n1")
+        n2 <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n2")
+      } yield {
+        val input1: Ordered[NonNegLong] = NonNegLong.unsafeFrom(n1)
+        val input2: NonNegLong          = NonNegLong.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
   }
 
   object PosLongSpec {
@@ -648,6 +710,7 @@ object numericSpec extends Properties {
       property("test PosLong.value", testValue),
       property("test PosLong.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[PosLong]", testOrdering),
+      property("test Ordered[PosLong]", testNumericOrdered),
     )
 
     def testApply: Result = {
@@ -734,6 +797,16 @@ object numericSpec extends Properties {
         Ordering[PosLong].compare(input1, input2) ==== Ordering[Long].compare(input1.value, input2.value)
       }
 
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n1")
+        n2 <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n2")
+      } yield {
+        val input1: Ordered[PosLong] = PosLong.unsafeFrom(n1)
+        val input2: PosLong          = PosLong.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
   }
 
   object NonPosLongSpec {
@@ -749,6 +822,7 @@ object numericSpec extends Properties {
       property("test NonPosLong.value", testValue),
       property("test NonPosLong.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NonPosLong]", testOrdering),
+      property("test Ordered[NonPosLong]", testNumericOrdered),
     )
 
     def testApply: Result = {
@@ -840,6 +914,16 @@ object numericSpec extends Properties {
         val input1 = NonPosLong.unsafeFrom(n1)
         val input2 = NonPosLong.unsafeFrom(n2)
         Ordering[NonPosLong].compare(input1, input2) ==== Ordering[Long].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.long(Range.linear(Long.MinValue, 0L)).log("n1")
+        n2 <- Gen.long(Range.linear(Long.MinValue, 0L)).log("n2")
+      } yield {
+        val input1: Ordered[NonPosLong] = NonPosLong.unsafeFrom(n1)
+        val input2: NonPosLong          = NonPosLong.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
       }
 
   }
