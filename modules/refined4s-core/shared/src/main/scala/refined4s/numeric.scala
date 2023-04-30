@@ -8,7 +8,7 @@ trait numeric {
   trait Numeric[A: math.Ordering] extends Refined[A] {
     given numericOrdering: Ordering[Type]
 
-    given numericOrdered: Conversion[Type, Ordered[Type]] with {
+    given numericToOrdered: Conversion[Type, Ordered[Type]] with {
       def apply(a: Type): Ordered[Type] =
         Ordered.orderingToOrdered[Type](a)(using numericOrdering)
     }
