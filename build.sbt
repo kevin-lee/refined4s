@@ -28,7 +28,7 @@ ThisBuild / licenses := props.licenses
 
 ThisBuild / resolvers += props.SonatypeSnapshots
 
-ThisBuild / scalafixDependencies += "com.github.xuwei-k" %% "scalafix-rules" % "0.2.17"
+ThisBuild / scalafixDependencies += "com.github.xuwei-k" %% "scalafix-rules" % "0.3.0"
 
 ThisBuild / scalafixConfig := (
   if (scalaVersion.value.startsWith("3"))
