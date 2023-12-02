@@ -31,4 +31,6 @@ trait RefinedBase[A] {
   extension (typ: Type) {
     inline def value: A = typ
   }
+  def deriving[F[*]](using fa: F[A]): F[Type] = fa
+
 }

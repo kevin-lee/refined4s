@@ -1,5 +1,7 @@
 package refined4s
 
+import cats.*
+
 object InlinedRefinedType {
   type Something = Something.Type
   object Something extends InlinedRefined[Int] {
@@ -39,6 +41,10 @@ object InlinedRefinedType {
       } catch {
         case _: Throwable => false
       }
+
+    given eqSomething: Eq[Something] = deriving[Eq]
+
+    given showSomething: Show[Something] = deriving[Show]
   }
 
   def validate(a: Int): Int =
