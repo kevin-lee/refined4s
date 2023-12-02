@@ -56,6 +56,11 @@ lazy val refined4s = (project in file("."))
   .aggregate(coreJvm, coreJs)
 
 lazy val core = module("core", crossProject(JVMPlatform, JSPlatform))
+  .settings(
+    libraryDependencies ++= List(
+      libs.cats % Test
+    )
+  )
 lazy val coreJvm = core.jvm
 lazy val coreJs = core.js.settings(jsSettingsForFuture)
 
@@ -89,9 +94,13 @@ lazy val props =
 
     val HedgehogVersion = "0.10.1"
 
+    val CatsVersion = "2.8.0"
   }
 
 lazy val libs = new {
+
+  lazy val cats = "org.typelevel" %% "cats-core" % props.CatsVersion
+
   lazy val hedgehogCore   = "qa.hedgehog" %% "hedgehog-core"   % props.HedgehogVersion
   lazy val hedgehogRunner = "qa.hedgehog" %% "hedgehog-runner" % props.HedgehogVersion
   lazy val hedgehogSbt    = "qa.hedgehog" %% "hedgehog-sbt"    % props.HedgehogVersion
