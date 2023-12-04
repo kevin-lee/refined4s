@@ -7,7 +7,7 @@ import scala.compiletime.*
   */
 trait InlinedRefined[A] extends RefinedBase[A] {
 
-  inline def inlinedInvalidReason(inline a: A): String
+  inline def inlinedInvalidReason(inline a: A): String = invalidReason(a)
 
   inline def inlinedPredicate(inline a: A): Boolean
 
