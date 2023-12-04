@@ -1,14 +1,12 @@
 package refined4s
 
 import cats.*
+import scala.compiletime.*
+import scala.quoted.*
 
 object InlinedRefinedType {
   type Something = Something.Type
   object Something extends InlinedRefined[Int] {
-    import scala.compiletime.*
-    import scala.quoted.*
-    override inline def inlinedInvalidReason(inline a: Int): String =
-      "The number is a negative Int. [a: " + codeOf(a) + "]"
 
     private def inlinedPredicate0(a: Expr[Int])(using Quotes): Expr[Boolean] = {
       import quotes.reflect.*
@@ -49,5 +47,26 @@ object InlinedRefinedType {
 
   def validate(a: Int): Int =
     if (a >= 0) a else sys.error("The number should be non-negative number.")
+
+  type MoreThan2CharsString = MoreThan2CharsString.Type
+  @SuppressWarnings(Array("org.wartremover.warts.Equals"))
+  object MoreThan2CharsString extends InlinedRefined[String] {
+
+    override inline def invalidReason(a: String): String =
+      "The String should have more than 2 chars but got " + a + " instead"
+
+    override def predicate(a: String): Boolean = a.length > 2
+
+    override inline def inlinedPredicate(inline a: String): Boolean =
+      ${ checkStringLength('a) }
+
+    private def checkStringLength(strExpr: Expr[String])(using Quotes): Expr[Boolean] = {
+      val str = strExpr.valueOrAbort
+      if predicate(str) then Expr(true) else Expr(false)
+    }
+
+    given eqMoreThan2CharsString: Eq[MoreThan2CharsString]     = deriving[Eq]
+    given showMoreThan2CharsString: Show[MoreThan2CharsString] = deriving[Show]
+  }
 
 }

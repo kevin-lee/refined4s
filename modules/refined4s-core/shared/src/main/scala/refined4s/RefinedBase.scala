@@ -4,12 +4,10 @@ package refined4s
   * @author Kevin Lee
   * @since 2022-03-23
   */
-trait RefinedBase[A] {
+trait RefinedBase[A] extends NewtypeBase[A] {
   import compiletime.*
 
-  opaque type Type = A
-
-  given newRefinedCanEqual: CanEqual[Type, Type] = CanEqual.derived
+  override opaque type Type = A
 
   def unapply(typ: Type): Option[A] = Some(typ)
 
@@ -29,8 +27,9 @@ trait RefinedBase[A] {
   def predicate(a: A): Boolean
 
   extension (typ: Type) {
-    inline def value: A = typ
+    override inline def value: A = typ
   }
-  def deriving[F[*]](using fa: F[A]): F[Type] = fa
+
+  override def deriving[M[*]](using fa: M[A]): M[Type] = fa
 
 }

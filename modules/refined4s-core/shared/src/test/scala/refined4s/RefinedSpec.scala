@@ -15,6 +15,7 @@ object RefinedSpec extends Properties {
     example("test Refined.unsafeFrom(invalid)", testUnsafeFromInvalid),
     property("test Refined.value", testValue),
     property("test Refined.unapply", testUnapplyWithPatternMatching),
+    property("test unwrap Refined with Coercible", testCoercibleUnwrapping),
   )
 
   def testApply: Result = {
@@ -79,6 +80,21 @@ object RefinedSpec extends Properties {
         case MyType(actual) =>
           actual ==== expected
       }
+    }
+
+  def testCoercibleUnwrapping: Property =
+    for {
+      s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+    } yield {
+
+      def unwrap[A, B](a: A)(using coercible: Coercible[A, B]): B =
+        coercible(a)
+
+      val expected = s
+      val myType   = MyType.unsafeFrom(s)
+
+      val actual: String = unwrap(myType)
+      actual ==== expected
     }
 
   type MyType = MyType.Type
