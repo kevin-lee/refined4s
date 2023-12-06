@@ -87,6 +87,15 @@ object syntaxSpec extends Properties {
       "For type T = InlinedRefined[A] and type N = NewType[T], refinedNewtype(a)[N] with an invalid `a` should return Either[String, N] = Left(String)",
       testInlinedRefined_RefinedNewtypeTAInvalid,
     ),
+    ///
+    property(
+      "For type T = Refined[A] and type N = NewType[T], (n: N).toValue should return A",
+      testRefinedNewtypeToValueA,
+    ),
+    property(
+      "For type T = InlinedRefined[A] and type N = NewType[T], (n: N).toValue should return A",
+      testInlinedRefinedNewtypeToValueA,
+    ),
   )
 
   def testTCoerceA: Property =
@@ -276,6 +285,29 @@ object syntaxSpec extends Properties {
              |expected: ${expected.leftMap(_.encodeToUnicode)}
              |""".stripMargin
       )
+    }
+
+  def testRefinedNewtypeToValueA: Property =
+    for {
+      s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+    } yield {
+      val newMyType = NewMyType(MyType.unsafeFrom(s))
+
+      val expected       = s
+      val actual: String = newMyType.toValue
+      actual ==== expected
+    }
+
+  def testInlinedRefinedNewtypeToValueA: Property =
+    for {
+      s <- Gen.string(Gen.unicode, Range.linear(3, 10)).log("s")
+    } yield {
+
+      val newMoreThan2CharsString = NewMoreThan2CharsString(MoreThan2CharsString.unsafeFrom(s))
+
+      val expected       = s
+      val actual: String = newMoreThan2CharsString.toValue
+      actual ==== expected
     }
 
   def testInlinedRefined_RefinedNewtypeTAInvalid: Property =
