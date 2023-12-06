@@ -14,6 +14,10 @@ object syntaxSpec extends Properties {
 
   override def tests: List[Test] = List(
     property(
+      "For type T = Refined[A] and t: T, t.coerce[A] should return A",
+      testTCoerceA,
+    ),
+    property(
       "For type T = Refined[A], a.refinedTo[T] with a valid `a` should return Either[String, T] = Right(T)",
       testARefinedT,
     ),
@@ -28,6 +32,10 @@ object syntaxSpec extends Properties {
     example(
       "For type T = Refined[A], refinedTo(a)[T] with an invalid `a` should return Either[String, T] = Left(String)",
       testRefinedTAInvalid,
+    ),
+    property(
+      "For type T = InlinedRefined[A] and t: T, t.coerce[A] should return A",
+      testInlinedRefined_TCoerceA,
     ),
     property(
       "For type T = InlinedRefined[A], a.refinedTo[T] with a valid `a` should return Either[String, T] = Right(T)",
@@ -46,6 +54,17 @@ object syntaxSpec extends Properties {
       testInlinedRefined_RefinedTAInvalid,
     ),
   )
+
+  def testTCoerceA: Property =
+    for {
+      s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+    } yield {
+      val myType = MyType.unsafeFrom(s)
+
+      val expected = s
+      val actual   = myType.coerce[String]
+      actual ==== expected
+    }
 
   def testARefinedT: Property =
     for {
@@ -88,6 +107,17 @@ object syntaxSpec extends Properties {
 
       val expected = s.asRight[String]
       val actual   = s.refinedTo[MoreThan2CharsString]
+      actual ==== expected
+    }
+
+  def testInlinedRefined_TCoerceA: Property =
+    for {
+      s <- Gen.string(Gen.unicode, Range.linear(3, 10)).log("s")
+    } yield {
+      val moreThan2CharsString = MoreThan2CharsString.unsafeFrom(s)
+
+      val expected = s
+      val actual   = moreThan2CharsString.coerce[String]
       actual ==== expected
     }
 
