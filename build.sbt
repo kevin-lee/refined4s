@@ -53,7 +53,12 @@ ThisBuild / scalafixScalaBinaryVersion := {
 
 lazy val refined4s = (project in file("."))
   .settings(noPublish)
-  .aggregate(coreJvm, coreJs)
+  .aggregate(
+    coreJvm,
+    coreJs,
+    catsJvm,
+    catsJs,
+  )
 
 lazy val core    = module("core", crossProject(JVMPlatform, JSPlatform))
   .settings(
@@ -64,6 +69,17 @@ lazy val core    = module("core", crossProject(JVMPlatform, JSPlatform))
   )
 lazy val coreJvm = core.jvm
 lazy val coreJs  = core.js.settings(jsSettingsForFuture)
+
+lazy val cats    = module("cats", crossProject(JVMPlatform, JSPlatform))
+  .settings(
+    libraryDependencies ++= List(
+      libs.cats,
+      libs.extrasTypeInfo % Test,
+    )
+  )
+  .dependsOn(core % props.IncludeTest)
+lazy val catsJvm = cats.jvm
+lazy val catsJs  = cats.js.settings(jsSettingsForFuture)
 
 lazy val props =
   new {
