@@ -3,7 +3,7 @@ package refined4s
 /** @author Kevin Lee
   * @since 2023-12-02
   */
-object syntax {
+trait syntax {
 
   extension [A](a: A) {
 
@@ -13,4 +13,19 @@ object syntax {
       refinedCtor.create(a)
   }
 
+  import internal.typeTools.*
+  extension [A, T](a: A) {
+
+    inline def refinedNewtype[N](
+      using coercible: Coercible[T, N],
+      refinedCtor: RefinedCtor[T, A],
+    ): Either[String, N] =
+      a.refinedTo[T]
+        .left
+        .map(err => s"Failed to create ${getTypeName[N]}: $err")
+        .map(coercible(_))
+
+  }
+
 }
+object syntax extends syntax
