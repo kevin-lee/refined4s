@@ -53,6 +53,40 @@ object syntaxSpec extends Properties {
       "For type T = InlinedRefined[A], refinedTo(a)[T] with an invalid `a` should return Either[String, T] = Left(String)",
       testInlinedRefined_RefinedTAInvalid,
     ),
+    ///
+    property(
+      "For type T = Refined[A] and type N = NewType[T], a.refinedNewtype[N] with a valid `a` should return Either[String, N] = Right(N)",
+      testARefinedNewtypeT,
+    ),
+    example(
+      "For type T = Refined[A] and type N = NewType[T], a.refinedNewtype[N] with an invalid `a` should return Either[String, N] = Left(String)",
+      testARefinedNewtypeTInvalid,
+    ),
+    property(
+      "For type T = Refined[A] and type N = NewType[T], refinedNewtype(a)[N] with a valid `a` should return Either[String, N] = Right(N)",
+      testRefinedNewtypeTA,
+    ),
+    example(
+      "For type T = Refined[A] and type N = NewType[T], refinedNewtype(a)[N] with an invalid `a` should return Either[String, N] = Left(String)",
+      testRefinedNewtypeTAInvalid,
+    ),
+    ///
+    property(
+      "For type T = InlinedRefined[A] and type N = NewType[T], a.refinedNewtype[N] with a valid `a` should return Either[String, N] = Right(N)",
+      testInlinedRefined_ARefinedNewtypeT,
+    ),
+    property(
+      "For type T = InlinedRefined[A] and type N = NewType[T], a.refinedNewtype[N] with an invalid `a` should return Either[String, N] = Left(String)",
+      testInlinedRefined_ARefinedNewtypeTInvalid,
+    ),
+    property(
+      "For type T = InlinedRefined[A] and type N = NewType[T], refinedNewtype(a)[N] with a valid `a` should return Either[String, N] = Right(N)",
+      testInlinedRefined_RefinedNewtypeTA,
+    ),
+    property(
+      "For type T = InlinedRefined[A] and type N = NewType[T], refinedNewtype(a)[N] with an invalid `a` should return Either[String, N] = Left(String)",
+      testInlinedRefined_RefinedNewtypeTAInvalid,
+    ),
   )
 
   def testTCoerceA: Property =
@@ -161,6 +195,105 @@ object syntaxSpec extends Properties {
       )
     }
 
+  def testARefinedNewtypeT: Property =
+    for {
+      s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+    } yield {
+
+      val expected = NewMyType(MyType.unsafeFrom(s)).asRight[String]
+      val actual   = s.refinedNewtype[NewMyType]
+      actual ==== expected
+    }
+
+  def testARefinedNewtypeTInvalid: Result = {
+    val expected =
+      "Failed to create refined4s.syntaxSpec.NewMyType: Invalid value: []. It has to be a non-empty String but got \"\""
+        .asLeft[NewMyType]
+    val actual   = "".refinedNewtype[NewMyType]
+    actual ==== expected
+  }
+
+  def testRefinedNewtypeTA: Property =
+    for {
+      s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+    } yield {
+
+      val expected = NewMyType(MyType.unsafeFrom(s)).asRight[String]
+      val actual   = refinedNewtype(s)[NewMyType]
+      actual ==== expected
+    }
+
+  def testRefinedNewtypeTAInvalid: Result = {
+    val expected =
+      "Failed to create refined4s.syntaxSpec.NewMyType: Invalid value: []. It has to be a non-empty String but got \"\""
+        .asLeft[NewMyType]
+    val actual   = refinedNewtype("")[NewMyType]
+    actual ==== expected
+  }
+
+  def testInlinedRefined_ARefinedNewtypeT: Property =
+    for {
+      s <- Gen.string(Gen.unicode, Range.linear(3, 10)).log("s")
+    } yield {
+
+      val expected = NewMoreThan2CharsString(MoreThan2CharsString.unsafeFrom(s)).asRight[String]
+      val actual   = s.refinedNewtype[NewMoreThan2CharsString]
+      (actual ==== expected).log(
+        raw"""       s: ${s.encodeToUnicode}
+             |  actual: ${actual.leftMap(_.encodeToUnicode)}
+             |expected: ${expected.leftMap(_.encodeToUnicode)}
+             |""".stripMargin
+      )
+    }
+
+  def testInlinedRefined_ARefinedNewtypeTInvalid: Property =
+    for {
+      s <- Gen.string(Gen.unicode, Range.linear(0, 2)).log("s")
+    } yield {
+      val expected =
+        s"Failed to create refined4s.syntaxSpec.NewMoreThan2CharsString: Invalid value: [$s]. The String should have more than 2 chars but got $s instead"
+          .asLeft[NewMoreThan2CharsString]
+
+      val actual = s.refinedNewtype[NewMoreThan2CharsString]
+      (actual ==== expected).log(
+        raw"""       s: ${s.encodeToUnicode}
+             |  actual: ${actual.leftMap(_.encodeToUnicode)}
+             |expected: ${expected.leftMap(_.encodeToUnicode)}
+             |""".stripMargin
+      )
+    }
+
+  def testInlinedRefined_RefinedNewtypeTA: Property =
+    for {
+      s <- Gen.string(Gen.unicode, Range.linear(3, 10)).log("s")
+    } yield {
+
+      val expected = NewMoreThan2CharsString(MoreThan2CharsString.unsafeFrom(s)).asRight[String]
+      val actual   = refinedNewtype(s)[NewMoreThan2CharsString]
+      (actual ==== expected).log(
+        raw"""       s: ${s.encodeToUnicode}
+             |  actual: ${actual.leftMap(_.encodeToUnicode)}
+             |expected: ${expected.leftMap(_.encodeToUnicode)}
+             |""".stripMargin
+      )
+    }
+
+  def testInlinedRefined_RefinedNewtypeTAInvalid: Property =
+    for {
+      s <- Gen.string(Gen.unicode, Range.linear(0, 2)).log("s")
+    } yield {
+      val expected =
+        s"Failed to create refined4s.syntaxSpec.NewMoreThan2CharsString: Invalid value: [$s]. The String should have more than 2 chars but got $s instead"
+          .asLeft[NewMoreThan2CharsString]
+      val actual   = refinedNewtype(s)[NewMoreThan2CharsString]
+      (actual ==== expected).log(
+        raw"""       s: ${s.encodeToUnicode}
+             |  actual: ${actual.leftMap(_.encodeToUnicode)}
+             |expected: ${expected.leftMap(_.encodeToUnicode)}
+             |""".stripMargin
+      )
+    }
+
   type MyType = MyType.Type
   @SuppressWarnings(Array("org.wartremover.warts.Equals"))
   object MyType extends Refined[String] {
@@ -175,4 +308,9 @@ object syntaxSpec extends Properties {
     given showMyType: Show[MyType] = deriving[Show]
   }
 
+  type NewMyType = NewMyType.Type
+  object NewMyType extends Newtype[MyType]
+
+  type NewMoreThan2CharsString = NewMoreThan2CharsString.Type
+  object NewMoreThan2CharsString extends Newtype[MoreThan2CharsString]
 }
