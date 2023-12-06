@@ -27,5 +27,11 @@ trait syntax {
 
   }
 
+  extension [N, T, A](nt: N) {
+
+    def toValue(using coercible1: Coercible[N, T], coercible2: Coercible[T, A]): A =
+      coercible2(coercible1(nt))
+  }
+
 }
 object syntax extends syntax
