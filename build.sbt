@@ -55,14 +55,15 @@ lazy val refined4s = (project in file("."))
   .settings(noPublish)
   .aggregate(coreJvm, coreJs)
 
-lazy val core = module("core", crossProject(JVMPlatform, JSPlatform))
+lazy val core    = module("core", crossProject(JVMPlatform, JSPlatform))
   .settings(
     libraryDependencies ++= List(
-      libs.cats % Test
+      libs.extrasTypeInfo % Test,
+      libs.cats           % Test,
     )
   )
 lazy val coreJvm = core.jvm
-lazy val coreJs = core.js.settings(jsSettingsForFuture)
+lazy val coreJs  = core.js.settings(jsSettingsForFuture)
 
 lazy val props =
   new {
@@ -94,10 +95,14 @@ lazy val props =
 
     val HedgehogVersion = "0.10.1"
 
+    val ExtrasVersion = "0.44.0"
+
     val CatsVersion = "2.8.0"
   }
 
 lazy val libs = new {
+
+  lazy val extrasTypeInfo = "io.kevinlee" %% "extras-type-info" % props.ExtrasVersion
 
   lazy val cats = "org.typelevel" %% "cats-core" % props.CatsVersion
 
@@ -181,7 +186,7 @@ def module(projectName: String, crossProject: CrossProject.Builder): CrossProjec
 lazy val jsSettingsForFuture: SettingsDefinition = List(
   Test / fork := false,
   Test / scalacOptions ++= (if (scalaVersion.value.startsWith("3")) List.empty
-  else List("-P:scalajs:nowarnGlobalExecutionContext")),
+                            else List("-P:scalajs:nowarnGlobalExecutionContext")),
   Test / compile / scalacOptions ++= (if (scalaVersion.value.startsWith("3")) List.empty
-  else List("-P:scalajs:nowarnGlobalExecutionContext")),
+                                      else List("-P:scalajs:nowarnGlobalExecutionContext")),
 )
