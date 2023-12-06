@@ -10,11 +10,11 @@ import hedgehog.runner.*
 object RefinedCtorSpec extends Properties {
   override def tests: List[Test] = List(
     property(
-      "RefinedCtor[T].create with a valid input should return Either[String, T] = Right(T)",
+      "RefinedCtor[Type, A].create with a valid input should return Either[String, T] = Right(T)",
       testRefinedCtorCreate,
     ),
     example(
-      "RefinedCtor[T].create with an invalid input should return Either[String, T] = Left(String)",
+      "RefinedCtor[Type, A].create with an invalid input should return Either[String, T] = Left(String)",
       testRefinedCtorCreateInvalid,
     ),
   )
@@ -29,22 +29,24 @@ object RefinedCtorSpec extends Properties {
     }
 
   def testRefinedCtorCreateInvalid: Result = {
-    val expected = "Invalid value: []. It has to be non-empty String but got \"\"".asLeft[MyType]
+    val expected = "It has to be non-empty String but got \"\"".asLeft[MyType]
     val actual   = RefinedCtor[MyType, String].create("")
     actual ==== expected
   }
 
   type MyType = MyType.Type
   @SuppressWarnings(Array("org.wartremover.warts.Equals"))
-  object MyType extends Refined[String] {
+  object MyType {
+    opaque type Type = String
 
-    override inline def invalidReason(a: String): String =
+    def invalidReason(a: String): String =
       "It has to be non-empty String but got \"" + a + "\""
 
-    override inline def predicate(a: String): Boolean = a != ""
+    def predicate(a: String): Boolean = a != ""
 
     given refinedCtor: RefinedCtor[Type, String] with {
-      override def create(a: String): Either[String, MyType] = from(a)
+      override def create(a: String): Either[String, MyType] =
+        Either.cond(predicate(a), (a: Type), invalidReason(a))
     }
   }
 

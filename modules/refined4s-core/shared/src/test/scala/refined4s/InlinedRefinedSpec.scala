@@ -1,5 +1,6 @@
 package refined4s
 
+import cats.syntax.all.*
 import hedgehog.*
 import hedgehog.runner.*
 import refined4s.InlinedRefinedType.Something
@@ -18,6 +19,14 @@ object InlinedInlinedRefinedSpec extends Properties {
     property("test InlinedRefined.unapply", testUnapplyWithPatternMatching),
     property("test unwrap InlinedRefined[String] with Coercible", testCoercibleUnwrappingString),
     property("test unwrap InlinedRefined[Int] with Coercible", testCoercibleUnwrappingInt),
+    property(
+      "Given InlinedRefined[A], RefinedCtor[InlinedRefined[A]#Type, A].create with a valid input should return Either[String, InlinedRefined[A]#Type] = Right(InlinedRefined[A]#Type)",
+      testRefinedCtorCreate,
+    ),
+    example(
+      "Given InlinedRefined[A], RefinedCtor[InlinedRefined[A]#Type, A].create with an invalid input should return Either[String, InlinedRefined[A]#Type] = Left(String)",
+      testRefinedCtorCreateInvalid,
+    ),
   )
 
   def testApply: Result = {
@@ -37,7 +46,7 @@ object InlinedInlinedRefinedSpec extends Properties {
     }
 
   def testFromInvalid: Result = {
-    val expected = "Invalid value: []. It has to be a non-empty String but got []"
+    val expected = "Invalid value: []. It has to be a non-empty String but got \"\""
     val actual   = MyType.from("")
     actual ==== Left(expected)
   }
@@ -52,7 +61,7 @@ object InlinedInlinedRefinedSpec extends Properties {
     }
 
   def testUnsafeFromInvalid: Result = {
-    val expected = "Invalid value: []. It has to be a non-empty String but got []"
+    val expected = "Invalid value: []. It has to be a non-empty String but got \"\""
     try {
       MyType.unsafeFrom("")
       Result.failure.log("""IllegalArgumentException was expected from MyType.unsafeFrom(""), but it was not thrown.""")
@@ -114,12 +123,27 @@ object InlinedInlinedRefinedSpec extends Properties {
       actual ==== expected
     }
 
+  def testRefinedCtorCreate: Property =
+    for {
+      s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+    } yield {
+      val expected = s.asRight[String]
+      val actual   = RefinedCtor[MyType, String].create(s)
+      actual ==== expected
+    }
+
+  def testRefinedCtorCreateInvalid: Result = {
+    val expected = "Invalid value: []. It has to be a non-empty String but got \"\"".asLeft[MyType]
+    val actual   = RefinedCtor[MyType, String].create("")
+    actual ==== expected
+  }
+
   type MyType = MyType.Type
   @SuppressWarnings(Array("org.wartremover.warts.Equals"))
   object MyType extends InlinedRefined[String] {
 
     override inline def invalidReason(a: String): String =
-      "It has to be a non-empty String but got [" + a + "]"
+      "It has to be a non-empty String but got \"" + a + "\""
 
     override inline def predicate(a: String): Boolean = a != ""
 
