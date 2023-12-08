@@ -142,5 +142,37 @@ trait numeric {
 
   }
 
+  type NegFloat = NegFloat.Type
+  object NegFloat extends Numeric[Float] {
+    override inline def invalidReason(a: Float): String = expectedMessage("a negative Float")
+
+    override inline def predicate(a: Float): Boolean = a < 0f
+
+  }
+
+  type NonNegFloat = NonNegFloat.Type
+  object NonNegFloat extends Numeric[Float] {
+    override inline def invalidReason(a: Float): String = expectedMessage("a non-negative Float")
+
+    override inline def predicate(a: Float): Boolean = a >= 0f
+
+  }
+
+  type PosFloat = PosFloat.Type
+  object PosFloat extends Numeric[Float] {
+    override inline def invalidReason(a: Float): String = expectedMessage("a positive Float")
+
+    override inline def predicate(a: Float): Boolean = a > 0f
+
+  }
+
+  type NonPosFloat = NonPosFloat.Type
+  object NonPosFloat extends Numeric[Float] {
+    override inline def invalidReason(a: Float): String = expectedMessage("a non-positive Float")
+
+    override inline def predicate(a: Float): Boolean = a <= 0f
+
+  }
+
 }
 object numeric extends numeric
