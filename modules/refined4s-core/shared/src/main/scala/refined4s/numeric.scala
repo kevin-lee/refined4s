@@ -78,5 +78,37 @@ trait numeric {
 
   }
 
+  type NegShort = NegShort.Type
+  object NegShort extends Numeric[Short] {
+    override inline def invalidReason(a: Short): String = expectedMessage("a negative Short")
+
+    override inline def predicate(a: Short): Boolean = a < 0
+
+  }
+
+  type NonNegShort = NonNegShort.Type
+  object NonNegShort extends Numeric[Short] {
+    override inline def invalidReason(a: Short): String = expectedMessage("a non-negative Short")
+
+    override inline def predicate(a: Short): Boolean = a >= 0
+
+  }
+
+  type PosShort = PosShort.Type
+  object PosShort extends Numeric[Short] {
+    override inline def invalidReason(a: Short): String = expectedMessage("a positive Short")
+
+    override inline def predicate(a: Short): Boolean = a > 0
+
+  }
+
+  type NonPosShort = NonPosShort.Type
+  object NonPosShort extends Numeric[Short] {
+    override inline def invalidReason(a: Short): String = expectedMessage("a non-positive Short")
+
+    override inline def predicate(a: Short): Boolean = a <= 0
+
+  }
+
 }
 object numeric extends numeric

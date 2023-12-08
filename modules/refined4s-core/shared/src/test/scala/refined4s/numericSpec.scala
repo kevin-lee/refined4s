@@ -9,7 +9,8 @@ import hedgehog.runner.*
 object numericSpec extends Properties {
   override def tests: List[Test] =
     NegIntSpec.tests ++ NonNegIntSpec.tests ++ PosIntSpec.tests ++ NonPosIntSpec.tests ++
-      NegLongSpec.tests ++ NonNegLongSpec.tests ++ PosLongSpec.tests ++ NonPosLongSpec.tests
+      NegLongSpec.tests ++ NonNegLongSpec.tests ++ PosLongSpec.tests ++ NonPosLongSpec.tests ++
+      NegShortSpec.tests ++ NonNegShortSpec.tests ++ PosShortSpec.tests ++ NonPosShortSpec.tests
 
   object NegIntSpec {
 
@@ -923,6 +924,461 @@ object numericSpec extends Properties {
       } yield {
         val input1: Ordered[NonPosLong] = NonPosLong.unsafeFrom(n1)
         val input2: NonPosLong          = NonPosLong.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
+  }
+
+  object NegShortSpec {
+
+    import numeric.NegShort
+
+    def tests: List[Test] = List(
+      example("test NegShort.apply", testApply),
+      property("test NegShort.from(valid)", testFromValid),
+      property("test NegShort.from(invalid)", testFromInvalid),
+      property("test NegShort.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test NegShort.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test NegShort.value", testValue),
+      property("test NegShort.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[NegShort]", testOrdering),
+      property("test Ordered[NegShort]", testNumericOrdered),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected = NegShort(-1)
+      val actual   = NegShort(-1)
+      actual ==== expected
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.short(Range.linear(Short.MinValue, -1)).log("n")
+      } yield {
+        val expected = NegShort.unsafeFrom(n)
+        val actual   = NegShort.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.short(Range.linear(0, Short.MaxValue)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a negative Short"
+        val actual   = NegShort.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.short(Range.linear(Short.MinValue, -1)).log("n")
+      } yield {
+        val expected = NegShort.unsafeFrom(n)
+        val actual   = NegShort.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.short(Range.linear(0, Short.MaxValue)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a negative Short"
+        try {
+          NegShort.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from NegShort.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.short(Range.linear(Short.MinValue, -1)).log("n")
+      } yield {
+        val expected = n
+        val actual   = NegShort.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.short(Range.linear(Short.MinValue, -1)).log("n")
+      } yield {
+        val expected = n
+        val nes      = NegShort.unsafeFrom(n)
+        nes match {
+          case NegShort(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.short(Range.linear(Short.MinValue, -1)).log("n1")
+        n2 <- Gen.short(Range.linear(Short.MinValue, -1)).log("n2")
+      } yield {
+        val input1 = NegShort.unsafeFrom(n1)
+        val input2 = NegShort.unsafeFrom(n2)
+        Ordering[NegShort].compare(input1, input2) ==== Ordering[Short].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.short(Range.linear(Short.MinValue, -1)).log("n1")
+        n2 <- Gen.short(Range.linear(Short.MinValue, -1)).log("n2")
+      } yield {
+        val input1: Ordered[NegShort] = NegShort.unsafeFrom(n1)
+        val input2: NegShort          = NegShort.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
+  }
+
+  object NonNegShortSpec {
+
+    import numeric.NonNegShort
+
+    def tests: List[Test] = List(
+      example("test NonNegShort.apply", testApply),
+      property("test NonNegShort.from(valid)", testFromValid),
+      property("test NonNegShort.from(invalid)", testFromInvalid),
+      property("test NonNegShort.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test NonNegShort.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test NonNegShort.value", testValue),
+      property("test NonNegShort.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[NonNegShort]", testOrdering),
+      property("test Ordered[NonNegShort]", testNumericOrdered),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected = NonNegShort(0)
+      val actual   = NonNegShort(0)
+      actual ==== expected
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.short(Range.linear(0, Short.MaxValue)).log("n")
+      } yield {
+        val expected = NonNegShort.unsafeFrom(n)
+        val actual   = NonNegShort.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.short(Range.linear(Short.MinValue, -1)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a non-negative Short"
+        val actual   = NonNegShort.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.short(Range.linear(0, Short.MaxValue)).log("n")
+      } yield {
+        val expected = NonNegShort.unsafeFrom(n)
+        val actual   = NonNegShort.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.short(Range.linear(-1, Short.MinValue)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a non-negative Short"
+        try {
+          NonNegShort.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from NonNegShort.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.short(Range.linear(0, Short.MaxValue)).log("n")
+      } yield {
+        val expected = n
+        val actual   = NonNegShort.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.short(Range.linear(0, Short.MaxValue)).log("n")
+      } yield {
+        val expected = n
+        val nes      = NonNegShort.unsafeFrom(n)
+        nes match {
+          case NonNegShort(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.short(Range.linear(0, Short.MaxValue)).log("n1")
+        n2 <- Gen.short(Range.linear(0, Short.MaxValue)).log("n2")
+      } yield {
+        val input1 = NonNegShort.unsafeFrom(n1)
+        val input2 = NonNegShort.unsafeFrom(n2)
+        Ordering[NonNegShort].compare(input1, input2) ==== Ordering[Short].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.short(Range.linear(0, Short.MaxValue)).log("n1")
+        n2 <- Gen.short(Range.linear(0, Short.MaxValue)).log("n2")
+      } yield {
+        val input1: Ordered[NonNegShort] = NonNegShort.unsafeFrom(n1)
+        val input2: NonNegShort          = NonNegShort.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
+  }
+
+  object PosShortSpec {
+
+    import numeric.PosShort
+
+    def tests: List[Test] = List(
+      example("test PosShort.apply", testApply),
+      property("test PosShort.from(valid)", testFromValid),
+      property("test PosShort.from(invalid)", testFromInvalid),
+      property("test PosShort.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test PosShort.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test PosShort.value", testValue),
+      property("test PosShort.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[PosShort]", testOrdering),
+      property("test Ordered[PosShort]", testNumericOrdered),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected = PosShort(1)
+      val actual   = PosShort(1)
+      actual ==== expected
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.short(Range.linear(1, Short.MaxValue)).log("n")
+      } yield {
+        val expected = PosShort.unsafeFrom(n)
+        val actual   = PosShort.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.short(Range.linear(Short.MinValue, 0)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a positive Short"
+        val actual   = PosShort.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.short(Range.linear(1, Short.MaxValue)).log("n")
+      } yield {
+        val expected = PosShort.unsafeFrom(n)
+        val actual   = PosShort.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.short(Range.linear(Short.MinValue, 0)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a positive Short"
+        try {
+          PosShort.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from PosShort.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.short(Range.linear(1, Short.MaxValue)).log("n")
+      } yield {
+        val expected = n
+        val actual   = PosShort.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.short(Range.linear(1, Short.MaxValue)).log("n")
+      } yield {
+        val expected = n
+        val nes      = PosShort.unsafeFrom(n)
+        nes match {
+          case PosShort(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.short(Range.linear(1, Short.MaxValue)).log("n1")
+        n2 <- Gen.short(Range.linear(1, Short.MaxValue)).log("n2")
+      } yield {
+        val input1 = PosShort.unsafeFrom(n1)
+        val input2 = PosShort.unsafeFrom(n2)
+        Ordering[PosShort].compare(input1, input2) ==== Ordering[Short].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.short(Range.linear(1, Short.MaxValue)).log("n1")
+        n2 <- Gen.short(Range.linear(1, Short.MaxValue)).log("n2")
+      } yield {
+        val input1: Ordered[PosShort] = PosShort.unsafeFrom(n1)
+        val input2: PosShort          = PosShort.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
+  }
+
+  object NonPosShortSpec {
+
+    import numeric.NonPosShort
+
+    def tests: List[Test] = List(
+      example("test NonPosShort.apply", testApply),
+      property("test NonPosShort.from(valid)", testFromValid),
+      property("test NonPosShort.from(invalid)", testFromInvalid),
+      property("test NonPosShort.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test NonPosShort.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test NonPosShort.value", testValue),
+      property("test NonPosShort.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[NonPosShort]", testOrdering),
+      property("test Ordered[NonPosShort]", testNumericOrdered),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected  = NonPosShort(0)
+      val actual    = NonPosShort(0)
+      val expected2 = NonPosShort(Short.MinValue)
+      val actual2   = NonPosShort(Short.MinValue)
+      Result.all(
+        List(
+          actual ==== expected,
+          actual2 ==== expected2,
+        )
+      )
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.short(Range.linear(Short.MinValue, 0)).log("n")
+      } yield {
+        val expected = NonPosShort.unsafeFrom(n)
+        val actual   = NonPosShort.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.short(Range.linear(1, Short.MaxValue)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a non-positive Short"
+        val actual   = NonPosShort.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.short(Range.linear(Short.MinValue, 0)).log("n")
+      } yield {
+        val expected = NonPosShort.unsafeFrom(n)
+        val actual   = NonPosShort.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.short(Range.linear(1, Short.MaxValue)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a non-positive Short"
+        try {
+          NonPosShort.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from NonPosShort.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.short(Range.linear(Short.MinValue, 0)).log("n")
+      } yield {
+        val expected = n
+        val actual   = NonPosShort.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.short(Range.linear(Short.MinValue, 0)).log("n")
+      } yield {
+        val expected = n
+        val nes      = NonPosShort.unsafeFrom(n)
+        nes match {
+          case NonPosShort(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.short(Range.linear(Short.MinValue, 0)).log("n1")
+        n2 <- Gen.short(Range.linear(Short.MinValue, 0)).log("n2")
+      } yield {
+        val input1 = NonPosShort.unsafeFrom(n1)
+        val input2 = NonPosShort.unsafeFrom(n2)
+        Ordering[NonPosShort].compare(input1, input2) ==== Ordering[Short].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.short(Range.linear(Short.MinValue, 0)).log("n1")
+        n2 <- Gen.short(Range.linear(Short.MinValue, 0)).log("n2")
+      } yield {
+        val input1: Ordered[NonPosShort] = NonPosShort.unsafeFrom(n1)
+        val input2: NonPosShort          = NonPosShort.unsafeFrom(n2)
         input1.compare(input2) ==== n1.compare(n2)
       }
 
