@@ -337,8 +337,8 @@ object numericSpec extends Properties {
 
     def testNumericOrdered: Property =
       for {
-        n1 <- Gen.int(Range.linear(0, Int.MaxValue)).log("n1")
-        n2 <- Gen.int(Range.linear(0, Int.MaxValue)).log("n2")
+        n1 <- Gen.int(Range.linear(1, Int.MaxValue)).log("n1")
+        n2 <- Gen.int(Range.linear(1, Int.MaxValue)).log("n2")
       } yield {
         val input1: Ordered[PosInt] = PosInt.unsafeFrom(n1)
         val input2: PosInt          = PosInt.unsafeFrom(n2)
@@ -789,8 +789,8 @@ object numericSpec extends Properties {
 
     def testOrdering: Property =
       for {
-        n1 <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n1")
-        n2 <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n2")
+        n1 <- Gen.long(Range.linear(1L, Long.MaxValue)).log("n1")
+        n2 <- Gen.long(Range.linear(1L, Long.MaxValue)).log("n2")
       } yield {
         val input1 = PosLong.unsafeFrom(n1)
         val input2 = PosLong.unsafeFrom(n2)
@@ -799,8 +799,8 @@ object numericSpec extends Properties {
 
     def testNumericOrdered: Property =
       for {
-        n1 <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n1")
-        n2 <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n2")
+        n1 <- Gen.long(Range.linear(1L, Long.MaxValue)).log("n1")
+        n2 <- Gen.long(Range.linear(1L, Long.MaxValue)).log("n2")
       } yield {
         val input1: Ordered[PosLong] = PosLong.unsafeFrom(n1)
         val input2: PosLong          = PosLong.unsafeFrom(n2)
