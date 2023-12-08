@@ -10,6 +10,7 @@ on:
 env:
   GH_JAVA_VERSION: "11"
   GH_JAVA_DISTRIBUTION: "temurin"
+  GH_SBT_OPTS: "-Xss64m -Xms1024m -XX:MaxMetaspaceSize=1G -Xmx4G -XX:MaxInlineLevel=18 -XX:+UnlockExperimentalVMOptions"
   GH_JVM_OPTS: "-Xss64m -Xms1024m -XX:MaxMetaspaceSize=1G -Xmx4G -XX:MaxInlineLevel=18 -XX:+UnlockExperimentalVMOptions -XX:+UseJVMCICompiler"
 
 
@@ -48,6 +49,7 @@ jobs:
           RUN_ID: ${{ github.run_id }}
           RUN_NUMBER: ${{ github.run_number }}
           JVM_OPTS: ${{ env.GH_JVM_OPTS }}
+          SBT_OPTS: ${{ env.GH_SBT_OPTS }}
         run: |
           echo "[BEFORE]CURRENT_BRANCH_NAME=${CURRENT_BRANCH_NAME}"
           export CURRENT_BRANCH_NAME="${CURRENT_BRANCH_NAME#refs/heads/}"
@@ -97,6 +99,8 @@ jobs:
           CURRENT_BRANCH_NAME: ${{ github.ref }}
           RUN_ID: ${{ github.run_id }}
           RUN_NUMBER: ${{ github.run_number }}
+          JVM_OPTS: ${{ env.GH_JVM_OPTS }}
+          SBT_OPTS: ${{ env.GH_SBT_OPTS }}
         run: |
           echo "[BEFORE]CURRENT_BRANCH_NAME=${CURRENT_BRANCH_NAME}"
           export CURRENT_BRANCH_NAME="${CURRENT_BRANCH_NAME#refs/heads/}"
@@ -138,6 +142,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.RELEASE_AUTH_TOKEN_GITHUB }}
         JVM_OPTS: ${{ env.GH_JVM_OPTS }}
+        SBT_OPTS: ${{ env.GH_SBT_OPTS }}
       run: |
         echo "Run] sbt GitHub release"
         echo "JVM_OPTS=${JVM_OPTS}"
@@ -181,6 +186,7 @@ jobs:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           GITHUB_TOKEN: ${{ secrets.RELEASE_AUTH_TOKEN_GITHUB }}
           JVM_OPTS: ${{ env.GH_JVM_OPTS }}
+          SBT_OPTS: ${{ env.GH_SBT_OPTS }}
         run: |
           echo "Run] sbt ci-release"
           export SOURCE_DATE_EPOCH=$(date +%s)
@@ -231,6 +237,7 @@ jobs:
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           JVM_OPTS: ${{ env.GH_JVM_OPTS }}
+          SBT_OPTS: ${{ env.GH_SBT_OPTS }}
         run: |
           echo "Run] sbt ci-release"
           export SOURCE_DATE_EPOCH=$(date +%s)
