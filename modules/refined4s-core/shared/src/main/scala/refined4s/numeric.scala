@@ -110,5 +110,37 @@ trait numeric {
 
   }
 
+  type NegByte = NegByte.Type
+  object NegByte extends Numeric[Byte] {
+    override inline def invalidReason(a: Byte): String = expectedMessage("a negative Byte")
+
+    override inline def predicate(a: Byte): Boolean = a < 0
+
+  }
+
+  type NonNegByte = NonNegByte.Type
+  object NonNegByte extends Numeric[Byte] {
+    override inline def invalidReason(a: Byte): String = expectedMessage("a non-negative Byte")
+
+    override inline def predicate(a: Byte): Boolean = a >= 0
+
+  }
+
+  type PosByte = PosByte.Type
+  object PosByte extends Numeric[Byte] {
+    override inline def invalidReason(a: Byte): String = expectedMessage("a positive Byte")
+
+    override inline def predicate(a: Byte): Boolean = a > 0
+
+  }
+
+  type NonPosByte = NonPosByte.Type
+  object NonPosByte extends Numeric[Byte] {
+    override inline def invalidReason(a: Byte): String = expectedMessage("a non-positive Byte")
+
+    override inline def predicate(a: Byte): Boolean = a <= 0
+
+  }
+
 }
 object numeric extends numeric
