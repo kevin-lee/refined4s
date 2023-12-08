@@ -10,7 +10,8 @@ object numericSpec extends Properties {
   override def tests: List[Test] =
     NegIntSpec.tests ++ NonNegIntSpec.tests ++ PosIntSpec.tests ++ NonPosIntSpec.tests ++
       NegLongSpec.tests ++ NonNegLongSpec.tests ++ PosLongSpec.tests ++ NonPosLongSpec.tests ++
-      NegShortSpec.tests ++ NonNegShortSpec.tests ++ PosShortSpec.tests ++ NonPosShortSpec.tests
+      NegShortSpec.tests ++ NonNegShortSpec.tests ++ PosShortSpec.tests ++ NonPosShortSpec.tests ++
+      NegByteSpec.tests ++ NonNegByteSpec.tests ++ PosByteSpec.tests ++ NonPosByteSpec.tests
 
   object NegIntSpec {
 
@@ -1379,6 +1380,461 @@ object numericSpec extends Properties {
       } yield {
         val input1: Ordered[NonPosShort] = NonPosShort.unsafeFrom(n1)
         val input2: NonPosShort          = NonPosShort.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
+  }
+
+  object NegByteSpec {
+
+    import numeric.NegByte
+
+    def tests: List[Test] = List(
+      example("test NegByte.apply", testApply),
+      property("test NegByte.from(valid)", testFromValid),
+      property("test NegByte.from(invalid)", testFromInvalid),
+      property("test NegByte.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test NegByte.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test NegByte.value", testValue),
+      property("test NegByte.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[NegByte]", testOrdering),
+      property("test Ordered[NegByte]", testNumericOrdered),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected = NegByte(-1)
+      val actual   = NegByte(-1)
+      actual ==== expected
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.byte(Range.linear(Byte.MinValue, -1)).log("n")
+      } yield {
+        val expected = NegByte.unsafeFrom(n)
+        val actual   = NegByte.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.byte(Range.linear(0, Byte.MaxValue)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a negative Byte"
+        val actual   = NegByte.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.byte(Range.linear(Byte.MinValue, -1)).log("n")
+      } yield {
+        val expected = NegByte.unsafeFrom(n)
+        val actual   = NegByte.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.byte(Range.linear(0, Byte.MaxValue)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a negative Byte"
+        try {
+          NegByte.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from NegByte.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.byte(Range.linear(Byte.MinValue, -1)).log("n")
+      } yield {
+        val expected = n
+        val actual   = NegByte.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.byte(Range.linear(Byte.MinValue, -1)).log("n")
+      } yield {
+        val expected = n
+        val nes      = NegByte.unsafeFrom(n)
+        nes match {
+          case NegByte(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.byte(Range.linear(Byte.MinValue, -1)).log("n1")
+        n2 <- Gen.byte(Range.linear(Byte.MinValue, -1)).log("n2")
+      } yield {
+        val input1 = NegByte.unsafeFrom(n1)
+        val input2 = NegByte.unsafeFrom(n2)
+        Ordering[NegByte].compare(input1, input2) ==== Ordering[Byte].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.byte(Range.linear(Byte.MinValue, -1)).log("n1")
+        n2 <- Gen.byte(Range.linear(Byte.MinValue, -1)).log("n2")
+      } yield {
+        val input1: Ordered[NegByte] = NegByte.unsafeFrom(n1)
+        val input2: NegByte          = NegByte.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
+  }
+
+  object NonNegByteSpec {
+
+    import numeric.NonNegByte
+
+    def tests: List[Test] = List(
+      example("test NonNegByte.apply", testApply),
+      property("test NonNegByte.from(valid)", testFromValid),
+      property("test NonNegByte.from(invalid)", testFromInvalid),
+      property("test NonNegByte.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test NonNegByte.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test NonNegByte.value", testValue),
+      property("test NonNegByte.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[NonNegByte]", testOrdering),
+      property("test Ordered[NonNegByte]", testNumericOrdered),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected = NonNegByte(0)
+      val actual   = NonNegByte(0)
+      actual ==== expected
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.byte(Range.linear(0, Byte.MaxValue)).log("n")
+      } yield {
+        val expected = NonNegByte.unsafeFrom(n)
+        val actual   = NonNegByte.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.byte(Range.linear(Byte.MinValue, -1)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a non-negative Byte"
+        val actual   = NonNegByte.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.byte(Range.linear(0, Byte.MaxValue)).log("n")
+      } yield {
+        val expected = NonNegByte.unsafeFrom(n)
+        val actual   = NonNegByte.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.byte(Range.linear(-1, Byte.MinValue)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a non-negative Byte"
+        try {
+          NonNegByte.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from NonNegByte.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.byte(Range.linear(0, Byte.MaxValue)).log("n")
+      } yield {
+        val expected = n
+        val actual   = NonNegByte.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.byte(Range.linear(0, Byte.MaxValue)).log("n")
+      } yield {
+        val expected = n
+        val nes      = NonNegByte.unsafeFrom(n)
+        nes match {
+          case NonNegByte(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.byte(Range.linear(0, Byte.MaxValue)).log("n1")
+        n2 <- Gen.byte(Range.linear(0, Byte.MaxValue)).log("n2")
+      } yield {
+        val input1 = NonNegByte.unsafeFrom(n1)
+        val input2 = NonNegByte.unsafeFrom(n2)
+        Ordering[NonNegByte].compare(input1, input2) ==== Ordering[Byte].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.byte(Range.linear(0, Byte.MaxValue)).log("n1")
+        n2 <- Gen.byte(Range.linear(0, Byte.MaxValue)).log("n2")
+      } yield {
+        val input1: Ordered[NonNegByte] = NonNegByte.unsafeFrom(n1)
+        val input2: NonNegByte          = NonNegByte.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
+  }
+
+  object PosByteSpec {
+
+    import numeric.PosByte
+
+    def tests: List[Test] = List(
+      example("test PosByte.apply", testApply),
+      property("test PosByte.from(valid)", testFromValid),
+      property("test PosByte.from(invalid)", testFromInvalid),
+      property("test PosByte.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test PosByte.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test PosByte.value", testValue),
+      property("test PosByte.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[PosByte]", testOrdering),
+      property("test Ordered[PosByte]", testNumericOrdered),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected = PosByte(1)
+      val actual   = PosByte(1)
+      actual ==== expected
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.byte(Range.linear(1, Byte.MaxValue)).log("n")
+      } yield {
+        val expected = PosByte.unsafeFrom(n)
+        val actual   = PosByte.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.byte(Range.linear(Byte.MinValue, 0)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a positive Byte"
+        val actual   = PosByte.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.byte(Range.linear(1, Byte.MaxValue)).log("n")
+      } yield {
+        val expected = PosByte.unsafeFrom(n)
+        val actual   = PosByte.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.byte(Range.linear(Byte.MinValue, 0)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a positive Byte"
+        try {
+          PosByte.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from PosByte.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.byte(Range.linear(1, Byte.MaxValue)).log("n")
+      } yield {
+        val expected = n
+        val actual   = PosByte.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.byte(Range.linear(1, Byte.MaxValue)).log("n")
+      } yield {
+        val expected = n
+        val nes      = PosByte.unsafeFrom(n)
+        nes match {
+          case PosByte(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.byte(Range.linear(1, Byte.MaxValue)).log("n1")
+        n2 <- Gen.byte(Range.linear(1, Byte.MaxValue)).log("n2")
+      } yield {
+        val input1 = PosByte.unsafeFrom(n1)
+        val input2 = PosByte.unsafeFrom(n2)
+        Ordering[PosByte].compare(input1, input2) ==== Ordering[Byte].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.byte(Range.linear(1, Byte.MaxValue)).log("n1")
+        n2 <- Gen.byte(Range.linear(1, Byte.MaxValue)).log("n2")
+      } yield {
+        val input1: Ordered[PosByte] = PosByte.unsafeFrom(n1)
+        val input2: PosByte          = PosByte.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
+  }
+
+  object NonPosByteSpec {
+
+    import numeric.NonPosByte
+
+    def tests: List[Test] = List(
+      example("test NonPosByte.apply", testApply),
+      property("test NonPosByte.from(valid)", testFromValid),
+      property("test NonPosByte.from(invalid)", testFromInvalid),
+      property("test NonPosByte.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test NonPosByte.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test NonPosByte.value", testValue),
+      property("test NonPosByte.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[NonPosByte]", testOrdering),
+      property("test Ordered[NonPosByte]", testNumericOrdered),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected  = NonPosByte(0)
+      val actual    = NonPosByte(0)
+      val expected2 = NonPosByte(Byte.MinValue)
+      val actual2   = NonPosByte(Byte.MinValue)
+      Result.all(
+        List(
+          actual ==== expected,
+          actual2 ==== expected2,
+        )
+      )
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.byte(Range.linear(Byte.MinValue, 0)).log("n")
+      } yield {
+        val expected = NonPosByte.unsafeFrom(n)
+        val actual   = NonPosByte.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.byte(Range.linear(1, Byte.MaxValue)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a non-positive Byte"
+        val actual   = NonPosByte.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.byte(Range.linear(Byte.MinValue, 0)).log("n")
+      } yield {
+        val expected = NonPosByte.unsafeFrom(n)
+        val actual   = NonPosByte.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.byte(Range.linear(1, Byte.MaxValue)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a non-positive Byte"
+        try {
+          NonPosByte.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from NonPosByte.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.byte(Range.linear(Byte.MinValue, 0)).log("n")
+      } yield {
+        val expected = n
+        val actual   = NonPosByte.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.byte(Range.linear(Byte.MinValue, 0)).log("n")
+      } yield {
+        val expected = n
+        val nes      = NonPosByte.unsafeFrom(n)
+        nes match {
+          case NonPosByte(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.byte(Range.linear(Byte.MinValue, 0)).log("n1")
+        n2 <- Gen.byte(Range.linear(Byte.MinValue, 0)).log("n2")
+      } yield {
+        val input1 = NonPosByte.unsafeFrom(n1)
+        val input2 = NonPosByte.unsafeFrom(n2)
+        Ordering[NonPosByte].compare(input1, input2) ==== Ordering[Byte].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.byte(Range.linear(Byte.MinValue, 0)).log("n1")
+        n2 <- Gen.byte(Range.linear(Byte.MinValue, 0)).log("n2")
+      } yield {
+        val input1: Ordered[NonPosByte] = NonPosByte.unsafeFrom(n1)
+        val input2: NonPosByte          = NonPosByte.unsafeFrom(n2)
         input1.compare(input2) ==== n1.compare(n2)
       }
 
