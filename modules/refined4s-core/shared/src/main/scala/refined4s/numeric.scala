@@ -6,7 +6,7 @@ package refined4s
 trait numeric {
 
   trait Numeric[A: math.Ordering] extends Refined[A] {
-    given numericOrdering: Ordering[Type]
+    given numericOrdering: Ordering[Type] = deriving[Ordering]
 
     given numericToOrdered: Conversion[Type, Ordered[Type]] with {
       def apply(a: Type): Ordered[Type] =
@@ -20,9 +20,6 @@ trait numeric {
 
     override inline def predicate(a: Int): Boolean = a < 0
 
-    override given numericOrdering: Ordering[NegInt] =
-      (x, y) => scala.math.Numeric.IntIsIntegral.compare(x.value, y.value)
-
   }
 
   type NonNegInt = NonNegInt.Type
@@ -30,9 +27,6 @@ trait numeric {
     override inline def invalidReason(a: Int): String = expectedMessage("a non-negative Int")
 
     override inline def predicate(a: Int): Boolean = a >= 0
-
-    override given numericOrdering: Ordering[NonNegInt] =
-      (x, y) => scala.math.Numeric.IntIsIntegral.compare(x.value, y.value)
 
   }
 
@@ -42,9 +36,6 @@ trait numeric {
 
     override inline def predicate(a: Int): Boolean = a > 0
 
-    override given numericOrdering: Ordering[PosInt] =
-      (x, y) => scala.math.Numeric.IntIsIntegral.compare(x.value, y.value)
-
   }
 
   type NonPosInt = NonPosInt.Type
@@ -52,9 +43,6 @@ trait numeric {
     override inline def invalidReason(a: Int): String = expectedMessage("a non-positive Int")
 
     override inline def predicate(a: Int): Boolean = a <= 0
-
-    override given numericOrdering: Ordering[NonPosInt] =
-      (x, y) => scala.math.Numeric.IntIsIntegral.compare(x.value, y.value)
 
   }
 
@@ -64,9 +52,6 @@ trait numeric {
 
     override inline def predicate(a: Long): Boolean = a < 0L
 
-    override given numericOrdering: Ordering[NegLong] =
-      (x, y) => scala.math.Numeric.LongIsIntegral.compare(x.value, y.value)
-
   }
 
   type NonNegLong = NonNegLong.Type
@@ -74,9 +59,6 @@ trait numeric {
     override inline def invalidReason(a: Long): String = expectedMessage("a non-negative Long")
 
     override inline def predicate(a: Long): Boolean = a >= 0L
-
-    override given numericOrdering: Ordering[NonNegLong] =
-      (x, y) => scala.math.Numeric.LongIsIntegral.compare(x.value, y.value)
 
   }
 
@@ -86,9 +68,6 @@ trait numeric {
 
     override inline def predicate(a: Long): Boolean = a > 0L
 
-    override given numericOrdering: Ordering[PosLong] =
-      (x, y) => scala.math.Numeric.LongIsIntegral.compare(x.value, y.value)
-
   }
 
   type NonPosLong = NonPosLong.Type
@@ -96,9 +75,6 @@ trait numeric {
     override inline def invalidReason(a: Long): String = expectedMessage("a non-positive Long")
 
     override inline def predicate(a: Long): Boolean = a <= 0L
-
-    override given numericOrdering: Ordering[NonPosLong] =
-      (x, y) => scala.math.Numeric.LongIsIntegral.compare(x.value, y.value)
 
   }
 
