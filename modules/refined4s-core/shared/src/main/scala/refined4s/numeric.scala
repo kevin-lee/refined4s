@@ -221,6 +221,8 @@ trait numeric {
 
   val BigInt0: BigInt = numericTools.BigInt0
 
+  val BigDecimal0: BigDecimal = numericTools.BigDecimal0
+
   type NegBigInt = NegBigInt.Type
   @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
   object NegBigInt extends InlinedNumeric[BigInt] {
@@ -232,7 +234,7 @@ trait numeric {
 
     inline def apply(inline a: Int): Type = apply(BigInt(a))
 
-    inline def apply(a: Long): Type = apply(BigInt(a))
+    inline def apply(inline a: Long): Type = apply(BigInt(a))
 
     inline def apply(inline a: String): Type = apply(BigInt(a))
   }
@@ -283,6 +285,86 @@ trait numeric {
     inline def apply(inline a: Long): Type = apply(BigInt(a))
 
     inline def apply(inline a: String): Type = apply(BigInt(a))
+  }
+
+  type NegBigDecimal = NegBigDecimal.Type
+  @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
+  object NegBigDecimal extends InlinedNumeric[BigDecimal] {
+    override def invalidReason(a: BigDecimal): String = expectedMessage("a negative BigDecimal")
+
+    override def predicate(a: BigDecimal): Boolean = a < BigDecimal0
+
+    override inline def inlinedPredicate(inline a: BigDecimal): Boolean = ${ numericTools.isNegativeBigDecimal('a) }
+
+    inline def apply(inline a: Int): Type = apply(BigDecimal(a))
+
+    inline def apply(inline a: Long): Type = apply(BigDecimal(a))
+
+    inline def apply(inline a: Float): Type = apply(BigDecimal(a))
+
+    inline def apply(inline a: Double): Type = apply(BigDecimal(a))
+
+    inline def apply(inline a: String): Type = apply(BigDecimal(a))
+  }
+
+  type NonNegBigDecimal = NonNegBigDecimal.Type
+  @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
+  object NonNegBigDecimal extends InlinedNumeric[BigDecimal] {
+    override def invalidReason(a: BigDecimal): String = expectedMessage("a non-negative BigDecimal")
+
+    override def predicate(a: BigDecimal): Boolean = a >= BigDecimal0
+
+    override inline def inlinedPredicate(inline a: BigDecimal): Boolean = ${ numericTools.isNonNegativeBigDecimal('a) }
+
+    inline def apply(inline a: Int): Type = apply(BigDecimal(a))
+
+    inline def apply(inline a: Long): Type = apply(BigDecimal(a))
+
+    inline def apply(inline a: Float): Type = apply(BigDecimal(a))
+
+    inline def apply(inline a: Double): Type = apply(BigDecimal(a))
+
+    inline def apply(inline a: String): Type = apply(BigDecimal(a))
+  }
+
+  type PosBigDecimal = PosBigDecimal.Type
+  @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
+  object PosBigDecimal extends InlinedNumeric[BigDecimal] {
+    override def invalidReason(a: BigDecimal): String = expectedMessage("a positive BigDecimal")
+
+    override def predicate(a: BigDecimal): Boolean = a > BigDecimal0
+
+    override inline def inlinedPredicate(inline a: BigDecimal): Boolean = ${ numericTools.isPositiveBigDecimal('a) }
+
+    inline def apply(inline a: Int): Type = apply(BigDecimal(a))
+
+    inline def apply(inline a: Long): Type = apply(BigDecimal(a))
+
+    inline def apply(inline a: Float): Type = apply(BigDecimal(a))
+
+    inline def apply(inline a: Double): Type = apply(BigDecimal(a))
+
+    inline def apply(inline a: String): Type = apply(BigDecimal(a))
+  }
+
+  type NonPosBigDecimal = NonPosBigDecimal.Type
+  @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
+  object NonPosBigDecimal extends InlinedNumeric[BigDecimal] {
+    override def invalidReason(a: BigDecimal): String = expectedMessage("a non-positive BigDecimal")
+
+    override def predicate(a: BigDecimal): Boolean = a <= BigDecimal0
+
+    override inline def inlinedPredicate(inline a: BigDecimal): Boolean = ${ numericTools.isNonPositiveBigDecimal('a) }
+
+    inline def apply(inline a: Int): Type = apply(BigDecimal(a))
+
+    inline def apply(inline a: Long): Type = apply(BigDecimal(a))
+
+    inline def apply(inline a: Float): Type = apply(BigDecimal(a))
+
+    inline def apply(inline a: Double): Type = apply(BigDecimal(a))
+
+    inline def apply(inline a: String): Type = apply(BigDecimal(a))
   }
 
 }
