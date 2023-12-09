@@ -11,8 +11,9 @@ object numericSpec extends Properties {
     NegIntSpec.tests ++ NonNegIntSpec.tests ++ PosIntSpec.tests ++ NonPosIntSpec.tests ++
       NegLongSpec.tests ++ NonNegLongSpec.tests ++ PosLongSpec.tests ++ NonPosLongSpec.tests ++
       NegShortSpec.tests ++ NonNegShortSpec.tests ++ PosShortSpec.tests ++ NonPosShortSpec.tests ++
-      NegByteSpec.tests ++ NonNegByteSpec.tests ++ PosByteSpec.tests ++ NonPosByteSpec.tests
-    NegFloatSpec.tests ++ NonNegFloatSpec.tests ++ PosFloatSpec.tests ++ NonPosFloatSpec.tests
+      NegByteSpec.tests ++ NonNegByteSpec.tests ++ PosByteSpec.tests ++ NonPosByteSpec.tests ++
+      NegFloatSpec.tests ++ NonNegFloatSpec.tests ++ PosFloatSpec.tests ++ NonPosFloatSpec.tests ++
+      NegDoubleSpec.tests ++ NonNegDoubleSpec.tests ++ PosDoubleSpec.tests ++ NonPosDoubleSpec.tests
 
   object NegIntSpec {
 
@@ -2293,6 +2294,463 @@ object numericSpec extends Properties {
       } yield {
         val input1: Ordered[NonPosFloat] = NonPosFloat.unsafeFrom(n1)
         val input2: NonPosFloat          = NonPosFloat.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
+  }
+
+  object NegDoubleSpec {
+
+    import numeric.NegDouble
+
+    def tests: List[Test] = List(
+      example("test NegDouble.apply", testApply),
+      property("test NegDouble.from(valid)", testFromValid),
+      property("test NegDouble.from(invalid)", testFromInvalid),
+      property("test NegDouble.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test NegDouble.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test NegDouble.value", testValue),
+      property("test NegDouble.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[NegDouble]", testOrdering),
+      property("test Ordered[NegDouble]", testNumericOrdered),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected = NegDouble(-0.0000001d)
+      val actual   = NegDouble(-0.0000001d)
+      actual ==== expected
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).log("n")
+      } yield {
+        val expected = NegDouble.unsafeFrom(n)
+        val actual   = NegDouble.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a negative Double"
+        val actual   = NegDouble.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).log("n")
+      } yield {
+        val expected = NegDouble.unsafeFrom(n)
+        val actual   = NegDouble.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a negative Double"
+        try {
+          NegDouble.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from NegDouble.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).log("n")
+      } yield {
+        val expected = n
+        val actual   = NegDouble.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).log("n")
+      } yield {
+        val expected = n
+        val nes      = NegDouble.unsafeFrom(n)
+        nes match {
+          case NegDouble(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).log("n1")
+        n2 <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).log("n2")
+      } yield {
+        val input1 = NegDouble.unsafeFrom(n1)
+        val input2 = NegDouble.unsafeFrom(n2)
+        Ordering[NegDouble].compare(input1, input2) ==== Ordering[Double].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).log("n1")
+        n2 <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).log("n2")
+      } yield {
+        val input1: Ordered[NegDouble] = NegDouble.unsafeFrom(n1)
+        val input2: NegDouble          = NegDouble.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
+  }
+
+  object NonNegDoubleSpec {
+
+    import numeric.NonNegDouble
+
+    def tests: List[Test] = List(
+      example("test NonNegDouble.apply", testApply),
+      property("test NonNegDouble.from(valid)", testFromValid),
+      property("test NonNegDouble.from(invalid)", testFromInvalid),
+      property("test NonNegDouble.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test NonNegDouble.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test NonNegDouble.value", testValue),
+      property("test NonNegDouble.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[NonNegDouble]", testOrdering),
+      property("test Ordered[NonNegDouble]", testNumericOrdered),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected = NonNegDouble(0d)
+      val actual   = NonNegDouble(0d)
+      actual ==== expected
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).log("n")
+      } yield {
+        val expected = NonNegDouble.unsafeFrom(n)
+        val actual   = NonNegDouble.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a non-negative Double"
+        val actual   = NonNegDouble.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).log("n")
+      } yield {
+        val expected = NonNegDouble.unsafeFrom(n)
+        val actual   = NonNegDouble.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(-0.0000001d, Double.MinValue)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a non-negative Double"
+        try {
+          NonNegDouble.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from NonNegDouble.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0, Double.MaxValue)).log("n")
+      } yield {
+        val expected = n
+        val actual   = NonNegDouble.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0, Double.MaxValue)).log("n")
+      } yield {
+        val expected = n
+        val nes      = NonNegDouble.unsafeFrom(n)
+        nes match {
+          case NonNegDouble(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.double(Range.linearFrac(0, Double.MaxValue)).log("n1")
+        n2 <- Gen.double(Range.linearFrac(0, Double.MaxValue)).log("n2")
+      } yield {
+        val input1 = NonNegDouble.unsafeFrom(n1)
+        val input2 = NonNegDouble.unsafeFrom(n2)
+        Ordering[NonNegDouble].compare(input1, input2) ==== Ordering[Double].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.double(Range.linearFrac(0, Double.MaxValue)).log("n1")
+        n2 <- Gen.double(Range.linearFrac(0, Double.MaxValue)).log("n2")
+      } yield {
+        val input1: Ordered[NonNegDouble] = NonNegDouble.unsafeFrom(n1)
+        val input2: NonNegDouble          = NonNegDouble.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
+  }
+
+  object PosDoubleSpec {
+
+    import numeric.PosDouble
+
+    def tests: List[Test] = List(
+      example("test PosDouble.apply", testApply),
+      property("test PosDouble.from(valid)", testFromValid),
+      property("test PosDouble.from(invalid)", testFromInvalid),
+      property("test PosDouble.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test PosDouble.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test PosDouble.value", testValue),
+      property("test PosDouble.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[PosDouble]", testOrdering),
+      property("test Ordered[PosDouble]", testNumericOrdered),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected = PosDouble(0.0000001d)
+      val actual   = PosDouble(0.0000001d)
+      actual ==== expected
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).log("n")
+      } yield {
+        val expected = PosDouble.unsafeFrom(n)
+        val actual   = PosDouble.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a positive Double"
+        val actual   = PosDouble.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).log("n")
+      } yield {
+        val expected = PosDouble.unsafeFrom(n)
+        val actual   = PosDouble.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a positive Double"
+        try {
+          PosDouble.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from PosDouble.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).log("n")
+      } yield {
+        val expected = n
+        val actual   = PosDouble.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).log("n")
+      } yield {
+        val expected = n
+        val nes      = PosDouble.unsafeFrom(n)
+        nes match {
+          case PosDouble(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).log("n1")
+        n2 <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).log("n2")
+      } yield {
+        val input1 = PosDouble.unsafeFrom(n1)
+        val input2 = PosDouble.unsafeFrom(n2)
+        Ordering[PosDouble].compare(input1, input2) ==== Ordering[Double].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).log("n1")
+        n2 <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).log("n2")
+      } yield {
+        val input1: Ordered[PosDouble] = PosDouble.unsafeFrom(n1)
+        val input2: PosDouble          = PosDouble.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
+  }
+
+  object NonPosDoubleSpec {
+
+    import numeric.NonPosDouble
+
+    def tests: List[Test] = List(
+      example("test NonPosDouble.apply", testApply),
+      property("test NonPosDouble.from(valid)", testFromValid),
+      property("test NonPosDouble.from(invalid)", testFromInvalid),
+      property("test NonPosDouble.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test NonPosDouble.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test NonPosDouble.value", testValue),
+      property("test NonPosDouble.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[NonPosDouble]", testOrdering),
+      property("test Ordered[NonPosDouble]", testNumericOrdered),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected = NonPosDouble(0d)
+      val actual   = NonPosDouble(0d)
+
+      val expected2 = NonPosDouble(-3.4028234e38d)
+      val actual2   = NonPosDouble(-3.4028234e38d)
+
+      Result.all(
+        List(
+          actual ==== expected,
+          actual2 ==== expected2,
+        )
+      )
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).log("n")
+      } yield {
+        val expected = NonPosDouble.unsafeFrom(n)
+        val actual   = NonPosDouble.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a non-positive Double"
+        val actual   = NonPosDouble.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).log("n")
+      } yield {
+        val expected = NonPosDouble.unsafeFrom(n)
+        val actual   = NonPosDouble.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a non-positive Double"
+        try {
+          NonPosDouble.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from NonPosDouble.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).log("n")
+      } yield {
+        val expected = n
+        val actual   = NonPosDouble.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).log("n")
+      } yield {
+        val expected = n
+        val nes      = NonPosDouble.unsafeFrom(n)
+        nes match {
+          case NonPosDouble(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).log("n1")
+        n2 <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).log("n2")
+      } yield {
+        val input1 = NonPosDouble.unsafeFrom(n1)
+        val input2 = NonPosDouble.unsafeFrom(n2)
+        Ordering[NonPosDouble].compare(input1, input2) ==== Ordering[Double].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).log("n1")
+        n2 <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).log("n2")
+      } yield {
+        val input1: Ordered[NonPosDouble] = NonPosDouble.unsafeFrom(n1)
+        val input2: NonPosDouble          = NonPosDouble.unsafeFrom(n2)
         input1.compare(input2) ==== n1.compare(n2)
       }
 
