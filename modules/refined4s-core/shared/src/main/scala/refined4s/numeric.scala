@@ -174,5 +174,37 @@ trait numeric {
 
   }
 
+  type NegDouble = NegDouble.Type
+  object NegDouble extends Numeric[Double] {
+    override inline def invalidReason(a: Double): String = expectedMessage("a negative Double")
+
+    override inline def predicate(a: Double): Boolean = a < 0d
+
+  }
+
+  type NonNegDouble = NonNegDouble.Type
+  object NonNegDouble extends Numeric[Double] {
+    override inline def invalidReason(a: Double): String = expectedMessage("a non-negative Double")
+
+    override inline def predicate(a: Double): Boolean = a >= 0d
+
+  }
+
+  type PosDouble = PosDouble.Type
+  object PosDouble extends Numeric[Double] {
+    override inline def invalidReason(a: Double): String = expectedMessage("a positive Double")
+
+    override inline def predicate(a: Double): Boolean = a > 0d
+
+  }
+
+  type NonPosDouble = NonPosDouble.Type
+  object NonPosDouble extends Numeric[Double] {
+    override inline def invalidReason(a: Double): String = expectedMessage("a non-positive Double")
+
+    override inline def predicate(a: Double): Boolean = a <= 0d
+
+  }
+
 }
 object numeric extends numeric
