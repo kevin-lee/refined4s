@@ -1,11 +1,24 @@
 package refined4s
 
+import refined4s.internal.numericTools
+
+import numeric.*
+
 /** @author Kevin Lee
   * @since 2023-04-26
   */
 trait numeric {
 
   trait Numeric[A: math.Ordering] extends Refined[A] {
+    given numericOrdering: Ordering[Type] = deriving[Ordering]
+
+    given numericToOrdered: Conversion[Type, Ordered[Type]] with {
+      def apply(a: Type): Ordered[Type] =
+        Ordered.orderingToOrdered[Type](a)(using numericOrdering)
+    }
+  }
+
+  trait InlinedNumeric[A: math.Ordering] extends InlinedRefined[A] {
     given numericOrdering: Ordering[Type] = deriving[Ordering]
 
     given numericToOrdered: Conversion[Type, Ordered[Type]] with {
@@ -204,6 +217,72 @@ trait numeric {
 
     override inline def predicate(a: Double): Boolean = a <= 0d
 
+  }
+
+  val BigInt0: BigInt = numericTools.BigInt0
+
+  type NegBigInt = NegBigInt.Type
+  @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
+  object NegBigInt extends InlinedNumeric[BigInt] {
+    override def invalidReason(a: BigInt): String = expectedMessage("a negative BigInt")
+
+    override def predicate(a: BigInt): Boolean = a < BigInt0
+
+    override inline def inlinedPredicate(inline a: BigInt): Boolean = ${ numericTools.isNegativeBigInt('a) }
+
+    inline def apply(inline a: Int): Type = apply(BigInt(a))
+
+    inline def apply(a: Long): Type = apply(BigInt(a))
+
+    inline def apply(inline a: String): Type = apply(BigInt(a))
+  }
+
+  type NonNegBigInt = NonNegBigInt.Type
+  @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
+  object NonNegBigInt extends InlinedNumeric[BigInt] {
+    override def invalidReason(a: BigInt): String = expectedMessage("a non-negative BigInt")
+
+    override def predicate(a: BigInt): Boolean = a >= BigInt0
+
+    override inline def inlinedPredicate(inline a: BigInt): Boolean = ${ numericTools.isNonNegativeBigInt('a) }
+
+    inline def apply(inline a: Int): Type = apply(BigInt(a))
+
+    inline def apply(inline a: Long): Type = apply(BigInt(a))
+
+    inline def apply(inline a: String): Type = apply(BigInt(a))
+  }
+
+  type PosBigInt = PosBigInt.Type
+  @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
+  object PosBigInt extends InlinedNumeric[BigInt] {
+    override def invalidReason(a: BigInt): String = expectedMessage("a positive BigInt")
+
+    override def predicate(a: BigInt): Boolean = a > BigInt0
+
+    override inline def inlinedPredicate(inline a: BigInt): Boolean = ${ numericTools.isPositiveBigInt('a) }
+
+    inline def apply(inline a: Int): Type = apply(BigInt(a))
+
+    inline def apply(inline a: Long): Type = apply(BigInt(a))
+
+    inline def apply(inline a: String): Type = apply(BigInt(a))
+  }
+
+  type NonPosBigInt = NonPosBigInt.Type
+  @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
+  object NonPosBigInt extends InlinedNumeric[BigInt] {
+    override def invalidReason(a: BigInt): String = expectedMessage("a non-positive BigInt")
+
+    override def predicate(a: BigInt): Boolean = a <= BigInt0
+
+    override inline def inlinedPredicate(inline a: BigInt): Boolean = ${ numericTools.isNonPositiveBigInt('a) }
+
+    inline def apply(inline a: Int): Type = apply(BigInt(a))
+
+    inline def apply(inline a: Long): Type = apply(BigInt(a))
+
+    inline def apply(inline a: String): Type = apply(BigInt(a))
   }
 
 }

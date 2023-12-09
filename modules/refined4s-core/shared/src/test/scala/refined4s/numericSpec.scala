@@ -13,7 +13,8 @@ object numericSpec extends Properties {
       NegShortSpec.tests ++ NonNegShortSpec.tests ++ PosShortSpec.tests ++ NonPosShortSpec.tests ++
       NegByteSpec.tests ++ NonNegByteSpec.tests ++ PosByteSpec.tests ++ NonPosByteSpec.tests ++
       NegFloatSpec.tests ++ NonNegFloatSpec.tests ++ PosFloatSpec.tests ++ NonPosFloatSpec.tests ++
-      NegDoubleSpec.tests ++ NonNegDoubleSpec.tests ++ PosDoubleSpec.tests ++ NonPosDoubleSpec.tests
+      NegDoubleSpec.tests ++ NonNegDoubleSpec.tests ++ PosDoubleSpec.tests ++ NonPosDoubleSpec.tests ++
+      NegBigIntSpec.tests ++ NonNegBigIntSpec.tests ++ PosBigIntSpec.tests ++ NonPosBigIntSpec.tests
 
   object NegIntSpec {
 
@@ -2751,6 +2752,651 @@ object numericSpec extends Properties {
       } yield {
         val input1: Ordered[NonPosDouble] = NonPosDouble.unsafeFrom(n1)
         val input2: NonPosDouble          = NonPosDouble.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
+  }
+
+  object NegBigIntSpec {
+
+    import numeric.NegBigInt
+
+    def tests: List[Test] = List(
+      example("test NegBigInt.apply", testApply),
+      property("test NegBigInt.from(valid)", testFromValid),
+      property("test NegBigInt.from(invalid)", testFromInvalid),
+      property("test NegBigInt.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test NegBigInt.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test NegBigInt.value", testValue),
+      property("test NegBigInt.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[NegBigInt]", testOrdering),
+      property("test Ordered[NegBigInt]", testNumericOrdered),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected1 = NegBigInt(-1)
+      val actual1   = NegBigInt(-1)
+
+      val expected2 = NegBigInt(-1L)
+      val actual2   = NegBigInt(-1L)
+
+      val expected3 = NegBigInt("-1")
+      val actual3   = NegBigInt("-1")
+
+      val expected4 = NegBigInt(BigInt(-1))
+      val actual4   = NegBigInt(BigInt(-1))
+
+      val expected5 = NegBigInt(BigInt(-1L))
+      val actual5   = NegBigInt(BigInt(-1L))
+
+      val expected6 = NegBigInt(BigInt("-1"))
+      val actual6   = NegBigInt(BigInt("-1"))
+
+      val expected7 = NegBigInt(-2147483648)
+      val actual7   = NegBigInt(-2147483648)
+
+      val expected8 = NegBigInt(-9223372036854775808L)
+      val actual8   = NegBigInt(-9223372036854775808L)
+
+      val expected9 = NegBigInt("-9223372036854775808")
+      val actual9   = NegBigInt("-9223372036854775808")
+
+      val expected10 = NegBigInt(BigInt(-2147483648))
+      val actual10   = NegBigInt(BigInt(-2147483648))
+
+      val expected11 = NegBigInt(BigInt(-9223372036854775808L))
+      val actual11   = NegBigInt(BigInt(-9223372036854775808L))
+
+      val expected12 = NegBigInt(BigInt("-9223372036854775808"))
+      val actual12   = NegBigInt(BigInt("-9223372036854775808"))
+
+      Result.all(
+        List(
+          actual1 ==== expected1,
+          actual2 ==== expected2,
+          actual3 ==== expected3,
+          actual4 ==== expected4,
+          actual5 ==== expected5,
+          actual6 ==== expected6,
+          actual7 ==== expected7,
+          actual8 ==== expected8,
+          actual9 ==== expected9,
+          actual10 ==== expected10,
+          actual11 ==== expected11,
+          actual12 ==== expected12,
+        )
+      )
+    }
+
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+    def testFromValid: Property =
+      for {
+        n <- Gen.long(Range.linear(Long.MinValue, -1L)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = NegBigInt.unsafeFrom(n)
+        val actual   = NegBigInt.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.long(Range.linear(0L, Long.MaxValue)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a negative BigInt"
+        val actual   = NegBigInt.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.long(Range.linear(Long.MinValue, -1L)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = NegBigInt.unsafeFrom(n)
+        val actual   = NegBigInt.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.long(Range.linear(0L, Long.MaxValue)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a negative BigInt"
+        try {
+          NegBigInt.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from NegBigInt.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.long(Range.linear(Long.MinValue, -1L)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = n
+        val actual   = NegBigInt.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.long(Range.linear(Long.MinValue, -1L)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = n
+        val nes      = NegBigInt.unsafeFrom(n)
+        nes match {
+          case NegBigInt(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.long(Range.linear(Long.MinValue, -1L)).map(BigInt(_)).log("n1")
+        n2 <- Gen.long(Range.linear(Long.MinValue, -1L)).map(BigInt(_)).log("n2")
+      } yield {
+        val input1 = NegBigInt.unsafeFrom(n1)
+        val input2 = NegBigInt.unsafeFrom(n2)
+        Ordering[NegBigInt].compare(input1, input2) ==== Ordering[BigInt].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.long(Range.linear(Long.MinValue, -1L)).map(BigInt(_)).log("n1")
+        n2 <- Gen.long(Range.linear(Long.MinValue, -1L)).map(BigInt(_)).log("n2")
+      } yield {
+        val input1: Ordered[NegBigInt] = NegBigInt.unsafeFrom(n1)
+        val input2: NegBigInt          = NegBigInt.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
+  }
+
+  object NonNegBigIntSpec {
+
+    import numeric.NonNegBigInt
+
+    def tests: List[Test] = List(
+      example("test NonNegBigInt.apply", testApply),
+      property("test NonNegBigInt.from(valid)", testFromValid),
+      property("test NonNegBigInt.from(invalid)", testFromInvalid),
+      property("test NonNegBigInt.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test NonNegBigInt.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test NonNegBigInt.value", testValue),
+      property("test NonNegBigInt.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[NonNegBigInt]", testOrdering),
+      property("test Ordered[NonNegBigInt]", testNumericOrdered),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected1 = NonNegBigInt(0L)
+      val actual1   = NonNegBigInt(0L)
+
+      val expected2 = NonNegBigInt(0L)
+      val actual2   = NonNegBigInt(0L)
+
+      val expected3 = NonNegBigInt("0")
+      val actual3   = NonNegBigInt("0")
+
+      val expected4 = NonNegBigInt(BigInt(0))
+      val actual4   = NonNegBigInt(BigInt(0))
+
+      val expected5 = NonNegBigInt(BigInt(0L))
+      val actual5   = NonNegBigInt(BigInt(0L))
+
+      val expected6 = NonNegBigInt(BigInt("0"))
+      val actual6   = NonNegBigInt(BigInt("0"))
+
+      val expected7 = NonNegBigInt(2147483647)
+      val actual7   = NonNegBigInt(2147483647)
+
+      val expected8 = NonNegBigInt(9223372036854775807L)
+      val actual8   = NonNegBigInt(9223372036854775807L)
+
+      val expected9 = NonNegBigInt("9223372036854775807")
+      val actual9   = NonNegBigInt("9223372036854775807")
+
+      val expected10 = NonNegBigInt(BigInt(2147483647))
+      val actual10   = NonNegBigInt(BigInt(2147483647))
+
+      val expected11 = NonNegBigInt(BigInt(9223372036854775807L))
+      val actual11   = NonNegBigInt(BigInt(9223372036854775807L))
+
+      val expected12 = NonNegBigInt(BigInt("9223372036854775807"))
+      val actual12   = NonNegBigInt(BigInt("9223372036854775807"))
+
+      Result.all(
+        List(
+          actual1 ==== expected1,
+          actual2 ==== expected2,
+          actual3 ==== expected3,
+          actual4 ==== expected4,
+          actual5 ==== expected5,
+          actual6 ==== expected6,
+          actual7 ==== expected7,
+          actual8 ==== expected8,
+          actual9 ==== expected9,
+          actual10 ==== expected10,
+          actual11 ==== expected11,
+          actual12 ==== expected12,
+        )
+      )
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.long(Range.linear(0L, Long.MaxValue)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = NonNegBigInt.unsafeFrom(n)
+        val actual   = NonNegBigInt.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.long(Range.linear(Long.MinValue, -1L)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a non-negative BigInt"
+        val actual   = NonNegBigInt.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.long(Range.linear(0L, Long.MaxValue)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = NonNegBigInt.unsafeFrom(n)
+        val actual   = NonNegBigInt.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.long(Range.linear(-1L, Long.MinValue)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a non-negative BigInt"
+        try {
+          NonNegBigInt.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from NonNegBigInt.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.long(Range.linear(0L, Long.MaxValue)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = n
+        val actual   = NonNegBigInt.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.long(Range.linear(0L, Long.MaxValue)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = n
+        val nes      = NonNegBigInt.unsafeFrom(n)
+        nes match {
+          case NonNegBigInt(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.long(Range.linear(0L, Long.MaxValue)).map(BigInt(_)).log("n1")
+        n2 <- Gen.long(Range.linear(0L, Long.MaxValue)).map(BigInt(_)).log("n2")
+      } yield {
+        val input1 = NonNegBigInt.unsafeFrom(n1)
+        val input2 = NonNegBigInt.unsafeFrom(n2)
+        Ordering[NonNegBigInt].compare(input1, input2) ==== Ordering[BigInt].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n2 <- Gen.long(Range.linear(0L, Long.MaxValue)).map(BigInt(_)).log("n2")
+        n1 <- Gen.long(Range.linear(0L, Long.MaxValue)).map(BigInt(_)).log("n1")
+      } yield {
+        val input1: Ordered[NonNegBigInt] = NonNegBigInt.unsafeFrom(n1)
+        val input2: NonNegBigInt          = NonNegBigInt.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
+  }
+
+  object PosBigIntSpec {
+
+    import numeric.PosBigInt
+
+    def tests: List[Test] = List(
+      example("test PosBigInt.apply", testApply),
+      property("test PosBigInt.from(valid)", testFromValid),
+      property("test PosBigInt.from(invalid)", testFromInvalid),
+      property("test PosBigInt.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test PosBigInt.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test PosBigInt.value", testValue),
+      property("test PosBigInt.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[PosBigInt]", testOrdering),
+      property("test Ordered[PosBigInt]", testNumericOrdered),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected1 = PosBigInt(1L)
+      val actual1   = PosBigInt(1L)
+
+      val expected2 = PosBigInt(1L)
+      val actual2   = PosBigInt(1L)
+
+      val expected3 = PosBigInt("1")
+      val actual3   = PosBigInt("1")
+
+      val expected4 = PosBigInt(BigInt(1))
+      val actual4   = PosBigInt(BigInt(1))
+
+      val expected5 = PosBigInt(BigInt(1L))
+      val actual5   = PosBigInt(BigInt(1L))
+
+      val expected6 = PosBigInt(BigInt("1"))
+      val actual6   = PosBigInt(BigInt("1"))
+
+      val expected7 = PosBigInt(2147483647)
+      val actual7   = PosBigInt(2147483647)
+
+      val expected8 = PosBigInt(9223372036854775807L)
+      val actual8   = PosBigInt(9223372036854775807L)
+
+      val expected9 = PosBigInt("9223372036854775807")
+      val actual9   = PosBigInt("9223372036854775807")
+
+      val expected10 = PosBigInt(BigInt(2147483647))
+      val actual10   = PosBigInt(BigInt(2147483647))
+
+      val expected11 = PosBigInt(BigInt(9223372036854775807L))
+      val actual11   = PosBigInt(BigInt(9223372036854775807L))
+
+      val expected12 = PosBigInt(BigInt("9223372036854775807"))
+      val actual12   = PosBigInt(BigInt("9223372036854775807"))
+
+      Result.all(
+        List(
+          actual1 ==== expected1,
+          actual2 ==== expected2,
+          actual3 ==== expected3,
+          actual4 ==== expected4,
+          actual5 ==== expected5,
+          actual6 ==== expected6,
+          actual7 ==== expected7,
+          actual8 ==== expected8,
+          actual9 ==== expected9,
+          actual10 ==== expected10,
+          actual11 ==== expected11,
+          actual12 ==== expected12,
+        )
+      )
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.long(Range.linear(1L, Long.MaxValue)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = PosBigInt.unsafeFrom(n)
+        val actual   = PosBigInt.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.long(Range.linear(Long.MinValue, 0L)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a positive BigInt"
+        val actual   = PosBigInt.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.long(Range.linear(1L, Long.MaxValue)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = PosBigInt.unsafeFrom(n)
+        val actual   = PosBigInt.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.long(Range.linear(Long.MinValue, 0L)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a positive BigInt"
+        try {
+          PosBigInt.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from PosBigInt.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.long(Range.linear(1L, Long.MaxValue)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = n
+        val actual   = PosBigInt.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.long(Range.linear(1L, Long.MaxValue)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = n
+        val nes      = PosBigInt.unsafeFrom(n)
+        nes match {
+          case PosBigInt(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.long(Range.linear(1L, Long.MaxValue)).map(BigInt(_)).log("n1")
+        n2 <- Gen.long(Range.linear(1L, Long.MaxValue)).map(BigInt(_)).log("n2")
+      } yield {
+        val input1 = PosBigInt.unsafeFrom(n1)
+        val input2 = PosBigInt.unsafeFrom(n2)
+        Ordering[PosBigInt].compare(input1, input2) ==== Ordering[BigInt].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.long(Range.linear(1L, Long.MaxValue)).map(BigInt(_)).log("n1")
+        n2 <- Gen.long(Range.linear(1L, Long.MaxValue)).map(BigInt(_)).log("n2")
+      } yield {
+        val input1: Ordered[PosBigInt] = PosBigInt.unsafeFrom(n1)
+        val input2: PosBigInt          = PosBigInt.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
+  }
+
+  object NonPosBigIntSpec {
+
+    import numeric.NonPosBigInt
+
+    def tests: List[Test] = List(
+      example("test NonPosBigInt.apply", testApply),
+      property("test NonPosBigInt.from(valid)", testFromValid),
+      property("test NonPosBigInt.from(invalid)", testFromInvalid),
+      property("test NonPosBigInt.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test NonPosBigInt.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test NonPosBigInt.value", testValue),
+      property("test NonPosBigInt.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[NonPosBigInt]", testOrdering),
+      property("test Ordered[NonPosBigInt]", testNumericOrdered),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected1 = NonPosBigInt(0L)
+      val actual1   = NonPosBigInt(0L)
+
+      val expected2 = NonPosBigInt(0L)
+      val actual2   = NonPosBigInt(0L)
+
+      val expected3 = NonPosBigInt("0")
+      val actual3   = NonPosBigInt("0")
+
+      val expected4 = NonPosBigInt(BigInt(0))
+      val actual4   = NonPosBigInt(BigInt(0))
+
+      val expected5 = NonPosBigInt(BigInt(0L))
+      val actual5   = NonPosBigInt(BigInt(0L))
+
+      val expected6 = NonPosBigInt(BigInt("0"))
+      val actual6   = NonPosBigInt(BigInt("0"))
+
+      val expected7 = NonPosBigInt(-2147483648)
+      val actual7   = NonPosBigInt(-2147483648)
+
+      val expected8 = NonPosBigInt(-9223372036854775808L)
+      val actual8   = NonPosBigInt(-9223372036854775808L)
+
+      val expected9 = NonPosBigInt("-9223372036854775808")
+      val actual9   = NonPosBigInt("-9223372036854775808")
+
+      val expected10 = NonPosBigInt(BigInt(-2147483648))
+      val actual10   = NonPosBigInt(BigInt(-2147483648))
+
+      val expected11 = NonPosBigInt(BigInt(-9223372036854775808L))
+      val actual11   = NonPosBigInt(BigInt(-9223372036854775808L))
+
+      val expected12 = NonPosBigInt(BigInt("-9223372036854775808"))
+      val actual12   = NonPosBigInt(BigInt("-9223372036854775808"))
+
+      Result.all(
+        List(
+          actual1 ==== expected1,
+          actual2 ==== expected2,
+          actual3 ==== expected3,
+          actual4 ==== expected4,
+          actual5 ==== expected5,
+          actual6 ==== expected6,
+          actual7 ==== expected7,
+          actual8 ==== expected8,
+          actual9 ==== expected9,
+          actual10 ==== expected10,
+          actual11 ==== expected11,
+          actual12 ==== expected12,
+        )
+      )
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.long(Range.linear(Long.MinValue, 0L)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = NonPosBigInt.unsafeFrom(n)
+        val actual   = NonPosBigInt.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.long(Range.linear(1L, Long.MaxValue)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a non-positive BigInt"
+        val actual   = NonPosBigInt.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.long(Range.linear(Long.MinValue, 0L)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = NonPosBigInt.unsafeFrom(n)
+        val actual   = NonPosBigInt.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.long(Range.linear(1L, Long.MaxValue)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a non-positive BigInt"
+        try {
+          NonPosBigInt.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from NonPosBigInt.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.long(Range.linear(Long.MinValue, 0L)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = n
+        val actual   = NonPosBigInt.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.long(Range.linear(Long.MinValue, 0L)).map(BigInt(_)).log("n")
+      } yield {
+        val expected = n
+        val nes      = NonPosBigInt.unsafeFrom(n)
+        nes match {
+          case NonPosBigInt(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.long(Range.linear(Long.MinValue, 0L)).map(BigInt(_)).log("n1")
+        n2 <- Gen.long(Range.linear(Long.MinValue, 0L)).map(BigInt(_)).log("n2")
+      } yield {
+        val input1 = NonPosBigInt.unsafeFrom(n1)
+        val input2 = NonPosBigInt.unsafeFrom(n2)
+        Ordering[NonPosBigInt].compare(input1, input2) ==== Ordering[BigInt].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.long(Range.linear(Long.MinValue, 0L)).map(BigInt(_)).log("n1")
+        n2 <- Gen.long(Range.linear(Long.MinValue, 0L)).map(BigInt(_)).log("n2")
+      } yield {
+        val input1: Ordered[NonPosBigInt] = NonPosBigInt.unsafeFrom(n1)
+        val input2: NonPosBigInt          = NonPosBigInt.unsafeFrom(n2)
         input1.compare(input2) ==== n1.compare(n2)
       }
 

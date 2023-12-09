@@ -1,3 +1,5 @@
 comment:
   layout: "reach, diff, flags, files"
   behavior: default
+ignore:
+  - "modules/refined4s-core/shared/src/main/scala/refined4s/internal/numericTools.scala"
