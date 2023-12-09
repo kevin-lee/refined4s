@@ -162,7 +162,7 @@ def module(projectName: String, crossProject: CrossProject.Builder): CrossProjec
         else
           ((ThisBuild / baseDirectory).value / ".scalafix-scala2.conf").some
       ),
-      scalacOptions ++= (if (isScala3(scalaVersion.value)) List.empty else List("-Xsource:3")),
+      scalacOptions ++= (if (isScala3(scalaVersion.value)) List("-no-indent") else List("-Xsource:3")),
       scalacOptions ~= (ops => ops.filter(_ != "UTF-8")),
       libraryDependencies ++= libs.hedgehog,
       wartremoverErrors ++= Warts.allBut(Wart.Any, Wart.Nothing, Wart.ImplicitConversion, Wart.ImplicitParameter),
