@@ -14,7 +14,8 @@ object numericSpec extends Properties {
       NegByteSpec.tests ++ NonNegByteSpec.tests ++ PosByteSpec.tests ++ NonPosByteSpec.tests ++
       NegFloatSpec.tests ++ NonNegFloatSpec.tests ++ PosFloatSpec.tests ++ NonPosFloatSpec.tests ++
       NegDoubleSpec.tests ++ NonNegDoubleSpec.tests ++ PosDoubleSpec.tests ++ NonPosDoubleSpec.tests ++
-      NegBigIntSpec.tests ++ NonNegBigIntSpec.tests ++ PosBigIntSpec.tests ++ NonPosBigIntSpec.tests
+      NegBigIntSpec.tests ++ NonNegBigIntSpec.tests ++ PosBigIntSpec.tests ++ NonPosBigIntSpec.tests ++
+      NegBigDecimalSpec.tests ++ NonNegBigDecimalSpec.tests ++ PosBigDecimalSpec.tests ++ NonPosBigDecimalSpec.tests
 
   object NegIntSpec {
 
@@ -3397,6 +3398,747 @@ object numericSpec extends Properties {
       } yield {
         val input1: Ordered[NonPosBigInt] = NonPosBigInt.unsafeFrom(n1)
         val input2: NonPosBigInt          = NonPosBigInt.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
+  }
+
+  object NegBigDecimalSpec {
+
+    import numeric.NegBigDecimal
+
+    def tests: List[Test] = List(
+      example("test NegBigDecimal.apply", testApply),
+      property("test NegBigDecimal.from(valid)", testFromValid),
+      property("test NegBigDecimal.from(invalid)", testFromInvalid),
+      property("test NegBigDecimal.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test NegBigDecimal.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test NegBigDecimal.value", testValue),
+      property("test NegBigDecimal.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[NegBigDecimal]", testOrdering),
+      property("test Ordered[NegBigDecimal]", testNumericOrdered),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected1 = NegBigDecimal(-1)
+      val actual1   = NegBigDecimal(-1)
+
+      val expected2 = NegBigDecimal(-1L)
+      val actual2   = NegBigDecimal(-1L)
+
+      val expected3 = NegBigDecimal("-1")
+      val actual3   = NegBigDecimal("-1")
+
+      val expected4 = NegBigDecimal(BigDecimal(-1))
+      val actual4   = NegBigDecimal(BigDecimal(-1))
+
+      val expected5 = NegBigDecimal(BigDecimal(-1L))
+      val actual5   = NegBigDecimal(BigDecimal(-1L))
+
+      val expected6 = NegBigDecimal(BigDecimal("-1"))
+      val actual6   = NegBigDecimal(BigDecimal("-1"))
+
+      val expected7 = NegBigDecimal(-2147483648)
+      val actual7   = NegBigDecimal(-2147483648)
+
+      val expected8 = NegBigDecimal(-9223372036854775808L)
+      val actual8   = NegBigDecimal(-9223372036854775808L)
+
+      val expected9 = NegBigDecimal("-9223372036854775808")
+      val actual9   = NegBigDecimal("-9223372036854775808")
+
+      val expected10 = NegBigDecimal(BigDecimal(-2147483648))
+      val actual10   = NegBigDecimal(BigDecimal(-2147483648))
+
+      val expected11 = NegBigDecimal(BigDecimal(-9223372036854775808L))
+      val actual11   = NegBigDecimal(BigDecimal(-9223372036854775808L))
+
+      val expected12 = NegBigDecimal(BigDecimal("-9223372036854775808"))
+      val actual12   = NegBigDecimal(BigDecimal("-9223372036854775808"))
+
+      val expected13 = NegBigDecimal(-0.00001f)
+      val actual13   = NegBigDecimal(-0.00001f)
+
+      val expected14 = NegBigDecimal(-0.0000001d)
+      val actual14   = NegBigDecimal(-0.0000001d)
+
+      val expected15 = NegBigDecimal("-0.0000001")
+      val actual15   = NegBigDecimal("-0.0000001")
+
+      val expected16 = NegBigDecimal(BigDecimal(-0.00001f))
+      val actual16   = NegBigDecimal(BigDecimal(-0.00001f))
+
+      val expected17 = NegBigDecimal(BigDecimal(-0.0000001d))
+      val actual17   = NegBigDecimal(BigDecimal(-0.0000001d))
+
+      val expected18 = NegBigDecimal(BigDecimal("-0.0000001"))
+      val actual18   = NegBigDecimal(BigDecimal("-0.0000001"))
+
+      Result.all(
+        List(
+          actual1 ==== expected1,
+          actual2 ==== expected2,
+          actual3 ==== expected3,
+          actual4 ==== expected4,
+          actual5 ==== expected5,
+          actual6 ==== expected6,
+          actual7 ==== expected7,
+          actual8 ==== expected8,
+          actual9 ==== expected9,
+          actual10 ==== expected10,
+          actual11 ==== expected11,
+          actual12 ==== expected12,
+          actual13 ==== expected13,
+          actual14 ==== expected14,
+          actual15 ==== expected15,
+          actual16 ==== expected16,
+          actual17 ==== expected17,
+          actual18 ==== expected18,
+        )
+      )
+    }
+
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+    def testFromValid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = NegBigDecimal.unsafeFrom(n)
+        val actual   = NegBigDecimal.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a negative BigDecimal"
+        val actual   = NegBigDecimal.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = NegBigDecimal.unsafeFrom(n)
+        val actual   = NegBigDecimal.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a negative BigDecimal"
+        try {
+          NegBigDecimal.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from NegBigDecimal.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = n
+        val actual   = NegBigDecimal.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = n
+        val nes      = NegBigDecimal.unsafeFrom(n)
+        nes match {
+          case NegBigDecimal(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).map(BigDecimal(_)).log("n1")
+        n2 <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).map(BigDecimal(_)).log("n2")
+      } yield {
+        val input1 = NegBigDecimal.unsafeFrom(n1)
+        val input2 = NegBigDecimal.unsafeFrom(n2)
+        Ordering[NegBigDecimal].compare(input1, input2) ==== Ordering[BigDecimal].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).map(BigDecimal(_)).log("n1")
+        n2 <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).map(BigDecimal(_)).log("n2")
+      } yield {
+        val input1: Ordered[NegBigDecimal] = NegBigDecimal.unsafeFrom(n1)
+        val input2: NegBigDecimal          = NegBigDecimal.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
+  }
+
+  object NonNegBigDecimalSpec {
+
+    import numeric.NonNegBigDecimal
+
+    def tests: List[Test] = List(
+      example("test NonNegBigDecimal.apply", testApply),
+      property("test NonNegBigDecimal.from(valid)", testFromValid),
+      property("test NonNegBigDecimal.from(invalid)", testFromInvalid),
+      property("test NonNegBigDecimal.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test NonNegBigDecimal.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test NonNegBigDecimal.value", testValue),
+      property("test NonNegBigDecimal.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[NonNegBigDecimal]", testOrdering),
+      property("test Ordered[NonNegBigDecimal]", testNumericOrdered),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected1 = NonNegBigDecimal(0L)
+      val actual1   = NonNegBigDecimal(0L)
+
+      val expected2 = NonNegBigDecimal(0L)
+      val actual2   = NonNegBigDecimal(0L)
+
+      val expected3 = NonNegBigDecimal("0")
+      val actual3   = NonNegBigDecimal("0")
+
+      val expected4 = NonNegBigDecimal(BigDecimal(0))
+      val actual4   = NonNegBigDecimal(BigDecimal(0))
+
+      val expected5 = NonNegBigDecimal(BigDecimal(0L))
+      val actual5   = NonNegBigDecimal(BigDecimal(0L))
+
+      val expected6 = NonNegBigDecimal(BigDecimal("0"))
+      val actual6   = NonNegBigDecimal(BigDecimal("0"))
+
+      val expected7 = NonNegBigDecimal(2147483647)
+      val actual7   = NonNegBigDecimal(2147483647)
+
+      val expected8 = NonNegBigDecimal(9223372036854775807L)
+      val actual8   = NonNegBigDecimal(9223372036854775807L)
+
+      val expected9 = NonNegBigDecimal("9223372036854775807")
+      val actual9   = NonNegBigDecimal("9223372036854775807")
+
+      val expected10 = NonNegBigDecimal(BigDecimal(2147483647))
+      val actual10   = NonNegBigDecimal(BigDecimal(2147483647))
+
+      val expected11 = NonNegBigDecimal(BigDecimal(9223372036854775807L))
+      val actual11   = NonNegBigDecimal(BigDecimal(9223372036854775807L))
+
+      val expected12 = NonNegBigDecimal(BigDecimal("9223372036854775807"))
+      val actual12   = NonNegBigDecimal(BigDecimal("9223372036854775807"))
+
+      val expected13 = NonNegBigDecimal(3.141592f)
+      val actual13   = NonNegBigDecimal(3.141592f)
+
+      val expected14 = NonNegBigDecimal(3.141592d)
+      val actual14   = NonNegBigDecimal(3.141592d)
+
+      val expected15 = NonNegBigDecimal("3.141592")
+      val actual15   = NonNegBigDecimal("3.141592")
+
+      val expected16 = NonNegBigDecimal(BigDecimal(3.141592f))
+      val actual16   = NonNegBigDecimal(BigDecimal(3.141592f))
+
+      val expected17 = NonNegBigDecimal(BigDecimal(3.141592d))
+      val actual17   = NonNegBigDecimal(BigDecimal(3.141592d))
+
+      val expected18 = NonNegBigDecimal(BigDecimal("3.141592"))
+      val actual18   = NonNegBigDecimal(BigDecimal("3.141592"))
+
+      Result.all(
+        List(
+          actual1 ==== expected1,
+          actual2 ==== expected2,
+          actual3 ==== expected3,
+          actual4 ==== expected4,
+          actual5 ==== expected5,
+          actual6 ==== expected6,
+          actual7 ==== expected7,
+          actual8 ==== expected8,
+          actual9 ==== expected9,
+          actual10 ==== expected10,
+          actual11 ==== expected11,
+          actual12 ==== expected12,
+          actual13 ==== expected13,
+          actual14 ==== expected14,
+          actual15 ==== expected15,
+          actual16 ==== expected16,
+          actual17 ==== expected17,
+          actual18 ==== expected18,
+        )
+      )
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = NonNegBigDecimal.unsafeFrom(n)
+        val actual   = NonNegBigDecimal.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a non-negative BigDecimal"
+        val actual   = NonNegBigDecimal.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = NonNegBigDecimal.unsafeFrom(n)
+        val actual   = NonNegBigDecimal.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(-0.0000001d, Double.MinValue)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a non-negative BigDecimal"
+        try {
+          NonNegBigDecimal.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from NonNegBigDecimal.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = n
+        val actual   = NonNegBigDecimal.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = n
+        val nes      = NonNegBigDecimal.unsafeFrom(n)
+        nes match {
+          case NonNegBigDecimal(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).map(BigDecimal(_)).log("n1")
+        n2 <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).map(BigDecimal(_)).log("n2")
+      } yield {
+        val input1 = NonNegBigDecimal.unsafeFrom(n1)
+        val input2 = NonNegBigDecimal.unsafeFrom(n2)
+        Ordering[NonNegBigDecimal].compare(input1, input2) ==== Ordering[BigDecimal].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n2 <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).map(BigDecimal(_)).log("n2")
+        n1 <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).map(BigDecimal(_)).log("n1")
+      } yield {
+        val input1: Ordered[NonNegBigDecimal] = NonNegBigDecimal.unsafeFrom(n1)
+        val input2: NonNegBigDecimal          = NonNegBigDecimal.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
+  }
+
+  object PosBigDecimalSpec {
+
+    import numeric.PosBigDecimal
+
+    def tests: List[Test] = List(
+      example("test PosBigDecimal.apply", testApply),
+      property("test PosBigDecimal.from(valid)", testFromValid),
+      property("test PosBigDecimal.from(invalid)", testFromInvalid),
+      property("test PosBigDecimal.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test PosBigDecimal.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test PosBigDecimal.value", testValue),
+      property("test PosBigDecimal.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[PosBigDecimal]", testOrdering),
+      property("test Ordered[PosBigDecimal]", testNumericOrdered),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected1 = PosBigDecimal(1L)
+      val actual1   = PosBigDecimal(1L)
+
+      val expected2 = PosBigDecimal(1L)
+      val actual2   = PosBigDecimal(1L)
+
+      val expected3 = PosBigDecimal("1")
+      val actual3   = PosBigDecimal("1")
+
+      val expected4 = PosBigDecimal(BigDecimal(1))
+      val actual4   = PosBigDecimal(BigDecimal(1))
+
+      val expected5 = PosBigDecimal(BigDecimal(1L))
+      val actual5   = PosBigDecimal(BigDecimal(1L))
+
+      val expected6 = PosBigDecimal(BigDecimal("1"))
+      val actual6   = PosBigDecimal(BigDecimal("1"))
+
+      val expected7 = PosBigDecimal(2147483647)
+      val actual7   = PosBigDecimal(2147483647)
+
+      val expected8 = PosBigDecimal(9223372036854775807L)
+      val actual8   = PosBigDecimal(9223372036854775807L)
+
+      val expected9 = PosBigDecimal("9223372036854775807")
+      val actual9   = PosBigDecimal("9223372036854775807")
+
+      val expected10 = PosBigDecimal(BigDecimal(2147483647))
+      val actual10   = PosBigDecimal(BigDecimal(2147483647))
+
+      val expected11 = PosBigDecimal(BigDecimal(9223372036854775807L))
+      val actual11   = PosBigDecimal(BigDecimal(9223372036854775807L))
+
+      val expected12 = PosBigDecimal(BigDecimal("9223372036854775807"))
+      val actual12   = PosBigDecimal(BigDecimal("9223372036854775807"))
+
+      val expected13 = PosBigDecimal(3.141592f)
+      val actual13   = PosBigDecimal(3.141592f)
+
+      val expected14 = PosBigDecimal(3.141592d)
+      val actual14   = PosBigDecimal(3.141592d)
+
+      val expected15 = PosBigDecimal("3.141592")
+      val actual15   = PosBigDecimal("3.141592")
+
+      val expected16 = PosBigDecimal(BigDecimal(3.141592f))
+      val actual16   = PosBigDecimal(BigDecimal(3.141592f))
+
+      val expected17 = PosBigDecimal(BigDecimal(3.141592d))
+      val actual17   = PosBigDecimal(BigDecimal(3.141592d))
+
+      val expected18 = PosBigDecimal(BigDecimal("3.141592"))
+      val actual18   = PosBigDecimal(BigDecimal("3.141592"))
+
+      Result.all(
+        List(
+          actual1 ==== expected1,
+          actual2 ==== expected2,
+          actual3 ==== expected3,
+          actual4 ==== expected4,
+          actual5 ==== expected5,
+          actual6 ==== expected6,
+          actual7 ==== expected7,
+          actual8 ==== expected8,
+          actual9 ==== expected9,
+          actual10 ==== expected10,
+          actual11 ==== expected11,
+          actual12 ==== expected12,
+          actual13 ==== expected13,
+          actual14 ==== expected14,
+          actual15 ==== expected15,
+          actual16 ==== expected16,
+          actual17 ==== expected17,
+          actual18 ==== expected18,
+        )
+      )
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = PosBigDecimal.unsafeFrom(n)
+        val actual   = PosBigDecimal.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a positive BigDecimal"
+        val actual   = PosBigDecimal.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = PosBigDecimal.unsafeFrom(n)
+        val actual   = PosBigDecimal.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a positive BigDecimal"
+        try {
+          PosBigDecimal.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from PosBigDecimal.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = n
+        val actual   = PosBigDecimal.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = n
+        val nes      = PosBigDecimal.unsafeFrom(n)
+        nes match {
+          case PosBigDecimal(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).map(BigDecimal(_)).log("n1")
+        n2 <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).map(BigDecimal(_)).log("n2")
+      } yield {
+        val input1 = PosBigDecimal.unsafeFrom(n1)
+        val input2 = PosBigDecimal.unsafeFrom(n2)
+        Ordering[PosBigDecimal].compare(input1, input2) ==== Ordering[BigDecimal].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).map(BigDecimal(_)).log("n1")
+        n2 <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).map(BigDecimal(_)).log("n2")
+      } yield {
+        val input1: Ordered[PosBigDecimal] = PosBigDecimal.unsafeFrom(n1)
+        val input2: PosBigDecimal          = PosBigDecimal.unsafeFrom(n2)
+        input1.compare(input2) ==== n1.compare(n2)
+      }
+
+  }
+
+  object NonPosBigDecimalSpec {
+
+    import numeric.NonPosBigDecimal
+
+    def tests: List[Test] = List(
+      example("test NonPosBigDecimal.apply", testApply),
+      property("test NonPosBigDecimal.from(valid)", testFromValid),
+      property("test NonPosBigDecimal.from(invalid)", testFromInvalid),
+      property("test NonPosBigDecimal.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test NonPosBigDecimal.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test NonPosBigDecimal.value", testValue),
+      property("test NonPosBigDecimal.unapply", testUnapplyWithPatternMatching),
+      property("test Ordering[NonPosBigDecimal]", testOrdering),
+      property("test Ordered[NonPosBigDecimal]", testNumericOrdered),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected1 = NonPosBigDecimal(0L)
+      val actual1   = NonPosBigDecimal(0L)
+
+      val expected2 = NonPosBigDecimal(0L)
+      val actual2   = NonPosBigDecimal(0L)
+
+      val expected3 = NonPosBigDecimal("0")
+      val actual3   = NonPosBigDecimal("0")
+
+      val expected4 = NonPosBigDecimal(BigDecimal(0))
+      val actual4   = NonPosBigDecimal(BigDecimal(0))
+
+      val expected5 = NonPosBigDecimal(BigDecimal(0L))
+      val actual5   = NonPosBigDecimal(BigDecimal(0L))
+
+      val expected6 = NonPosBigDecimal(BigDecimal("0"))
+      val actual6   = NonPosBigDecimal(BigDecimal("0"))
+
+      val expected7 = NonPosBigDecimal(-2147483648)
+      val actual7   = NonPosBigDecimal(-2147483648)
+
+      val expected8 = NonPosBigDecimal(-9223372036854775808L)
+      val actual8   = NonPosBigDecimal(-9223372036854775808L)
+
+      val expected9 = NonPosBigDecimal("-9223372036854775808")
+      val actual9   = NonPosBigDecimal("-9223372036854775808")
+
+      val expected10 = NonPosBigDecimal(BigDecimal(-2147483648))
+      val actual10   = NonPosBigDecimal(BigDecimal(-2147483648))
+
+      val expected11 = NonPosBigDecimal(BigDecimal(-9223372036854775808L))
+      val actual11   = NonPosBigDecimal(BigDecimal(-9223372036854775808L))
+
+      val expected12 = NonPosBigDecimal(BigDecimal("-9223372036854775808"))
+      val actual12   = NonPosBigDecimal(BigDecimal("-9223372036854775808"))
+
+      val expected13 = NonPosBigDecimal(-3.141592f)
+      val actual13   = NonPosBigDecimal(-3.141592f)
+
+      val expected14 = NonPosBigDecimal(-3.141592d)
+      val actual14   = NonPosBigDecimal(-3.141592d)
+
+      val expected15 = NonPosBigDecimal("-3.141592")
+      val actual15   = NonPosBigDecimal("-3.141592")
+
+      val expected16 = NonPosBigDecimal(BigDecimal(-3.141592f))
+      val actual16   = NonPosBigDecimal(BigDecimal(-3.141592f))
+
+      val expected17 = NonPosBigDecimal(BigDecimal(-3.141592d))
+      val actual17   = NonPosBigDecimal(BigDecimal(-3.141592d))
+
+      val expected18 = NonPosBigDecimal(BigDecimal("-3.141592"))
+      val actual18   = NonPosBigDecimal(BigDecimal("-3.141592"))
+
+      Result.all(
+        List(
+          actual1 ==== expected1,
+          actual2 ==== expected2,
+          actual3 ==== expected3,
+          actual4 ==== expected4,
+          actual5 ==== expected5,
+          actual6 ==== expected6,
+          actual7 ==== expected7,
+          actual8 ==== expected8,
+          actual9 ==== expected9,
+          actual10 ==== expected10,
+          actual11 ==== expected11,
+          actual12 ==== expected12,
+          actual13 ==== expected13,
+          actual14 ==== expected14,
+          actual15 ==== expected15,
+          actual16 ==== expected16,
+          actual17 ==== expected17,
+          actual18 ==== expected18,
+        )
+      )
+    }
+
+    def testFromValid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = NonPosBigDecimal.unsafeFrom(n)
+        val actual   = NonPosBigDecimal.from(n)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = s"Invalid value: [${n.toString}]. It must be a non-positive BigDecimal"
+        val actual   = NonPosBigDecimal.from(n)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = NonPosBigDecimal.unsafeFrom(n)
+        val actual   = NonPosBigDecimal.unsafeFrom(n)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = s"Invalid value: [$n]. It must be a non-positive BigDecimal"
+        try {
+          NonPosBigDecimal.unsafeFrom(n)
+          Result
+            .failure
+            .log(
+              s"""IllegalArgumentException was expected from NonPosBigDecimal.unsafeFrom(${n.toString}), but it was not thrown."""
+            )
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = n
+        val actual   = NonPosBigDecimal.unsafeFrom(n)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).map(BigDecimal(_)).log("n")
+      } yield {
+        val expected = n
+        val nes      = NonPosBigDecimal.unsafeFrom(n)
+        nes match {
+          case NonPosBigDecimal(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testOrdering: Property =
+      for {
+        n1 <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).map(BigDecimal(_)).log("n1")
+        n2 <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).map(BigDecimal(_)).log("n2")
+      } yield {
+        val input1 = NonPosBigDecimal.unsafeFrom(n1)
+        val input2 = NonPosBigDecimal.unsafeFrom(n2)
+        Ordering[NonPosBigDecimal].compare(input1, input2) ==== Ordering[BigDecimal].compare(input1.value, input2.value)
+      }
+
+    def testNumericOrdered: Property =
+      for {
+        n1 <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).map(BigDecimal(_)).log("n1")
+        n2 <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).map(BigDecimal(_)).log("n2")
+      } yield {
+        val input1: Ordered[NonPosBigDecimal] = NonPosBigDecimal.unsafeFrom(n1)
+        val input2: NonPosBigDecimal          = NonPosBigDecimal.unsafeFrom(n2)
         input1.compare(input2) ==== n1.compare(n2)
       }
 
