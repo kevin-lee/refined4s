@@ -53,6 +53,7 @@ ThisBuild / scalafixScalaBinaryVersion := {
 
 lazy val refined4s = (project in file("."))
   .enablePlugins(DevOopsGitHubReleasePlugin)
+  .settings(mavenCentralPublishSettings)
   .settings(noPublish)
   .aggregate(
     coreJvm,
