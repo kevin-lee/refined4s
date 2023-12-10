@@ -1,4 +1,4 @@
-package refined4s.cats
+package refined4s.modules.cats
 
 import cats.*
 import cats.syntax.all.*
@@ -7,7 +7,7 @@ import hedgehog.*
 import hedgehog.runner.*
 import refined4s.*
 import refined4s.InlinedRefinedType.MoreThan2CharsString
-import refined4s.cats.syntax.*
+import refined4s.modules.cats.syntax.*
 
 /** @author Kevin Lee
   * @since 2023-12-06
@@ -62,7 +62,7 @@ object syntaxSpec extends Properties {
 
   def testAValidateAsTInvalid: Result = {
     val expected =
-      "Failed to create refined4s.cats.syntaxSpec.NewMyType: Invalid value: []. It has to be a non-empty String but got \"\""
+      "Failed to create refined4s.modules.cats.syntaxSpec.NewMyType: Invalid value: []. It has to be a non-empty String but got \"\""
         .leftNec[NewMyType]
     val actual   = "".validateAs[NewMyType]
     actual ==== expected
@@ -80,7 +80,7 @@ object syntaxSpec extends Properties {
 
   def testValidateAsTAInvalid: Result = {
     val expected =
-      "Failed to create refined4s.cats.syntaxSpec.NewMyType: Invalid value: []. It has to be a non-empty String but got \"\""
+      "Failed to create refined4s.modules.cats.syntaxSpec.NewMyType: Invalid value: []. It has to be a non-empty String but got \"\""
         .leftNec[NewMyType]
     val actual   = validateAs("")[NewMyType]
     actual ==== expected
@@ -106,7 +106,7 @@ object syntaxSpec extends Properties {
       s <- Gen.string(Gen.unicode, Range.linear(0, 2)).log("s")
     } yield {
       val expected =
-        s"Failed to create refined4s.cats.syntaxSpec.NewMoreThan2CharsString: Invalid value: [$s]. The String should have more than 2 chars but got $s instead"
+        s"Failed to create refined4s.modules.cats.syntaxSpec.NewMoreThan2CharsString: Invalid value: [$s]. The String should have more than 2 chars but got $s instead"
           .leftNec[NewMoreThan2CharsString]
 
       val actual = s.validateAs[NewMoreThan2CharsString]
@@ -138,7 +138,7 @@ object syntaxSpec extends Properties {
       s <- Gen.string(Gen.unicode, Range.linear(0, 2)).log("s")
     } yield {
       val expected =
-        s"Failed to create refined4s.cats.syntaxSpec.NewMoreThan2CharsString: Invalid value: [$s]. The String should have more than 2 chars but got $s instead"
+        s"Failed to create refined4s.modules.cats.syntaxSpec.NewMoreThan2CharsString: Invalid value: [$s]. The String should have more than 2 chars but got $s instead"
           .leftNec[NewMoreThan2CharsString]
       val actual   = validateAs(s)[NewMoreThan2CharsString]
       (actual ==== expected).log(
