@@ -1,4 +1,6 @@
-package refined4s
+package refined4s.types
+
+import refined4s.*
 
 import cats.syntax.all.*
 import hedgehog.*
