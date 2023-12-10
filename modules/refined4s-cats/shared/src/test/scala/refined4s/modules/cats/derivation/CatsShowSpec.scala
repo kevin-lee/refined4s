@@ -1,4 +1,4 @@
-package refined4s.cats.derivation
+package refined4s.modules.cats.derivation
 
 import cats.*
 import cats.syntax.all.*
