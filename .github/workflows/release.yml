@@ -193,13 +193,12 @@ jobs:
           echo "SOURCE_DATE_EPOCH=$SOURCE_DATE_EPOCH"
           echo "JVM_OPTS=${JVM_OPTS}"
           echo "SBT_OPTS=${SBT_OPTS}"
-          echo 'sbt -v clean +packagedArtifacts ci-release devOopsGitHubReleaseUploadArtifacts'
+          echo 'sbt -v clean +packagedArtifacts ci-release'
           sbt \
             -v \
             clean \
             +packagedArtifacts \
-            ci-release \
-            devOopsGitHubReleaseUploadArtifacts
+            ci-release
 
 
   publish-snapshot:
