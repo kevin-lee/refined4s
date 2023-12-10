@@ -1,4 +1,6 @@
-package refined4s
+package refined4s.types
+
+import refined4s.*
 
 import hedgehog.*
 import hedgehog.runner.*
