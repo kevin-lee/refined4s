@@ -52,6 +52,7 @@ ThisBuild / scalafixScalaBinaryVersion := {
 }
 
 lazy val refined4s = (project in file("."))
+  .enablePlugins(DevOopsGitHubReleasePlugin)
   .settings(noPublish)
   .aggregate(
     coreJvm,
@@ -84,10 +85,12 @@ lazy val catsJs  = cats.js.settings(jsSettingsForFuture)
 lazy val props =
   new {
 
+    private val GitHubRepo = findRepoOrgAndName
+
     val Org = "io.kevinlee"
 
-    val GitHubUsername = "Kevin-Lee"
-    val RepoName       = "refined4s"
+    val GitHubUsername = GitHubRepo.fold("kevin-lee")(_.orgToString)
+    val RepoName       = GitHubRepo.fold("refined4s")(_.nameToString)
 
     val Scala3Version = "3.1.3"
 
