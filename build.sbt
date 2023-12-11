@@ -60,6 +60,8 @@ lazy val refined4s = (project in file("."))
     coreJs,
     catsJvm,
     catsJs,
+    circeJvm,
+    circeJs,
   )
 
 lazy val core    = module("core", crossProject(JVMPlatform, JSPlatform))
@@ -82,6 +84,18 @@ lazy val cats    = module("cats", crossProject(JVMPlatform, JSPlatform))
   .dependsOn(core % props.IncludeTest)
 lazy val catsJvm = cats.jvm
 lazy val catsJs  = cats.js.settings(jsSettingsForFuture)
+
+lazy val circe    = module("circe", crossProject(JVMPlatform, JSPlatform))
+  .settings(
+    libraryDependencies ++= List(
+      libs.circeCore,
+      libs.circeParser    % Test,
+      libs.extrasTypeInfo % Test,
+    )
+  )
+  .dependsOn(core % props.IncludeTest)
+lazy val circeJvm = circe.jvm
+lazy val circeJs  = circe.js.settings(jsSettingsForFuture)
 
 lazy val props =
   new {
@@ -118,6 +132,8 @@ lazy val props =
     val ExtrasVersion = "0.44.0"
 
     val CatsVersion = "2.8.0"
+
+    val CirceVersion = "0.14.3"
   }
 
 lazy val libs = new {
@@ -125,6 +141,9 @@ lazy val libs = new {
   lazy val extrasTypeInfo = "io.kevinlee" %% "extras-type-info" % props.ExtrasVersion
 
   lazy val cats = "org.typelevel" %% "cats-core" % props.CatsVersion
+
+  lazy val circeCore   = "io.circe" %% "circe-core"   % props.CirceVersion
+  lazy val circeParser = "io.circe" %% "circe-parser" % props.CirceVersion
 
   lazy val hedgehogCore   = "qa.hedgehog" %% "hedgehog-core"   % props.HedgehogVersion
   lazy val hedgehogRunner = "qa.hedgehog" %% "hedgehog-runner" % props.HedgehogVersion
