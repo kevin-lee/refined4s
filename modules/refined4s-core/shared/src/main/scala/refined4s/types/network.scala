@@ -36,6 +36,57 @@ trait network {
     }
 
   }
+
+  type PortNumber = PortNumber.Type
+  object PortNumber extends Refined[Int] {
+
+    override inline def invalidReason(a: Int): String =
+      "It has to be Int between 0 and 65535 (0 <= PortNumber <= 65535)"
+
+    override inline def predicate(a: Int): Boolean =
+      0 <= a && a <= 65535
+  }
+
+  type SystemPortNumber = SystemPortNumber.Type
+  object SystemPortNumber extends Refined[Int] {
+
+    override inline def invalidReason(a: Int): String =
+      "It has to be Int between 0 and 1023 (0 <= SystemPortNumber <= 1023)"
+
+    override inline def predicate(a: Int): Boolean =
+      0 <= a && a <= 1023
+  }
+
+  type NonSystemPortNumber = NonSystemPortNumber.Type
+  object NonSystemPortNumber extends Refined[Int] {
+
+    override inline def invalidReason(a: Int): String =
+      "It has to be Int between 1024 and 65535 (1024 <= NonSystemPortNumber <= 65535)"
+
+    override inline def predicate(a: Int): Boolean =
+      1024 <= a && a <= 65535
+  }
+
+  type UserPortNumber = UserPortNumber.Type
+  object UserPortNumber extends Refined[Int] {
+
+    override inline def invalidReason(a: Int): String =
+      "It has to be Int between 1024 and 49151 (1024 <= UserPortNumber <= 49151)"
+
+    override inline def predicate(a: Int): Boolean =
+      1024 <= a && a <= 49151
+  }
+
+  type DynamicPortNumber = DynamicPortNumber.Type
+  object DynamicPortNumber extends Refined[Int] {
+
+    override inline def invalidReason(a: Int): String =
+      "It has to be Int between 49152 and 65535 (49152 <= DynamicPortNumber <= 65535)"
+
+    override inline def predicate(a: Int): Boolean =
+      49152 <= a && a <= 65535
+  }
+
 }
 object network extends network {
   val UnexpectedLiteralErrorMessage: String =
