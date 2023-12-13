@@ -99,27 +99,7 @@ object networkSpec extends Properties {
 
   def testUriFromValid: Property =
     for {
-      scheme    <- Gen
-                     .frequency1(
-                       30 -> Gen.element1("http", "https", "ftp", "file"),
-                       70 -> Gen.string(Gen.alpha, Range.linear(3, 10)),
-                     )
-                     .log("scheme")
-      authority <- Gen
-                     .string(Gen.alphaNum, Range.linear(3, 10))
-                     .list(Range.linear(1, 4))
-                     .map(_.mkString("."))
-                     .log("authority")
-      path      <- Gen
-                     .frequency1(
-                       40 -> Gen.constant(""),
-                       60 -> Gen
-                         .string(Gen.alphaNum, Range.linear(1, 10))
-                         .list(Range.linear(1, 5))
-                         .map(_.mkString("/")),
-                     )
-                     .log("path")
-      uri       <- Gen.constant(s"$scheme://$authority${if (path.isEmpty) "" else "/" + path}").log("uri")
+      uri <- networkGens.genUriString.log("uri")
     } yield {
       val expected = Uri.unsafeFrom(uri).asRight
       val actual   = Uri.from(uri)
@@ -147,27 +127,7 @@ object networkSpec extends Properties {
 
   def testUriUnsafeFromValid: Property =
     for {
-      scheme    <- Gen
-                     .frequency1(
-                       30 -> Gen.element1("http", "https", "ftp", "file"),
-                       70 -> Gen.string(Gen.alpha, Range.linear(3, 10)),
-                     )
-                     .log("scheme")
-      authority <- Gen
-                     .string(Gen.alphaNum, Range.linear(3, 10))
-                     .list(Range.linear(1, 4))
-                     .map(_.mkString("."))
-                     .log("authority")
-      path      <- Gen
-                     .frequency1(
-                       40 -> Gen.constant(""),
-                       60 -> Gen
-                         .string(Gen.alphaNum, Range.linear(1, 10))
-                         .list(Range.linear(1, 5))
-                         .map(_.mkString("/")),
-                     )
-                     .log("path")
-      uri       <- Gen.constant(s"$scheme://$authority${if (path.isEmpty) "" else "/" + path}").log("uri")
+      uri <- networkGens.genUriString.log("uri")
     } yield {
       val expected = Uri.from(uri)
       val actual   = Uri.unsafeFrom(uri)
@@ -204,27 +164,7 @@ object networkSpec extends Properties {
 
   def testUriValue: Property =
     for {
-      scheme    <- Gen
-                     .frequency1(
-                       30 -> Gen.element1("http", "https", "ftp", "file"),
-                       70 -> Gen.string(Gen.alpha, Range.linear(3, 10)),
-                     )
-                     .log("scheme")
-      authority <- Gen
-                     .string(Gen.alphaNum, Range.linear(3, 10))
-                     .list(Range.linear(1, 4))
-                     .map(_.mkString("."))
-                     .log("authority")
-      path      <- Gen
-                     .frequency1(
-                       40 -> Gen.constant(""),
-                       60 -> Gen
-                         .string(Gen.alphaNum, Range.linear(1, 10))
-                         .list(Range.linear(1, 5))
-                         .map(_.mkString("/")),
-                     )
-                     .log("path")
-      uri       <- Gen.constant(s"$scheme://$authority${if (path.isEmpty) "" else "/" + path}").log("uri")
+      uri <- networkGens.genUriString.log("uri")
     } yield {
       val expected = uri
       val actual   = Uri.unsafeFrom(uri).value
@@ -234,27 +174,7 @@ object networkSpec extends Properties {
 
   def testUriUnapply: Property =
     for {
-      scheme    <- Gen
-                     .frequency1(
-                       30 -> Gen.element1("http", "https", "ftp", "file"),
-                       70 -> Gen.string(Gen.alpha, Range.linear(3, 10)),
-                     )
-                     .log("scheme")
-      authority <- Gen
-                     .string(Gen.alphaNum, Range.linear(3, 10))
-                     .list(Range.linear(1, 4))
-                     .map(_.mkString("."))
-                     .log("authority")
-      path      <- Gen
-                     .frequency1(
-                       40 -> Gen.constant(""),
-                       60 -> Gen
-                         .string(Gen.alphaNum, Range.linear(1, 10))
-                         .list(Range.linear(1, 5))
-                         .map(_.mkString("/")),
-                     )
-                     .log("path")
-      uri       <- Gen.constant(s"$scheme://$authority${if (path.isEmpty) "" else "/" + path}").log("uri")
+      uri <- networkGens.genUriString.log("uri")
     } yield {
       val expected = uri
       Uri.unsafeFrom(uri) match {
@@ -265,27 +185,7 @@ object networkSpec extends Properties {
 
   def testUriToURI: Property =
     for {
-      scheme    <- Gen
-                     .frequency1(
-                       30 -> Gen.element1("http", "https", "ftp", "file"),
-                       70 -> Gen.string(Gen.alpha, Range.linear(3, 10)),
-                     )
-                     .log("scheme")
-      authority <- Gen
-                     .string(Gen.alphaNum, Range.linear(3, 10))
-                     .list(Range.linear(1, 4))
-                     .map(_.mkString("."))
-                     .log("authority")
-      path      <- Gen
-                     .frequency1(
-                       40 -> Gen.constant(""),
-                       60 -> Gen
-                         .string(Gen.alphaNum, Range.linear(1, 10))
-                         .list(Range.linear(1, 5))
-                         .map(_.mkString("/")),
-                     )
-                     .log("path")
-      uri       <- Gen.constant(s"$scheme://$authority${if (path.isEmpty) "" else "/" + path}").log("uri")
+      uri <- networkGens.genUriString.log("uri")
     } yield {
       val expected = new URI(uri)
       val actual   = Uri.unsafeFrom(uri).toURI

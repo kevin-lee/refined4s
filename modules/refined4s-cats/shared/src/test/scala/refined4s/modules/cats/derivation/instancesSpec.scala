@@ -2,11 +2,10 @@ package refined4s.modules.cats.derivation
 
 import hedgehog.*
 import hedgehog.runner.*
-
 import refined4s.types.all.*
 import refined4s.modules.cats.derivation.instances.given
-
 import cats.syntax.all.*
+import refined4s.types.networkGens
 
 /** @author Kevin Lee
   * @since 2023-12-10
@@ -912,27 +911,7 @@ object instancesSpec extends Properties {
 
   def testEqUri: Property =
     for {
-      scheme    <- Gen
-                     .frequency1(
-                       30 -> Gen.element1("http", "https", "ftp", "file"),
-                       70 -> Gen.string(Gen.alpha, Range.linear(3, 10)),
-                     )
-                     .log("scheme")
-      authority <- Gen
-                     .string(Gen.alphaNum, Range.linear(3, 10))
-                     .list(Range.linear(1, 4))
-                     .map(_.mkString("."))
-                     .log("authority")
-      path      <- Gen
-                     .frequency1(
-                       40 -> Gen.constant(""),
-                       60 -> Gen
-                         .string(Gen.alphaNum, Range.linear(1, 10))
-                         .list(Range.linear(1, 5))
-                         .map(_.mkString("/")),
-                     )
-                     .log("path")
-      uri       <- Gen.constant(s"$scheme://$authority${if (path.isEmpty) "" else "/" + path}").log("uri")
+      uri <- networkGens.genUriString.log("uri")
     } yield {
       val input = Uri.unsafeFrom(uri)
 
@@ -944,27 +923,7 @@ object instancesSpec extends Properties {
 
   def testShowUri: Property =
     for {
-      scheme    <- Gen
-                     .frequency1(
-                       30 -> Gen.element1("http", "https", "ftp", "file"),
-                       70 -> Gen.string(Gen.alpha, Range.linear(3, 10)),
-                     )
-                     .log("scheme")
-      authority <- Gen
-                     .string(Gen.alphaNum, Range.linear(3, 10))
-                     .list(Range.linear(1, 4))
-                     .map(_.mkString("."))
-                     .log("authority")
-      path      <- Gen
-                     .frequency1(
-                       40 -> Gen.constant(""),
-                       60 -> Gen
-                         .string(Gen.alphaNum, Range.linear(1, 10))
-                         .list(Range.linear(1, 5))
-                         .map(_.mkString("/")),
-                     )
-                     .log("path")
-      uri       <- Gen.constant(s"$scheme://$authority${if (path.isEmpty) "" else "/" + path}").log("uri")
+      uri <- networkGens.genUriString.log("uri")
     } yield {
       val input = Uri.unsafeFrom(uri)
 

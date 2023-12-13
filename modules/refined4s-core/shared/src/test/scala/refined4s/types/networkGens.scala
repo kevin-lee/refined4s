@@ -1,7 +1,6 @@
 package refined4s.types
 
 import hedgehog.*
-
 import refined4s.types.network.*
 
 /** @author Kevin Lee
@@ -73,5 +72,33 @@ object networkGens {
   def genDynamicPortNumber: Gen[DynamicPortNumber] =
     genDynamicPortNumberInt
       .map(DynamicPortNumber.unsafeFrom)
+
+  def genUriString: Gen[String] =
+    for {
+      uri  <- genUriStringWithoutPath
+      path <- Gen
+                .frequency1(
+                  40 -> Gen.constant(""),
+                  60 -> Gen
+                    .string(Gen.alphaNum, Range.linear(1, 10))
+                    .list(Range.linear(1, 5))
+                    .map(_.mkString("/")),
+                )
+      uriWithPath = s"$uri${if (path.isEmpty) "" else "/" + path}"
+    } yield uriWithPath
+
+  def genUriStringWithoutPath: Gen[String] =
+    for {
+      scheme    <- Gen
+                     .frequency1(
+                       30 -> Gen.element1("http", "https", "ftp", "file"),
+                       70 -> Gen.string(Gen.alpha, Range.linear(3, 10)),
+                     )
+      authority <- Gen
+                     .string(Gen.alphaNum, Range.linear(3, 10))
+                     .list(Range.linear(1, 4))
+                     .map(_.mkString("."))
+      uri = s"$scheme://$authority"
+    } yield uri
 
 }
