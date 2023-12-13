@@ -62,6 +62,8 @@ lazy val refined4s = (project in file("."))
     catsJs,
     circeJvm,
     circeJs,
+    pureconfigJvm,
+    pureconfigJs,
   )
 
 lazy val core    = module("core", crossProject(JVMPlatform, JSPlatform))
@@ -96,6 +98,17 @@ lazy val circe    = module("circe", crossProject(JVMPlatform, JSPlatform))
   .dependsOn(core % props.IncludeTest)
 lazy val circeJvm = circe.jvm
 lazy val circeJs  = circe.js.settings(jsSettingsForFuture)
+
+lazy val pureconfig    = module("pureconfig", crossProject(JVMPlatform, JSPlatform))
+  .settings(
+    libraryDependencies ++= List(
+      libs.pureconfigCore,
+      libs.extrasTypeInfo % Test,
+    )
+  )
+  .dependsOn(core % props.IncludeTest)
+lazy val pureconfigJvm = pureconfig.jvm
+lazy val pureconfigJs  = pureconfig.js.settings(jsSettingsForFuture)
 
 lazy val props =
   new {
@@ -134,6 +147,9 @@ lazy val props =
     val CatsVersion = "2.8.0"
 
     val CirceVersion = "0.14.3"
+
+    val PureconfigVersion = "0.17.1"
+
   }
 
 lazy val libs = new {
@@ -144,6 +160,9 @@ lazy val libs = new {
 
   lazy val circeCore   = "io.circe" %% "circe-core"   % props.CirceVersion
   lazy val circeParser = "io.circe" %% "circe-parser" % props.CirceVersion
+
+  lazy val pureconfigCore    = "com.github.pureconfig" %% "pureconfig-core"    % props.PureconfigVersion
+  lazy val pureconfigGeneric = "com.github.pureconfig" %% "pureconfig-generic" % props.PureconfigVersion
 
   lazy val hedgehogCore   = "qa.hedgehog" %% "hedgehog-core"   % props.HedgehogVersion
   lazy val hedgehogRunner = "qa.hedgehog" %% "hedgehog-runner" % props.HedgehogVersion
