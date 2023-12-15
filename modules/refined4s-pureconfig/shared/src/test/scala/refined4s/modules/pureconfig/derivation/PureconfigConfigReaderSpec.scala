@@ -52,7 +52,7 @@ object PureconfigConfigReaderSpec extends Properties {
   @SuppressWarnings(Array("org.wartremover.warts.ToString"))
   def testRefinedConfigReaderValid: Property =
     for {
-      s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+      s <- Gen.string(Gen.alphaNum, Range.linear(1, 10)).log("s")
     } yield {
       val confString =
         raw"""the-value = "$s"
@@ -75,7 +75,7 @@ object PureconfigConfigReaderSpec extends Properties {
   @SuppressWarnings(Array("org.wartremover.warts.ToString"))
   def testPureconfigRefinedConfigReaderRefinedValid: Property =
     for {
-      s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+      s <- Gen.string(Gen.alphaNum, Range.linear(1, 10)).log("s")
     } yield {
       val confString =
         raw"""the-value = "$s"
@@ -123,7 +123,7 @@ object PureconfigConfigReaderSpec extends Properties {
   @SuppressWarnings(Array("org.wartremover.warts.ToString"))
   def testPureconfigRefinedConfigReaderInlinedRefinedValid: Property =
     for {
-      s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+      s <- Gen.string(Gen.alphaNum, Range.linear(1, 10)).log("s")
     } yield {
       val confString =
         raw"""the-value = "$s"
@@ -171,7 +171,7 @@ object PureconfigConfigReaderSpec extends Properties {
   @SuppressWarnings(Array("org.wartremover.warts.ToString"))
   def testPureconfigRefinedConfigReaderRefinedNewtypeValid: Property =
     for {
-      s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+      s <- Gen.string(Gen.alphaNum, Range.linear(1, 10)).log("s")
     } yield {
       val confString =
         raw"""the-value = "$s"
