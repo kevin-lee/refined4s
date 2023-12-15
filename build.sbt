@@ -64,6 +64,10 @@ lazy val refined4s = (project in file("."))
     circeJs,
     pureconfigJvm,
     pureconfigJs,
+    doobieCe2Jvm,
+    doobieCe2Js,
+    doobieCe3Jvm,
+    doobieCe3Js,
   )
 
 lazy val core    = module("core", crossProject(JVMPlatform, JSPlatform))
@@ -110,6 +114,42 @@ lazy val pureconfig    = module("pureconfig", crossProject(JVMPlatform, JSPlatfo
 lazy val pureconfigJvm = pureconfig.jvm
 lazy val pureconfigJs  = pureconfig.js.settings(jsSettingsForFuture)
 
+lazy val doobieCe2    = module("doobie-ce2", crossProject(JVMPlatform, JSPlatform))
+  .settings(
+    libraryDependencies ++= List(
+      libs.doobieCoreCe2,
+      libs.embeddedPostgres     % Test,
+      libs.effectieCe2          % Test,
+      libs.extrasDoobieToolsCe2 % Test,
+      libs.logback              % Test,
+//      libs.kittens              % Test,
+    )
+  )
+  .dependsOn(
+    core % props.IncludeTest,
+    cats,
+  )
+lazy val doobieCe2Jvm = doobieCe2.jvm
+lazy val doobieCe2Js  = doobieCe2.js.settings(jsSettingsForFuture)
+
+lazy val doobieCe3    = module("doobie-ce3", crossProject(JVMPlatform, JSPlatform))
+  .settings(
+    libraryDependencies ++= List(
+      libs.doobieCoreCe3,
+      libs.embeddedPostgres     % Test,
+      libs.effectieCe3          % Test,
+      libs.extrasDoobieToolsCe3 % Test,
+      libs.logback              % Test,
+//      libs.kittens              % Test,
+    )
+  )
+  .dependsOn(
+    core % props.IncludeTest,
+    cats,
+  )
+lazy val doobieCe3Jvm = doobieCe3.jvm
+lazy val doobieCe3Js  = doobieCe3.js.settings(jsSettingsForFuture)
+
 lazy val props =
   new {
 
@@ -150,19 +190,45 @@ lazy val props =
 
     val PureconfigVersion = "0.17.1"
 
+    val DoobieCe2Version = "0.13.4"
+    val DoobieCe3Version = "1.0.0-RC2"
+
+    val EmbeddedPostgresVersion = "2.0.1"
+
+    val EffectieVersion = "2.0.0-beta13"
+
+    val LogbackVersion = "1.4.14"
+
+    val KittensVersion = "3.0.0"
   }
 
 lazy val libs = new {
 
-  lazy val extrasTypeInfo = "io.kevinlee" %% "extras-type-info" % props.ExtrasVersion
+  lazy val extrasTypeInfo       = "io.kevinlee" %% "extras-type-info"        % props.ExtrasVersion
+  lazy val extrasDoobieToolsCe2 = "io.kevinlee" %% "extras-doobie-tools-ce2" % props.ExtrasVersion
+  lazy val extrasDoobieToolsCe3 = "io.kevinlee" %% "extras-doobie-tools-ce3" % props.ExtrasVersion
 
   lazy val cats = "org.typelevel" %% "cats-core" % props.CatsVersion
+
+  lazy val kittens = "org.typelevel" %% "kittens" % props.KittensVersion
 
   lazy val circeCore   = "io.circe" %% "circe-core"   % props.CirceVersion
   lazy val circeParser = "io.circe" %% "circe-parser" % props.CirceVersion
 
   lazy val pureconfigCore    = "com.github.pureconfig" %% "pureconfig-core"    % props.PureconfigVersion
   lazy val pureconfigGeneric = "com.github.pureconfig" %% "pureconfig-generic" % props.PureconfigVersion
+
+  lazy val doobieCoreCe2 = "org.tpolecat" %% "doobie-core" % props.DoobieCe2Version
+  lazy val doobieCoreCe3 = "org.tpolecat" %% "doobie-core" % props.DoobieCe3Version
+
+  lazy val embeddedPostgres = "io.zonky.test" % "embedded-postgres" % props.EmbeddedPostgresVersion
+
+  lazy val effectieCore   = "io.kevinlee" %% "effectie-core"         % props.EffectieVersion
+  lazy val effectieSyntax = "io.kevinlee" %% "effectie-syntax"       % props.EffectieVersion
+  lazy val effectieCe2    = "io.kevinlee" %% "effectie-cats-effect2" % props.EffectieVersion
+  lazy val effectieCe3    = "io.kevinlee" %% "effectie-cats-effect3" % props.EffectieVersion
+
+  lazy val logback = "ch.qos.logback" % "logback-classic" % props.LogbackVersion
 
   lazy val hedgehogCore   = "qa.hedgehog" %% "hedgehog-core"   % props.HedgehogVersion
   lazy val hedgehogRunner = "qa.hedgehog" %% "hedgehog-runner" % props.HedgehogVersion
