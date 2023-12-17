@@ -1,3 +1,4 @@
+import just.semver.SemVer
 import sbtcrossproject.CrossProject
 
 ThisBuild / scalaVersion := props.ProjectScalaVersion
@@ -149,6 +150,41 @@ lazy val doobieCe3    = module("doobie-ce3", crossProject(JVMPlatform, JSPlatfor
   )
 lazy val doobieCe3Jvm = doobieCe3.jvm
 lazy val doobieCe3Js  = doobieCe3.js.settings(jsSettingsForFuture)
+
+lazy val docs = (project in file("docs-gen-tmp/docs"))
+  .enablePlugins(MdocPlugin, DocusaurPlugin)
+  .settings(
+    scalaVersion := props.Scala3Version,
+    name := prefixedProjectName("docs"),
+    mdocIn := file("docs"),
+    mdocOut := file("generated-docs/docs"),
+    cleanFiles += file("generated-docs/docs"),
+    libraryDependencies ++= {
+      import sys.process.*
+      "git fetch --tags".!
+      val tag           = "git rev-list --tags --max-count=1".!!.trim
+      val latestVersion = s"git describe --tags $tag".!!.trim.stripPrefix("v")
+
+      List(
+        "io.kevinlee" %% "refined4s-core"       % latestVersion,
+        "io.kevinlee" %% "refined4s-cats"       % latestVersion,
+        "io.kevinlee" %% "refined4s-circe"      % latestVersion,
+        "io.kevinlee" %% "refined4s-pureconfig" % latestVersion,
+        "io.kevinlee" %% "refined4s-doobie-ce2" % latestVersion,
+      )
+    },
+    mdocVariables := Map(
+      "VERSION" -> {
+        import sys.process.*
+        "git fetch --tags".!
+        val tag = "git rev-list --tags --max-count=1".!!.trim
+        s"git describe --tags $tag".!!.trim.stripPrefix("v")
+      }
+    ),
+    docusaurDir := (ThisBuild / baseDirectory).value / "website",
+    docusaurBuildDir := docusaurDir.value / "build",
+  )
+  .settings(noPublish)
 
 lazy val props =
   new {
