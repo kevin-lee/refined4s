@@ -12,10 +12,7 @@ const lightCodeTheme = prismThemes.nightOwlLight;
 const darkCodeTheme = prismThemes.nightOwl;
 
 
-const isEmptyObject = obj => {
-  for (field in obj) return false;
-  return true;
-};
+const isEmptyObject = (obj: object) => Object.keys(obj).length === 0;
 
 const isSearchable = !isEmptyObject(algoliaConfig);
 const hasGoogleAnalytics = !isEmptyObject(googleAnalyticsConfig);
@@ -66,7 +63,7 @@ const config: Config = {
         theme: {
           customCss: './src/css/custom.css',
         },
-        ...(hasGoogleAnalytics ? { "gtag": googleAnalyticsConfig } : {}),
+        ...(hasGoogleAnalytics ? {"gtag": googleAnalyticsConfig} : {}),
       } satisfies Preset.Options,
     ],
   ],
