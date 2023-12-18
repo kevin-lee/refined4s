@@ -2,6 +2,25 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
+
+const algoliaConfig = require('./algolia.config.json');
+const googleAnalyticsConfig = require('./google-analytics.config.json');
+
+// const lightCodeTheme = require('prism-react-renderer/themes/github');
+// const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const lightCodeTheme = prismThemes.nightOwlLight;
+const darkCodeTheme = prismThemes.nightOwl;
+
+
+const isEmptyObject = obj => {
+  for (field in obj) return false;
+  return true;
+};
+
+const isSearchable = !isEmptyObject(algoliaConfig);
+const hasGoogleAnalytics = !isEmptyObject(googleAnalyticsConfig);
+
+
 const config: Config = {
   title: 'Refined4s',
   tagline: 'Newtypes and Refinement types for Scala 3',
@@ -47,6 +66,7 @@ const config: Config = {
         theme: {
           customCss: './src/css/custom.css',
         },
+        ...(hasGoogleAnalytics ? { "gtag": googleAnalyticsConfig } : {}),
       } satisfies Preset.Options,
     ],
   ],
@@ -101,8 +121,8 @@ const config: Config = {
       `,
     },
     prism: {
-      theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      theme: lightCodeTheme,
+      darkTheme: darkCodeTheme,
       additionalLanguages: [
         'java',
         'scala',
@@ -110,5 +130,9 @@ const config: Config = {
     },
   } satisfies Preset.ThemeConfig,
 };
+
+if (isSearchable) {
+  config['themeConfig']['algolia'] = algoliaConfig;
+}
 
 export default config;
