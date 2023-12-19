@@ -16,7 +16,14 @@ To make `Newtype`, `Refined` and `InlinedRefined` have `Eq` and `Show` type-clas
 ```scala
 import refined4s.modules.cats.derivation.instances.given
 ```
-
+:::warning NOTE
+This works only when the actual type already has `Eq` and `Show`.
+:::
+:::info
+Using `refined4s.modules.cats.derivation.instances` is required only when `Eq` and/or `Show` is used.<br/>
+So if you want your `Newtype` or `Refined` or `InlinedRefined` to have `Eq` and `Show` instances,<br/>
+you can use [pre-defined traits for cats](#with-explicit-pre-defined-cats-support) or the [`deriving` method](#with-deriving-method) instead.<br/>
+:::
 ```scala mdoc
 import refined4s.*
 import refined4s.types.all.*
@@ -43,7 +50,7 @@ def equal[A: Eq](a1: A, a2: A): Unit =
 
 **With `derivation.instances`,**
 
-```scala
+```scala {1}
 import refined4s.modules.cats.derivation.instances.given
 
 hello(NonEmptyString("Peter Parker"))
@@ -99,7 +106,11 @@ There are the following pre-defined traits to support cats' `Eq` and `Show`.
 * `refined4s.modules.cats.derivation.CatsShow`
 * `refined4s.modules.cats.derivation.CatsEqShow`
 
-```scala mdoc:reset
+:::warning NOTE
+This works only when the actual type already has `Eq` and `Show`.
+:::
+
+```scala mdoc:reset {5,8}
 import refined4s.*
 import refined4s.modules.cats.derivation.*
 
@@ -111,6 +122,64 @@ object NotEmptyStr extends Refined[String] with CatsEqShow[String] {
   inline def invalidReason(a: String): String = "non-empty String"
 
   inline def predicate(a: String): Boolean = a != ""
+}
+
+import cats.*
+import cats.syntax.all.*
+
+def hello[A: Show](a: A): Unit = println(show"Hello $a")
+
+def equal[A: Eq](a1: A, a2: A): Unit =
+  if Eq[A].eqv(a1, a1) then println("The given values are equal.")
+  else println("The given values are not equal.")
+```
+
+```scala
+hello(Name("Tony Stark"))
+// Hello Tony Stark
+
+hello(NotEmptyStr("Thor Odinson"))
+// Hello Thor Odinson
+
+equal(Name("Tony Stark"), Name("Tony Stark"))
+// The given values are equal.
+equal(Name("Tony Stark"), Name("Steve Rogers"))
+// The given values are not equal.
+
+equal(NotEmptyStr("Thor Odinson"), NotEmptyStr("Thor Odinson"))
+// The given values are equal.
+equal(NotEmptyStr("Thor Odinson"), NotEmptyStr("Bruce Banner"))
+// The given values are not equal.
+```
+
+
+## With `deriving` Method
+If you want to have explicit `Eq` and `Show` type-class instances in your `Newtype` or `Refined` or `InlinedRefined`, you can use the `deriving` method.
+
+:::warning NOTE
+This works only when the actual type already has `Eq` and `Show`.
+:::
+
+```scala mdoc:reset {8-9,18-19}
+import cats.*
+
+import refined4s.*
+import refined4s.modules.cats.derivation.*
+
+type Name = Name.Type
+object Name extends Newtype[String] {
+  given eqName: Eq[Name] = deriving[Eq]
+  given showName: Show[Name] = deriving[Show]
+}
+
+type NotEmptyStr = NotEmptyStr.Type
+object NotEmptyStr extends Refined[String] with CatsEqShow[String] {
+  inline def invalidReason(a: String): String = "non-empty String"
+
+  inline def predicate(a: String): Boolean = a != ""
+
+  given eqNotEmptyStr: Eq[NotEmptyStr] = deriving[Eq]
+  given showNotEmptyStr: Show[NotEmptyStr] = deriving[Show]
 }
 
 import cats.*
