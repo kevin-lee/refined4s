@@ -227,7 +227,7 @@ trait numeric {
   type NegBigInt = NegBigInt.Type
   @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
   object NegBigInt extends InlinedNumeric[BigInt] {
-    override def invalidReason(a: BigInt): String = expectedMessage("a negative BigInt")
+    override inline def invalidReason(a: BigInt): String = expectedMessage("a negative BigInt")
 
     override def predicate(a: BigInt): Boolean = a < BigInt0
 
@@ -243,7 +243,7 @@ trait numeric {
   type NonNegBigInt = NonNegBigInt.Type
   @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
   object NonNegBigInt extends InlinedNumeric[BigInt] {
-    override def invalidReason(a: BigInt): String = expectedMessage("a non-negative BigInt")
+    override inline def invalidReason(a: BigInt): String = expectedMessage("a non-negative BigInt")
 
     override def predicate(a: BigInt): Boolean = a >= BigInt0
 
@@ -259,7 +259,7 @@ trait numeric {
   type PosBigInt = PosBigInt.Type
   @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
   object PosBigInt extends InlinedNumeric[BigInt] {
-    override def invalidReason(a: BigInt): String = expectedMessage("a positive BigInt")
+    override inline def invalidReason(a: BigInt): String = expectedMessage("a positive BigInt")
 
     override def predicate(a: BigInt): Boolean = a > BigInt0
 
@@ -275,7 +275,7 @@ trait numeric {
   type NonPosBigInt = NonPosBigInt.Type
   @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
   object NonPosBigInt extends InlinedNumeric[BigInt] {
-    override def invalidReason(a: BigInt): String = expectedMessage("a non-positive BigInt")
+    override inline def invalidReason(a: BigInt): String = expectedMessage("a non-positive BigInt")
 
     override def predicate(a: BigInt): Boolean = a <= BigInt0
 
@@ -291,7 +291,7 @@ trait numeric {
   type NegBigDecimal = NegBigDecimal.Type
   @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
   object NegBigDecimal extends InlinedNumeric[BigDecimal] {
-    override def invalidReason(a: BigDecimal): String = expectedMessage("a negative BigDecimal")
+    override inline def invalidReason(a: BigDecimal): String = expectedMessage("a negative BigDecimal")
 
     override def predicate(a: BigDecimal): Boolean = a < BigDecimal0
 
@@ -311,7 +311,7 @@ trait numeric {
   type NonNegBigDecimal = NonNegBigDecimal.Type
   @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
   object NonNegBigDecimal extends InlinedNumeric[BigDecimal] {
-    override def invalidReason(a: BigDecimal): String = expectedMessage("a non-negative BigDecimal")
+    override inline def invalidReason(a: BigDecimal): String = expectedMessage("a non-negative BigDecimal")
 
     override def predicate(a: BigDecimal): Boolean = a >= BigDecimal0
 
@@ -331,7 +331,7 @@ trait numeric {
   type PosBigDecimal = PosBigDecimal.Type
   @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
   object PosBigDecimal extends InlinedNumeric[BigDecimal] {
-    override def invalidReason(a: BigDecimal): String = expectedMessage("a positive BigDecimal")
+    override inline def invalidReason(a: BigDecimal): String = expectedMessage("a positive BigDecimal")
 
     override def predicate(a: BigDecimal): Boolean = a > BigDecimal0
 
@@ -351,7 +351,7 @@ trait numeric {
   type NonPosBigDecimal = NonPosBigDecimal.Type
   @SuppressWarnings(Array("org.wartremover.warts.Overloading"))
   object NonPosBigDecimal extends InlinedNumeric[BigDecimal] {
-    override def invalidReason(a: BigDecimal): String = expectedMessage("a non-positive BigDecimal")
+    override inline def invalidReason(a: BigDecimal): String = expectedMessage("a non-positive BigDecimal")
 
     override def predicate(a: BigDecimal): Boolean = a <= BigDecimal0
 
