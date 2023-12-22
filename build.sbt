@@ -307,7 +307,7 @@ def module(projectName: String, crossProject: CrossProject.Builder): CrossProjec
           ((ThisBuild / baseDirectory).value / ".scalafix-scala2.conf").some
       ),
       scalacOptions ++= (if (isScala3(scalaVersion.value)) List("-no-indent") else List("-Xsource:3")),
-      scalacOptions ~= (ops => ops.filter(_ != "UTF-8")),
+//      scalacOptions ~= (ops => ops.filter(_ != "UTF-8")),
       libraryDependencies ++= libs.hedgehog,
       wartremoverErrors ++= Warts.allBut(Wart.Any, Wart.Nothing, Wart.ImplicitConversion, Wart.ImplicitParameter),
       Compile / console / scalacOptions :=
@@ -330,15 +330,15 @@ def module(projectName: String, crossProject: CrossProject.Builder): CrossProjec
       }),
       /* } coverage */
 
-      scalacOptions ~= (_.filterNot(_.startsWith("-language"))),
-      scalacOptions ++= List(
-        "-language:dynamics",
-        "-language:existentials",
-        "-language:higherKinds",
-        "-language:reflectiveCalls",
-        "-language:experimental.macros",
-        "-language:implicitConversions",
-      ),
+//      scalacOptions ~= (_.filterNot(_.startsWith("-language"))),
+//      scalacOptions ++= List(
+//        "-language:dynamics",
+//        "-language:existentials",
+//        "-language:higherKinds",
+//        "-language:reflectiveCalls",
+//        "-language:experimental.macros",
+//        "-language:implicitConversions",
+//      ),
     )
     .settings(mavenCentralPublishSettings)
 }

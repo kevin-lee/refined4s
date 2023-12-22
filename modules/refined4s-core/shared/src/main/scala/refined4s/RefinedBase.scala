@@ -5,7 +5,6 @@ package refined4s
   * @since 2022-03-23
   */
 trait RefinedBase[A] extends NewtypeBase[A] {
-  import compiletime.*
 
   override opaque type Type = A
 
