@@ -5,7 +5,6 @@ import cats.syntax.all.*
 import hedgehog.*
 import hedgehog.runner.*
 import refined4s.*
-import refined4s.modules.cats.derivation.CatsShowSpec.{MyRefinedNewtype, MyRefinedType}
 
 /** @author Kevin Lee
   * @since 2023-12-07

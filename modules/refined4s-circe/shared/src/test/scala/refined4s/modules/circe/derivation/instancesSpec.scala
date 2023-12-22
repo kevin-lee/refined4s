@@ -7,7 +7,6 @@ import io.circe.syntax.*
 import io.circe.parser.*
 
 import refined4s.*
-import refined4s.types.all.*
 import refined4s.modules.circe.derivation.instances.given
 
 import hedgehog.*

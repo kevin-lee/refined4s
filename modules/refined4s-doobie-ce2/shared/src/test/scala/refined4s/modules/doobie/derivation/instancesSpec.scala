@@ -1,6 +1,5 @@
 package refined4s.modules.doobie.derivation
 
-import cats.Eq
 import cats.effect.ContextShift
 import cats.syntax.all.*
 import doobie.syntax.all.*
@@ -10,7 +9,6 @@ import extras.runner.ce2.RunSyncCe2
 import hedgehog.*
 import hedgehog.runner.*
 import refined4s.*
-import refined4s.modules.cats.derivation.*
 import refined4s.modules.doobie.derivation.instances.given
 import refined4s.types.all.*
 

@@ -3,7 +3,7 @@ package refined4s.modules.pureconfig.derivation
 import com.typesafe.config.{ConfigRenderOptions, ConfigValueFactory}
 import hedgehog.*
 import hedgehog.runner.*
-import pureconfig.{ConfigReader, ConfigWriter}
+import pureconfig.ConfigWriter
 import refined4s.types.all.Uri
 import refined4s.types.networkGens
 import refined4s.{InlinedRefined, Newtype, Refined}

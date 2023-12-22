@@ -1,8 +1,6 @@
 package refined4s.modules.pureconfig.derivation
 
-import cats.syntax.all.*
 import com.typesafe.config.{ConfigRenderOptions, ConfigValue, ConfigValueFactory}
-import com.typesafe.config.impl.SimpleConfigObject
 import hedgehog.*
 import hedgehog.runner.*
 import pureconfig.error.{ConfigReaderFailures, ConvertFailure, UserValidationFailed}
