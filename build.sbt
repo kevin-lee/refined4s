@@ -197,6 +197,7 @@ lazy val props =
     val RepoName       = GitHubRepo.fold("refined4s")(_.nameToString)
 
     val Scala3Version = "3.1.3"
+//    val Scala3Version = "3.3.1"
 
     val ProjectScalaVersion = Scala3Version
 

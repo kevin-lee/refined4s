@@ -1,5 +1,6 @@
 package refined4s.modules.pureconfig.derivation
 
+import com.typesafe.config.ConfigValue
 import pureconfig.error.UserValidationFailed
 import pureconfig.{ConfigReader, ConfigWriter}
 import refined4s.*
@@ -9,24 +10,26 @@ import refined4s.*
   */
 trait instances {
 
-  given derivedNewtypeConfigReader[A, B](using coercible: Coercible[A, B], configReader: ConfigReader[A]): ConfigReader[B] =
+  inline given derivedNewtypeConfigReader[A, B](using coercible: Coercible[A, B], configReader: ConfigReader[A]): ConfigReader[B] =
     Coercible.unsafeWrapM(configReader)
 
-//  import refined4s.internal.typeTools.*
+  import refined4s.internal.typeTools.*
 
   @SuppressWarnings(Array("org.wartremover.warts.ToString"))
-  given derivedRefinedConfigReader[A, B](using refinedCtor: RefinedCtor[B, A], configReader: ConfigReader[A]): ConfigReader[B] =
+  inline given derivedRefinedConfigReader[A, B](using refinedCtor: RefinedCtor[B, A], configReader: ConfigReader[A]): ConfigReader[B] =
     configReader.emap { a =>
       refinedCtor.create(a).left.map { err =>
-//        val expectedType = getTypeName[B]
+        val expectedType = getTypeName[B]
         UserValidationFailed(
-          s"Invalid value found: ${a.toString} with error: $err"
+          s"The value ${a.toString} cannot be created as the expected type, $expectedType, due to the following error: $err"
         )
       }
     }
 
-  given derivedConfigWriter[A, B](using coercible: Coercible[A, B], configWriter: ConfigWriter[B]): ConfigWriter[A] =
-    a => configWriter.to(coercible(a))
+  inline given derivedConfigWriter[A, B](using coercible: Coercible[A, B], configWriter: ConfigWriter[B]): ConfigWriter[A] with {
+    override inline def to(a: A): ConfigValue =
+      configWriter.to(coercible(a))
+  }
 
 }
 object instances extends instances
