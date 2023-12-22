@@ -1,7 +1,6 @@
 package refined4s.modules.circe.derivation
 
 import refined4s.*
-import refined4s.modules.circe.derivation.*
 
 import hedgehog.*
 import hedgehog.runner.*

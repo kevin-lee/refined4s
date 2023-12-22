@@ -10,7 +10,6 @@ import extras.hedgehog.ce3.CatsEffectRunner
 import hedgehog.*
 import hedgehog.runner.*
 import refined4s.*
-import refined4s.modules.cats.derivation.*
 import refined4s.modules.doobie.derivation.instances.given
 import refined4s.types.all.*
 

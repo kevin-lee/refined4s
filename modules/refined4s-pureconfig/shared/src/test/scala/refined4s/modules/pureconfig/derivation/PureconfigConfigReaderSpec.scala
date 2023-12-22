@@ -1,18 +1,12 @@
 package refined4s.modules.pureconfig.derivation
 
 import cats.syntax.all.*
-import com.typesafe.config.ConfigOrigin
-import com.typesafe.config.impl.{OriginType, SimpleConfigOrigin}
 import hedgehog.*
 import hedgehog.runner.*
 import pureconfig.*
 import pureconfig.error.{ConfigReaderFailures, ConvertFailure, UserValidationFailed}
 import pureconfig.generic.derivation.default.*
-import refined4s.modules.pureconfig.derivation.*
 import refined4s.{InlinedRefined, Newtype, Refined}
-
-import java.net.URL
-import java.util
 
 /** @author Kevin Lee
   * @since 2023-12-14

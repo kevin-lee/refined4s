@@ -2,7 +2,6 @@ package refined4s.modules.doobie.derivation
 
 import cats.*
 import doobie.{Get, Put}
-import refined4s.modules.cats.derivation.instances.given
 import refined4s.{Coercible, RefinedCtor}
 
 /** @author Kevin Lee

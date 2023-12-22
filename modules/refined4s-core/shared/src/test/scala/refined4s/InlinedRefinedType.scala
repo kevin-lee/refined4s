@@ -1,7 +1,6 @@
 package refined4s
 
 import cats.*
-import scala.compiletime.*
 import scala.quoted.*
 
 object InlinedRefinedType {

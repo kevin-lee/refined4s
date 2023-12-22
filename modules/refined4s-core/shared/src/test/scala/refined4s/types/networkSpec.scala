@@ -86,7 +86,7 @@ object networkSpec extends Properties {
   }
 
   def testUriApplyInvalid: Result = {
-    import scala.compiletime.testing.*
+    import scala.compiletime.testing.typeChecks
 
     val shouldNotCompile = !typeChecks(
       """
@@ -210,7 +210,7 @@ object networkSpec extends Properties {
   }
 
   def testNetworkIsValidateUriWithInvalidLiteral: Result = {
-    import scala.compiletime.testing.*
+    import scala.compiletime.testing.typeCheckErrors
     val expectedMessage = network.UnexpectedLiteralErrorMessage
 
     val actual = typeCheckErrors(
@@ -241,7 +241,7 @@ object networkSpec extends Properties {
   }
 
   def testPortNumberApplyInvalid: Result = {
-    import scala.compiletime.testing.*
+    import scala.compiletime.testing.typeChecks
 
     val shouldNotCompile  = !typeChecks(
       """
@@ -351,7 +351,7 @@ object networkSpec extends Properties {
   }
 
   def testSystemPortNumberApplyInvalid: Result = {
-    import scala.compiletime.testing.*
+    import scala.compiletime.testing.typeChecks
 
     val shouldNotCompile  = !typeChecks(
       """
@@ -462,7 +462,7 @@ object networkSpec extends Properties {
   }
 
   def testNonSystemPortNumberApplyInvalid: Result = {
-    import scala.compiletime.testing.*
+    import scala.compiletime.testing.typeChecks
 
     val shouldNotCompile  = !typeChecks(
       """
@@ -572,7 +572,7 @@ object networkSpec extends Properties {
   }
 
   def testUserPortNumberApplyInvalid: Result = {
-    import scala.compiletime.testing.*
+    import scala.compiletime.testing.typeChecks
 
     val shouldNotCompile  = !typeChecks(
       """
@@ -682,7 +682,7 @@ object networkSpec extends Properties {
   }
 
   def testDynamicPortNumberApplyInvalid: Result = {
-    import scala.compiletime.testing.*
+    import scala.compiletime.testing.typeChecks
 
     val shouldNotCompile  = !typeChecks(
       """

@@ -1,6 +1,5 @@
 package refined4s.modules.pureconfig.derivation
 
-import cats.syntax.all.*
 import hedgehog.*
 import hedgehog.runner.*
 import pureconfig.generic.derivation.default.*

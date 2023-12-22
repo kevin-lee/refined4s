@@ -7,7 +7,6 @@ import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.*
 import refined4s.*
-import refined4s.modules.circe.derivation.*
 
 /** @author Kevin Lee
   * @since 2023-12-11
