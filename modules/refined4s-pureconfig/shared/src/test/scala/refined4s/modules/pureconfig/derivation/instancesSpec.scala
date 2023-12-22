@@ -78,7 +78,9 @@ object instancesSpec extends Properties {
              |}
              |""".stripMargin
 
-      val expected = s"Invalid value found: ${id.toString} with error: Invalid value: [${id.toString}]. It must be a positive Long"
+      val expected =
+        s"The value ${id.toString} cannot be created as the expected type, ${Id.getClass.getName.replace("$", ".")}Type, due to the following error: " +
+          s"Invalid value: [${id.toString}]. It must be a positive Long"
 
       ConfigSource
         .string(confString)
