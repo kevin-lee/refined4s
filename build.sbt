@@ -159,6 +159,7 @@ lazy val docs = (project in file("docs-gen-tmp/docs"))
   .settings(
     scalaVersion := props.Scala3Version,
     name := prefixedProjectName("docs"),
+    scalacOptions ~= (ops => ops.filter(_ != "-Wunused:imports")),
     mdocIn := file("docs"),
     mdocOut := file("generated-docs/docs"),
     cleanFiles += file("generated-docs/docs"),

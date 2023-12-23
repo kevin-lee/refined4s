@@ -26,7 +26,6 @@ you can use [pre-defined traits for cats](#with-explicit-pre-defined-cats-suppor
 :::
 ```scala mdoc
 import refined4s.*
-import refined4s.types.all.*
 
 type Name = Name.Type
 object Name extends Newtype[String]

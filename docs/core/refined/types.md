@@ -459,7 +459,217 @@ nonPosLongMinus999.value
 
 ## Refined `BigInt`
 
-...TBA...
+### `NegBigInt`: negative `BigInt`
+
+#### Compile-time Validation
+```scala mdoc
+NegBigInt(-1)
+```
+```scala mdoc:fail
+NegBigInt(0)
+```
+```scala mdoc:fail
+NegBigInt(1)
+```
+
+#### Runtime Validation
+```scala mdoc
+val validNegBigInt = -1 
+NegBigInt.from(validNegBigInt)
+```
+```scala mdoc
+val invalidNegBigInt1 = 0 
+NegBigInt.from(invalidNegBigInt1)
+
+val invalidNegBigInt2 = 1
+NegBigInt.from(invalidNegBigInt2)
+```
+
+#### Comparison
+```scala mdoc
+val negBigInt1 = NegBigInt(-1)
+val negBigInt2 = NegBigInt(-2)
+
+negBigInt1 > negBigInt2
+negBigInt1 >= negBigInt2
+negBigInt1 == negBigInt2
+negBigInt1 < negBigInt2
+negBigInt1 <= negBigInt2
+```
+
+#### Get Value
+```scala mdoc
+val negBigInt123 = NegBigInt(-123)
+val negBigInt999 = NegBigInt(-999)
+
+negBigInt123.value
+
+negBigInt999.value
+```
+
+***
+
+### `NonNegBigInt`: non-negative `BigInt`
+
+#### Compile-time Validation
+```scala mdoc
+NonNegBigInt(0)
+NonNegBigInt(1)
+```
+
+```scala mdoc:fail
+NonNegBigInt(-2)
+```
+
+#### Runtime Validation
+```scala mdoc
+val validNonNegBigInt = 1 
+NonNegBigInt.from(validNonNegBigInt)
+```
+```scala mdoc
+val invalidNonNegBigInt1 = -1
+NonNegBigInt.from(invalidNonNegBigInt1)
+
+val invalidNonNegBigInt2 = -999
+NonNegBigInt.from(invalidNonNegBigInt2)
+```
+
+#### Comparison
+
+```scala mdoc
+val nonNegBigInt1 = NonNegBigInt(0)
+val nonNegBigInt2 = NonNegBigInt(999)
+
+nonNegBigInt1 > nonNegBigInt2
+nonNegBigInt1 >= nonNegBigInt2
+nonNegBigInt1 == nonNegBigInt2
+nonNegBigInt1 < nonNegBigInt2
+nonNegBigInt1 <= nonNegBigInt2
+```
+
+#### Get Value
+
+```scala mdoc
+val nonNegBigInt123 = NonNegBigInt(0)
+val nonNegBigInt999 = NonNegBigInt(999)
+
+nonNegBigInt123.value
+
+nonNegBigInt999.value
+```
+
+***
+
+### `PosBigInt`: positive `BigInt`
+
+#### Compile-time Validation
+```scala mdoc
+PosBigInt(1)
+PosBigInt(999)
+```
+
+```scala mdoc:fail
+PosBigInt(0)
+```
+```scala mdoc:fail
+PosBigInt(-2)
+```
+
+#### Runtime Validation
+
+```scala mdoc
+val validPosBigInt = 1
+PosBigInt.from(validPosBigInt)
+```
+
+```scala mdoc
+val invalidPosBigInt1 = 0
+PosBigInt.from(invalidPosBigInt1)
+
+val invalidPosBigInt2 = -999
+PosBigInt.from(invalidPosBigInt2)
+```
+
+#### Comparison
+
+```scala mdoc
+val posBigInt1 = PosBigInt(1)
+val posBigInt2 = PosBigInt(999)
+
+posBigInt1 > posBigInt2
+posBigInt1 >= posBigInt2
+posBigInt1 == posBigInt2
+posBigInt1 < posBigInt2
+posBigInt1 <= posBigInt2
+```
+
+#### Get Value
+
+```scala mdoc
+val posBigInt123 = PosBigInt(123)
+val posBigInt999 = PosBigInt(999)
+
+posBigInt123.value
+
+posBigInt999.value
+```
+
+***
+
+### `NonPosBigInt`: non-positive `BigInt`
+
+#### Compile-time Validation
+```scala mdoc
+NonPosBigInt(0)
+NonPosBigInt(-999)
+```
+
+```scala mdoc:fail
+NonPosBigInt(1)
+```
+
+#### Runtime Validation
+
+```scala mdoc
+val validNonPosBigInt = 0
+NonPosBigInt.from(validNonPosBigInt)
+
+val validNonPosBigInt2 = -999
+NonPosBigInt.from(validNonPosBigInt2)
+```
+
+```scala mdoc
+val invalidNonPosBigInt1 = 1
+NonPosBigInt.from(invalidNonPosBigInt1)
+
+val invalidNonPosBigInt2 = 999
+NonPosBigInt.from(invalidNonPosBigInt2)
+```
+
+#### Comparison
+
+```scala mdoc
+val nonPosBigInt1 = NonPosBigInt(0)
+val nonPosBigInt2 = NonPosBigInt(-999)
+
+nonPosBigInt1 > nonPosBigInt2
+nonPosBigInt1 >= nonPosBigInt2
+nonPosBigInt1 == nonPosBigInt2
+nonPosBigInt1 < nonPosBigInt2
+nonPosBigInt1 <= nonPosBigInt2
+```
+
+#### Get Value
+
+```scala mdoc
+val nonPosBigInt0 = NonPosBigInt(0)
+val nonPosBigIntMinus999 = NonPosBigInt(-999)
+
+nonPosBigInt0.value
+
+nonPosBigIntMinus999.value
+```
+
 
 ***
 
