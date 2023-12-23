@@ -33,6 +33,6 @@ trait RefinedBase[A] extends NewtypeBase[A] {
     override inline def value: A = typ
   }
 
-  override def deriving[M[*]](using fa: M[A]): M[Type] = fa
+  override def deriving[F[*]](using fa: F[A]): F[Type] = fa
 
 }

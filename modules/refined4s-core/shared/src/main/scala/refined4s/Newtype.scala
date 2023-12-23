@@ -10,12 +10,13 @@ trait Newtype[A] extends NewtypeBase[A] {
 
   def unapply(typ: Type): Option[A] = Some(typ)
 
-  inline given wrap: Coercible[A, Type]              = Coercible.instance
-  inline given wrapM[M[*]]: Coercible[M[A], M[Type]] = Coercible.instance
+  inline given wrap: Coercible[A, Type] = Coercible.instance
+
+  inline given wrapTC[F[*]]: Coercible[F[A], F[Type]] = Coercible.instance
 
   extension (typ: Type) {
     override inline def value: A = typ
   }
 
-  override def deriving[M[*]](using fa: M[A]): M[Type] = fa
+  override def deriving[F[*]](using fa: F[A]): F[Type] = fa
 }

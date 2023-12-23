@@ -12,8 +12,8 @@ object CoercibleSpec extends Properties {
   override def tests: List[Test] = List(
     property("test Coercible[A, B].apply", testApply),
     property("test Coercible[A, B].instance.apply", testApply),
-    property("Coercible.unsafeWrapM[M[*], A, B](M[A]) should return M[B]", testUnsafeWrapM),
-    property("Coercible.unsafeWrapMOfM[M1[*], M2[*], A, B](M1[M2[A]]) should return M1[M2[B]]", testUnsafeWrapMOfM),
+    property("Coercible.unsafeWrapTC[F[*], A, B](F[A]) should return F[B]", testUnsafeWrapM),
+    property("Coercible.unsafeWrapHKT[F[*], G[*], A, B](F[G[A]]) should return F[G[B]]", testUnsafeWrapMOfM),
   )
 
   def testApply: Property =
@@ -44,7 +44,7 @@ object CoercibleSpec extends Properties {
       testType <- Gen.constant(TestType(s).some).log("testType")
     } yield {
       val expected  = s.some
-      val coercible = Coercible.unsafeWrapM[Option, TestType, String]
+      val coercible = Coercible.unsafeWrapTC[Option, TestType, String]
       val actual    = coercible(testType)
       actual ==== expected
     }
@@ -55,7 +55,7 @@ object CoercibleSpec extends Properties {
       testType <- Gen.constant(List(TestType(s).some)).log("testType")
     } yield {
       val expected  = List(s.some)
-      val coercible = Coercible.unsafeWrapMOfM[List, Option, TestType, String]
+      val coercible = Coercible.unsafeWrapHKT[List, Option, TestType, String]
       val actual    = coercible(testType)
       actual ==== expected
     }

@@ -23,12 +23,12 @@ object Coercible {
   private object coercible extends Coercible[Any, Any]
 
   /* For type constructors */
-  given unsafeWrapM[M[*], A, B](
+  given unsafeWrapTC[F[*], A, B](
     using Coercible[A, B]
-  ): Coercible[M[A], M[B]] = Coercible.instance
+  ): Coercible[F[A], F[B]] = Coercible.instance
 
-  /* For nested type constructors */
-  given unsafeWrapMOfM[M1[*], M2[*], A, B](
-    using Coercible[M2[A], M2[B]]
-  ): Coercible[M1[M2[A]], M1[M2[B]]] = Coercible.instance
+  /* For higher-kinded type */
+  given unsafeWrapHKT[F[*], G[*], A, B](
+    using Coercible[G[A], G[B]]
+  ): Coercible[F[G[A]], F[G[B]]] = Coercible.instance
 }
