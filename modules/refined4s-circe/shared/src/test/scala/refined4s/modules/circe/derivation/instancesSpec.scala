@@ -230,11 +230,11 @@ object instancesSpec extends Properties {
   }
 
   type MyNewtype = MyNewtype.Type
-  object MyNewtype extends Newtype[String] // with CirceEncoder[String]
+  object MyNewtype extends Newtype[String]
 
   type MyRefinedType = MyRefinedType.Type
   @SuppressWarnings(Array("org.wartremover.warts.Equals"))
-  object MyRefinedType extends Refined[String] { // with CirceEncoder[String] {
+  object MyRefinedType extends Refined[String] {
     override inline def invalidReason(a: String): String =
       "It has to be a non-empty String but got \"" + a + "\""
 
@@ -242,11 +242,13 @@ object instancesSpec extends Properties {
   }
 
   type MyRefinedNewtype = MyRefinedNewtype.Type
-  object MyRefinedNewtype extends Newtype[MyRefinedType] // with CirceEncoder[MyRefinedType]
+  object MyRefinedNewtype extends Newtype[MyRefinedType]
 
   type MyInlinedRefinedType = MyInlinedRefinedType.Type
   @SuppressWarnings(Array("org.wartremover.warts.Equals"))
-  object MyInlinedRefinedType extends InlinedRefined[String] { // with CirceEncoder[String] {
+  object MyInlinedRefinedType extends InlinedRefined[String] {
+
+    override inline val inlinedExpectedValue             = "a non-empty String"
     override inline def invalidReason(a: String): String =
       "It has to be a non-empty String but got \"" + a + "\""
 

@@ -7,12 +7,12 @@ import scala.compiletime.*
   */
 trait InlinedRefined[A] extends RefinedBase[A] {
 
-  inline def inlinedInvalidReason(inline a: A): String = invalidReason(a)
+  inline val inlinedExpectedValue: String
 
   inline def inlinedPredicate(inline a: A): Boolean
 
   inline def apply(inline a: A): Type =
     inline if inlinedPredicate(a) then a.asInstanceOf[Type] // scalafix:ok DisableSyntax.asInstanceOf
-    else error("Invalid value: [" + codeOf(a) + "]. " + inlinedInvalidReason(a))
+    else error("Invalid value: [" + codeOf(a) + "]. It must be " + inlinedExpectedValue)
 
 }

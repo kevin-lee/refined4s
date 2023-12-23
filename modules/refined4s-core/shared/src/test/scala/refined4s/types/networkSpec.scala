@@ -119,7 +119,7 @@ object networkSpec extends Properties {
     for {
       input <- Gen.string(Gen.element1('%', '^', '<', '>', '[', ']', '`', '{', '}'), Range.linear(1, 5)).log("input")
     } yield {
-      val expected = s"Invalid value: [$input]. It has to be a URI but got [$input]".asLeft
+      val expected = s"Invalid value: [$input]. It must be a URI String".asLeft
       val actual   = Uri.from(input)
 
       actual ==== expected
@@ -147,7 +147,7 @@ object networkSpec extends Properties {
     for {
       input <- Gen.string(Gen.element1('%', '^', '<', '>', '[', ']', '`', '{', '}'), Range.linear(1, 5)).log("input")
     } yield {
-      val expected = s"Invalid value: [$input]. It has to be a URI but got [$input]"
+      val expected = s"Invalid value: [$input]. It must be a URI String"
 
       try {
         Uri.unsafeFrom(input)

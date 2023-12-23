@@ -169,6 +169,8 @@ object instancesSpec extends Properties {
   type Id = Id.Type
   object Id extends InlinedRefined[Long] {
 
+    override inline val inlinedExpectedValue = "a positive Long"
+
     override inline def invalidReason(a: Long): String =
       "It must be a positive Long"
 

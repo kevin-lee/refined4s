@@ -7,6 +7,8 @@ object InlinedRefinedType {
   type Something = Something.Type
   object Something extends InlinedRefined[Int] {
 
+    override inline val inlinedExpectedValue = "a negative Int"
+
     private def inlinedPredicate0(a: Expr[Int])(using Quotes): Expr[Boolean] = {
       import quotes.reflect.*
       a.asTerm match {
@@ -42,6 +44,7 @@ object InlinedRefinedType {
     given eqSomething: Eq[Something] = deriving[Eq]
 
     given showSomething: Show[Something] = deriving[Show]
+
   }
 
   def validate(a: Int): Int =
@@ -50,6 +53,8 @@ object InlinedRefinedType {
   type MoreThan2CharsString = MoreThan2CharsString.Type
   @SuppressWarnings(Array("org.wartremover.warts.Equals"))
   object MoreThan2CharsString extends InlinedRefined[String] {
+
+    override inline val inlinedExpectedValue = "more than 2 chars"
 
     override inline def invalidReason(a: String): String =
       "The String should have more than 2 chars but got " + a + " instead"

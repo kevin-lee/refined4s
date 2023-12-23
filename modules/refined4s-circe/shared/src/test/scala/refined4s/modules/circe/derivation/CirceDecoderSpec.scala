@@ -162,6 +162,9 @@ object CirceDecoderSpec extends Properties {
   type MyInlinedRefinedType = MyInlinedRefinedType.Type
   @SuppressWarnings(Array("org.wartremover.warts.Equals"))
   object MyInlinedRefinedType extends InlinedRefined[String] with CirceRefinedDecoder[String] {
+
+    override inline val inlinedExpectedValue = "a non-empty String"
+
     override inline def invalidReason(a: String): String =
       "It has to be a non-empty String but got \"" + a + "\""
 

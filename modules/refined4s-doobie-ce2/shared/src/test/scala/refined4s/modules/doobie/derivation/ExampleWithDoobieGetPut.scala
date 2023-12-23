@@ -27,6 +27,9 @@ object ExampleWithDoobieGetPut {
   type MyString = MyString.Type
   @SuppressWarnings(Array("org.wartremover.warts.Equals"))
   object MyString extends InlinedRefined[String] with DoobieRefinedGetPut[String] {
+
+    override inline val inlinedExpectedValue = "a non-empty String"
+
     override inline def inlinedPredicate(inline a: String): Boolean = a != ""
 
     override inline def invalidReason(a: String): String = "It must be a non-empty String"
