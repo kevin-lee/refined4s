@@ -229,6 +229,8 @@ trait numeric {
 
     override def predicate(a: BigInt): Boolean = a < BigInt0
 
+    override inline val inlinedExpectedValue = "a negative BigInt"
+
     override inline def inlinedPredicate(inline a: BigInt): Boolean = ${ numericTools.isNegativeBigInt('a) }
 
     inline def apply(inline a: Int): Type = apply(BigInt(a))
@@ -236,6 +238,7 @@ trait numeric {
     inline def apply(inline a: Long): Type = apply(BigInt(a))
 
     inline def apply(inline a: String): Type = apply(BigInt(a))
+
   }
 
   type NonNegBigInt = NonNegBigInt.Type
@@ -244,6 +247,8 @@ trait numeric {
     override inline def invalidReason(a: BigInt): String = expectedMessage("a non-negative BigInt")
 
     override def predicate(a: BigInt): Boolean = a >= BigInt0
+
+    override inline val inlinedExpectedValue = "a non-negative BigInt"
 
     override inline def inlinedPredicate(inline a: BigInt): Boolean = ${ numericTools.isNonNegativeBigInt('a) }
 
@@ -261,6 +266,8 @@ trait numeric {
 
     override def predicate(a: BigInt): Boolean = a > BigInt0
 
+    override inline val inlinedExpectedValue = "a positive BigInt"
+
     override inline def inlinedPredicate(inline a: BigInt): Boolean = ${ numericTools.isPositiveBigInt('a) }
 
     inline def apply(inline a: Int): Type = apply(BigInt(a))
@@ -277,6 +284,8 @@ trait numeric {
 
     override def predicate(a: BigInt): Boolean = a <= BigInt0
 
+    override inline val inlinedExpectedValue = "a non-positive BigInt"
+
     override inline def inlinedPredicate(inline a: BigInt): Boolean = ${ numericTools.isNonPositiveBigInt('a) }
 
     inline def apply(inline a: Int): Type = apply(BigInt(a))
@@ -292,6 +301,8 @@ trait numeric {
     override inline def invalidReason(a: BigDecimal): String = expectedMessage("a negative BigDecimal")
 
     override def predicate(a: BigDecimal): Boolean = a < BigDecimal0
+
+    override inline val inlinedExpectedValue = "a negative BigDecimal"
 
     override inline def inlinedPredicate(inline a: BigDecimal): Boolean = ${ numericTools.isNegativeBigDecimal('a) }
 
@@ -313,6 +324,8 @@ trait numeric {
 
     override def predicate(a: BigDecimal): Boolean = a >= BigDecimal0
 
+    override inline val inlinedExpectedValue = "a non-negative BigDecimal"
+
     override inline def inlinedPredicate(inline a: BigDecimal): Boolean = ${ numericTools.isNonNegativeBigDecimal('a) }
 
     inline def apply(inline a: Int): Type = apply(BigDecimal(a))
@@ -333,6 +346,8 @@ trait numeric {
 
     override def predicate(a: BigDecimal): Boolean = a > BigDecimal0
 
+    override inline val inlinedExpectedValue = "a positive BigDecimal"
+
     override inline def inlinedPredicate(inline a: BigDecimal): Boolean = ${ numericTools.isPositiveBigDecimal('a) }
 
     inline def apply(inline a: Int): Type = apply(BigDecimal(a))
@@ -352,6 +367,8 @@ trait numeric {
     override inline def invalidReason(a: BigDecimal): String = expectedMessage("a non-positive BigDecimal")
 
     override def predicate(a: BigDecimal): Boolean = a <= BigDecimal0
+
+    override inline val inlinedExpectedValue = "a non-positive BigDecimal"
 
     override inline def inlinedPredicate(inline a: BigDecimal): Boolean = ${ numericTools.isNonPositiveBigDecimal('a) }
 

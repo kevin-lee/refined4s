@@ -18,7 +18,7 @@ trait network {
   object Uri extends InlinedRefined[String] {
 
     override def invalidReason(a: String): String =
-      "It has to be a URI but got [" + a + "]"
+      expectedMessage(inlinedExpectedValue)
 
     override def predicate(a: String): Boolean =
       try {
@@ -28,6 +28,8 @@ trait network {
         case NonFatal(_) =>
           false
       }
+
+    override inline val inlinedExpectedValue = "a URI String"
 
     override inline def inlinedPredicate(inline uri: String): Boolean = ${ isValidateUri('uri) }
 
