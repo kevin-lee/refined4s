@@ -8,13 +8,14 @@ trait NewtypeBase[A] {
 
   given newRefinedCanEqual: CanEqual[Type, Type] = CanEqual.derived
 
-  inline given unwrap: Coercible[Type, A]              = Coercible.instance
-  inline given unwrapM[M[*]]: Coercible[M[Type], M[A]] = Coercible.instance
+  inline given unwrap: Coercible[Type, A] = Coercible.instance
+
+  inline given unwrapTC[F[*]]: Coercible[F[Type], F[A]] = Coercible.instance
 
   extension (typ: Type) {
     def value: A
   }
 
-  def deriving[M[*]](using fa: M[A]): M[Type]
+  def deriving[F[*]](using fa: F[A]): F[Type]
 
 }

@@ -11,7 +11,7 @@ import refined4s.*
 trait instances {
 
   inline given derivedNewtypeConfigReader[A, B](using coercible: Coercible[A, B], configReader: ConfigReader[A]): ConfigReader[B] =
-    Coercible.unsafeWrapM(configReader)
+    Coercible.unsafeWrapTC(configReader)
 
   import refined4s.internal.typeTools.*
 

@@ -12,7 +12,7 @@ trait instances {
     refined4s.modules.cats.derivation.instances.contraCoercible(encoder)
 
   inline given derivedNewtypeDecoder[A, B](using coercible: Coercible[A, B], decoder: Decoder[A]): Decoder[B] =
-    Coercible.unsafeWrapM(decoder)
+    Coercible.unsafeWrapTC(decoder)
 
   inline given derivedRefinedDecoder[A, B](using refinedCtor: RefinedCtor[B, A], decoder: Decoder[A]): Decoder[B] =
     decoder.emap(refinedCtor.create)
