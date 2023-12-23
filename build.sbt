@@ -100,7 +100,10 @@ lazy val circe    = module("circe", crossProject(JVMPlatform, JSPlatform))
       libs.extrasTypeInfo % Test,
     )
   )
-  .dependsOn(core % props.IncludeTest)
+  .dependsOn(
+    core % props.IncludeTest,
+    cats,
+  )
 lazy val circeJvm = circe.jvm
 lazy val circeJs  = circe.js.settings(jsSettingsForFuture)
 
