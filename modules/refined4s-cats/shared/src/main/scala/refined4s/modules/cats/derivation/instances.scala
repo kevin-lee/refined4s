@@ -2,7 +2,6 @@ package refined4s.modules.cats.derivation
 
 import cats.*
 import refined4s.*
-import refined4s.types.all.*
 
 /** @author Kevin Lee
   * @since 2023-12-07
@@ -10,9 +9,12 @@ import refined4s.types.all.*
 
 trait instances {
 
-  given eqDerived[A, B](using coercible: Coercible[A, B], eqB: Eq[B]): Eq[A] = (a1, a2) => eqB.eqv(coercible(a1), coercible(a2))
+  inline def contraCoercible[F[*], A, B](fb: F[B])(using contravariant: Contravariant[F], coercible: Coercible[A, B]): F[A] =
+    contravariant.contramap[B, A](fb)(coercible(_))
 
-  given showDerived[A, B](using coercible: Coercible[A, B], showB: Show[B]): Show[A] = showB.show.compose(coercible(_))(_)
+  inline given eqDerived[A, B](using coercible: Coercible[A, B], eqB: Eq[B]): Eq[A] = contraCoercible(eqB)
+
+  inline given showDerived[A, B](using coercible: Coercible[A, B], showB: Show[B]): Show[A] = contraCoercible(showB)
 
 }
 object instances extends instances
