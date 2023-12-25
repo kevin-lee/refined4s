@@ -24,4 +24,3 @@ trait strings {
     }
   }
 }
-object strings extends strings

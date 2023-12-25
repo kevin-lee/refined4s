@@ -12,7 +12,7 @@ object stringsSpec extends Properties {
   override def tests: List[Test] = NonEmptyStringSpec.tests
 
   object NonEmptyStringSpec {
-    import strings.NonEmptyString
+    import all.NonEmptyString
 
     def tests: List[Test] = List(
       example("test NonEmptyString.apply", testApply),

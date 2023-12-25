@@ -21,7 +21,7 @@ object numericSpec extends Properties {
 
   object NegIntSpec {
 
-    import numeric.NegInt
+    import all.NegInt
 
     def tests: List[Test] = List(
       example("test NegInt.apply", testApply),
@@ -133,7 +133,7 @@ object numericSpec extends Properties {
 
   object NonNegIntSpec {
 
-    import numeric.NonNegInt
+    import all.NonNegInt
 
     def tests: List[Test] = List(
       example("test NonNegInt.apply", testApply),
@@ -245,7 +245,7 @@ object numericSpec extends Properties {
 
   object PosIntSpec {
 
-    import numeric.PosInt
+    import all.PosInt
 
     def tests: List[Test] = List(
       example("test PosInt.apply", testApply),
@@ -357,7 +357,7 @@ object numericSpec extends Properties {
 
   object NonPosIntSpec {
 
-    import numeric.NonPosInt
+    import all.NonPosInt
 
     def tests: List[Test] = List(
       example("test NonPosInt.apply", testApply),
@@ -476,7 +476,7 @@ object numericSpec extends Properties {
 
   object NegLongSpec {
 
-    import numeric.NegLong
+    import all.NegLong
 
     def tests: List[Test] = List(
       example("test NegLong.apply", testApply),
@@ -588,7 +588,7 @@ object numericSpec extends Properties {
 
   object NonNegLongSpec {
 
-    import numeric.NonNegLong
+    import all.NonNegLong
 
     def tests: List[Test] = List(
       example("test NonNegLong.apply", testApply),
@@ -707,7 +707,7 @@ object numericSpec extends Properties {
 
   object PosLongSpec {
 
-    import numeric.PosLong
+    import all.PosLong
 
     def tests: List[Test] = List(
       example("test PosLong.apply", testApply),
@@ -819,7 +819,7 @@ object numericSpec extends Properties {
 
   object NonPosLongSpec {
 
-    import numeric.NonPosLong
+    import all.NonPosLong
 
     def tests: List[Test] = List(
       example("test NonPosLong.apply", testApply),
@@ -938,7 +938,7 @@ object numericSpec extends Properties {
 
   object NegShortSpec {
 
-    import numeric.NegShort
+    import all.NegShort
 
     def tests: List[Test] = List(
       example("test NegShort.apply", testApply),
@@ -1050,7 +1050,7 @@ object numericSpec extends Properties {
 
   object NonNegShortSpec {
 
-    import numeric.NonNegShort
+    import all.NonNegShort
 
     def tests: List[Test] = List(
       example("test NonNegShort.apply", testApply),
@@ -1162,7 +1162,7 @@ object numericSpec extends Properties {
 
   object PosShortSpec {
 
-    import numeric.PosShort
+    import all.PosShort
 
     def tests: List[Test] = List(
       example("test PosShort.apply", testApply),
@@ -1274,7 +1274,7 @@ object numericSpec extends Properties {
 
   object NonPosShortSpec {
 
-    import numeric.NonPosShort
+    import all.NonPosShort
 
     def tests: List[Test] = List(
       example("test NonPosShort.apply", testApply),
@@ -1393,7 +1393,7 @@ object numericSpec extends Properties {
 
   object NegByteSpec {
 
-    import numeric.NegByte
+    import all.NegByte
 
     def tests: List[Test] = List(
       example("test NegByte.apply", testApply),
@@ -1505,7 +1505,7 @@ object numericSpec extends Properties {
 
   object NonNegByteSpec {
 
-    import numeric.NonNegByte
+    import all.NonNegByte
 
     def tests: List[Test] = List(
       example("test NonNegByte.apply", testApply),
@@ -1617,7 +1617,7 @@ object numericSpec extends Properties {
 
   object PosByteSpec {
 
-    import numeric.PosByte
+    import all.PosByte
 
     def tests: List[Test] = List(
       example("test PosByte.apply", testApply),
@@ -1729,7 +1729,7 @@ object numericSpec extends Properties {
 
   object NonPosByteSpec {
 
-    import numeric.NonPosByte
+    import all.NonPosByte
 
     def tests: List[Test] = List(
       example("test NonPosByte.apply", testApply),
@@ -1848,7 +1848,7 @@ object numericSpec extends Properties {
 
   object NegFloatSpec {
 
-    import numeric.NegFloat
+    import all.NegFloat
 
     def tests: List[Test] = List(
       example("test NegFloat.apply", testApply),
@@ -1960,7 +1960,7 @@ object numericSpec extends Properties {
 
   object NonNegFloatSpec {
 
-    import numeric.NonNegFloat
+    import all.NonNegFloat
 
     def tests: List[Test] = List(
       example("test NonNegFloat.apply", testApply),
@@ -2072,7 +2072,7 @@ object numericSpec extends Properties {
 
   object PosFloatSpec {
 
-    import numeric.PosFloat
+    import all.PosFloat
 
     def tests: List[Test] = List(
       example("test PosFloat.apply", testApply),
@@ -2184,7 +2184,7 @@ object numericSpec extends Properties {
 
   object NonPosFloatSpec {
 
-    import numeric.NonPosFloat
+    import all.NonPosFloat
 
     def tests: List[Test] = List(
       example("test NonPosFloat.apply", testApply),
@@ -2305,7 +2305,7 @@ object numericSpec extends Properties {
 
   object NegDoubleSpec {
 
-    import numeric.NegDouble
+    import all.NegDouble
 
     def tests: List[Test] = List(
       example("test NegDouble.apply", testApply),
@@ -2417,7 +2417,7 @@ object numericSpec extends Properties {
 
   object NonNegDoubleSpec {
 
-    import numeric.NonNegDouble
+    import all.NonNegDouble
 
     def tests: List[Test] = List(
       example("test NonNegDouble.apply", testApply),
@@ -2529,7 +2529,7 @@ object numericSpec extends Properties {
 
   object PosDoubleSpec {
 
-    import numeric.PosDouble
+    import all.PosDouble
 
     def tests: List[Test] = List(
       example("test PosDouble.apply", testApply),
@@ -2641,7 +2641,7 @@ object numericSpec extends Properties {
 
   object NonPosDoubleSpec {
 
-    import numeric.NonPosDouble
+    import all.NonPosDouble
 
     def tests: List[Test] = List(
       example("test NonPosDouble.apply", testApply),
@@ -2762,7 +2762,7 @@ object numericSpec extends Properties {
 
   object NegBigIntSpec {
 
-    import numeric.NegBigInt
+    import all.NegBigInt
 
     def tests: List[Test] = List(
       example("test NegBigInt.apply", testApply),
@@ -2924,7 +2924,7 @@ object numericSpec extends Properties {
 
   object NonNegBigIntSpec {
 
-    import numeric.NonNegBigInt
+    import all.NonNegBigInt
 
     def tests: List[Test] = List(
       example("test NonNegBigInt.apply", testApply),
@@ -3085,7 +3085,7 @@ object numericSpec extends Properties {
 
   object PosBigIntSpec {
 
-    import numeric.PosBigInt
+    import all.PosBigInt
 
     def tests: List[Test] = List(
       example("test PosBigInt.apply", testApply),
@@ -3246,7 +3246,7 @@ object numericSpec extends Properties {
 
   object NonPosBigIntSpec {
 
-    import numeric.NonPosBigInt
+    import all.NonPosBigInt
 
     def tests: List[Test] = List(
       example("test NonPosBigInt.apply", testApply),
@@ -3407,7 +3407,7 @@ object numericSpec extends Properties {
 
   object NegBigDecimalSpec {
 
-    import numeric.NegBigDecimal
+    import all.NegBigDecimal
 
     def tests: List[Test] = List(
       example("test NegBigDecimal.apply", testApply),
@@ -3593,7 +3593,7 @@ object numericSpec extends Properties {
 
   object NonNegBigDecimalSpec {
 
-    import numeric.NonNegBigDecimal
+    import all.NonNegBigDecimal
 
     def tests: List[Test] = List(
       example("test NonNegBigDecimal.apply", testApply),
@@ -3778,7 +3778,7 @@ object numericSpec extends Properties {
 
   object PosBigDecimalSpec {
 
-    import numeric.PosBigDecimal
+    import all.PosBigDecimal
 
     def tests: List[Test] = List(
       example("test PosBigDecimal.apply", testApply),
@@ -3963,7 +3963,7 @@ object numericSpec extends Properties {
 
   object NonPosBigDecimalSpec {
 
-    import numeric.NonPosBigDecimal
+    import all.NonPosBigDecimal
 
     def tests: List[Test] = List(
       example("test NonPosBigDecimal.apply", testApply),

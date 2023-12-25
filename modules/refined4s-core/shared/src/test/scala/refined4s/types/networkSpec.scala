@@ -12,7 +12,7 @@ import java.net.URI
   * @since 2023-12-09
   */
 object networkSpec extends Properties {
-  import network.*
+  import all.{DynamicPortNumber, NonSystemPortNumber, PortNumber, SystemPortNumber, Uri, UserPortNumber}
 
   override def tests: List[Test] = List(
     example("test Uri(valid URI String)", testUriApply),

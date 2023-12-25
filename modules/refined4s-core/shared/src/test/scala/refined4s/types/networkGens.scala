@@ -1,7 +1,7 @@
 package refined4s.types
 
 import hedgehog.*
-import refined4s.types.network.*
+import refined4s.types.all.*
 
 /** @author Kevin Lee
   * @since 2023-12-12
