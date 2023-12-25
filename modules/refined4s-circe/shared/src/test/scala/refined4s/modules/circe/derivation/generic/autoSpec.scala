@@ -1,21 +1,18 @@
-package refined4s.modules.circe.derivation
+package refined4s.modules.circe.derivation.generic
 
 import cats.syntax.all.*
-
-import io.circe.*
-import io.circe.syntax.*
-import io.circe.parser.*
-
-import refined4s.*
-import refined4s.modules.circe.derivation.instances.given
-
 import hedgehog.*
 import hedgehog.runner.*
+import io.circe.*
+import io.circe.parser.*
+import io.circe.syntax.*
+import refined4s.*
+import refined4s.modules.circe.derivation.generic.auto.given
 
 /** @author Kevin Lee
   * @since 2023-12-11
   */
-object instancesSpec extends Properties {
+object autoSpec extends Properties {
   override def tests: List[Test] = List(
     property("test CirceEncoder for Newtype", testNewtypeEncoder),
     property("test CirceEncoder for Refined", testRefinedEncoder),
