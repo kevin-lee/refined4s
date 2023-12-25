@@ -11,7 +11,7 @@ import refined4s.internal.typeTools.getTypeName
 trait PureconfigRefinedConfigReader[A: ConfigReader] {
   self: RefinedBase[A] =>
 
-  given derivedEncoder: ConfigReader[Type] = ConfigReader[A].emap { a =>
+  given derivedConfigReader: ConfigReader[Type] = ConfigReader[A].emap { a =>
     from(a).left.map { err =>
       val expectedType = getTypeName[Type]
       UserValidationFailed(

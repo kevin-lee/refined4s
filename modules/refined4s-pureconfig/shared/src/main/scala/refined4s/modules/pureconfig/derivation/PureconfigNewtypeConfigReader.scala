@@ -9,5 +9,5 @@ import refined4s.NewtypeBase
 trait PureconfigNewtypeConfigReader[A: ConfigReader] {
   self: NewtypeBase[A] =>
 
-  given derivedEncoder: ConfigReader[Type] = deriving[ConfigReader]
+  given derivedConfigReader: ConfigReader[Type] = deriving[ConfigReader]
 }

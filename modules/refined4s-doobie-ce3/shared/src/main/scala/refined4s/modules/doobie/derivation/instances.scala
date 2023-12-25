@@ -9,7 +9,7 @@ import refined4s.{Coercible, RefinedCtor}
   */
 trait instances {
 
-  inline given putNewtype[A, B](using coercible: Coercible[A, B], put: Put[B]): Put[A] =
+  inline given derivedPut[A, B](using coercible: Coercible[A, B], put: Put[B]): Put[A] =
     put.contramap(coercible(_))
 
   inline given derivedRefinedGet[A, B](using refinedCtor: RefinedCtor[B, A], getA: Get[A], showA: Show[A]): Get[B] =
