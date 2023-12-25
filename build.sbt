@@ -96,8 +96,10 @@ lazy val circe    = module("circe", crossProject(JVMPlatform, JSPlatform))
   .settings(
     libraryDependencies ++= List(
       libs.circeCore,
-      libs.circeParser    % Test,
-      libs.extrasTypeInfo % Test,
+      libs.circeParser         % Test,
+      libs.circeLiteral        % Test,
+      libs.extrasTypeInfo      % Test,
+      libs.extrasHedgehogCirce % Test,
     )
   )
   .dependsOn(
@@ -246,6 +248,7 @@ lazy val props =
 lazy val libs = new {
 
   lazy val extrasTypeInfo       = "io.kevinlee" %% "extras-type-info"        % props.ExtrasVersion
+  lazy val extrasHedgehogCirce  = "io.kevinlee" %% "extras-hedgehog-circe"   % props.ExtrasVersion
   lazy val extrasDoobieToolsCe2 = "io.kevinlee" %% "extras-doobie-tools-ce2" % props.ExtrasVersion
   lazy val extrasDoobieToolsCe3 = "io.kevinlee" %% "extras-doobie-tools-ce3" % props.ExtrasVersion
 
@@ -253,8 +256,9 @@ lazy val libs = new {
 
   lazy val kittens = "org.typelevel" %% "kittens" % props.KittensVersion
 
-  lazy val circeCore   = "io.circe" %% "circe-core"   % props.CirceVersion
-  lazy val circeParser = "io.circe" %% "circe-parser" % props.CirceVersion
+  lazy val circeCore    = "io.circe" %% "circe-core"    % props.CirceVersion
+  lazy val circeParser  = "io.circe" %% "circe-parser"  % props.CirceVersion
+  lazy val circeLiteral = "io.circe" %% "circe-literal" % props.CirceVersion
 
   lazy val pureconfigCore    = "com.github.pureconfig" %% "pureconfig-core"    % props.PureconfigVersion
   lazy val pureconfigGeneric = "com.github.pureconfig" %% "pureconfig-generic" % props.PureconfigVersion
