@@ -384,4 +384,3 @@ trait numeric {
   }
 
 }
-object numeric extends numeric

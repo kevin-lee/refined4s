@@ -90,7 +90,7 @@ trait network {
   }
 
 }
-object network extends network {
+object network {
   val UnexpectedLiteralErrorMessage: String =
     """Uri must be a string literal.
       |If it's unknown in compile-time, use `Uri.from` or `Uri.unsafeFrom` instead.
