@@ -4,7 +4,7 @@ import cats.*
 
 import refined4s.*
 import refined4s.modules.cats.derivation.*
-import refined4s.modules.cats.derivation.instances.given
+import refined4s.modules.cats.derivation.types.all.given
 import refined4s.types.all.*
 
 final case class Example(id: Example.Id, name: Example.Name, note: Example.Note, count: Example.Count)
@@ -21,7 +21,7 @@ object Example {
 
   type MyString = MyString.Type
   @SuppressWarnings(Array("org.wartremover.warts.Equals"))
-  object MyString extends InlinedRefined[String] {
+  object MyString extends InlinedRefined[String] with CatsEqShow[String] {
 
     override inline val inlinedExpectedValue = "a non-empty String"
 

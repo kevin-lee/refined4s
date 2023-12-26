@@ -28,7 +28,7 @@ object instancesSpec extends Properties with RunSyncCe2 with RunWithDb {
 
   def testFetchUpdateFetch(testName: String): Property =
     for {
-      example <- genExample.log("example")
+      example <- Gens.genExample.log("example")
     } yield withDb[F](testName) { transactor =>
       val expectedFetchBefore = none[Example]
       val expectedInsert      = 1
@@ -60,10 +60,4 @@ object instancesSpec extends Properties with RunSyncCe2 with RunWithDb {
       )
     }
 
-  def genExample: Gen[Example] = for {
-    id    <- Gen.int(Range.linear(1, Int.MaxValue)).map(Example.Id(_))
-    name  <- Gen.string(Gen.alphaNum, Range.linear(5, 20)).map(s => Example.Name(NonEmptyString.unsafeFrom(s)))
-    note  <- Gen.string(Gen.alphaNum, Range.linear(5, 20)).map(s => Example.Note(Example.MyString.unsafeFrom(s)))
-    count <- Gen.int(Range.linear(0, Int.MaxValue)).map(Example.Count.unsafeFrom)
-  } yield Example(id, name, note, count)
 }

@@ -3,7 +3,7 @@ package refined4s.modules.doobie.derivation
 import cats.*
 import refined4s.*
 import refined4s.modules.cats.derivation.*
-import refined4s.modules.cats.derivation.instances.given
+import refined4s.modules.cats.derivation.types.all.given
 import refined4s.modules.doobie.derivation.instances.given
 import refined4s.types.all.*
 
@@ -26,7 +26,7 @@ object ExampleWithDoobieGetPut {
 
   type MyString = MyString.Type
   @SuppressWarnings(Array("org.wartremover.warts.Equals"))
-  object MyString extends InlinedRefined[String] with DoobieRefinedGetPut[String] {
+  object MyString extends InlinedRefined[String] with CatsEqShow[String] with DoobieRefinedGetPut[String] {
 
     override inline val inlinedExpectedValue = "a non-empty String"
 

@@ -1,5 +1,6 @@
 package refined4s.modules.cats
 
+import cats.Contravariant
 import cats.data.*
 import cats.syntax.all.*
 import refined4s.*
@@ -8,6 +9,10 @@ import refined4s.*
   * @since 2023-12-06
   */
 trait syntax {
+
+  inline def contraCoercible[F[*], A, B](inline fb: F[B])(using contravariant: Contravariant[F], coercible: Coercible[A, B]): F[A] =
+    contravariant.contramap[B, A](fb)(coercible(_))
+
   import refined4s.syntax.*
   import refined4s.internal.typeTools.*
 
