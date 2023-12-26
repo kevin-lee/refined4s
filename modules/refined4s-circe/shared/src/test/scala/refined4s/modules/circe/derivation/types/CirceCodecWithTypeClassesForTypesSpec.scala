@@ -1,4 +1,4 @@
-package refined4s.modules.circe.derivation
+package refined4s.modules.circe.derivation.types
 
 import cats.*
 import extras.hedgehog.circe.RoundTripTester
@@ -8,6 +8,7 @@ import io.circe.{Codec, Decoder, Encoder}
 import refined4s.*
 import refined4s.modules.cats.derivation.*
 import refined4s.modules.cats.derivation.types.all.given
+import refined4s.modules.circe.derivation.CirceNewtypeCodec
 import refined4s.modules.circe.derivation.types.all.given
 import refined4s.types.all.*
 
@@ -16,7 +17,7 @@ import java.time.Instant
 /** @author Kevin Lee
   * @since 2023-12-25
   */
-object CirceCodecWithInstancesSpec extends Properties {
+object CirceCodecWithTypeClassesForTypesSpec extends Properties {
 
   override def tests: List[Test] = List(
     property("round-trip test Newtype and Refined with derived and custom Codec", roundTripTest),

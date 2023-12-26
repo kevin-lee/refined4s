@@ -12,7 +12,7 @@ import refined4s.types.networkGens
 /** @author Kevin Lee
   * @since 2023-12-11
   */
-object typesSpec extends Properties {
+object allSpec extends Properties {
 
   override def tests: List[Test] = List(
     property("test Encoder[NegInt]", testEncoderNegInt),
