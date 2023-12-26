@@ -1,17 +1,17 @@
-package refined4s.modules.cats.derivation
+package refined4s.modules.cats.derivation.types
 
+import cats.syntax.all.*
 import hedgehog.*
 import hedgehog.runner.*
+import refined4s.modules.cats.derivation.types.all.given
 import refined4s.types.all.*
-import refined4s.modules.cats.derivation.instances.given
-import cats.syntax.all.*
 import refined4s.types.networkGens
 
 /** @author Kevin Lee
   * @since 2023-12-10
   */
 @SuppressWarnings(Array("org.wartremover.warts.ToString"))
-object instancesSpec extends Properties {
+object allSpec extends Properties {
 
   override def tests: List[Test] = List(
     property("test Eq[NegInt]", testEqNegInt),
@@ -115,6 +115,22 @@ object instancesSpec extends Properties {
     //
     property("test Eq[Uri]", testEqUri),
     property("test Show[Uri]", testShowUri),
+
+    //
+    property("test Eq[PortNumber]", testEqPortNumber),
+    property("test Show[PortNumber]", testShowPortNumber),
+    //
+    property("test Eq[SystemPortNumber]", testEqSystemPortNumber),
+    property("test Show[SystemPortNumber]", testShowSystemPortNumber),
+    //
+    property("test Eq[NonSystemPortNumber]", testEqNonSystemPortNumber),
+    property("test Show[NonSystemPortNumber]", testShowNonSystemPortNumber),
+    //
+    property("test Eq[UserPortNumber]", testEqUserPortNumber),
+    property("test Show[UserPortNumber]", testShowUserPortNumber),
+    //
+    property("test Eq[DynamicPortNumber]", testEqDynamicPortNumber),
+    property("test Show[DynamicPortNumber]", testShowDynamicPortNumber),
   )
 
   def testEqNegInt: Property =
@@ -928,6 +944,173 @@ object instancesSpec extends Properties {
       val input = Uri.unsafeFrom(uri)
 
       val expected = uri
+      val actual   = input.show
+
+      actual ==== expected
+    }
+
+  /* network ports */
+
+  def testEqPortNumber: Property =
+    for {
+      portNumber1 <- networkGens.genPortNumberInt.log("portNumber1")
+      portNumber2 <- Gen
+                       .constant(portNumber1)
+                       .map { n =>
+                         if n === 0 then n + 1 else n - 1
+                       }
+                       .log("portNumber2")
+    } yield {
+      val input1 = PortNumber.unsafeFrom(portNumber1)
+      val input2 = PortNumber.unsafeFrom(portNumber2)
+      Result.all(
+        List(
+          Result.diffNamed("Comparing the same objects with ===", input1, input1)(_ === _),
+          Result.diffNamed("Comparing the different objects with =!=", input2, input2)(_ === _),
+        )
+      )
+    }
+
+  def testShowPortNumber: Property =
+    for {
+      portNumber <- networkGens.genPortNumberInt.log("portNumber")
+    } yield {
+
+      val input = PortNumber.unsafeFrom(portNumber)
+
+      val expected = portNumber.toString
+      val actual   = input.show
+
+      actual ==== expected
+    }
+
+  def testEqSystemPortNumber: Property =
+    for {
+      systemPortNumber1 <- networkGens.genSystemPortNumberInt.log("systemPortNumber1")
+      systemPortNumber2 <- Gen
+                             .constant(systemPortNumber1)
+                             .map { n =>
+                               if n === 0 then n + 1 else n - 1
+                             }
+                             .log("systemPortNumber2")
+    } yield {
+      val input1 = SystemPortNumber.unsafeFrom(systemPortNumber1)
+      val input2 = SystemPortNumber.unsafeFrom(systemPortNumber2)
+      Result.all(
+        List(
+          Result.diffNamed("Comparing the same objects with ===", input1, input1)(_ === _),
+          Result.diffNamed("Comparing the different objects with =!=", input2, input2)(_ === _),
+        )
+      )
+    }
+
+  def testShowSystemPortNumber: Property =
+    for {
+      systemPortNumber <- networkGens.genSystemPortNumberInt.log("systemPortNumber")
+    } yield {
+
+      val input = SystemPortNumber.unsafeFrom(systemPortNumber)
+
+      val expected = systemPortNumber.toString
+      val actual   = input.show
+
+      actual ==== expected
+    }
+
+  def testEqNonSystemPortNumber: Property =
+    for {
+      nonSystemPortNumber1 <- networkGens.genNonSystemPortNumberInt.log("nonSystemPortNumber1")
+      nonSystemPortNumber2 <- Gen
+                                .constant(nonSystemPortNumber1)
+                                .map { n =>
+                                  if n === 1024 then n + 1 else n - 1
+                                }
+                                .log("nonSystemPortNumber2")
+    } yield {
+      val input1 = NonSystemPortNumber.unsafeFrom(nonSystemPortNumber1)
+      val input2 = NonSystemPortNumber.unsafeFrom(nonSystemPortNumber2)
+      Result.all(
+        List(
+          Result.diffNamed("Comparing the same objects with ===", input1, input1)(_ === _),
+          Result.diffNamed("Comparing the different objects with =!=", input2, input2)(_ === _),
+        )
+      )
+    }
+
+  def testShowNonSystemPortNumber: Property =
+    for {
+      nonSystemPortNumber <- networkGens.genNonSystemPortNumberInt.log("nonSystemPortNumber")
+    } yield {
+
+      val input = NonSystemPortNumber.unsafeFrom(nonSystemPortNumber)
+
+      val expected = nonSystemPortNumber.toString
+      val actual   = input.show
+
+      actual ==== expected
+    }
+
+  def testEqUserPortNumber: Property =
+    for {
+      userPortNumber1 <- networkGens.genUserPortNumberInt.log("userPortNumber1")
+      userPortNumber2 <- Gen
+                           .constant(userPortNumber1)
+                           .map { n =>
+                             if n === 1024 then n + 1 else n - 1
+                           }
+                           .log("userPortNumber2")
+    } yield {
+      val input1 = UserPortNumber.unsafeFrom(userPortNumber1)
+      val input2 = UserPortNumber.unsafeFrom(userPortNumber2)
+      Result.all(
+        List(
+          Result.diffNamed("Comparing the same objects with ===", input1, input1)(_ === _),
+          Result.diffNamed("Comparing the different objects with =!=", input2, input2)(_ === _),
+        )
+      )
+    }
+
+  def testShowUserPortNumber: Property =
+    for {
+      userPortNumber <- networkGens.genUserPortNumberInt.log("userPortNumber")
+    } yield {
+
+      val input = UserPortNumber.unsafeFrom(userPortNumber)
+
+      val expected = userPortNumber.toString
+      val actual   = input.show
+
+      actual ==== expected
+    }
+
+  def testEqDynamicPortNumber: Property =
+    for {
+      dynamicPortNumber1 <- networkGens.genDynamicPortNumberInt.log("dynamicPortNumber1")
+      dynamicPortNumber2 <- Gen
+                              .constant(dynamicPortNumber1)
+                              .map { n =>
+                                if n === 49152 then n + 1 else n - 1
+                              }
+                              .log("userPortNumber2")
+    } yield {
+      val input1 = DynamicPortNumber.unsafeFrom(dynamicPortNumber1)
+      val input2 = DynamicPortNumber.unsafeFrom(dynamicPortNumber2)
+      Result.all(
+        List(
+          Result.diffNamed("Comparing the same objects with ===", input1, input1)(_ === _),
+          Result.diffNamed("Comparing the different objects with =!=", input2, input2)(_ === _),
+        )
+      )
+    }
+
+  def testShowDynamicPortNumber: Property =
+    for {
+      dynamicPortNumber <- networkGens.genDynamicPortNumberInt.log("dynamicPortNumber")
+    } yield {
+
+      val input = DynamicPortNumber.unsafeFrom(dynamicPortNumber)
+
+      val expected = dynamicPortNumber.toString
       val actual   = input.show
 
       actual ==== expected

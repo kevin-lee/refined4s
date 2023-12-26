@@ -1,6 +1,7 @@
 package refined4s.modules.circe.derivation.generic
 
 import io.circe.{Decoder, Encoder}
+import refined4s.modules.cats.syntax.contraCoercible
 import refined4s.{Coercible, RefinedCtor}
 
 /** @author Kevin Lee
@@ -9,7 +10,7 @@ import refined4s.{Coercible, RefinedCtor}
 trait auto {
 
   inline given derivedEncoder[A, B](using coercible: Coercible[A, B], encoder: Encoder[B]): Encoder[A] =
-    refined4s.modules.cats.derivation.instances.contraCoercible(encoder)
+    contraCoercible(encoder)
 
   inline given derivedNewtypeDecoder[A, B](using coercible: Coercible[A, B], decoder: Decoder[A]): Decoder[B] =
     Coercible.unsafeWrapTC(decoder)
