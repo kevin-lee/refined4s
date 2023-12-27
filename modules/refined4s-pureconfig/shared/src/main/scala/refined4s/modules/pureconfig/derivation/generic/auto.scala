@@ -1,4 +1,4 @@
-package refined4s.modules.pureconfig.derivation
+package refined4s.modules.pureconfig.derivation.generic
 
 import com.typesafe.config.ConfigValue
 import pureconfig.error.UserValidationFailed
@@ -8,7 +8,7 @@ import refined4s.*
 /** @author Kevin Lee
   * @since 2023-12-13
   */
-trait instances {
+trait auto {
 
   inline given derivedNewtypeConfigReader[A, B](using coercible: Coercible[A, B], configReader: ConfigReader[A]): ConfigReader[B] =
     Coercible.unsafeWrapTC(configReader)
@@ -32,4 +32,4 @@ trait instances {
   }
 
 }
-object instances extends instances
+object auto extends auto

@@ -1,20 +1,20 @@
-package refined4s.modules.pureconfig.derivation
+package refined4s.modules.pureconfig.derivation.generic
 
 import com.typesafe.config.{ConfigRenderOptions, ConfigValue, ConfigValueFactory}
 import hedgehog.*
 import hedgehog.runner.*
 import pureconfig.error.{ConfigReaderFailures, ConvertFailure, UserValidationFailed}
-import pureconfig.{ConfigReader, ConfigSource, ConfigWriter}
 import pureconfig.generic.derivation.default.*
+import pureconfig.{ConfigReader, ConfigSource, ConfigWriter}
 import refined4s.*
+import refined4s.modules.pureconfig.derivation.generic.auto.given
 import refined4s.types.all.*
-import refined4s.modules.pureconfig.derivation.instances.given
 import refined4s.types.networkGens
 
 /** @author Kevin Lee
   * @since 2023-12-13
   */
-object instancesSpec extends Properties {
+object autoSpec extends Properties {
   override def tests: List[Test] = List(
     property("test ConfigReader[Newtype], ConfigReader[Refined] and ConfigReader[InlinedRefined] all together", testConfigReaderAll),
     property("test ConfigReader[Refined] with invalid value", testConfigReaderInvalid),
