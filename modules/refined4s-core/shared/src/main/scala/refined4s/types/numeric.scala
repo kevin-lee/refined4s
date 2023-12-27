@@ -237,6 +237,8 @@ trait numeric {
 
     inline def apply(inline a: Long): Type = apply(BigInt(a))
 
+    inline def apply(inline a: BigDecimal): Type = apply(a.toBigInt)
+
     inline def apply(inline a: String): Type = apply(BigInt(a))
 
   }

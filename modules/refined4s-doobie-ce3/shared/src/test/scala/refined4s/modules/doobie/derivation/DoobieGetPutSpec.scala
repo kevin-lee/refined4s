@@ -12,10 +12,14 @@ import hedgehog.runner.*
 import refined4s.*
 import refined4s.types.all.*
 
+import java.util.concurrent.atomic.AtomicInteger
+
 /** @author Kevin Lee
   * @since 2023-12-16
   */
 object DoobieGetPutSpec extends Properties with CatsEffectRunner with RunWithDb {
+
+  val postgresPortNumber: AtomicInteger = AtomicInteger(5832)
 
   import effectie.instances.ce3.fx.ioFx
 
@@ -25,43 +29,59 @@ object DoobieGetPutSpec extends Properties with CatsEffectRunner with RunWithDb 
   override def tests: List[Test] = List(
     propertyWithDb(
       "test DoobiePut, DoobieNewtypeGet, DoobieRefinedGet, DoobieNewtypeGetPut and DoobieRefinedGetPut all together by fetching and updating data",
+      postgresPortNumber.getAndIncrement(),
       testFetchUpdateFetch,
     )
   )
 
-  def testFetchUpdateFetch(testName: String): Property =
+  def testFetchUpdateFetch(testName: String, postgresPortNumber: Int): Property =
     for {
       example <- genExampleWithDoobieGetPut.log("example")
-    } yield runIO(withDb[F](testName) { transactor =>
-      val expectedFetchBefore = none[ExampleWithDoobieGetPut]
-      val expectedInsert      = 1
-      val expectedFetchAfter  = example.some
-
-      val fetch = DbTools.fetchSingleRow[F][ExampleWithDoobieGetPut](
+    } yield runIO(
+      withDb[F](
+        testName,
+        postgresPortNumber,
+        sql"""CREATE SCHEMA IF NOT EXISTS db_tools_test""",
         sql"""
-          SELECT id, name, note, count
-            FROM db_tools_test.example
-        """
-      )(transactor)
+          CREATE TABLE IF NOT EXISTS db_tools_test.example
+          (
+              id SERIAL PRIMARY KEY,
+              name TEXT NOT NULL,
+              note TEXT NULL,
+              count INT NOT NULL
+          )
+        """,
+      ) { transactor =>
+        val expectedFetchBefore = none[ExampleWithDoobieGetPut]
+        val expectedInsert      = 1
+        val expectedFetchAfter  = example.some
 
-      val insert = DbTools.updateSingle[F](
-        sql"""
-          INSERT INTO db_tools_test.example (id, name, note, count) VALUES (${example.id}, ${example.name}, ${example.note}, ${example.count})
-        """
-      )(transactor)
+        val fetch = DbTools.fetchSingleRow[F][ExampleWithDoobieGetPut](
+          sql"""
+            SELECT id, name, note, count
+              FROM db_tools_test.example
+          """
+        )(transactor)
 
-      for {
-        fetchResultBefore <- fetch.map(_ ==== expectedFetchBefore)
-        insertResult      <- insert.map(_ ==== expectedInsert)
-        fetchResultAfter  <- fetch.map(_ ==== expectedFetchAfter)
-      } yield Result.all(
-        List(
-          fetchResultBefore.log("Failed: fetch before"),
-          insertResult.log("Failed: insert"),
-          fetchResultAfter.log("Failed: fetch after"),
+        val insert = DbTools.updateSingle[F](
+          sql"""
+            INSERT INTO db_tools_test.example (id, name, note, count) VALUES (${example.id}, ${example.name}, ${example.note}, ${example.count})
+          """
+        )(transactor)
+
+        for {
+          fetchResultBefore <- fetch.map(_ ==== expectedFetchBefore)
+          insertResult      <- insert.map(_ ==== expectedInsert)
+          fetchResultAfter  <- fetch.map(_ ==== expectedFetchAfter)
+        } yield Result.all(
+          List(
+            fetchResultBefore.log("Failed: fetch before"),
+            insertResult.log("Failed: insert"),
+            fetchResultAfter.log("Failed: fetch after"),
+          )
         )
-      )
-    })
+      }
+    )
 
   def genExampleWithDoobieGetPut: Gen[ExampleWithDoobieGetPut] = for {
     id    <- Gen.int(Range.linear(1, Int.MaxValue)).map(ExampleWithDoobieGetPut.Id(_))

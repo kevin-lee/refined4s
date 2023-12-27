@@ -2,6 +2,7 @@ package extras.doobie
 
 import cats.effect.*
 import cats.syntax.all.*
+import doobie.Fragment
 import doobie.implicits.*
 import doobie.util.transactor.Transactor
 import effectie.core.*
@@ -22,12 +23,16 @@ trait RunWithDb {
 
   def propertyWithDb(
     name: String,
-    stringToProperty: String => Property,
+    portNumber: Int,
+    stringToProperty: (String, Int) => Property,
   ): Test =
-    property(name, stringToProperty(name)).withTests(count = 1).noShrinking
+    property(name, stringToProperty(name, portNumber)).withTests(count = 1).noShrinking
 
   def withDb[F[*]: Fx: Async](
-    testName: String
+    testName: String,
+    portNumber: Int,
+    createSchemaFragment: Fragment,
+    createTableFragment: Fragment,
   )(test: Transactor[F] => F[Result]): F[Result] = {
     Ce3Resource
       .fromAutoCloseable(effectOf(AutoDeletingFile(Files.createTempDirectory("pg-test").toFile)))
@@ -40,6 +45,7 @@ trait RunWithDb {
                 .builder()
                 .setOverrideWorkingDirectory(workingDir)
                 .setCleanDataDirectory(true)
+                .setPort(portNumber)
                 .start()
             )
           )
@@ -57,16 +63,8 @@ trait RunWithDb {
                               )
                             )
 
-              _ <- sql"""CREATE SCHEMA IF NOT EXISTS db_tools_test""".update.run.transact(transactor)
-              _ <- sql"""
-                       CREATE TABLE IF NOT EXISTS db_tools_test.example
-                       (
-                           id SERIAL PRIMARY KEY,
-                           name TEXT NOT NULL,
-                           note TEXT NULL,
-                           count INT NOT NULL
-                       )
-                     """.update.run.transact(transactor)
+              _ <- createSchemaFragment.update.run.transact(transactor)
+              _ <- createTableFragment.update.run.transact(transactor)
 
               result <- test(transactor)
                           .handleNonFatal { err =>
