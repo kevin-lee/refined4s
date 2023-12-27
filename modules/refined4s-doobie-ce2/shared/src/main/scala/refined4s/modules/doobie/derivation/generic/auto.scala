@@ -1,4 +1,4 @@
-package refined4s.modules.doobie.derivation
+package refined4s.modules.doobie.derivation.generic
 
 import cats.*
 import doobie.{Get, Put}
@@ -7,7 +7,7 @@ import refined4s.{Coercible, RefinedCtor}
 /** @author Kevin Lee
   * @since 2023-12-16
   */
-trait instances {
+trait auto {
 
   inline given derivedPut[A, B](using coercible: Coercible[A, B], put: Put[B]): Put[A] =
     put.contramap(coercible(_))
@@ -19,4 +19,4 @@ trait instances {
     getA.map(coercible(_))
 
 }
-object instances extends instances
+object auto extends auto
