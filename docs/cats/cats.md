@@ -5,22 +5,22 @@ title: "cats module"
 
 ## Import
 ```scala
-import refined4s.modules.cats.derivation.instances.given
+import refined4s.modules.cats.derivation.types.all.given
 ```
 ```scala
 import refined4s.modules.cats.derivation.*
 ```
 
-## Use Automatically Drived Instances
+## Use Drived Instances for Pre-defined Types
 To make `Newtype`, `Refined` and `InlinedRefined` have `Eq` and `Show` type-class instances derived from the actual values, you can simply use
 ```scala
-import refined4s.modules.cats.derivation.instances.given
+import refined4s.modules.cats.derivation.types.all.given
 ```
 :::warning NOTE
 This works only when the actual type already has `Eq` and `Show`.
 :::
 :::info
-Using `refined4s.modules.cats.derivation.instances` is required only when `Eq` and/or `Show` is used.<br/>
+Using `refined4s.modules.cats.derivation.types.all.given` is required only when `Eq` and/or `Show` is used.<br/>
 So if you want your `Newtype` or `Refined` or `InlinedRefined` to have `Eq` and `Show` instances,<br/>
 you can use [pre-defined traits for cats](#with-explicit-pre-defined-cats-support) or the [`deriving` method](#with-deriving-method) instead.<br/>
 :::
@@ -47,10 +47,10 @@ def equal[A: Eq](a1: A, a2: A): Unit =
   else println("The given values are not equal.")
 ```
 
-**With `derivation.instances`,**
+**With `derivation.types.all`,**
 
 ```scala {1}
-import refined4s.modules.cats.derivation.instances.given
+import refined4s.modules.cats.derivation.types.all.given
 
 hello(NonEmptyString("Peter Parker"))
 // Hello Peter Parker
@@ -77,7 +77,7 @@ equal(NotEmptyStr("Thor Odinson"), NotEmptyStr("Bruce Banner"))
 // The given values are not equal.
 ```
 
-**Without `derivation.instances`,**
+**Without `derivation.types.all`,**
 
 ```scala mdoc:fail
 hello(NonEmptyString("Kevin"))
