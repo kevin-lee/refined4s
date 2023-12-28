@@ -177,6 +177,9 @@ lazy val docs = (project in file("docs-gen-tmp/docs"))
         "io.kevinlee" %% "refined4s-circe"      % latestVersion,
         "io.kevinlee" %% "refined4s-pureconfig" % latestVersion,
         "io.kevinlee" %% "refined4s-doobie-ce2" % latestVersion,
+        libs.circeCore,
+        libs.circeLiteral,
+        libs.circeParser,
       )
     },
     mdocVariables := Map(
