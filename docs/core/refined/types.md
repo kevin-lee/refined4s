@@ -1367,7 +1367,49 @@ nonPosBigDecimalMinus999.value
 
 ## Refined `NonEmptyString`
 
-...TBA...
+### Compile-time Validation
+```scala mdoc
+NonEmptyString("blah")
+NonEmptyString("Lorem Ipsum is simply dummy text of the printing and typesetting industry.")
+```
+```scala
+NonEmptyString("")
+// error:
+// Invalid value: [""]. It must be a non-empty String
+```
+
+### Runtime Validation
+```scala mdoc
+val validNonEmptyString1 = "blah" 
+NonEmptyString.from(validNonEmptyString1)
+
+val validNonEmptyString2 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry." 
+NonEmptyString.from(validNonEmptyString2)
+```
+```scala mdoc
+val invalidNonEmptyString = "" 
+NonEmptyString.from(invalidNonEmptyString)
+```
+
+### Concatenation
+
+```scala mdoc
+val nonEmptyString1 = NonEmptyString("Hello")
+val nonEmptyString2 = NonEmptyString(" World")
+
+nonEmptyString1 ++ nonEmptyString2
+```
+
+### Get Value
+
+```scala mdoc
+val nonEmptyStringA = NonEmptyString("blah")
+val nonEmptyStringB = NonEmptyString("Lorem Ipsum is simply dummy text of the printing and typesetting industry.")
+
+nonEmptyStringA.value
+
+nonEmptyStringB.value
+```
 
 
 ***
