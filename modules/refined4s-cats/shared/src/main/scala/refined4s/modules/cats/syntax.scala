@@ -36,6 +36,15 @@ trait syntax {
         .toEitherNel
         .map(coercible(_))
 
+    inline def validateAs[N](
+      using coercible: Coercible[T, N],
+      refinedCtor: RefinedCtor[T, A],
+    ): Validated[String, N] =
+      a.refinedTo[T]
+        .leftMap(err => s"Failed to create ${getTypeName[N]}: $err")
+        .toValidated
+        .map(coercible(_))
+
   }
 
 }
