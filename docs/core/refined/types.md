@@ -1132,7 +1132,235 @@ nonPosBigIntMinus999.value
 
 ## Refined `BigDecimal`
 
-...TBA...
+
+### `NegBigDecimal`: negative `BigDecimal`
+
+#### Compile-time Validation
+```scala mdoc
+NegBigDecimal(-0.00001d)
+NegBigDecimal(-999.999d)
+```
+```scala mdoc:fail
+NegBigDecimal(0d)
+```
+```scala mdoc:fail
+NegBigDecimal(999.999d)
+```
+
+#### Runtime Validation
+```scala mdoc
+val validNegBigDecimal = -0.00001d 
+NegBigDecimal.from(validNegBigDecimal)
+```
+```scala mdoc
+val invalidNegBigDecimal1 = 0d 
+NegBigDecimal.from(invalidNegBigDecimal1)
+
+val invalidNegBigDecimal2 = 999.999d
+NegBigDecimal.from(invalidNegBigDecimal2)
+```
+
+#### Comparison
+
+```scala mdoc
+val negBigDecimal1 = NegBigDecimal(-0.1d)
+val negBigDecimal2 = NegBigDecimal(-0.2d)
+
+negBigDecimal1 > negBigDecimal2
+negBigDecimal1 >= negBigDecimal2
+negBigDecimal1 == negBigDecimal2
+negBigDecimal1 < negBigDecimal2
+negBigDecimal1 <= negBigDecimal2
+```
+
+#### Get Value
+
+```scala mdoc
+val negBigDecimal123 = NegBigDecimal(-123.123d)
+val negBigDecimal999 = NegBigDecimal(-999.999d)
+
+negBigDecimal123.value
+
+negBigDecimal999.value
+```
+
+***
+
+### `NonNegBigDecimal`: non-negative `BigDecimal`
+
+#### Compile-time Validation
+```scala mdoc
+NonNegBigDecimal(0d)
+NonNegBigDecimal(999.999d)
+```
+
+```scala mdoc:fail
+NonNegBigDecimal(-0.00001d)
+```
+```
+```scala mdoc:fail
+NonNegBigDecimal(-999.999d)
+```
+
+#### Runtime Validation
+
+```scala mdoc
+val validNonNegBigDecimal1 = 0d
+NonNegBigDecimal.from(validNonNegBigDecimal1)
+
+val validNonNegBigDecimal2 = 999.999d
+NonNegBigDecimal.from(validNonNegBigDecimal2)
+```
+
+```scala mdoc
+val invalidNonNegBigDecimal1 = -0.00001d
+NonNegBigDecimal.from(invalidNonNegBigDecimal1)
+
+val invalidNonNegBigDecimal2 = -999.999d
+NonNegBigDecimal.from(invalidNonNegBigDecimal2)
+```
+
+#### Comparison
+
+```scala mdoc
+val nonNegBigDecimal1 = NonNegBigDecimal(0d)
+val nonNegBigDecimal2 = NonNegBigDecimal(0.999d)
+
+nonNegBigDecimal1 > nonNegBigDecimal2
+nonNegBigDecimal1 >= nonNegBigDecimal2
+nonNegBigDecimal1 == nonNegBigDecimal2
+nonNegBigDecimal1 < nonNegBigDecimal2
+nonNegBigDecimal1 <= nonNegBigDecimal2
+```
+
+#### Get Value
+
+```scala mdoc
+val nonNegBigDecimal123 = NonNegBigDecimal(0d)
+val nonNegBigDecimal999 = NonNegBigDecimal(999.999d)
+
+nonNegBigDecimal123.value
+
+nonNegBigDecimal999.value
+```
+
+***
+
+### `PosBigDecimal`: positive `BigDecimal`
+
+#### Compile-time Validation
+```scala mdoc
+PosBigDecimal(0.00001d)
+PosBigDecimal(999.999d)
+```
+
+```scala mdoc:fail
+PosBigDecimal(0d)
+```
+```scala mdoc:fail
+PosBigDecimal(-999.999d)
+```
+
+#### Runtime Validation
+
+```scala mdoc
+val validPosBigDecimal1 = 0.00001d
+PosBigDecimal.from(validPosBigDecimal1)
+
+val validPosBigDecimal2 = 999.999d
+PosBigDecimal.from(validPosBigDecimal2)
+```
+
+```scala mdoc
+val invalidPosBigDecimal1 = 0d
+PosBigDecimal.from(invalidPosBigDecimal1)
+
+val invalidPosBigDecimal2 = -999.999d
+PosBigDecimal.from(invalidPosBigDecimal2)
+```
+
+#### Comparison
+
+```scala mdoc
+val posBigDecimal1 = PosBigDecimal(0.00001d)
+val posBigDecimal2 = PosBigDecimal(0.999d)
+
+posBigDecimal1 > posBigDecimal2
+posBigDecimal1 >= posBigDecimal2
+posBigDecimal1 == posBigDecimal2
+posBigDecimal1 < posBigDecimal2
+posBigDecimal1 <= posBigDecimal2
+```
+
+#### Get Value
+
+```scala mdoc
+val posBigDecimal123 = PosBigDecimal(123.123d)
+val posBigDecimal999 = PosBigDecimal(999.999d)
+
+posBigDecimal123.value
+
+posBigDecimal999.value
+```
+
+***
+
+### `NonPosBigDecimal`: non-positive `BigDecimal`
+
+#### Compile-time Validation
+```scala mdoc
+NonPosBigDecimal(0d)
+NonPosBigDecimal(-999.999d)
+```
+
+```scala mdoc:fail
+NonPosBigDecimal(0.00001d)
+```
+```scala mdoc:fail
+NonPosBigDecimal(999.999d)
+```
+
+#### Runtime Validation
+
+```scala mdoc
+val validNonPosBigDecimal = 0d
+NonPosBigDecimal.from(validNonPosBigDecimal)
+
+val validNonPosBigDecimal2 = -999.999d
+NonPosBigDecimal.from(validNonPosBigDecimal2)
+```
+
+```scala mdoc
+val invalidNonPosBigDecimal1 = 0.00001d
+NonPosBigDecimal.from(invalidNonPosBigDecimal1)
+
+val invalidNonPosBigDecimal2 = 999.999d
+NonPosBigDecimal.from(invalidNonPosBigDecimal2)
+```
+
+#### Comparison
+
+```scala mdoc
+val nonPosBigDecimal1 = NonPosBigDecimal(0d)
+val nonPosBigDecimal2 = NonPosBigDecimal(-0.999d)
+
+nonPosBigDecimal1 > nonPosBigDecimal2
+nonPosBigDecimal1 >= nonPosBigDecimal2
+nonPosBigDecimal1 == nonPosBigDecimal2
+nonPosBigDecimal1 < nonPosBigDecimal2
+nonPosBigDecimal1 <= nonPosBigDecimal2
+```
+
+#### Get Value
+
+```scala mdoc
+val nonPosBigDecimal0 = NonPosBigDecimal(0d)
+val nonPosBigDecimalMinus999 = NonPosBigDecimal(-999.999d)
+
+nonPosBigDecimal0.value
+
+nonPosBigDecimalMinus999.value
+```
 
 
 ***
