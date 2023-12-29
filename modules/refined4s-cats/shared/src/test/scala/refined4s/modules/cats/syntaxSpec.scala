@@ -13,7 +13,7 @@ import refined4s.modules.cats.syntax.*
   * @since 2023-12-06
   */
 object syntaxSpec extends Properties {
-  override def tests: List[Test] = RefinedNewtypeNec.tests ++ RefinedNewtypeNel.tests
+  override def tests: List[Test] = RefinedNewtypeNec.tests ++ RefinedNewtypeNel.tests ++ ValidateAsSpec.tests
 
   object RefinedNewtypeNec {
 
@@ -292,6 +292,147 @@ object syntaxSpec extends Properties {
         )
       }
   }
+
+  object ValidateAsSpec {
+
+    def tests: List[Test] = List(
+      ///
+      property(
+        "For type T = Refined[A] and type N = NewType[T], a.validateAs[N] with a valid `a` should return EitherNel[String, N] = Right(N)",
+        testAValidateAsT,
+      ),
+      example(
+        "For type T = Refined[A] and type N = NewType[T], a.validateAs[N] with an invalid `a` should return EitherNel[String, N] = Left(String)",
+        testAValidateAsTInvalid,
+      ),
+      property(
+        "For type T = Refined[A] and type N = NewType[T], validateAs(a)[N] with a valid `a` should return EitherNel[String, N] = Right(N)",
+        testValidateAsTA,
+      ),
+      example(
+        "For type T = Refined[A] and type N = NewType[T], validateAs(a)[N] with an invalid `a` should return EitherNel[String, N] = Left(String)",
+        testValidateAsTAInvalid,
+      ),
+      ///
+      property(
+        "For type T = InlinedRefined[A] and type N = NewType[T], a.validateAs[N] with a valid `a` should return EitherNel[String, N] = Right(N)",
+        testInlinedRefined_AValidateAsT,
+      ),
+      property(
+        "For type T = InlinedRefined[A] and type N = NewType[T], a.validateAs[N] with an invalid `a` should return EitherNel[String, N] = Left(String)",
+        testInlinedRefined_AValidateAsTInvalid,
+      ),
+      property(
+        "For type T = InlinedRefined[A] and type N = NewType[T], validateAs(a)[N] with a valid `a` should return EitherNel[String, N] = Right(N)",
+        testInlinedRefined_ValidateAsTA,
+      ),
+      property(
+        "For type T = InlinedRefined[A] and type N = NewType[T], validateAs(a)[N] with an invalid `a` should return EitherNel[String, N] = Left(String)",
+        testInlinedRefined_ValidateAsTAInvalid,
+      ),
+    )
+
+    def testAValidateAsT: Property =
+      for {
+        s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+      } yield {
+
+        val expected = NewMyType(MyType.unsafeFrom(s)).valid[String]
+        val actual   = s.validateAs[NewMyType]
+        actual ==== expected
+      }
+
+    def testAValidateAsTInvalid: Result = {
+      val expected =
+        "Failed to create refined4s.modules.cats.syntaxSpec.NewMyType: Invalid value: []. It has to be a non-empty String but got \"\""
+          .invalid[NewMyType]
+      val actual   = "".validateAs[NewMyType]
+      actual ==== expected
+    }
+
+    def testValidateAsTA: Property =
+      for {
+        s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+      } yield {
+
+        val expected = NewMyType(MyType.unsafeFrom(s)).valid[String]
+        val actual   = validateAs(s)[NewMyType]
+        actual ==== expected
+      }
+
+    def testValidateAsTAInvalid: Result = {
+      val expected =
+        "Failed to create refined4s.modules.cats.syntaxSpec.NewMyType: Invalid value: []. It has to be a non-empty String but got \"\""
+          .invalid[NewMyType]
+      val actual   = validateAs("")[NewMyType]
+      actual ==== expected
+    }
+
+    def testInlinedRefined_AValidateAsT: Property =
+      for {
+        s <- Gen.string(Gen.unicode, Range.linear(3, 10)).log("s")
+      } yield {
+
+        val expected = NewMoreThan2CharsString(MoreThan2CharsString.unsafeFrom(s)).valid[String]
+        val actual   = s.validateAs[NewMoreThan2CharsString]
+        (actual ==== expected).log(
+          raw"""       s: ${s.encodeToUnicode}
+               |  actual: ${actual.leftMap(_.encodeToUnicode)}
+               |expected: ${expected.leftMap(_.encodeToUnicode)}
+               |""".stripMargin
+        )
+      }
+
+    def testInlinedRefined_AValidateAsTInvalid: Property =
+      for {
+        s <- Gen.string(Gen.unicode, Range.linear(0, 2)).log("s")
+      } yield {
+        val expected =
+          s"Failed to create refined4s.modules.cats.syntaxSpec.NewMoreThan2CharsString: Invalid value: [$s]. The String should have more than 2 chars but got $s instead"
+            .invalid[NewMoreThan2CharsString]
+
+        val actual = s.validateAs[NewMoreThan2CharsString]
+        (actual ==== expected).log(
+          raw"""       s: ${s.encodeToUnicode}
+               |  actual: ${actual.leftMap(_.encodeToUnicode)}
+               |expected: ${expected.leftMap(_.encodeToUnicode)}
+               |""".stripMargin
+        )
+      }
+
+    def testInlinedRefined_ValidateAsTA: Property =
+      for {
+        s <- Gen.string(Gen.unicode, Range.linear(3, 10)).log("s")
+      } yield {
+
+        val expected = NewMoreThan2CharsString(MoreThan2CharsString.unsafeFrom(s)).valid[String]
+        val actual   = validateAs(s)[NewMoreThan2CharsString]
+        (actual ==== expected).log(
+          raw"""       s: ${s.encodeToUnicode}
+               |  actual: ${actual.leftMap(_.encodeToUnicode)}
+               |expected: ${expected.leftMap(_.encodeToUnicode)}
+               |""".stripMargin
+        )
+      }
+
+    def testInlinedRefined_ValidateAsTAInvalid: Property =
+      for {
+        s <- Gen.string(Gen.unicode, Range.linear(0, 2)).log("s")
+      } yield {
+        val expected =
+          s"Failed to create refined4s.modules.cats.syntaxSpec.NewMoreThan2CharsString: Invalid value: [$s]. The String should have more than 2 chars but got $s instead"
+            .invalid[NewMoreThan2CharsString]
+        val actual   = validateAs(s)[NewMoreThan2CharsString]
+        (actual ==== expected).log(
+          raw"""       s: ${s.encodeToUnicode}
+               |  actual: ${actual.leftMap(_.encodeToUnicode)}
+               |expected: ${expected.leftMap(_.encodeToUnicode)}
+               |""".stripMargin
+        )
+      }
+  }
+
+  ///
 
   type MyType = MyType.Type
   @SuppressWarnings(Array("org.wartremover.warts.Equals"))
