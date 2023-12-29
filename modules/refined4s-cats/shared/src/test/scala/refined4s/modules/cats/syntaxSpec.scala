@@ -17,7 +17,8 @@ object syntaxSpec extends Properties {
     RefinedNewtypeNec.tests ++
       RefinedNewtypeNel.tests ++
       ValidateAsSpec.tests ++
-      ValidateNecAsSpec.tests
+      ValidateNecAsSpec.tests ++
+      ValidateNelAsSpec.tests
 
   object RefinedNewtypeNec {
 
@@ -566,6 +567,145 @@ object syntaxSpec extends Properties {
           s"Failed to create refined4s.modules.cats.syntaxSpec.NewMoreThan2CharsString: Invalid value: [$s]. The String should have more than 2 chars but got $s instead"
             .invalidNec[NewMoreThan2CharsString]
         val actual   = validateNecAs(s)[NewMoreThan2CharsString]
+        (actual ==== expected).log(
+          raw"""       s: ${s.encodeToUnicode}
+               |  actual: ${actual.leftMap(_.map(_.encodeToUnicode))}
+               |expected: ${expected.leftMap(_.map(_.encodeToUnicode))}
+               |""".stripMargin
+        )
+      }
+  }
+
+  object ValidateNelAsSpec {
+
+    def tests: List[Test] = List(
+      ///
+      property(
+        "For type T = Refined[A] and type N = NewType[T], a.validateNelAs[N] with a valid `a` should return EitherNel[String, N] = Right(N)",
+        testAValidateNelAsT,
+      ),
+      example(
+        "For type T = Refined[A] and type N = NewType[T], a.validateNelAs[N] with an invalid `a` should return EitherNel[String, N] = Left(String)",
+        testAValidateNelAsTInvalid,
+      ),
+      property(
+        "For type T = Refined[A] and type N = NewType[T], validateNelAs(a)[N] with a valid `a` should return EitherNel[String, N] = Right(N)",
+        testValidateNelAsTA,
+      ),
+      example(
+        "For type T = Refined[A] and type N = NewType[T], validateNelAs(a)[N] with an invalid `a` should return EitherNel[String, N] = Left(String)",
+        testValidateNelAsTAInvalid,
+      ),
+      ///
+      property(
+        "For type T = InlinedRefined[A] and type N = NewType[T], a.validateNelAs[N] with a valid `a` should return EitherNel[String, N] = Right(N)",
+        testInlinedRefined_AValidateNelAsT,
+      ),
+      property(
+        "For type T = InlinedRefined[A] and type N = NewType[T], a.validateNelAs[N] with an invalid `a` should return EitherNel[String, N] = Left(String)",
+        testInlinedRefined_AValidateNelAsTInvalid,
+      ),
+      property(
+        "For type T = InlinedRefined[A] and type N = NewType[T], validateNelAs(a)[N] with a valid `a` should return EitherNel[String, N] = Right(N)",
+        testInlinedRefined_ValidateNelAsTA,
+      ),
+      property(
+        "For type T = InlinedRefined[A] and type N = NewType[T], validateNelAs(a)[N] with an invalid `a` should return EitherNel[String, N] = Left(String)",
+        testInlinedRefined_ValidateNelAsTAInvalid,
+      ),
+    )
+
+    def testAValidateNelAsT: Property =
+      for {
+        s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+      } yield {
+
+        val expected = NewMyType(MyType.unsafeFrom(s)).validNel[String]
+        val actual   = s.validateNelAs[NewMyType]
+        actual ==== expected
+      }
+
+    def testAValidateNelAsTInvalid: Result = {
+      val expected =
+        "Failed to create refined4s.modules.cats.syntaxSpec.NewMyType: Invalid value: []. It has to be a non-empty String but got \"\""
+          .invalidNel[NewMyType]
+      val actual   = "".validateNelAs[NewMyType]
+      actual ==== expected
+    }
+
+    def testValidateNelAsTA: Property =
+      for {
+        s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+      } yield {
+
+        val expected = NewMyType(MyType.unsafeFrom(s)).validNel[String]
+        val actual   = validateNelAs(s)[NewMyType]
+        actual ==== expected
+      }
+
+    def testValidateNelAsTAInvalid: Result = {
+      val expected =
+        "Failed to create refined4s.modules.cats.syntaxSpec.NewMyType: Invalid value: []. It has to be a non-empty String but got \"\""
+          .invalidNel[NewMyType]
+      val actual   = validateNelAs("")[NewMyType]
+      actual ==== expected
+    }
+
+    def testInlinedRefined_AValidateNelAsT: Property =
+      for {
+        s <- Gen.string(Gen.unicode, Range.linear(3, 10)).log("s")
+      } yield {
+
+        val expected = NewMoreThan2CharsString(MoreThan2CharsString.unsafeFrom(s)).validNel[String]
+        val actual   = s.validateNelAs[NewMoreThan2CharsString]
+        (actual ==== expected).log(
+          raw"""       s: ${s.encodeToUnicode}
+               |  actual: ${actual.leftMap(_.map(_.encodeToUnicode))}
+               |expected: ${expected.leftMap(_.map(_.encodeToUnicode))}
+               |""".stripMargin
+        )
+      }
+
+    def testInlinedRefined_AValidateNelAsTInvalid: Property =
+      for {
+        s <- Gen.string(Gen.unicode, Range.linear(0, 2)).log("s")
+      } yield {
+        val expected =
+          s"Failed to create refined4s.modules.cats.syntaxSpec.NewMoreThan2CharsString: Invalid value: [$s]. The String should have more than 2 chars but got $s instead"
+            .invalidNel[NewMoreThan2CharsString]
+
+        val actual = s.validateNelAs[NewMoreThan2CharsString]
+        (actual ==== expected).log(
+          raw"""       s: ${s.encodeToUnicode}
+               |  actual: ${actual.leftMap(_.map(_.encodeToUnicode))}
+               |expected: ${expected.leftMap(_.map(_.encodeToUnicode))}
+               |""".stripMargin
+        )
+      }
+
+    def testInlinedRefined_ValidateNelAsTA: Property =
+      for {
+        s <- Gen.string(Gen.unicode, Range.linear(3, 10)).log("s")
+      } yield {
+
+        val expected = NewMoreThan2CharsString(MoreThan2CharsString.unsafeFrom(s)).validNel[String]
+        val actual   = validateNelAs(s)[NewMoreThan2CharsString]
+        (actual ==== expected).log(
+          raw"""       s: ${s.encodeToUnicode}
+               |  actual: ${actual.leftMap(_.map(_.encodeToUnicode))}
+               |expected: ${expected.leftMap(_.map(_.encodeToUnicode))}
+               |""".stripMargin
+        )
+      }
+
+    def testInlinedRefined_ValidateNelAsTAInvalid: Property =
+      for {
+        s <- Gen.string(Gen.unicode, Range.linear(0, 2)).log("s")
+      } yield {
+        val expected =
+          s"Failed to create refined4s.modules.cats.syntaxSpec.NewMoreThan2CharsString: Invalid value: [$s]. The String should have more than 2 chars but got $s instead"
+            .invalidNel[NewMoreThan2CharsString]
+        val actual   = validateNelAs(s)[NewMoreThan2CharsString]
         (actual ==== expected).log(
           raw"""       s: ${s.encodeToUnicode}
                |  actual: ${actual.leftMap(_.map(_.encodeToUnicode))}

@@ -54,6 +54,15 @@ trait syntax {
         .toValidatedNec
         .map(coercible(_))
 
+    inline def validateNelAs[N](
+      using coercible: Coercible[T, N],
+      refinedCtor: RefinedCtor[T, A],
+    ): ValidatedNel[String, N] =
+      a.refinedTo[T]
+        .leftMap(err => s"Failed to create ${getTypeName[N]}: $err")
+        .toValidatedNel
+        .map(coercible(_))
+
   }
 
 }
