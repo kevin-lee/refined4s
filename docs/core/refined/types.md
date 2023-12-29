@@ -681,7 +681,236 @@ nonPosDoubleMinus999.value
 
 ## Refined `Float`
 
-...TBA...
+
+### `NegFloat`: negative `Float`
+
+#### Compile-time Validation
+```scala mdoc
+NegFloat(-0.00001f)
+NegFloat(-999.999f)
+```
+```scala mdoc:fail
+NegFloat(0f)
+```
+```scala mdoc:fail
+NegFloat(999.999f)
+```
+
+#### Runtime Validation
+```scala mdoc
+val validNegFloat = -0.00001f 
+NegFloat.from(validNegFloat)
+```
+```scala mdoc
+val invalidNegFloat1 = 0f 
+NegFloat.from(invalidNegFloat1)
+
+val invalidNegFloat2 = 999.999f
+NegFloat.from(invalidNegFloat2)
+```
+
+#### Comparison
+
+```scala mdoc
+val negFloat1 = NegFloat(-0.1f)
+val negFloat2 = NegFloat(-0.2f)
+
+negFloat1 > negFloat2
+negFloat1 >= negFloat2
+negFloat1 == negFloat2
+negFloat1 < negFloat2
+negFloat1 <= negFloat2
+```
+
+#### Get Value
+
+```scala mdoc
+val negFloat123 = NegFloat(-123.123f)
+val negFloat999 = NegFloat(-999.999f)
+
+negFloat123.value
+
+negFloat999.value
+```
+
+***
+
+### `NonNegFloat`: non-negative `Float`
+
+#### Compile-time Validation
+```scala mdoc
+NonNegFloat(0f)
+NonNegFloat(999.999f)
+```
+
+```scala mdoc:fail
+NonNegFloat(-0.00001f)
+```
+```
+```scala mdoc:fail
+NonNegFloat(-999.999f)
+```
+
+#### Runtime Validation
+
+```scala mdoc
+val validNonNegFloat1 = 0f
+NonNegFloat.from(validNonNegFloat1)
+
+val validNonNegFloat2 = 999.999f
+NonNegFloat.from(validNonNegFloat2)
+```
+
+```scala mdoc
+val invalidNonNegFloat1 = -0.00001f
+NonNegFloat.from(invalidNonNegFloat1)
+
+val invalidNonNegFloat2 = -999.999f
+NonNegFloat.from(invalidNonNegFloat2)
+```
+
+#### Comparison
+
+```scala mdoc
+val nonNegFloat1 = NonNegFloat(0f)
+val nonNegFloat2 = NonNegFloat(0.999f)
+
+nonNegFloat1 > nonNegFloat2
+nonNegFloat1 >= nonNegFloat2
+nonNegFloat1 == nonNegFloat2
+nonNegFloat1 < nonNegFloat2
+nonNegFloat1 <= nonNegFloat2
+```
+
+#### Get Value
+
+```scala mdoc
+val nonNegFloat123 = NonNegFloat(0f)
+val nonNegFloat999 = NonNegFloat(999.999f)
+
+nonNegFloat123.value
+
+nonNegFloat999.value
+```
+
+***
+
+### `PosFloat`: positive `Float`
+
+#### Compile-time Validation
+```scala mdoc
+PosFloat(0.00001f)
+PosFloat(999.999f)
+```
+
+```scala mdoc:fail
+PosFloat(0f)
+```
+```scala mdoc:fail
+PosFloat(-999.999f)
+```
+
+#### Runtime Validation
+
+```scala mdoc
+val validPosFloat1 = 0.00001f
+PosFloat.from(validPosFloat1)
+
+val validPosFloat2 = 999.999f
+PosFloat.from(validPosFloat2)
+```
+
+```scala mdoc
+val invalidPosFloat1 = 0f
+PosFloat.from(invalidPosFloat1)
+
+val invalidPosFloat2 = -999.999f
+PosFloat.from(invalidPosFloat2)
+```
+
+#### Comparison
+
+```scala mdoc
+val posFloat1 = PosFloat(0.00001f)
+val posFloat2 = PosFloat(0.999f)
+
+posFloat1 > posFloat2
+posFloat1 >= posFloat2
+posFloat1 == posFloat2
+posFloat1 < posFloat2
+posFloat1 <= posFloat2
+```
+
+#### Get Value
+
+```scala mdoc
+val posFloat123 = PosFloat(123.123f)
+val posFloat999 = PosFloat(999.999f)
+
+posFloat123.value
+
+posFloat999.value
+```
+
+***
+
+### `NonPosFloat`: non-positive `Float`
+
+#### Compile-time Validation
+```scala mdoc
+NonPosFloat(0f)
+NonPosFloat(-999.999f)
+```
+
+```scala mdoc:fail
+NonPosFloat(0.00001f)
+```
+```scala mdoc:fail
+NonPosFloat(999.999f)
+```
+
+#### Runtime Validation
+
+```scala mdoc
+val validNonPosFloat = 0f
+NonPosFloat.from(validNonPosFloat)
+
+val validNonPosFloat2 = -999.999f
+NonPosFloat.from(validNonPosFloat2)
+```
+
+```scala mdoc
+val invalidNonPosFloat1 = 0.00001f
+NonPosFloat.from(invalidNonPosFloat1)
+
+val invalidNonPosFloat2 = 999.999f
+NonPosFloat.from(invalidNonPosFloat2)
+```
+
+#### Comparison
+
+```scala mdoc
+val nonPosFloat1 = NonPosFloat(0f)
+val nonPosFloat2 = NonPosFloat(-0.999f)
+
+nonPosFloat1 > nonPosFloat2
+nonPosFloat1 >= nonPosFloat2
+nonPosFloat1 == nonPosFloat2
+nonPosFloat1 < nonPosFloat2
+nonPosFloat1 <= nonPosFloat2
+```
+
+#### Get Value
+
+```scala mdoc
+val nonPosFloat0 = NonPosFloat(0f)
+val nonPosFloatMinus999 = NonPosFloat(-999.999f)
+
+nonPosFloat0.value
+
+nonPosFloatMinus999.value
+```
+
 
 ***
 
