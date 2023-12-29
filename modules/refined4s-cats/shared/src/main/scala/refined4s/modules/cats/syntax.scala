@@ -18,7 +18,7 @@ trait syntax {
 
   extension [A, T](a: A) {
 
-    inline def validateAs[N](
+    inline def refinedNewtypeNec[N](
       using coercible: Coercible[T, N],
       refinedCtor: RefinedCtor[T, A],
     ): EitherNec[String, N] =
