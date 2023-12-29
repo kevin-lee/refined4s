@@ -1416,5 +1416,46 @@ nonEmptyStringB.value
 
 ## Refined `Uri`
 
-...TBA...
+### Compile-time Validation
+```scala mdoc
+Uri("https://www.google.com")
+Uri("https://github.com/kevin-lee")
+```
+```scala
+Uri("%^<>[]`{}")
+// error:
+// Invalid value: ["%^<>[]`{}"]. It must be a URI String
+```
+
+### Runtime Validation
+```scala mdoc
+val validUri1 = "https://www.google.com" 
+Uri.from(validUri1)
+
+val validUri2 = "https://github.com/kevin-lee" 
+Uri.from(validUri2)
+```
+```scala mdoc
+val invalidUri = "%^<>[]`{}" 
+Uri.from(invalidUri)
+```
+
+### Get Value
+
+```scala mdoc
+val uriA = Uri("https://www.google.com")
+val uriB = Uri("https://github.com/kevin-lee")
+
+uriA.value
+
+uriB.value
+```
+
+### Convert to `java.net.URI`
+
+```scala mdoc
+uriA.toURI
+
+uriB.toURI
+```
 
