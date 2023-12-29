@@ -16,6 +16,11 @@ trait NewtypeBase[A] {
     def value: A
   }
 
+  extension [B](typ: Type) {
+    def toValue(using coercibleA2B: Coercible[A, B]): B =
+      coercibleA2B(typ.value)
+  }
+
   def deriving[F[*]](using fa: F[A]): F[Type]
 
 }
