@@ -27,6 +27,15 @@ trait syntax {
         .toEitherNec
         .map(coercible(_))
 
+    inline def refinedNewtypeNel[N](
+      using coercible: Coercible[T, N],
+      refinedCtor: RefinedCtor[T, A],
+    ): EitherNel[String, N] =
+      a.refinedTo[T]
+        .leftMap(err => s"Failed to create ${getTypeName[N]}: $err")
+        .toEitherNel
+        .map(coercible(_))
+
   }
 
 }
