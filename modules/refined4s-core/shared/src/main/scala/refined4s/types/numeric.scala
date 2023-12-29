@@ -8,23 +8,9 @@ import refined4s.internal.numericTools
   */
 trait numeric {
 
-  trait Numeric[A: math.Ordering] extends Refined[A] {
-    given numericOrdering: Ordering[Type] = deriving[Ordering]
+  trait Numeric[A: math.Ordering] extends Refined[A], CanBeOrdered[A]
 
-    given numericToOrdered: Conversion[Type, Ordered[Type]] with {
-      def apply(a: Type): Ordered[Type] =
-        Ordered.orderingToOrdered[Type](a)(using numericOrdering)
-    }
-  }
-
-  trait InlinedNumeric[A: math.Ordering] extends InlinedRefined[A] {
-    given numericOrdering: Ordering[Type] = deriving[Ordering]
-
-    given numericToOrdered: Conversion[Type, Ordered[Type]] with {
-      def apply(a: Type): Ordered[Type] =
-        Ordered.orderingToOrdered[Type](a)(using numericOrdering)
-    }
-  }
+  trait InlinedNumeric[A: math.Ordering] extends InlinedRefined[A], CanBeOrdered[A]
 
   type NegInt = NegInt.Type
   object NegInt extends Numeric[Int] {
