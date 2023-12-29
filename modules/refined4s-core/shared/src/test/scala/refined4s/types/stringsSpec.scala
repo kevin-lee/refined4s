@@ -23,6 +23,8 @@ object stringsSpec extends Properties {
       property("test NonEmptyString.value", testValue),
       property("test NonEmptyString.unapply", testUnapplyWithPatternMatching),
       property("test NonEmptyString ++ NonEmptyString", testNonEmptyStringPlusNonEmptyString),
+      property("test Ordering[NonEmptyString]", testOrdering),
+      property("test Ordered[NonEmptyString]", testOrdered),
     )
 
     def testApply: Result = {
@@ -102,6 +104,28 @@ object stringsSpec extends Properties {
         val nes2   = NonEmptyString.unsafeFrom(s2)
         val actual = nes1 ++ nes2
         actual ==== expected
+      }
+
+    def testOrdering: Property =
+      for {
+        s1 <- Gen.string(Gen.alphaNum, Range.linear(1, 10)).log("s1")
+        s2 <- Gen.string(Gen.alphaNum, Range.linear(1, 10)).log("s2")
+      } yield {
+        val input1   = NonEmptyString.unsafeFrom(s1)
+        val input2   = NonEmptyString.unsafeFrom(s2)
+        val expected = s1.compare(s2)
+        Result.diff(input1, input2)(Ordering[NonEmptyString].compare(_, _) == expected)
+      }
+
+    def testOrdered: Property =
+      for {
+        s1 <- Gen.string(Gen.alphaNum, Range.linear(1, 10)).log("s1")
+        s2 <- Gen.string(Gen.alphaNum, Range.linear(1, 10)).log("s2")
+      } yield {
+        val input1   = NonEmptyString.unsafeFrom(s1)
+        val input2   = NonEmptyString.unsafeFrom(s2)
+        val expected = s1.compare(s2)
+        Result.diff(input1: Ordered[NonEmptyString], input2: NonEmptyString)(_.compare(_) == expected)
       }
 
   }

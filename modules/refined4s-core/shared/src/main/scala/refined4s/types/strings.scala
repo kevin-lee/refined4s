@@ -11,7 +11,7 @@ trait strings {
   type NonEmptyString = NonEmptyString.Type
 
   @SuppressWarnings(Array("org.wartremover.warts.Equals"))
-  object NonEmptyString extends Refined[String] {
+  object NonEmptyString extends Refined[String], CanBeOrdered[String] {
 
     override inline def invalidReason(a: String): String =
       expectedMessage("a non-empty String")
