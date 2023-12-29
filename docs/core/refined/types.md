@@ -447,7 +447,235 @@ nonPosLongMinus999.value
 
 ## Refined `Double`
 
-...TBA...
+### `NegDouble`: negative `Double`
+
+#### Compile-time Validation
+```scala mdoc
+NegDouble(-0.00001d)
+NegDouble(-999.999d)
+```
+```scala mdoc:fail
+NegDouble(0d)
+```
+```scala mdoc:fail
+NegDouble(999.999d)
+```
+
+#### Runtime Validation
+```scala mdoc
+val validNegDouble = -0.00001d 
+NegDouble.from(validNegDouble)
+```
+```scala mdoc
+val invalidNegDouble1 = 0d 
+NegDouble.from(invalidNegDouble1)
+
+val invalidNegDouble2 = 999.999d
+NegDouble.from(invalidNegDouble2)
+```
+
+#### Comparison
+
+```scala mdoc
+val negDouble1 = NegDouble(-0.1d)
+val negDouble2 = NegDouble(-0.2d)
+
+negDouble1 > negDouble2
+negDouble1 >= negDouble2
+negDouble1 == negDouble2
+negDouble1 < negDouble2
+negDouble1 <= negDouble2
+```
+
+#### Get Value
+
+```scala mdoc
+val negDouble123 = NegDouble(-123.123d)
+val negDouble999 = NegDouble(-999.999d)
+
+negDouble123.value
+
+negDouble999.value
+```
+
+***
+
+### `NonNegDouble`: non-negative `Double`
+
+#### Compile-time Validation
+```scala mdoc
+NonNegDouble(0d)
+NonNegDouble(999.999d)
+```
+
+```scala mdoc:fail
+NonNegDouble(-0.00001d)
+```
+```
+```scala mdoc:fail
+NonNegDouble(-999.999d)
+```
+
+#### Runtime Validation
+
+```scala mdoc
+val validNonNegDouble1 = 0d
+NonNegDouble.from(validNonNegDouble1)
+
+val validNonNegDouble2 = 999.999d
+NonNegDouble.from(validNonNegDouble2)
+```
+
+```scala mdoc
+val invalidNonNegDouble1 = -0.00001d
+NonNegDouble.from(invalidNonNegDouble1)
+
+val invalidNonNegDouble2 = -999.999d
+NonNegDouble.from(invalidNonNegDouble2)
+```
+
+#### Comparison
+
+```scala mdoc
+val nonNegDouble1 = NonNegDouble(0d)
+val nonNegDouble2 = NonNegDouble(0.999d)
+
+nonNegDouble1 > nonNegDouble2
+nonNegDouble1 >= nonNegDouble2
+nonNegDouble1 == nonNegDouble2
+nonNegDouble1 < nonNegDouble2
+nonNegDouble1 <= nonNegDouble2
+```
+
+#### Get Value
+
+```scala mdoc
+val nonNegDouble123 = NonNegDouble(0d)
+val nonNegDouble999 = NonNegDouble(999.999d)
+
+nonNegDouble123.value
+
+nonNegDouble999.value
+```
+
+***
+
+### `PosDouble`: positive `Double`
+
+#### Compile-time Validation
+```scala mdoc
+PosDouble(0.00001d)
+PosDouble(999.999d)
+```
+
+```scala mdoc:fail
+PosDouble(0d)
+```
+```scala mdoc:fail
+PosDouble(-999.999d)
+```
+
+#### Runtime Validation
+
+```scala mdoc
+val validPosDouble1 = 0.00001d
+PosDouble.from(validPosDouble1)
+
+val validPosDouble2 = 999.999d
+PosDouble.from(validPosDouble2)
+```
+
+```scala mdoc
+val invalidPosDouble1 = 0d
+PosDouble.from(invalidPosDouble1)
+
+val invalidPosDouble2 = -999.999d
+PosDouble.from(invalidPosDouble2)
+```
+
+#### Comparison
+
+```scala mdoc
+val posDouble1 = PosDouble(0.00001d)
+val posDouble2 = PosDouble(0.999d)
+
+posDouble1 > posDouble2
+posDouble1 >= posDouble2
+posDouble1 == posDouble2
+posDouble1 < posDouble2
+posDouble1 <= posDouble2
+```
+
+#### Get Value
+
+```scala mdoc
+val posDouble123 = PosDouble(123.123d)
+val posDouble999 = PosDouble(999.999d)
+
+posDouble123.value
+
+posDouble999.value
+```
+
+***
+
+### `NonPosDouble`: non-positive `Double`
+
+#### Compile-time Validation
+```scala mdoc
+NonPosDouble(0d)
+NonPosDouble(-999.999d)
+```
+
+```scala mdoc:fail
+NonPosDouble(0.00001d)
+```
+```scala mdoc:fail
+NonPosDouble(999.999d)
+```
+
+#### Runtime Validation
+
+```scala mdoc
+val validNonPosDouble = 0d
+NonPosDouble.from(validNonPosDouble)
+
+val validNonPosDouble2 = -999.999d
+NonPosDouble.from(validNonPosDouble2)
+```
+
+```scala mdoc
+val invalidNonPosDouble1 = 0.00001d
+NonPosDouble.from(invalidNonPosDouble1)
+
+val invalidNonPosDouble2 = 999.999d
+NonPosDouble.from(invalidNonPosDouble2)
+```
+
+#### Comparison
+
+```scala mdoc
+val nonPosDouble1 = NonPosDouble(0d)
+val nonPosDouble2 = NonPosDouble(-0.999d)
+
+nonPosDouble1 > nonPosDouble2
+nonPosDouble1 >= nonPosDouble2
+nonPosDouble1 == nonPosDouble2
+nonPosDouble1 < nonPosDouble2
+nonPosDouble1 <= nonPosDouble2
+```
+
+#### Get Value
+
+```scala mdoc
+val nonPosDouble0 = NonPosDouble(0d)
+val nonPosDoubleMinus999 = NonPosDouble(-999.999d)
+
+nonPosDouble0.value
+
+nonPosDoubleMinus999.value
+```
+
 
 ***
 
