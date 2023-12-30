@@ -4,7 +4,7 @@
 [![Release Status](https://github.com/kevin-lee/refined4s/workflows/Release/badge.svg)](https://github.com/kevin-lee/refined4s/actions?workflow=Release)
 [![Latest version](https://index.scala-lang.org/kevin-lee/refined4s/latest.svg)](https://index.scala-lang.org/kevin-lee/refined4s)
 
-![Refined4s Logo](https://refined4s.kevinly.dev/assets/images/refined4s-320x320-96dc6d04ce466c0b4644bfcd492bf76a.png)
+![Refined4s Logo](https://refined4s.kevinly.dev/img/refined4s-400x400.png)
 
 Newtypes and Refinement types for Scala 3
 
