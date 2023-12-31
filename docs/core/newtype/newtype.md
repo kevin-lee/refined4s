@@ -17,7 +17,7 @@ object NewtypeName extends Newtype[ActualType]
 ```
 
 e.g.)
-```scala
+```scala mdoc
 type Name = Name.Type
 object Name extends Newtype[String]
 ```
@@ -28,15 +28,39 @@ object Name extends Newtype[String]
 val newtypeName = NewtypeName(value)
 ```
 
+e.g.)
+```scala mdoc
+val name = Name("Kevin")
+```
+
+
 ## Get Actual Value
 
 ```scala
 newtypeName.value
 ```
 
+e.g.)
+```scala mdoc
+name.value
+```
+
+## Pattern Matching
+
+For pattern matching, `Newtype` has built-in `unapply` so you can simply do
+
+```scala mdoc
+name match {
+  case Name(value) =>
+    println(s"Pattern matched value: $value")
+}
+```
+
 
 ## Example
-```scala mdoc
+```scala mdoc:reset-object
+import refined4s.*
+
 type Name = Name.Type
 object Name extends Newtype[String]
 
