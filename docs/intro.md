@@ -30,6 +30,8 @@ Newtypes and Refinement types for Scala 3
 
 ## Getting Started
 
+To get `refined4s` for your project,
+
 ### refined4s-core
 <Tabs
 groupId="refined4s"

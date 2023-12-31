@@ -36,6 +36,8 @@ val name = Name("Kevin")
 
 ## Get Actual Value
 
+To get the actual value you can simply use the `value` method.
+
 ```scala
 newtypeName.value
 ```
