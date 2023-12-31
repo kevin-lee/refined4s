@@ -93,3 +93,23 @@ Month.from(invalidMonthInput2)
 
 ```
 
+
+## Get Actual Value
+
+To get the actual value you can simply use the `value` method.
+
+```scala mdoc
+val month = Month(1)
+month.value
+```
+
+## Pattern Matching
+
+For pattern matching, `Refined` has built-in `unapply` so you can simply do
+
+```scala mdoc
+month match {
+  case Month(value) =>
+    println(s"Pattern matched value: $value")
+}
+```
