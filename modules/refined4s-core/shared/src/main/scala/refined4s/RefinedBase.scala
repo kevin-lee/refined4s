@@ -12,7 +12,11 @@ trait RefinedBase[A] extends NewtypeBase[A] {
     override def create(a: A): Either[String, Type] = from(a)
   }
 
-  def unapply(typ: Type): Option[A] = Some(typ)
+  /* The reason to have `Some[A]` as a return type here is
+   * https://github.com/scala/bug/issues/12232
+   * So sad :(
+   */
+  def unapply(typ: Type): Some[A] = Some(typ)
 
   @SuppressWarnings(Array("org.wartremover.warts.ToString"))
   def from(a: A): Either[String, Type] =

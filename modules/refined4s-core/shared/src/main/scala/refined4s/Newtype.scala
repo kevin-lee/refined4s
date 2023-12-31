@@ -8,7 +8,11 @@ trait Newtype[A] extends NewtypeBase[A] {
 
   def apply(a: A): Type = a
 
-  def unapply(typ: Type): Option[A] = Some(typ)
+  /* The reason to have `Some[A]` as a return type here is
+   * https://github.com/scala/bug/issues/12232
+   * So sad :(
+   */
+  def unapply(typ: Type): Some[A] = Some(typ)
 
   inline given wrap: Coercible[A, Type] = Coercible.instance
 
