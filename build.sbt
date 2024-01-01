@@ -156,6 +156,18 @@ lazy val doobieCe3    = module("doobie-ce3", crossProject(JVMPlatform, JSPlatfor
 lazy val doobieCe3Jvm = doobieCe3.jvm
 lazy val doobieCe3Js  = doobieCe3.js.settings(jsSettingsForFuture)
 
+lazy val extrasRender    = module("extras-render", crossProject(JVMPlatform, JSPlatform))
+  .settings(
+    libraryDependencies ++= List(
+      libs.extrasRender
+    )
+  )
+  .dependsOn(
+    core % props.IncludeTest
+  )
+lazy val extrasRenderJvm = extrasRender.jvm
+lazy val extrasRenderJs  = extrasRender.js.settings(jsSettingsForFuture)
+
 lazy val docs = (project in file("docs-gen-tmp/docs"))
   .enablePlugins(MdocPlugin, DocusaurPlugin)
   .settings(
@@ -254,6 +266,7 @@ lazy val libs = new {
   lazy val extrasHedgehogCirce  = "io.kevinlee" %% "extras-hedgehog-circe"   % props.ExtrasVersion
   lazy val extrasDoobieToolsCe2 = "io.kevinlee" %% "extras-doobie-tools-ce2" % props.ExtrasVersion
   lazy val extrasDoobieToolsCe3 = "io.kevinlee" %% "extras-doobie-tools-ce3" % props.ExtrasVersion
+  lazy val extrasRender         = "io.kevinlee" %% "extras-render"           % props.ExtrasVersion
 
   lazy val cats = "org.typelevel" %% "cats-core" % props.CatsVersion
 
