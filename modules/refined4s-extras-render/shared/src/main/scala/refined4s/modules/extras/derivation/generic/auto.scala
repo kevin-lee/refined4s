@@ -6,7 +6,7 @@ import extras.render.Render
 /** @author Kevin Lee
   * @since 2024-01-01
   */
-object auto {
+trait auto {
 
   /** `Render` instance for Newtype, Refined and InlinedRefined types that delegates from the `Render`
     * instance of the base type.
@@ -15,3 +15,4 @@ object auto {
     renderB.contramap[A](coercible(_))
 
 }
+object auto extends auto
