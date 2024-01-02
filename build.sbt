@@ -69,6 +69,8 @@ lazy val refined4s = (project in file("."))
     doobieCe2Js,
     doobieCe3Jvm,
     doobieCe3Js,
+    extrasRenderJvm,
+    extrasRenderJs,
   )
 
 lazy val core    = module("core", crossProject(JVMPlatform, JSPlatform))

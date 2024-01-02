@@ -5,7 +5,6 @@ import extras.render.syntax.*
 import hedgehog.*
 import hedgehog.runner.*
 import refined4s.*
-import refined4s.modules.extras.derivation.*
 
 /** @author Kevin Lee
   * @since 2024-01-01
