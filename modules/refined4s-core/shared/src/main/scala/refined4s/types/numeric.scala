@@ -7,10 +7,7 @@ import refined4s.internal.numericTools
   * @since 2023-04-26
   */
 trait numeric {
-
-  trait Numeric[A: math.Ordering] extends Refined[A], CanBeOrdered[A]
-
-  trait InlinedNumeric[A: math.Ordering] extends InlinedRefined[A], CanBeOrdered[A]
+  import numeric.{InlinedNumeric, Numeric}
 
   type NegInt = NegInt.Type
   object NegInt extends Numeric[Int] {
@@ -370,5 +367,12 @@ trait numeric {
 
     inline def apply(inline a: String): Type = apply(BigDecimal(a))
   }
+
+}
+object numeric {
+
+  trait Numeric[A: math.Ordering] extends Refined[A], CanBeOrdered[A]
+
+  trait InlinedNumeric[A: math.Ordering] extends InlinedRefined[A], CanBeOrdered[A]
 
 }
