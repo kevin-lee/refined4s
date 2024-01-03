@@ -33,6 +33,8 @@ object numericSpec extends Properties {
       property("test NegInt.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NegInt]", testOrdering),
       property("test Ordered[NegInt]", testNumericOrdered),
+      example("test NegInt.MinValue", testMinValue),
+      example("test NegInt.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -129,6 +131,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = NegInt(Int.MinValue)
+      val actual    = NegInt.MinValue
+      val actualMin = NegInt.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NegInt.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"NegInt.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = NegInt(-1)
+      val actual    = NegInt.MaxValue
+      val actualMax = NegInt.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NegInt.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"NegInt.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object NonNegIntSpec {
@@ -145,6 +173,8 @@ object numericSpec extends Properties {
       property("test NonNegInt.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NonNegInt]", testOrdering),
       property("test Ordered[NonNegInt]", testNumericOrdered),
+      example("test NonNegInt.MinValue", testMinValue),
+      example("test NonNegInt.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -241,6 +271,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = NonNegInt(0)
+      val actual    = NonNegInt.MinValue
+      val actualMin = NonNegInt.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonNegInt.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"NonNegInt.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = NonNegInt(Int.MaxValue)
+      val actual    = NonNegInt.MaxValue
+      val actualMax = NonNegInt.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonNegInt.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"NonNegInt.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object PosIntSpec {
@@ -257,6 +313,8 @@ object numericSpec extends Properties {
       property("test PosInt.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[PosInt]", testOrdering),
       property("test Ordered[PosInt]", testNumericOrdered),
+      example("test PosInt.MinValue", testMinValue),
+      example("test PosInt.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -353,6 +411,31 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = PosInt(1)
+      val actual    = PosInt.MinValue
+      val actualMin = PosInt.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"PosInt.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"PosInt.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = PosInt(Int.MaxValue)
+      val actual    = PosInt.MaxValue
+      val actualMax = PosInt.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"PosInt.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"PosInt.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
   }
 
   object NonPosIntSpec {
@@ -369,6 +452,8 @@ object numericSpec extends Properties {
       property("test NonPosInt.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NonPosInt]", testOrdering),
       property("test Ordered[NonPosInt]", testNumericOrdered),
+      example("test NonPosInt.MinValue", testMinValue),
+      example("test NonPosInt.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -472,6 +557,31 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = NonPosInt(Int.MinValue)
+      val actual    = NonPosInt.MinValue
+      val actualMin = NonPosInt.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonPosInt.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"NonPosInt.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = NonPosInt(0)
+      val actual    = NonPosInt.MaxValue
+      val actualMax = NonPosInt.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonPosInt.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"NonPosInt.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
   }
 
   object NegLongSpec {
@@ -488,6 +598,8 @@ object numericSpec extends Properties {
       property("test NegLong.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NegLong]", testOrdering),
       property("test Ordered[NegLong]", testNumericOrdered),
+      example("test NegLong.MinValue", testMinValue),
+      example("test NegLong.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -584,6 +696,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = NegLong(Long.MinValue)
+      val actual    = NegLong.MinValue
+      val actualMin = NegLong.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NegLong.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"NegLong.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = NegLong(-1L)
+      val actual    = NegLong.MaxValue
+      val actualMax = NegLong.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NegLong.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"NegLong.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object NonNegLongSpec {
@@ -600,6 +738,8 @@ object numericSpec extends Properties {
       property("test NonNegLong.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NonNegLong]", testOrdering),
       property("test Ordered[NonNegLong]", testNumericOrdered),
+      example("test NonNegLong.MinValue", testMinValue),
+      example("test NonNegLong.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -703,6 +843,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = NonNegLong(0L)
+      val actual    = NonNegLong.MinValue
+      val actualMin = NonNegLong.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonNegLong.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"NonNegLong.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = NonNegLong(Long.MaxValue)
+      val actual    = NonNegLong.MaxValue
+      val actualMax = NonNegLong.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonNegLong.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"NonNegLong.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object PosLongSpec {
@@ -719,6 +885,8 @@ object numericSpec extends Properties {
       property("test PosLong.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[PosLong]", testOrdering),
       property("test Ordered[PosLong]", testNumericOrdered),
+      example("test PosLong.MinValue", testMinValue),
+      example("test PosLong.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -815,6 +983,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = PosLong(1L)
+      val actual    = PosLong.MinValue
+      val actualMin = PosLong.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"PosLong.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"PosLong.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = PosLong(Long.MaxValue)
+      val actual    = PosLong.MaxValue
+      val actualMax = PosLong.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"PosLong.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"PosLong.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object NonPosLongSpec {
@@ -831,6 +1025,8 @@ object numericSpec extends Properties {
       property("test NonPosLong.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NonPosLong]", testOrdering),
       property("test Ordered[NonPosLong]", testNumericOrdered),
+      example("test NonPosLong.MinValue", testMinValue),
+      example("test NonPosLong.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -934,6 +1130,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = NonPosLong(Long.MinValue)
+      val actual    = NonPosLong.MinValue
+      val actualMin = NonPosLong.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonPosLong.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"NonPosLong.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = NonPosLong(0L)
+      val actual    = NonPosLong.MaxValue
+      val actualMax = NonPosLong.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonPosLong.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"NonPosLong.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object NegShortSpec {
@@ -950,6 +1172,8 @@ object numericSpec extends Properties {
       property("test NegShort.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NegShort]", testOrdering),
       property("test Ordered[NegShort]", testNumericOrdered),
+      example("test NegShort.MinValue", testMinValue),
+      example("test NegShort.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -1046,6 +1270,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = NegShort(Short.MinValue)
+      val actual    = NegShort.MinValue
+      val actualMin = NegShort.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NegShort.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"NegShort.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = NegShort(-1)
+      val actual    = NegShort.MaxValue
+      val actualMax = NegShort.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NegShort.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"NegShort.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object NonNegShortSpec {
@@ -1062,6 +1312,8 @@ object numericSpec extends Properties {
       property("test NonNegShort.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NonNegShort]", testOrdering),
       property("test Ordered[NonNegShort]", testNumericOrdered),
+      example("test NonNegShort.MinValue", testMinValue),
+      example("test NonNegShort.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -1158,6 +1410,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = NonNegShort(0)
+      val actual    = NonNegShort.MinValue
+      val actualMin = NonNegShort.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonNegShort.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"NonNegShort.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = NonNegShort(Short.MaxValue)
+      val actual    = NonNegShort.MaxValue
+      val actualMax = NonNegShort.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonNegShort.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"NonNegShort.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object PosShortSpec {
@@ -1174,6 +1452,8 @@ object numericSpec extends Properties {
       property("test PosShort.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[PosShort]", testOrdering),
       property("test Ordered[PosShort]", testNumericOrdered),
+      example("test PosShort.MinValue", testMinValue),
+      example("test PosShort.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -1270,6 +1550,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = PosShort(1)
+      val actual    = PosShort.MinValue
+      val actualMin = PosShort.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"PosShort.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"PosShort.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = PosShort(Short.MaxValue)
+      val actual    = PosShort.MaxValue
+      val actualMax = PosShort.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"PosShort.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"PosShort.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object NonPosShortSpec {
@@ -1286,6 +1592,8 @@ object numericSpec extends Properties {
       property("test NonPosShort.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NonPosShort]", testOrdering),
       property("test Ordered[NonPosShort]", testNumericOrdered),
+      example("test NonPosShort.MinValue", testMinValue),
+      example("test NonPosShort.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -1389,6 +1697,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = NonPosShort(Short.MinValue)
+      val actual    = NonPosShort.MinValue
+      val actualMin = NonPosShort.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonPosShort.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"NonPosShort.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = NonPosShort(0)
+      val actual    = NonPosShort.MaxValue
+      val actualMax = NonPosShort.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonPosShort.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"NonPosShort.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object NegByteSpec {
@@ -1405,6 +1739,8 @@ object numericSpec extends Properties {
       property("test NegByte.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NegByte]", testOrdering),
       property("test Ordered[NegByte]", testNumericOrdered),
+      example("test NegByte.MinValue", testMinValue),
+      example("test NegByte.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -1501,6 +1837,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = NegByte(Byte.MinValue)
+      val actual    = NegByte.MinValue
+      val actualMin = NegByte.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NegByte.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"NegByte.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = NegByte(-1)
+      val actual    = NegByte.MaxValue
+      val actualMax = NegByte.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NegByte.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"NegByte.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object NonNegByteSpec {
@@ -1517,6 +1879,8 @@ object numericSpec extends Properties {
       property("test NonNegByte.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NonNegByte]", testOrdering),
       property("test Ordered[NonNegByte]", testNumericOrdered),
+      example("test NonNegByte.MinValue", testMinValue),
+      example("test NonNegByte.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -1613,6 +1977,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = NonNegByte(0)
+      val actual    = NonNegByte.MinValue
+      val actualMin = NonNegByte.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonNegByte.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"NonNegByte.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = NonNegByte(Byte.MaxValue)
+      val actual    = NonNegByte.MaxValue
+      val actualMax = NonNegByte.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonNegByte.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"NonNegByte.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object PosByteSpec {
@@ -1629,6 +2019,8 @@ object numericSpec extends Properties {
       property("test PosByte.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[PosByte]", testOrdering),
       property("test Ordered[PosByte]", testNumericOrdered),
+      example("test PosByte.MinValue", testMinValue),
+      example("test PosByte.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -1725,6 +2117,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = PosByte(1)
+      val actual    = PosByte.MinValue
+      val actualMin = PosByte.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"PosByte.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"PosByte.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = PosByte(Byte.MaxValue)
+      val actual    = PosByte.MaxValue
+      val actualMax = PosByte.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"PosByte.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"PosByte.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object NonPosByteSpec {
@@ -1741,6 +2159,8 @@ object numericSpec extends Properties {
       property("test NonPosByte.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NonPosByte]", testOrdering),
       property("test Ordered[NonPosByte]", testNumericOrdered),
+      example("test NonPosByte.MinValue", testMinValue),
+      example("test NonPosByte.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -1844,6 +2264,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = NonPosByte(Byte.MinValue)
+      val actual    = NonPosByte.MinValue
+      val actualMin = NonPosByte.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonPosByte.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"NonPosByte.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = NonPosByte(0)
+      val actual    = NonPosByte.MaxValue
+      val actualMax = NonPosByte.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonPosByte.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"NonPosByte.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object NegFloatSpec {
@@ -1860,6 +2306,8 @@ object numericSpec extends Properties {
       property("test NegFloat.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NegFloat]", testOrdering),
       property("test Ordered[NegFloat]", testNumericOrdered),
+      example("test NegFloat.MinValue", testMinValue),
+      example("test NegFloat.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -1956,6 +2404,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = NegFloat.unsafeFrom(Float.MinValue)
+      val actual    = NegFloat.MinValue
+      val actualMin = NegFloat.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NegFloat.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"NegFloat.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = NegFloat.unsafeFrom(math.nextDown(0f))
+      val actual    = NegFloat.MaxValue
+      val actualMax = NegFloat.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NegFloat.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"NegFloat.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object NonNegFloatSpec {
@@ -1972,6 +2446,8 @@ object numericSpec extends Properties {
       property("test NonNegFloat.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NonNegFloat]", testOrdering),
       property("test Ordered[NonNegFloat]", testNumericOrdered),
+      example("test NonNegFloat.MinValue", testMinValue),
+      example("test NonNegFloat.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -2068,6 +2544,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = NonNegFloat(0f)
+      val actual    = NonNegFloat.MinValue
+      val actualMin = NonNegFloat.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonNegFloat.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"NonNegFloat.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = NonNegFloat(Float.MaxValue)
+      val actual    = NonNegFloat.MaxValue
+      val actualMax = NonNegFloat.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonNegFloat.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"NonNegFloat.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object PosFloatSpec {
@@ -2084,6 +2586,8 @@ object numericSpec extends Properties {
       property("test PosFloat.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[PosFloat]", testOrdering),
       property("test Ordered[PosFloat]", testNumericOrdered),
+      example("test PosFloat.MinValue", testMinValue),
+      example("test PosFloat.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -2180,6 +2684,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = PosFloat.unsafeFrom(math.nextUp(0f))
+      val actual    = PosFloat.MinValue
+      val actualMin = PosFloat.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"PosFloat.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"PosFloat.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = PosFloat(Float.MaxValue)
+      val actual    = PosFloat.MaxValue
+      val actualMax = PosFloat.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"PosFloat.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"PosFloat.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object NonPosFloatSpec {
@@ -2196,6 +2726,8 @@ object numericSpec extends Properties {
       property("test NonPosFloat.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NonPosFloat]", testOrdering),
       property("test Ordered[NonPosFloat]", testNumericOrdered),
+      example("test NonPosFloat.MinValue", testMinValue),
+      example("test NonPosFloat.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -2301,6 +2833,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = NonPosFloat.unsafeFrom(Float.MinValue)
+      val actual    = NonPosFloat.MinValue
+      val actualMin = NonPosFloat.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonPosFloat.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"NonPosFloat.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = NonPosFloat(0f)
+      val actual    = NonPosFloat.MaxValue
+      val actualMax = NonPosFloat.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonPosFloat.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"NonPosFloat.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object NegDoubleSpec {
@@ -2317,6 +2875,8 @@ object numericSpec extends Properties {
       property("test NegDouble.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NegDouble]", testOrdering),
       property("test Ordered[NegDouble]", testNumericOrdered),
+      example("test NegDouble.MinValue", testMinValue),
+      example("test NegDouble.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -2413,6 +2973,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = NegDouble.unsafeFrom(Double.MinValue)
+      val actual    = NegDouble.MinValue
+      val actualMin = NegDouble.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NegDouble.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"NegDouble.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = NegDouble.unsafeFrom(math.nextDown(0d))
+      val actual    = NegDouble.MaxValue
+      val actualMax = NegDouble.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NegDouble.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"NegDouble.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object NonNegDoubleSpec {
@@ -2429,6 +3015,8 @@ object numericSpec extends Properties {
       property("test NonNegDouble.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NonNegDouble]", testOrdering),
       property("test Ordered[NonNegDouble]", testNumericOrdered),
+      example("test NonNegDouble.MinValue", testMinValue),
+      example("test NonNegDouble.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -2525,6 +3113,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = NonNegDouble(0d)
+      val actual    = NonNegDouble.MinValue
+      val actualMin = NonNegDouble.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonNegDouble.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"NonNegDouble.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = NonNegDouble(Double.MaxValue)
+      val actual    = NonNegDouble.MaxValue
+      val actualMax = NonNegDouble.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonNegDouble.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"NonNegDouble.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object PosDoubleSpec {
@@ -2541,6 +3155,8 @@ object numericSpec extends Properties {
       property("test PosDouble.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[PosDouble]", testOrdering),
       property("test Ordered[PosDouble]", testNumericOrdered),
+      example("test PosDouble.MinValue", testMinValue),
+      example("test PosDouble.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -2637,6 +3253,32 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    def testMinValue: Result = {
+      val expected  = PosDouble.unsafeFrom(math.nextUp(0d))
+      val actual    = PosDouble.MinValue
+      val actualMin = PosDouble.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"PosDouble.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"PosDouble.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = PosDouble(Double.MaxValue)
+      val actual    = PosDouble.MaxValue
+      val actualMax = PosDouble.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"PosDouble.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"PosDouble.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
   }
 
   object NonPosDoubleSpec {
@@ -2653,6 +3295,8 @@ object numericSpec extends Properties {
       property("test NonPosDouble.unapply", testUnapplyWithPatternMatching),
       property("test Ordering[NonPosDouble]", testOrdering),
       property("test Ordered[NonPosDouble]", testNumericOrdered),
+      example("test NonPosDouble.MinValue", testMinValue),
+      example("test NonPosDouble.MaxValue", testMaxValue),
     )
 
     def testApply: Result = {
@@ -2757,6 +3401,32 @@ object numericSpec extends Properties {
         val input2: NonPosDouble          = NonPosDouble.unsafeFrom(n2)
         input1.compare(input2) ==== n1.compare(n2)
       }
+
+    def testMinValue: Result = {
+      val expected  = NonPosDouble.unsafeFrom(Double.MinValue)
+      val actual    = NonPosDouble.MinValue
+      val actualMin = NonPosDouble.min
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonPosDouble.MinValue ==== ${expected.toString} failed"),
+          (actualMin ==== expected).log(s"NonPosDouble.min ==== ${expected.toString} failed"),
+        )
+      )
+    }
+
+    def testMaxValue: Result = {
+      val expected  = NonPosDouble(0d)
+      val actual    = NonPosDouble.MaxValue
+      val actualMax = NonPosDouble.max
+
+      Result.all(
+        List(
+          (actual ==== expected).log(s"NonPosDouble.MaxValue ==== ${expected.toString} failed"),
+          (actualMax ==== expected).log(s"NonPosDouble.max ==== ${expected.toString} failed"),
+        )
+      )
+    }
 
   }
 

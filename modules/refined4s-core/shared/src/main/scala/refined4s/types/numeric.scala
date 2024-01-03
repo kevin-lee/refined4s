@@ -7,10 +7,17 @@ import refined4s.internal.numericTools
   * @since 2023-04-26
   */
 trait numeric {
-  import numeric.{InlinedNumeric, Numeric}
+
+  import numeric.{InlinedNumeric, MinMax, Numeric}
 
   type NegInt = NegInt.Type
-  object NegInt extends Numeric[Int] {
+  object NegInt extends Numeric[Int], MinMax[Int] {
+    override def min: Type = apply(Int.MinValue)
+    override def max: Type = apply(-1)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Int): String = expectedMessage("a negative Int")
 
     override inline def predicate(a: Int): Boolean = a < 0
@@ -18,7 +25,13 @@ trait numeric {
   }
 
   type NonNegInt = NonNegInt.Type
-  object NonNegInt extends Numeric[Int] {
+  object NonNegInt extends Numeric[Int], MinMax[Int] {
+    override def min: Type = apply(0)
+    override def max: Type = apply(Int.MaxValue)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Int): String = expectedMessage("a non-negative Int")
 
     override inline def predicate(a: Int): Boolean = a >= 0
@@ -26,7 +39,13 @@ trait numeric {
   }
 
   type PosInt = PosInt.Type
-  object PosInt extends Numeric[Int] {
+  object PosInt extends Numeric[Int], MinMax[Int] {
+    override def min: Type = apply(1)
+    override def max: Type = apply(Int.MaxValue)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Int): String = expectedMessage("a positive Int")
 
     override inline def predicate(a: Int): Boolean = a > 0
@@ -34,7 +53,13 @@ trait numeric {
   }
 
   type NonPosInt = NonPosInt.Type
-  object NonPosInt extends Numeric[Int] {
+  object NonPosInt extends Numeric[Int], MinMax[Int] {
+    override def min: Type = apply(Int.MinValue)
+    override def max: Type = apply(0)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Int): String = expectedMessage("a non-positive Int")
 
     override inline def predicate(a: Int): Boolean = a <= 0
@@ -42,7 +67,13 @@ trait numeric {
   }
 
   type NegLong = NegLong.Type
-  object NegLong extends Numeric[Long] {
+  object NegLong extends Numeric[Long], MinMax[Long] {
+    override def min: Type = apply(Long.MinValue)
+    override def max: Type = apply(-1L)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Long): String = expectedMessage("a negative Long")
 
     override inline def predicate(a: Long): Boolean = a < 0L
@@ -50,7 +81,13 @@ trait numeric {
   }
 
   type NonNegLong = NonNegLong.Type
-  object NonNegLong extends Numeric[Long] {
+  object NonNegLong extends Numeric[Long], MinMax[Long] {
+    override def min: Type = apply(0L)
+    override def max: Type = apply(Long.MaxValue)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Long): String = expectedMessage("a non-negative Long")
 
     override inline def predicate(a: Long): Boolean = a >= 0L
@@ -58,7 +95,13 @@ trait numeric {
   }
 
   type PosLong = PosLong.Type
-  object PosLong extends Numeric[Long] {
+  object PosLong extends Numeric[Long], MinMax[Long] {
+    override def min: Type = apply(1L)
+    override def max: Type = apply(Long.MaxValue)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Long): String = expectedMessage("a positive Long")
 
     override inline def predicate(a: Long): Boolean = a > 0L
@@ -66,7 +109,13 @@ trait numeric {
   }
 
   type NonPosLong = NonPosLong.Type
-  object NonPosLong extends Numeric[Long] {
+  object NonPosLong extends Numeric[Long], MinMax[Long] {
+    override def min: Type = apply(Long.MinValue)
+    override def max: Type = apply(0L)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Long): String = expectedMessage("a non-positive Long")
 
     override inline def predicate(a: Long): Boolean = a <= 0L
@@ -74,7 +123,13 @@ trait numeric {
   }
 
   type NegShort = NegShort.Type
-  object NegShort extends Numeric[Short] {
+  object NegShort extends Numeric[Short], MinMax[Short] {
+    override def min: Type = apply(Short.MinValue)
+    override def max: Type = apply(-1)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Short): String = expectedMessage("a negative Short")
 
     override inline def predicate(a: Short): Boolean = a < 0
@@ -82,7 +137,13 @@ trait numeric {
   }
 
   type NonNegShort = NonNegShort.Type
-  object NonNegShort extends Numeric[Short] {
+  object NonNegShort extends Numeric[Short], MinMax[Short] {
+    override def min: Type = apply(0)
+    override def max: Type = apply(Short.MaxValue)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Short): String = expectedMessage("a non-negative Short")
 
     override inline def predicate(a: Short): Boolean = a >= 0
@@ -90,7 +151,13 @@ trait numeric {
   }
 
   type PosShort = PosShort.Type
-  object PosShort extends Numeric[Short] {
+  object PosShort extends Numeric[Short], MinMax[Short] {
+    override def min: Type = apply(1)
+    override def max: Type = apply(Short.MaxValue)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Short): String = expectedMessage("a positive Short")
 
     override inline def predicate(a: Short): Boolean = a > 0
@@ -98,7 +165,13 @@ trait numeric {
   }
 
   type NonPosShort = NonPosShort.Type
-  object NonPosShort extends Numeric[Short] {
+  object NonPosShort extends Numeric[Short], MinMax[Short] {
+    override def min: Type = apply(Short.MinValue)
+    override def max: Type = apply(0)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Short): String = expectedMessage("a non-positive Short")
 
     override inline def predicate(a: Short): Boolean = a <= 0
@@ -106,7 +179,13 @@ trait numeric {
   }
 
   type NegByte = NegByte.Type
-  object NegByte extends Numeric[Byte] {
+  object NegByte extends Numeric[Byte], MinMax[Byte] {
+    override def min: Type = apply(Byte.MinValue)
+    override def max: Type = apply(-1)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Byte): String = expectedMessage("a negative Byte")
 
     override inline def predicate(a: Byte): Boolean = a < 0
@@ -114,7 +193,13 @@ trait numeric {
   }
 
   type NonNegByte = NonNegByte.Type
-  object NonNegByte extends Numeric[Byte] {
+  object NonNegByte extends Numeric[Byte], MinMax[Byte] {
+    override def min: Type = apply(0)
+    override def max: Type = apply(Byte.MaxValue)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Byte): String = expectedMessage("a non-negative Byte")
 
     override inline def predicate(a: Byte): Boolean = a >= 0
@@ -122,7 +207,13 @@ trait numeric {
   }
 
   type PosByte = PosByte.Type
-  object PosByte extends Numeric[Byte] {
+  object PosByte extends Numeric[Byte], MinMax[Byte] {
+    override def min: Type = apply(1)
+    override def max: Type = apply(Byte.MaxValue)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Byte): String = expectedMessage("a positive Byte")
 
     override inline def predicate(a: Byte): Boolean = a > 0
@@ -130,7 +221,13 @@ trait numeric {
   }
 
   type NonPosByte = NonPosByte.Type
-  object NonPosByte extends Numeric[Byte] {
+  object NonPosByte extends Numeric[Byte], MinMax[Byte] {
+    override def min: Type = apply(Byte.MinValue)
+    override def max: Type = apply(0)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Byte): String = expectedMessage("a non-positive Byte")
 
     override inline def predicate(a: Byte): Boolean = a <= 0
@@ -138,7 +235,13 @@ trait numeric {
   }
 
   type NegFloat = NegFloat.Type
-  object NegFloat extends Numeric[Float] {
+  object NegFloat extends Numeric[Float], MinMax[Float] {
+    override def min: Type = apply(-java.lang.Float.MAX_VALUE) // Float.MinValue
+    override def max: Type = apply(-1.4e-45f) // math.nextDown(0f)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Float): String = expectedMessage("a negative Float")
 
     override inline def predicate(a: Float): Boolean = a < 0f
@@ -146,7 +249,13 @@ trait numeric {
   }
 
   type NonNegFloat = NonNegFloat.Type
-  object NonNegFloat extends Numeric[Float] {
+  object NonNegFloat extends Numeric[Float], MinMax[Float] {
+    override def min: Type = apply(0f)
+    override def max: Type = apply(Float.MaxValue)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Float): String = expectedMessage("a non-negative Float")
 
     override inline def predicate(a: Float): Boolean = a >= 0f
@@ -154,7 +263,13 @@ trait numeric {
   }
 
   type PosFloat = PosFloat.Type
-  object PosFloat extends Numeric[Float] {
+  object PosFloat extends Numeric[Float], MinMax[Float] {
+    override def min: Type = apply(1.4e-45f) // math.nextUp(0f)
+    override def max: Type = apply(Float.MaxValue)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Float): String = expectedMessage("a positive Float")
 
     override inline def predicate(a: Float): Boolean = a > 0f
@@ -162,7 +277,13 @@ trait numeric {
   }
 
   type NonPosFloat = NonPosFloat.Type
-  object NonPosFloat extends Numeric[Float] {
+  object NonPosFloat extends Numeric[Float], MinMax[Float] {
+    override def min: Type = apply(-java.lang.Float.MAX_VALUE)
+    override def max: Type = apply(0f)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Float): String = expectedMessage("a non-positive Float")
 
     override inline def predicate(a: Float): Boolean = a <= 0f
@@ -170,7 +291,13 @@ trait numeric {
   }
 
   type NegDouble = NegDouble.Type
-  object NegDouble extends Numeric[Double] {
+  object NegDouble extends Numeric[Double], MinMax[Double] {
+    override def min: Type = apply(-java.lang.Double.MAX_VALUE) // Double.MinValue
+    override def max: Type = apply(-4.9e-324d) // math.nextDown(0d)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Double): String = expectedMessage("a negative Double")
 
     override inline def predicate(a: Double): Boolean = a < 0d
@@ -178,7 +305,13 @@ trait numeric {
   }
 
   type NonNegDouble = NonNegDouble.Type
-  object NonNegDouble extends Numeric[Double] {
+  object NonNegDouble extends Numeric[Double], MinMax[Double] {
+    override def min: Type = apply(0d)
+    override def max: Type = apply(Double.MaxValue)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Double): String = expectedMessage("a non-negative Double")
 
     override inline def predicate(a: Double): Boolean = a >= 0d
@@ -186,7 +319,13 @@ trait numeric {
   }
 
   type PosDouble = PosDouble.Type
-  object PosDouble extends Numeric[Double] {
+  object PosDouble extends Numeric[Double], MinMax[Double] {
+    override def min: Type = apply(4.9e-324d) // math.nextUp(0d)
+    override def max: Type = apply(Double.MaxValue)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Double): String = expectedMessage("a positive Double")
 
     override inline def predicate(a: Double): Boolean = a > 0d
@@ -194,7 +333,13 @@ trait numeric {
   }
 
   type NonPosDouble = NonPosDouble.Type
-  object NonPosDouble extends Numeric[Double] {
+  object NonPosDouble extends Numeric[Double], MinMax[Double] {
+    override def min: Type = apply(-java.lang.Double.MAX_VALUE) // Double.MinValue
+    override def max: Type = apply(0d)
+
+    val MinValue: Type = min
+    val MaxValue: Type = max
+
     override inline def invalidReason(a: Double): String = expectedMessage("a non-positive Double")
 
     override inline def predicate(a: Double): Boolean = a <= 0d
@@ -374,5 +519,19 @@ object numeric {
   trait Numeric[A: math.Ordering] extends Refined[A], CanBeOrdered[A]
 
   trait InlinedNumeric[A: math.Ordering] extends InlinedRefined[A], CanBeOrdered[A]
+
+  trait Min[A] {
+    self: NewtypeBase[A] =>
+    def min: Type
+  }
+
+  trait Max[A] {
+    self: NewtypeBase[A] =>
+    def max: Type
+  }
+
+  trait MinMax[A] extends Min[A], Max[A] {
+    self: NewtypeBase[A] =>
+  }
 
 }
