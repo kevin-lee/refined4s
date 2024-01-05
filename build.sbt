@@ -297,12 +297,15 @@ lazy val libs = new {
   lazy val hedgehogRunner = "qa.hedgehog" %% "hedgehog-runner" % props.HedgehogVersion
   lazy val hedgehogSbt    = "qa.hedgehog" %% "hedgehog-sbt"    % props.HedgehogVersion
 
-  lazy val hedgehog: List[ModuleID] =
-    List(
-      hedgehogCore,
-      hedgehogRunner,
-      hedgehogSbt,
-    ).map(_ % Test)
+  lazy val tests = new {
+
+    lazy val hedgehog: List[ModuleID] =
+      List(
+        hedgehogCore,
+        hedgehogRunner,
+        hedgehogSbt,
+      ).map(_ % Test)
+  }
 }
 
 // scalafmt: off
@@ -335,7 +338,7 @@ def module(projectName: String, crossProject: CrossProject.Builder): CrossProjec
       ),
       scalacOptions ++= (if (isScala3(scalaVersion.value)) List("-no-indent") else List("-Xsource:3")),
 //      scalacOptions ~= (ops => ops.filter(_ != "UTF-8")),
-      libraryDependencies ++= libs.hedgehog,
+      libraryDependencies ++= libs.tests.hedgehog,
       wartremoverErrors ++= Warts.allBut(Wart.Any, Wart.Nothing, Wart.ImplicitConversion, Wart.ImplicitParameter),
       Compile / console / scalacOptions :=
         (console / scalacOptions)
@@ -346,7 +349,6 @@ def module(projectName: String, crossProject: CrossProject.Builder): CrossProjec
           .value
           .filterNot(option => option.contains("wartremover") || option.contains("import")),
       /* } WartRemover and scalacOptions */
-      testFrameworks ++= (testFrameworks.value ++ Seq(TestFramework("hedgehog.sbt.Framework"))).distinct,
       licenses := props.licenses,
       /* coverage { */
       coverageHighlighting := (CrossVersion.partialVersion(scalaVersion.value) match {
