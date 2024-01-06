@@ -324,20 +324,13 @@ values={[
 In `build.sbt`,
 
 ```scala
-"io.kevinlee" %% "refined4s-core" % "@VERSION@"
-,
-"io.kevinlee" %% "refined4s-cats" % "@VERSION@"
-,
-"io.kevinlee" %% "refined4s-circe" % "@VERSION@"
-,
-"io.kevinlee" %% "refined4s-pureconfig" % "@VERSION@"
-,
-"io.kevinlee" %% "refined4s-doobie-ce2" % "@VERSION@"
-, // Use either refined4s-doobie-ce2
-"io.kevinlee" %% "refined4s-doobie-ce3" % "@VERSION@"
-, // OR refined4s-doobie-ce3
-"io.kevinlee" %% "refined4s-extras-render" % "@VERSION@"
-,
+"io.kevinlee" %% "refined4s-core" % "@VERSION@",
+"io.kevinlee" %% "refined4s-cats" % "@VERSION@",
+"io.kevinlee" %% "refined4s-circe" % "@VERSION@",
+"io.kevinlee" %% "refined4s-pureconfig" % "@VERSION@",
+"io.kevinlee" %% "refined4s-doobie-ce2" % "@VERSION@", // Use either refined4s-doobie-ce2
+"io.kevinlee" %% "refined4s-doobie-ce3" % "@VERSION@", // OR refined4s-doobie-ce3
+"io.kevinlee" %% "refined4s-extras-render" % "@VERSION@",
 ```
 
   </TabItem>
