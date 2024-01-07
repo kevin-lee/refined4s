@@ -59,6 +59,14 @@ negInt123.value
 negInt999.value
 ```
 
+#### Min and Max Values
+```scala mdoc
+NegInt.MinValue
+
+NegInt.MaxValue
+```
+
+
 ***
 
 ### `NonNegInt`: non-negative `Int`
@@ -108,6 +116,13 @@ val nonNegInt999 = NonNegInt(999)
 nonNegInt123.value
 
 nonNegInt999.value
+```
+
+#### Min and Max Values
+```scala mdoc
+NonNegInt.MinValue
+
+NonNegInt.MaxValue
 ```
 
 ***
@@ -166,6 +181,13 @@ posInt123.value
 posInt999.value
 ```
 
+#### Min and Max Values
+```scala mdoc
+PosInt.MinValue
+
+PosInt.MaxValue
+```
+
 ***
 
 ### `NonPosInt`: non-positive `Int`
@@ -222,6 +244,13 @@ nonPosInt0.value
 nonPosIntMinus999.value
 ```
 
+#### Min and Max Values
+```scala mdoc
+NonPosInt.MinValue
+
+NonPosInt.MaxValue
+```
+
 ***
 
 ## Refined `Long`
@@ -276,6 +305,13 @@ negLong123.value
 negLong999.value
 ```
 
+#### Min and Max Values
+```scala mdoc
+NegLong.MinValue
+
+NegLong.MaxValue
+```
+
 ***
 
 ### `NonNegLong`: non-negative `Long`
@@ -327,6 +363,13 @@ val nonNegLong999 = NonNegLong(999L)
 nonNegLong123.value
 
 nonNegLong999.value
+```
+
+#### Min and Max Values
+```scala mdoc
+NonNegLong.MinValue
+
+NonNegLong.MaxValue
 ```
 
 ***
@@ -385,6 +428,13 @@ posLong123.value
 posLong999.value
 ```
 
+#### Min and Max Values
+```scala mdoc
+PosLong.MinValue
+
+PosLong.MaxValue
+```
+
 ***
 
 ### `NonPosLong`: non-positive `Long`
@@ -439,6 +489,13 @@ val nonPosLongMinus999 = NonPosLong(-999L)
 nonPosLong0.value
 
 nonPosLongMinus999.value
+```
+
+#### Min and Max Values
+```scala mdoc
+NonPosLong.MinValue
+
+NonPosLong.MaxValue
 ```
 
 
@@ -496,6 +553,13 @@ val negDouble999 = NegDouble(-999.999d)
 negDouble123.value
 
 negDouble999.value
+```
+
+#### Min and Max Values
+```scala mdoc
+NegDouble.MinValue
+
+NegDouble.MaxValue
 ```
 
 ***
@@ -558,6 +622,13 @@ nonNegDouble123.value
 nonNegDouble999.value
 ```
 
+#### Min and Max Values
+```scala mdoc
+NonNegDouble.MinValue
+
+NonNegDouble.MaxValue
+```
+
 ***
 
 ### `PosDouble`: positive `Double`
@@ -615,6 +686,13 @@ val posDouble999 = PosDouble(999.999d)
 posDouble123.value
 
 posDouble999.value
+```
+
+#### Min and Max Values
+```scala mdoc
+PosDouble.MinValue
+
+PosDouble.MaxValue
 ```
 
 ***
@@ -676,6 +754,13 @@ nonPosDouble0.value
 nonPosDoubleMinus999.value
 ```
 
+#### Min and Max Values
+```scala mdoc
+NonPosDouble.MinValue
+
+NonPosDouble.MaxValue
+```
+
 
 ***
 
@@ -733,6 +818,13 @@ negFloat123.value
 negFloat999.value
 ```
 
+#### Min and Max Values
+```scala mdoc
+NegFloat.MinValue
+
+NegFloat.MaxValue
+```
+
 ***
 
 ### `NonNegFloat`: non-negative `Float`
@@ -745,7 +837,6 @@ NonNegFloat(999.999f)
 
 ```scala mdoc:fail
 NonNegFloat(-0.00001f)
-```
 ```
 ```scala mdoc:fail
 NonNegFloat(-999.999f)
@@ -791,6 +882,13 @@ val nonNegFloat999 = NonNegFloat(999.999f)
 nonNegFloat123.value
 
 nonNegFloat999.value
+```
+
+#### Min and Max Values
+```scala mdoc
+NonNegFloat.MinValue
+
+NonNegFloat.MaxValue
 ```
 
 ***
@@ -852,6 +950,14 @@ posFloat123.value
 posFloat999.value
 ```
 
+#### Min and Max Values
+```scala mdoc
+PosFloat.MinValue
+
+PosFloat.MaxValue
+```
+
+
 ***
 
 ### `NonPosFloat`: non-positive `Float`
@@ -909,6 +1015,13 @@ val nonPosFloatMinus999 = NonPosFloat(-999.999f)
 nonPosFloat0.value
 
 nonPosFloatMinus999.value
+```
+
+#### Min and Max Values
+```scala mdoc
+NonPosFloat.MinValue
+
+NonPosFloat.MaxValue
 ```
 
 
