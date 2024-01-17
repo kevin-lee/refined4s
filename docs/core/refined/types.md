@@ -11,9 +11,9 @@ import refined4s.types.all.*
 ```
 
 ## Refined `Int`
-### `NegInt`: negative `Int`
+## `NegInt`: negative `Int`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 NegInt(-1)
 ```
@@ -24,7 +24,7 @@ NegInt(0)
 NegInt(1)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 ```scala mdoc
 val validNegInt = -1 
 NegInt.from(validNegInt)
@@ -37,7 +37,7 @@ val invalidNegInt2 = 1
 NegInt.from(invalidNegInt2)
 ```
 
-#### Comparison
+### Comparison
 ```scala mdoc
 val negInt1 = NegInt(-1)
 val negInt2 = NegInt(-2)
@@ -49,7 +49,7 @@ negInt1 < negInt2
 negInt1 <= negInt2
 ```
 
-#### Get Value
+### Get Value
 ```scala mdoc
 val negInt123 = NegInt(-123)
 val negInt999 = NegInt(-999)
@@ -59,7 +59,7 @@ negInt123.value
 negInt999.value
 ```
 
-#### Min and Max Values
+### Min and Max Values
 ```scala mdoc
 NegInt.MinValue
 
@@ -69,9 +69,9 @@ NegInt.MaxValue
 
 ***
 
-### `NonNegInt`: non-negative `Int`
+## `NonNegInt`: non-negative `Int`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 NonNegInt(0)
 NonNegInt(1)
@@ -81,7 +81,7 @@ NonNegInt(1)
 NonNegInt(-2)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 ```scala mdoc
 val validNonNegInt = 1 
 NonNegInt.from(validNonNegInt)
@@ -94,7 +94,7 @@ val invalidNonNegInt2 = -999
 NonNegInt.from(invalidNonNegInt2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val nonNegInt1 = NonNegInt(0)
@@ -107,7 +107,7 @@ nonNegInt1 < nonNegInt2
 nonNegInt1 <= nonNegInt2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val nonNegInt123 = NonNegInt(0)
@@ -118,7 +118,7 @@ nonNegInt123.value
 nonNegInt999.value
 ```
 
-#### Min and Max Values
+### Min and Max Values
 ```scala mdoc
 NonNegInt.MinValue
 
@@ -127,9 +127,9 @@ NonNegInt.MaxValue
 
 ***
 
-### `PosInt`: positive `Int`
+## `PosInt`: positive `Int`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 PosInt(1)
 PosInt(999)
@@ -142,7 +142,7 @@ PosInt(0)
 PosInt(-2)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 
 ```scala mdoc
 val validPosInt = 1
@@ -157,7 +157,7 @@ val invalidPosInt2 = -999
 PosInt.from(invalidPosInt2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val posInt1 = PosInt(1)
@@ -170,7 +170,7 @@ posInt1 < posInt2
 posInt1 <= posInt2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val posInt123 = PosInt(123)
@@ -181,7 +181,7 @@ posInt123.value
 posInt999.value
 ```
 
-#### Min and Max Values
+### Min and Max Values
 ```scala mdoc
 PosInt.MinValue
 
@@ -190,9 +190,9 @@ PosInt.MaxValue
 
 ***
 
-### `NonPosInt`: non-positive `Int`
+## `NonPosInt`: non-positive `Int`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 NonPosInt(0)
 NonPosInt(-999)
@@ -202,7 +202,7 @@ NonPosInt(-999)
 NonPosInt(1)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 
 ```scala mdoc
 val validNonPosInt = 0
@@ -220,7 +220,7 @@ val invalidNonPosInt2 = 999
 NonPosInt.from(invalidNonPosInt2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val nonPosInt1 = NonPosInt(0)
@@ -233,7 +233,7 @@ nonPosInt1 < nonPosInt2
 nonPosInt1 <= nonPosInt2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val nonPosInt0 = NonPosInt(0)
@@ -244,7 +244,7 @@ nonPosInt0.value
 nonPosIntMinus999.value
 ```
 
-#### Min and Max Values
+### Min and Max Values
 ```scala mdoc
 NonPosInt.MinValue
 
@@ -255,9 +255,9 @@ NonPosInt.MaxValue
 
 ## Refined `Long`
 
-### `NegLong`: negative `Long`
+## `NegLong`: negative `Long`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 NegLong(-1L)
 ```
@@ -268,7 +268,7 @@ NegLong(0L)
 NegLong(1L)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 ```scala mdoc
 val validNegLong = -1L 
 NegLong.from(validNegLong)
@@ -281,7 +281,7 @@ val invalidNegLong2 = 1L
 NegLong.from(invalidNegLong2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val negLong1 = NegLong(-1L)
@@ -294,7 +294,7 @@ negLong1 < negLong2
 negLong1 <= negLong2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val negLong123 = NegLong(-123L)
@@ -305,7 +305,7 @@ negLong123.value
 negLong999.value
 ```
 
-#### Min and Max Values
+### Min and Max Values
 ```scala mdoc
 NegLong.MinValue
 
@@ -314,9 +314,9 @@ NegLong.MaxValue
 
 ***
 
-### `NonNegLong`: non-negative `Long`
+## `NonNegLong`: non-negative `Long`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 NonNegLong(0L)
 NonNegLong(1L)
@@ -326,7 +326,7 @@ NonNegLong(1L)
 NonNegLong(-2L)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 
 ```scala mdoc
 val validNonNegLong = 1L
@@ -341,7 +341,7 @@ val invalidNonNegLong2 = -999L
 NonNegLong.from(invalidNonNegLong2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val nonNegLong1 = NonNegLong(0L)
@@ -354,7 +354,7 @@ nonNegLong1 < nonNegLong2
 nonNegLong1 <= nonNegLong2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val nonNegLong123 = NonNegLong(0L)
@@ -365,7 +365,7 @@ nonNegLong123.value
 nonNegLong999.value
 ```
 
-#### Min and Max Values
+### Min and Max Values
 ```scala mdoc
 NonNegLong.MinValue
 
@@ -374,9 +374,9 @@ NonNegLong.MaxValue
 
 ***
 
-### `PosLong`: positive `Long`
+## `PosLong`: positive `Long`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 PosLong(1L)
 PosLong(999L)
@@ -389,7 +389,7 @@ PosLong(0L)
 PosLong(-2L)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 
 ```scala mdoc
 val validPosLong = 1L
@@ -404,7 +404,7 @@ val invalidPosLong2 = -999L
 PosLong.from(invalidPosLong2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val posLong1 = PosLong(1L)
@@ -417,7 +417,7 @@ posLong1 < posLong2
 posLong1 <= posLong2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val posLong123 = PosLong(123L)
@@ -428,7 +428,7 @@ posLong123.value
 posLong999.value
 ```
 
-#### Min and Max Values
+### Min and Max Values
 ```scala mdoc
 PosLong.MinValue
 
@@ -437,9 +437,9 @@ PosLong.MaxValue
 
 ***
 
-### `NonPosLong`: non-positive `Long`
+## `NonPosLong`: non-positive `Long`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 NonPosLong(0L)
 NonPosLong(-999L)
@@ -449,7 +449,7 @@ NonPosLong(-999L)
 NonPosLong(1L)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 
 ```scala mdoc
 val validNonPosLong = 0L
@@ -467,7 +467,7 @@ val invalidNonPosLong2 = 999L
 NonPosLong.from(invalidNonPosLong2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val nonPosLong1 = NonPosLong(0L)
@@ -480,7 +480,7 @@ nonPosLong1 < nonPosLong2
 nonPosLong1 <= nonPosLong2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val nonPosLong0 = NonPosLong(0L)
@@ -491,7 +491,7 @@ nonPosLong0.value
 nonPosLongMinus999.value
 ```
 
-#### Min and Max Values
+### Min and Max Values
 ```scala mdoc
 NonPosLong.MinValue
 
@@ -504,9 +504,9 @@ NonPosLong.MaxValue
 
 ## Refined `Double`
 
-### `NegDouble`: negative `Double`
+## `NegDouble`: negative `Double`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 NegDouble(-0.00001d)
 NegDouble(-999.999d)
@@ -518,7 +518,7 @@ NegDouble(0d)
 NegDouble(999.999d)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 ```scala mdoc
 val validNegDouble = -0.00001d 
 NegDouble.from(validNegDouble)
@@ -531,7 +531,7 @@ val invalidNegDouble2 = 999.999d
 NegDouble.from(invalidNegDouble2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val negDouble1 = NegDouble(-0.1d)
@@ -544,7 +544,7 @@ negDouble1 < negDouble2
 negDouble1 <= negDouble2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val negDouble123 = NegDouble(-123.123d)
@@ -555,7 +555,7 @@ negDouble123.value
 negDouble999.value
 ```
 
-#### Min and Max Values
+### Min and Max Values
 ```scala mdoc
 NegDouble.MinValue
 
@@ -564,9 +564,9 @@ NegDouble.MaxValue
 
 ***
 
-### `NonNegDouble`: non-negative `Double`
+## `NonNegDouble`: non-negative `Double`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 NonNegDouble(0d)
 NonNegDouble(999.999d)
@@ -580,7 +580,7 @@ NonNegDouble(-0.00001d)
 NonNegDouble(-999.999d)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 
 ```scala mdoc
 val validNonNegDouble1 = 0d
@@ -598,7 +598,7 @@ val invalidNonNegDouble2 = -999.999d
 NonNegDouble.from(invalidNonNegDouble2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val nonNegDouble1 = NonNegDouble(0d)
@@ -611,7 +611,7 @@ nonNegDouble1 < nonNegDouble2
 nonNegDouble1 <= nonNegDouble2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val nonNegDouble123 = NonNegDouble(0d)
@@ -622,7 +622,7 @@ nonNegDouble123.value
 nonNegDouble999.value
 ```
 
-#### Min and Max Values
+### Min and Max Values
 ```scala mdoc
 NonNegDouble.MinValue
 
@@ -631,9 +631,9 @@ NonNegDouble.MaxValue
 
 ***
 
-### `PosDouble`: positive `Double`
+## `PosDouble`: positive `Double`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 PosDouble(0.00001d)
 PosDouble(999.999d)
@@ -646,7 +646,7 @@ PosDouble(0d)
 PosDouble(-999.999d)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 
 ```scala mdoc
 val validPosDouble1 = 0.00001d
@@ -664,7 +664,7 @@ val invalidPosDouble2 = -999.999d
 PosDouble.from(invalidPosDouble2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val posDouble1 = PosDouble(0.00001d)
@@ -677,7 +677,7 @@ posDouble1 < posDouble2
 posDouble1 <= posDouble2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val posDouble123 = PosDouble(123.123d)
@@ -688,7 +688,7 @@ posDouble123.value
 posDouble999.value
 ```
 
-#### Min and Max Values
+### Min and Max Values
 ```scala mdoc
 PosDouble.MinValue
 
@@ -697,9 +697,9 @@ PosDouble.MaxValue
 
 ***
 
-### `NonPosDouble`: non-positive `Double`
+## `NonPosDouble`: non-positive `Double`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 NonPosDouble(0d)
 NonPosDouble(-999.999d)
@@ -712,7 +712,7 @@ NonPosDouble(0.00001d)
 NonPosDouble(999.999d)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 
 ```scala mdoc
 val validNonPosDouble = 0d
@@ -730,7 +730,7 @@ val invalidNonPosDouble2 = 999.999d
 NonPosDouble.from(invalidNonPosDouble2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val nonPosDouble1 = NonPosDouble(0d)
@@ -743,7 +743,7 @@ nonPosDouble1 < nonPosDouble2
 nonPosDouble1 <= nonPosDouble2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val nonPosDouble0 = NonPosDouble(0d)
@@ -754,7 +754,7 @@ nonPosDouble0.value
 nonPosDoubleMinus999.value
 ```
 
-#### Min and Max Values
+### Min and Max Values
 ```scala mdoc
 NonPosDouble.MinValue
 
@@ -767,9 +767,9 @@ NonPosDouble.MaxValue
 ## Refined `Float`
 
 
-### `NegFloat`: negative `Float`
+## `NegFloat`: negative `Float`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 NegFloat(-0.00001f)
 NegFloat(-999.999f)
@@ -781,7 +781,7 @@ NegFloat(0f)
 NegFloat(999.999f)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 ```scala mdoc
 val validNegFloat = -0.00001f 
 NegFloat.from(validNegFloat)
@@ -794,7 +794,7 @@ val invalidNegFloat2 = 999.999f
 NegFloat.from(invalidNegFloat2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val negFloat1 = NegFloat(-0.1f)
@@ -807,7 +807,7 @@ negFloat1 < negFloat2
 negFloat1 <= negFloat2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val negFloat123 = NegFloat(-123.123f)
@@ -818,7 +818,7 @@ negFloat123.value
 negFloat999.value
 ```
 
-#### Min and Max Values
+### Min and Max Values
 ```scala mdoc
 NegFloat.MinValue
 
@@ -827,9 +827,9 @@ NegFloat.MaxValue
 
 ***
 
-### `NonNegFloat`: non-negative `Float`
+## `NonNegFloat`: non-negative `Float`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 NonNegFloat(0f)
 NonNegFloat(999.999f)
@@ -842,7 +842,7 @@ NonNegFloat(-0.00001f)
 NonNegFloat(-999.999f)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 
 ```scala mdoc
 val validNonNegFloat1 = 0f
@@ -860,7 +860,7 @@ val invalidNonNegFloat2 = -999.999f
 NonNegFloat.from(invalidNonNegFloat2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val nonNegFloat1 = NonNegFloat(0f)
@@ -873,7 +873,7 @@ nonNegFloat1 < nonNegFloat2
 nonNegFloat1 <= nonNegFloat2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val nonNegFloat123 = NonNegFloat(0f)
@@ -884,7 +884,7 @@ nonNegFloat123.value
 nonNegFloat999.value
 ```
 
-#### Min and Max Values
+### Min and Max Values
 ```scala mdoc
 NonNegFloat.MinValue
 
@@ -893,9 +893,9 @@ NonNegFloat.MaxValue
 
 ***
 
-### `PosFloat`: positive `Float`
+## `PosFloat`: positive `Float`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 PosFloat(0.00001f)
 PosFloat(999.999f)
@@ -908,7 +908,7 @@ PosFloat(0f)
 PosFloat(-999.999f)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 
 ```scala mdoc
 val validPosFloat1 = 0.00001f
@@ -926,7 +926,7 @@ val invalidPosFloat2 = -999.999f
 PosFloat.from(invalidPosFloat2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val posFloat1 = PosFloat(0.00001f)
@@ -939,7 +939,7 @@ posFloat1 < posFloat2
 posFloat1 <= posFloat2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val posFloat123 = PosFloat(123.123f)
@@ -950,7 +950,7 @@ posFloat123.value
 posFloat999.value
 ```
 
-#### Min and Max Values
+### Min and Max Values
 ```scala mdoc
 PosFloat.MinValue
 
@@ -960,9 +960,9 @@ PosFloat.MaxValue
 
 ***
 
-### `NonPosFloat`: non-positive `Float`
+## `NonPosFloat`: non-positive `Float`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 NonPosFloat(0f)
 NonPosFloat(-999.999f)
@@ -975,7 +975,7 @@ NonPosFloat(0.00001f)
 NonPosFloat(999.999f)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 
 ```scala mdoc
 val validNonPosFloat = 0f
@@ -993,7 +993,7 @@ val invalidNonPosFloat2 = 999.999f
 NonPosFloat.from(invalidNonPosFloat2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val nonPosFloat1 = NonPosFloat(0f)
@@ -1006,7 +1006,7 @@ nonPosFloat1 < nonPosFloat2
 nonPosFloat1 <= nonPosFloat2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val nonPosFloat0 = NonPosFloat(0f)
@@ -1017,7 +1017,7 @@ nonPosFloat0.value
 nonPosFloatMinus999.value
 ```
 
-#### Min and Max Values
+### Min and Max Values
 ```scala mdoc
 NonPosFloat.MinValue
 
@@ -1029,9 +1029,9 @@ NonPosFloat.MaxValue
 
 ## Refined `BigInt`
 
-### `NegBigInt`: negative `BigInt`
+## `NegBigInt`: negative `BigInt`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 NegBigInt(-1)
 ```
@@ -1042,7 +1042,7 @@ NegBigInt(0)
 NegBigInt(1)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 ```scala mdoc
 val validNegBigInt = -1 
 NegBigInt.from(validNegBigInt)
@@ -1055,7 +1055,7 @@ val invalidNegBigInt2 = 1
 NegBigInt.from(invalidNegBigInt2)
 ```
 
-#### Comparison
+### Comparison
 ```scala mdoc
 val negBigInt1 = NegBigInt(-1)
 val negBigInt2 = NegBigInt(-2)
@@ -1067,7 +1067,7 @@ negBigInt1 < negBigInt2
 negBigInt1 <= negBigInt2
 ```
 
-#### Get Value
+### Get Value
 ```scala mdoc
 val negBigInt123 = NegBigInt(-123)
 val negBigInt999 = NegBigInt(-999)
@@ -1079,9 +1079,9 @@ negBigInt999.value
 
 ***
 
-### `NonNegBigInt`: non-negative `BigInt`
+## `NonNegBigInt`: non-negative `BigInt`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 NonNegBigInt(0)
 NonNegBigInt(1)
@@ -1091,7 +1091,7 @@ NonNegBigInt(1)
 NonNegBigInt(-2)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 ```scala mdoc
 val validNonNegBigInt = 1 
 NonNegBigInt.from(validNonNegBigInt)
@@ -1104,7 +1104,7 @@ val invalidNonNegBigInt2 = -999
 NonNegBigInt.from(invalidNonNegBigInt2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val nonNegBigInt1 = NonNegBigInt(0)
@@ -1117,7 +1117,7 @@ nonNegBigInt1 < nonNegBigInt2
 nonNegBigInt1 <= nonNegBigInt2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val nonNegBigInt123 = NonNegBigInt(0)
@@ -1130,9 +1130,9 @@ nonNegBigInt999.value
 
 ***
 
-### `PosBigInt`: positive `BigInt`
+## `PosBigInt`: positive `BigInt`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 PosBigInt(1)
 PosBigInt(999)
@@ -1145,7 +1145,7 @@ PosBigInt(0)
 PosBigInt(-2)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 
 ```scala mdoc
 val validPosBigInt = 1
@@ -1160,7 +1160,7 @@ val invalidPosBigInt2 = -999
 PosBigInt.from(invalidPosBigInt2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val posBigInt1 = PosBigInt(1)
@@ -1173,7 +1173,7 @@ posBigInt1 < posBigInt2
 posBigInt1 <= posBigInt2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val posBigInt123 = PosBigInt(123)
@@ -1186,9 +1186,9 @@ posBigInt999.value
 
 ***
 
-### `NonPosBigInt`: non-positive `BigInt`
+## `NonPosBigInt`: non-positive `BigInt`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 NonPosBigInt(0)
 NonPosBigInt(-999)
@@ -1198,7 +1198,7 @@ NonPosBigInt(-999)
 NonPosBigInt(1)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 
 ```scala mdoc
 val validNonPosBigInt = 0
@@ -1216,7 +1216,7 @@ val invalidNonPosBigInt2 = 999
 NonPosBigInt.from(invalidNonPosBigInt2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val nonPosBigInt1 = NonPosBigInt(0)
@@ -1229,7 +1229,7 @@ nonPosBigInt1 < nonPosBigInt2
 nonPosBigInt1 <= nonPosBigInt2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val nonPosBigInt0 = NonPosBigInt(0)
@@ -1246,9 +1246,9 @@ nonPosBigIntMinus999.value
 ## Refined `BigDecimal`
 
 
-### `NegBigDecimal`: negative `BigDecimal`
+## `NegBigDecimal`: negative `BigDecimal`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 NegBigDecimal(-0.00001d)
 NegBigDecimal(-999.999d)
@@ -1260,7 +1260,7 @@ NegBigDecimal(0d)
 NegBigDecimal(999.999d)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 ```scala mdoc
 val validNegBigDecimal = -0.00001d 
 NegBigDecimal.from(validNegBigDecimal)
@@ -1273,7 +1273,7 @@ val invalidNegBigDecimal2 = 999.999d
 NegBigDecimal.from(invalidNegBigDecimal2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val negBigDecimal1 = NegBigDecimal(-0.1d)
@@ -1286,7 +1286,7 @@ negBigDecimal1 < negBigDecimal2
 negBigDecimal1 <= negBigDecimal2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val negBigDecimal123 = NegBigDecimal(-123.123d)
@@ -1299,9 +1299,9 @@ negBigDecimal999.value
 
 ***
 
-### `NonNegBigDecimal`: non-negative `BigDecimal`
+## `NonNegBigDecimal`: non-negative `BigDecimal`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 NonNegBigDecimal(0d)
 NonNegBigDecimal(999.999d)
@@ -1315,7 +1315,7 @@ NonNegBigDecimal(-0.00001d)
 NonNegBigDecimal(-999.999d)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 
 ```scala mdoc
 val validNonNegBigDecimal1 = 0d
@@ -1333,7 +1333,7 @@ val invalidNonNegBigDecimal2 = -999.999d
 NonNegBigDecimal.from(invalidNonNegBigDecimal2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val nonNegBigDecimal1 = NonNegBigDecimal(0d)
@@ -1346,7 +1346,7 @@ nonNegBigDecimal1 < nonNegBigDecimal2
 nonNegBigDecimal1 <= nonNegBigDecimal2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val nonNegBigDecimal123 = NonNegBigDecimal(0d)
@@ -1359,9 +1359,9 @@ nonNegBigDecimal999.value
 
 ***
 
-### `PosBigDecimal`: positive `BigDecimal`
+## `PosBigDecimal`: positive `BigDecimal`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 PosBigDecimal(0.00001d)
 PosBigDecimal(999.999d)
@@ -1374,7 +1374,7 @@ PosBigDecimal(0d)
 PosBigDecimal(-999.999d)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 
 ```scala mdoc
 val validPosBigDecimal1 = 0.00001d
@@ -1392,7 +1392,7 @@ val invalidPosBigDecimal2 = -999.999d
 PosBigDecimal.from(invalidPosBigDecimal2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val posBigDecimal1 = PosBigDecimal(0.00001d)
@@ -1405,7 +1405,7 @@ posBigDecimal1 < posBigDecimal2
 posBigDecimal1 <= posBigDecimal2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val posBigDecimal123 = PosBigDecimal(123.123d)
@@ -1418,9 +1418,9 @@ posBigDecimal999.value
 
 ***
 
-### `NonPosBigDecimal`: non-positive `BigDecimal`
+## `NonPosBigDecimal`: non-positive `BigDecimal`
 
-#### Compile-time Validation
+### Compile-time Validation
 ```scala mdoc
 NonPosBigDecimal(0d)
 NonPosBigDecimal(-999.999d)
@@ -1433,7 +1433,7 @@ NonPosBigDecimal(0.00001d)
 NonPosBigDecimal(999.999d)
 ```
 
-#### Runtime Validation
+### Runtime Validation
 
 ```scala mdoc
 val validNonPosBigDecimal = 0d
@@ -1451,7 +1451,7 @@ val invalidNonPosBigDecimal2 = 999.999d
 NonPosBigDecimal.from(invalidNonPosBigDecimal2)
 ```
 
-#### Comparison
+### Comparison
 
 ```scala mdoc
 val nonPosBigDecimal1 = NonPosBigDecimal(0d)
@@ -1464,7 +1464,7 @@ nonPosBigDecimal1 < nonPosBigDecimal2
 nonPosBigDecimal1 <= nonPosBigDecimal2
 ```
 
-#### Get Value
+### Get Value
 
 ```scala mdoc
 val nonPosBigDecimal0 = NonPosBigDecimal(0d)
