@@ -8,8 +8,18 @@ import scala.annotation.targetName
   * @since 2023-04-25
   */
 trait strings {
-  type NonEmptyString = NonEmptyString.Type
 
+  // scalafix:off DisableSyntax.noFinalVal
+
+  final type NonEmptyString = strings.NonEmptyString
+  final val NonEmptyString = strings.NonEmptyString
+
+  // scalafix:on
+
+}
+object strings {
+
+  type NonEmptyString = NonEmptyString.Type
   @SuppressWarnings(Array("org.wartremover.warts.Equals"))
   object NonEmptyString extends Refined[String], CanBeOrdered[String] {
 

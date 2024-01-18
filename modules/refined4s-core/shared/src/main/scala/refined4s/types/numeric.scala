@@ -8,7 +8,125 @@ import refined4s.internal.numericTools
   */
 trait numeric {
 
-  import numeric.{InlinedNumeric, MinMax, Numeric}
+  // scalafix:off DisableSyntax.noFinalVal
+
+  final type NegInt = numeric.NegInt
+  final val NegInt = numeric.NegInt
+
+  final type NonNegInt = numeric.NonNegInt
+  final val NonNegInt = numeric.NonNegInt
+
+  final type PosInt = numeric.PosInt
+  final val PosInt = numeric.PosInt
+
+  final type NonPosInt = numeric.NonPosInt
+  final val NonPosInt = numeric.NonPosInt
+
+  final type NegLong = numeric.NegLong
+  final val NegLong = numeric.NegLong
+
+  final type NonNegLong = numeric.NonNegLong
+  final val NonNegLong = numeric.NonNegLong
+
+  final type PosLong = numeric.PosLong
+  final val PosLong = numeric.PosLong
+
+  final type NonPosLong = numeric.NonPosLong
+  final val NonPosLong = numeric.NonPosLong
+
+  final type NegShort = numeric.NegShort
+  final val NegShort = numeric.NegShort
+
+  final type NonNegShort = numeric.NonNegShort
+  final val NonNegShort = numeric.NonNegShort
+
+  final type PosShort = numeric.PosShort
+  final val PosShort = numeric.PosShort
+
+  final type NonPosShort = numeric.NonPosShort
+  final val NonPosShort = numeric.NonPosShort
+
+  final type NegByte = numeric.NegByte
+  final val NegByte = numeric.NegByte
+
+  final type NonNegByte = numeric.NonNegByte
+  final val NonNegByte = numeric.NonNegByte
+
+  final type PosByte = numeric.PosByte
+  final val PosByte = numeric.PosByte
+
+  final type NonPosByte = numeric.NonPosByte
+  final val NonPosByte = numeric.NonPosByte
+
+  final type NegFloat = numeric.NegFloat
+  final val NegFloat = numeric.NegFloat
+
+  final type NonNegFloat = numeric.NonNegFloat
+  final val NonNegFloat = numeric.NonNegFloat
+
+  final type PosFloat = numeric.PosFloat
+  final val PosFloat = numeric.PosFloat
+
+  final type NonPosFloat = numeric.NonPosFloat
+  final val NonPosFloat = numeric.NonPosFloat
+
+  final type NegDouble = numeric.NegDouble
+  final val NegDouble = numeric.NegDouble
+
+  final type NonNegDouble = numeric.NonNegDouble
+  final val NonNegDouble = numeric.NonNegDouble
+
+  final type PosDouble = numeric.PosDouble
+  final val PosDouble = numeric.PosDouble
+
+  final type NonPosDouble = numeric.NonPosDouble
+  final val NonPosDouble = numeric.NonPosDouble
+
+  final type NegBigInt = numeric.NegBigInt
+  final val NegBigInt = numeric.NegBigInt
+
+  final type NonNegBigInt = numeric.NonNegBigInt
+  final val NonNegBigInt = numeric.NonNegBigInt
+
+  final type PosBigInt = numeric.PosBigInt
+  final val PosBigInt = numeric.PosBigInt
+
+  final type NonPosBigInt = numeric.NonPosBigInt
+  final val NonPosBigInt = numeric.NonPosBigInt
+
+  final type NegBigDecimal = numeric.NegBigDecimal
+  final val NegBigDecimal = numeric.NegBigDecimal
+
+  final type NonNegBigDecimal = numeric.NonNegBigDecimal
+  final val NonNegBigDecimal = numeric.NonNegBigDecimal
+
+  final type PosBigDecimal = numeric.PosBigDecimal
+  final val PosBigDecimal = numeric.PosBigDecimal
+
+  final type NonPosBigDecimal = numeric.NonPosBigDecimal
+  final val NonPosBigDecimal = numeric.NonPosBigDecimal
+
+  // scalafix:on
+}
+object numeric {
+
+  trait Numeric[A: math.Ordering] extends Refined[A], CanBeOrdered[A]
+
+  trait InlinedNumeric[A: math.Ordering] extends InlinedRefined[A], CanBeOrdered[A]
+
+  trait Min[A] {
+    self: NewtypeBase[A] =>
+    def min: Type
+  }
+
+  trait Max[A] {
+    self: NewtypeBase[A] =>
+    def max: Type
+  }
+
+  trait MinMax[A] extends Min[A], Max[A] {
+    self: NewtypeBase[A] =>
+  }
 
   type NegInt = NegInt.Type
   object NegInt extends Numeric[Int], MinMax[Int] {
@@ -511,27 +629,6 @@ trait numeric {
     inline def apply(inline a: Double): Type = apply(BigDecimal(a))
 
     inline def apply(inline a: String): Type = apply(BigDecimal(a))
-  }
-
-}
-object numeric {
-
-  trait Numeric[A: math.Ordering] extends Refined[A], CanBeOrdered[A]
-
-  trait InlinedNumeric[A: math.Ordering] extends InlinedRefined[A], CanBeOrdered[A]
-
-  trait Min[A] {
-    self: NewtypeBase[A] =>
-    def min: Type
-  }
-
-  trait Max[A] {
-    self: NewtypeBase[A] =>
-    def max: Type
-  }
-
-  trait MinMax[A] extends Min[A], Max[A] {
-    self: NewtypeBase[A] =>
   }
 
 }
