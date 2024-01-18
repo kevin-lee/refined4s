@@ -14,6 +14,32 @@ import java.net.URI
   */
 trait network {
 
+  // scalafix:off DisableSyntax.noFinalVal
+
+  final type Uri = network.Uri
+  final val Uri = network.Uri
+
+  final type PortNumber = network.PortNumber
+  final val PortNumber = network.PortNumber
+
+  final type SystemPortNumber = network.SystemPortNumber
+  final val SystemPortNumber = network.SystemPortNumber
+
+  final type NonSystemPortNumber = network.NonSystemPortNumber
+  final val NonSystemPortNumber = network.NonSystemPortNumber
+
+  final type UserPortNumber = network.UserPortNumber
+  final val UserPortNumber = network.UserPortNumber
+
+  final type DynamicPortNumber = network.DynamicPortNumber
+  final val DynamicPortNumber = network.DynamicPortNumber
+
+  // scalafix:on
+
+}
+
+object network {
+
   type Uri = Uri.Type
   object Uri extends InlinedRefined[String] {
 
@@ -89,8 +115,6 @@ trait network {
       49152 <= a && a <= 65535
   }
 
-}
-object network {
   val UnexpectedLiteralErrorMessage: String =
     """Uri must be a string literal.
       |If it's unknown in compile-time, use `Uri.from` or `Uri.unsafeFrom` instead.
