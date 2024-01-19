@@ -71,6 +71,10 @@ lazy val refined4s = (project in file("."))
     doobieCe3Js,
     extrasRenderJvm,
     extrasRenderJs,
+    refinedCompatScala2Jvm,
+    refinedCompatScala2Js,
+    refinedCompatScala3Jvm,
+    refinedCompatScala3Js,
   )
 
 lazy val core    = module("core", crossProject(JVMPlatform, JSPlatform))
@@ -169,6 +173,27 @@ lazy val extrasRender    = module("extras-render", crossProject(JVMPlatform, JSP
   )
 lazy val extrasRenderJvm = extrasRender.jvm
 lazy val extrasRenderJs  = extrasRender.js.settings(jsSettingsForFuture)
+
+lazy val refinedCompatScala2    = module("refined-compat-scala2", crossProject(JVMPlatform, JSPlatform))
+  .settings(
+    crossScalaVersions := List("2.12.15", "2.13.12"),
+    libraryDependencies ++=
+      (
+        if (isScala3(scalaVersion.value))
+          List.empty
+        else
+          List("eu.timepit" %% "refined" % "0.9.29")
+      ),
+  )
+lazy val refinedCompatScala2Jvm = refinedCompatScala2.jvm
+lazy val refinedCompatScala2Js  = refinedCompatScala2.js.settings(jsSettingsForFuture)
+
+lazy val refinedCompatScala3    = module("refined-compat-scala3", crossProject(JVMPlatform, JSPlatform))
+  .dependsOn(
+    core % props.IncludeTest
+  )
+lazy val refinedCompatScala3Jvm = refinedCompatScala3.jvm
+lazy val refinedCompatScala3Js  = refinedCompatScala3.js.settings(jsSettingsForFuture)
 
 lazy val docs = (project in file("docs-gen-tmp/docs"))
   .enablePlugins(MdocPlugin, DocusaurPlugin)
