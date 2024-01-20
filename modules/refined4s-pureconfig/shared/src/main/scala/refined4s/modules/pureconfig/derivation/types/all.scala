@@ -443,6 +443,19 @@ trait all {
       ConfigWriter[String].to(a.value)
   }
 
+  given derivedUuidConfigReader: ConfigReader[Uuid] = ConfigReader[String].emap { a =>
+    Uuid.from(a).left.map { err =>
+      val expectedType = getTypeName[Uuid]
+      UserValidationFailed(
+        s"The value $a cannot be created as the expected type, $expectedType, due to the following error: $err"
+      )
+    }
+  }
+  given derivedUuidConfigWriter: ConfigWriter[Uuid] with {
+    override inline def to(a: Uuid): ConfigValue =
+      ConfigWriter[String].to(a.value)
+  }
+
   // network
 
   given derivedUriConfigReader: ConfigReader[Uri] = ConfigReader[String].emap { a =>

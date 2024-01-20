@@ -11,4 +11,7 @@ trait strings {
   inline given derivedNonEmptyStringEncoder: Encoder[NonEmptyString] = Encoder[String].contramap[NonEmptyString](_.value)
   inline given derivedNonEmptyStringDecoder: Decoder[NonEmptyString] = Decoder[String].emap(NonEmptyString.from)
 
+  inline given derivedUuidEncoder: Encoder[Uuid] = Encoder[String].contramap[Uuid](_.value)
+  inline given derivedUuidDecoder: Decoder[Uuid] = Decoder[String].emap(Uuid.from)
+
 }

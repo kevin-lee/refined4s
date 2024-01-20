@@ -104,6 +104,9 @@ trait all {
   inline given derivedNonEmptyStringRender(using renderActual: Render[String]): Render[NonEmptyString] =
     renderActual.contramap(_.value)
 
+  inline given derivedUuidRender(using renderActual: Render[String]): Render[Uuid] =
+    renderActual.contramap(_.value)
+
   // network
 
   inline given derivedUriRender(using renderActual: Render[String]): Render[Uri] = renderActual.contramap(_.value)

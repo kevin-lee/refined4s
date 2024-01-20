@@ -14,6 +14,7 @@ import refined4s.types.all.*
 import refined4s.types.networkGens
 import refined4s.modules.doobie.derivation.types.all.given
 
+import java.util.UUID
 import java.util.concurrent.atomic.AtomicInteger
 
 /** @author Kevin Lee
@@ -101,6 +102,8 @@ object allSpec extends Properties, RunSyncCe2, RunWithDb {
     ),
     //
     propertyWithDb("test Get[NonEmptyString] and Put[NonEmptyString]", postgresPortNumber.getAndIncrement(), testGetAndPutNonEmptyString),
+    //
+    propertyWithDb("test Get[Uuid] and Put[Uuid]", postgresPortNumber.getAndIncrement(), testGetAndPutUuid),
     //
     propertyWithDb("test Get[Uri] and Put[Uri]", postgresPortNumber.getAndIncrement(), testGetAndPutUri),
 
@@ -1784,6 +1787,57 @@ object allSpec extends Properties, RunSyncCe2, RunWithDb {
       val expectedFetchAfter  = s.some
 
       val fetch = DbTools.fetchSingleRow[F][NonEmptyString](
+        sql"""
+            SELECT value
+              FROM db_tools_test.example
+        """
+      )(transactor)
+
+      val insert = DbTools.updateSingle[F](
+        sql"""
+             INSERT INTO db_tools_test.example (value) VALUES ($expected)
+        """
+      )(transactor)
+
+      for {
+        fetchResultBefore <- fetch.map(_ ==== expectedFetchBefore)
+        insertResult      <- insert.map(_ ==== expectedInsert)
+        fetchResultAfter  <- fetch.map(_ ==== expectedFetchAfter)
+      } yield Result.all(
+        List(
+          fetchResultBefore.log("Failed: fetch before"),
+          insertResult.log("Failed: insert"),
+          fetchResultAfter.log("Failed: fetch after"),
+        )
+      )
+
+    }
+
+  ///
+
+  def testGetAndPutUuid(testName: String, postgresPortNumber: Int): Property =
+    for {
+      uuid <- Gen.constant(UUID.randomUUID()).log("uuid")
+    } yield withDb[F](
+      testName,
+      postgresPortNumber,
+      sql"""CREATE SCHEMA IF NOT EXISTS db_tools_test""",
+      sql"""
+        CREATE TABLE IF NOT EXISTS db_tools_test.example
+        (
+           id SERIAL PRIMARY KEY,
+           value TEXT NOT NULL
+        )
+      """,
+    ) { transactor =>
+
+      val expected = Uuid(uuid)
+
+      val expectedFetchBefore = none[Uuid]
+      val expectedInsert      = 1
+      val expectedFetchAfter  = expected.some
+
+      val fetch = DbTools.fetchSingleRow[F][Uuid](
         sql"""
             SELECT value
               FROM db_tools_test.example
