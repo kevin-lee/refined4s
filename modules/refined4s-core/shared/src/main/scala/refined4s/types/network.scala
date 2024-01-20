@@ -61,6 +61,9 @@ object network {
 
     override inline def inlinedPredicate(inline uri: String): Boolean = ${ isValidateUri('uri) }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+    def apply(a: URI): Type = unsafeFrom(a.toString)
+
     extension (uri: Type) {
       def toURI: URI = new URI(uri.value)
     }
