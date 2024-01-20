@@ -30,6 +30,7 @@ object networkSpec extends Properties {
     example("test network.isValidateUri(non-String literal)", testNetworkIsValidateUriWithInvalidLiteral),
     //
     example("test Url(valid URL String)", testUrlApply),
+    example("test Url(URL)", testUrlApplyURL),
     example("test Url(invalid URL String)", testUrlApplyInvalid),
     property("test Url.from(valid)", testUrlFromValid),
     property("test Url.from(invalid)", testUrlFromInvalid),
@@ -255,6 +256,18 @@ object networkSpec extends Properties {
   def testUrlApply: Result = {
     val expected = new URL("https://github.com/kevin-lee/refined4s")
     val actual   = Url("https://github.com/kevin-lee/refined4s")
+    Result.all(
+      List(
+        actual.value ==== expected.toString,
+        actual.toURL ==== expected,
+      )
+    )
+  }
+
+  def testUrlApplyURL: Result = {
+    val url      = new URL("https://github.com/kevin-lee/refined4s")
+    val expected = url
+    val actual   = Url(url)
     Result.all(
       List(
         actual.value ==== expected.toString,
