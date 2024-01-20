@@ -16,6 +16,7 @@ object networkSpec extends Properties {
 
   override def tests: List[Test] = List(
     example("test Uri(valid URI String)", testUriApply),
+    example("test Uri(URI)", testUriApplyURI),
     example("test Uri(invalid URI String)", testUriApplyInvalid),
     property("test Uri.from(valid)", testUriFromValid),
     property("test Uri.from(invalid)", testUriFromInvalid),
@@ -90,6 +91,18 @@ object networkSpec extends Properties {
   def testUriApply: Result = {
     val expected = new URI("https://github.com/kevin-lee/refined4s")
     val actual   = Uri("https://github.com/kevin-lee/refined4s")
+    Result.all(
+      List(
+        actual.value ==== expected.toString,
+        actual.toURI ==== expected,
+      )
+    )
+  }
+
+  def testUriApplyURI: Result = {
+    val uri      = new URI("https://github.com/kevin-lee/refined4s")
+    val expected = uri
+    val actual   = Uri(uri)
     Result.all(
       List(
         actual.value ==== expected.toString,
