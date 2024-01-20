@@ -111,6 +111,8 @@ trait all {
 
   inline given derivedUriRender(using renderActual: Render[String]): Render[Uri] = renderActual.contramap(_.value)
 
+  inline given derivedUrlRender(using renderActual: Render[String]): Render[Url] = renderActual.contramap(_.value)
+
   inline given derivedPortNumberRender(using renderActual: Render[Int]): Render[PortNumber] =
     renderActual.contramap(_.value)
 

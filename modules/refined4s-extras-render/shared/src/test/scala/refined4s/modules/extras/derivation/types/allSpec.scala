@@ -85,6 +85,8 @@ object allSpec extends Properties {
     property("test Render[Uuid]", testRenderUuid),
     //
     property("test Render[Uri]", testRenderUri),
+    //
+    property("test Render[Url]", testRenderUrl),
 
     //
     property("test Render[PortNumber]", testRenderPortNumber),
@@ -513,6 +515,18 @@ object allSpec extends Properties {
       val input = Uri.unsafeFrom(uri)
 
       val expected = uri
+      val actual   = input.render
+
+      actual ==== expected
+    }
+
+  def testRenderUrl: Property =
+    for {
+      url <- networkGens.genUrlString.log("url")
+    } yield {
+      val input = Url.unsafeFrom(url)
+
+      val expected = url
       val actual   = input.render
 
       actual ==== expected
