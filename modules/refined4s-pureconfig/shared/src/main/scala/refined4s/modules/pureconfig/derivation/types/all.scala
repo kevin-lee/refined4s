@@ -458,6 +458,19 @@ trait all {
       ConfigWriter[String].to(a.value)
   }
 
+  given derivedUrlConfigReader: ConfigReader[Url] = ConfigReader[String].emap { a =>
+    Url.from(a).left.map { err =>
+      val expectedType = getTypeName[Url]
+      UserValidationFailed(
+        s"The value $a cannot be created as the expected type, $expectedType, due to the following error: $err"
+      )
+    }
+  }
+  given derivedUrlConfigWriter: ConfigWriter[Url] with {
+    override inline def to(a: Url): ConfigValue =
+      ConfigWriter[String].to(a.value)
+  }
+
   given derivedPortNumberConfigReader: ConfigReader[PortNumber] = ConfigReader[Int].emap { a =>
     PortNumber.from(a).left.map { err =>
       val expectedType = getTypeName[PortNumber]

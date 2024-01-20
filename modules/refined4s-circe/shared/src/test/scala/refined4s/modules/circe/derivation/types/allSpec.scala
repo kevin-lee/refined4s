@@ -117,6 +117,9 @@ object allSpec extends Properties {
     property("test Encoder[Uri]", testEncoderUri),
     property("test Decoder[Uri]", testDecoderUri),
     //
+    property("test Encoder[Url]", testEncoderUrl),
+    property("test Decoder[Url]", testDecoderUrl),
+    //
     property("test Encoder[PortNumber]", testEncoderPortNumber),
     property("test Decoder[PortNumber]", testDecoderPortNumber),
     //
@@ -1090,6 +1093,8 @@ object allSpec extends Properties {
       actual ==== expected
     }
 
+  //
+
   def testEncoderUri: Property =
     for {
       uri <- networkGens.genUriString.log("uri")
@@ -1119,6 +1124,40 @@ object allSpec extends Properties {
 
       actual ==== expected
     }
+
+  //
+
+  def testEncoderUrl: Property =
+    for {
+      uri <- networkGens.genUrlString.log("uri")
+    } yield {
+      val input = Url.unsafeFrom(uri)
+
+      val expected = uri.asJson
+      val actual   = input.asJson
+
+      Result.all(
+        List(
+          actual ==== expected,
+          actual.noSpaces ==== expected.noSpaces,
+        )
+      )
+    }
+
+  def testDecoderUrl: Property =
+    for {
+      uri <- networkGens.genUrlString.log("uri")
+    } yield {
+
+      val input = uri.asJson
+
+      val expected = Url.from(uri)
+      val actual   = decode[Url](input.noSpaces)
+
+      actual ==== expected
+    }
+
+  //
 
   def testEncoderPortNumber: Property =
     for {

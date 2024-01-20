@@ -113,6 +113,9 @@ trait all {
   inline given derivedUriGet(using Show[String]): Get[Uri] = Get[String].temap(Uri.from)
   inline given derivedUriPut: Put[Uri]                     = Put[String].contramap(_.value)
 
+  inline given derivedUrlGet(using Show[String]): Get[Url] = Get[String].temap(Url.from)
+  inline given derivedUrlPut: Put[Url]                     = Put[String].contramap(_.value)
+
   inline given derivedPortNumberGet(using Show[Int]): Get[PortNumber] = Get[Int].temap(PortNumber.from)
   inline given derivedPortNumberPut: Put[PortNumber]                  = Put[Int].contramap(_.value)
 

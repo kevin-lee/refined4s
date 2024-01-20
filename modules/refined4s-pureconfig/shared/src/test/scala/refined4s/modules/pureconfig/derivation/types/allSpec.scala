@@ -154,6 +154,11 @@ object allSpec extends Properties {
     property("test ConfigWriter[Uri]", testConfigWriterUri),
 
     //
+    property("test ConfigReader[Url]", testConfigReaderUrl),
+    property("test ConfigReader[Url] with invalid value", testConfigReaderUrlInvalid),
+    property("test ConfigWriter[Url]", testConfigWriterUrl),
+
+    //
     property("test ConfigReader[PortNumber]", testConfigReaderPortNumber),
     property("test ConfigReader[PortNumber] with invalid value", testConfigReaderPortNumberInvalid),
     property("test ConfigWriter[PortNumber]", testConfigWriterPortNumber),
@@ -2455,6 +2460,77 @@ object allSpec extends Properties {
     }
 
   final case class UriConfig(uri: Uri) derives ConfigReader
+
+  //
+
+  @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+  def testConfigReaderUrl: Property =
+    for {
+      url <- networkGens.genUrlString.log("url")
+    } yield {
+
+      val confString =
+        raw"""
+             |url = "$url"
+             |""".stripMargin
+
+      val expected = Url.unsafeFrom(url)
+
+      ConfigSource
+        .string(confString)
+        .load[UrlConfig] match {
+        case Right(UrlConfig(actual)) =>
+          actual ==== expected
+
+        case Left(err) =>
+          Result.failure.log(s"parse String config failed with error: ${err.toString}")
+      }
+
+    }
+
+  @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+  def testConfigReaderUrlInvalid: Property =
+    for {
+      url <- Gen.string(Gen.element1('%', '^', '<', '>', '[', ']', '`', '{', '}'), Range.linear(1, 5)).log("url")
+    } yield {
+
+      val confString = raw"""url = "$url""""
+
+      val expected = Url.from(url).leftMap { err =>
+        s"The value $url cannot be created as the expected type, ${typeTools.getTypeName[Url]}, due to the following error: $err"
+      }
+
+      ConfigSource
+        .string(confString)
+        .load[UrlConfig] match {
+        case Right(UrlConfig(actual)) =>
+          Result.failure.log(s"It should have failed to parse the config but got $actual")
+
+        case Left(ConfigReaderFailures(ConvertFailure(UserValidationFailed(err), _, _))) =>
+          err.asLeft ==== expected
+
+        case unexpected =>
+          Result.failure.log(s"Unexpected result: ${unexpected.toString}")
+      }
+
+    }
+
+  @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+  def testConfigWriterUrl: Property =
+    for {
+      url <- networkGens.genUrlString.log("url")
+    } yield {
+
+      val input  = Url.unsafeFrom(url)
+      val actual = ConfigWriter[Url].to(input)
+
+      val expected = ConfigWriter[String].to(url)
+
+      actual ==== expected
+
+    }
+
+  final case class UrlConfig(url: Url) derives ConfigReader
 
   /* network ports */
 

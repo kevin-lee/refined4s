@@ -115,6 +115,9 @@ trait all {
   inline given derivedUriEq(using eqActual: Eq[String]): Eq[Uri]         = contraCoercible(eqActual)
   inline given derivedUriShow(using showActual: Show[String]): Show[Uri] = contraCoercible(showActual)
 
+  inline given derivedUrlEq(using eqActual: Eq[String]): Eq[Url]         = contraCoercible(eqActual)
+  inline given derivedUrlShow(using showActual: Show[String]): Show[Url] = contraCoercible(showActual)
+
   inline given derivedPortNumberEq(using eqActual: Eq[Int]): Eq[PortNumber]         = contraCoercible(eqActual)
   inline given derivedPortNumberShow(using showActual: Show[Int]): Show[PortNumber] = contraCoercible(showActual)
 
