@@ -90,6 +90,9 @@ object network {
 
     override inline def inlinedPredicate(inline url: String): Boolean = ${ isValidateUrl('url) }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+    def apply(a: URL): Type = unsafeFrom(a.toString)
+
     extension (url: Type) {
       @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
       def toURL: URL = new URL(url.value)
