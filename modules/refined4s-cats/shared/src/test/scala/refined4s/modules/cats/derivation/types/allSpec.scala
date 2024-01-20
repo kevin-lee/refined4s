@@ -7,8 +7,9 @@ import refined4s.modules.cats.derivation.types.all.given
 import refined4s.types.numeric.*
 import refined4s.types.network.*
 import refined4s.types.strings.*
-
 import refined4s.types.networkGens
+
+import java.util.UUID
 
 /** @author Kevin Lee
   * @since 2023-12-10
@@ -115,6 +116,9 @@ object allSpec extends Properties {
     //
     property("test Eq[NonEmptyString]", testEqNonEmptyString),
     property("test Show[NonEmptyString]", testShowNonEmptyString),
+    //
+    property("test Eq[Uuid]", testEqUuid),
+    property("test Show[Uuid]", testShowUuid),
     //
     property("test Eq[Uri]", testEqUri),
     property("test Show[Uri]", testShowUri),
@@ -907,6 +911,8 @@ object allSpec extends Properties {
       actual ==== expected
     }
 
+  ///
+
   def testEqNonEmptyString: Property =
     for {
       s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
@@ -926,6 +932,39 @@ object allSpec extends Properties {
       val input = NonEmptyString.unsafeFrom(s)
 
       val expected = s
+      val actual   = input.show
+
+      actual ==== expected
+    }
+
+  ///
+
+  def testEqUuid: Property =
+    for {
+      uuid1 <- Gen.constant(UUID.randomUUID()).log("uuid1")
+      uuid2 <- Gen.constant(UUID.randomUUID()).log("uuid2")
+    } yield {
+      val input1 = Uuid(uuid1)
+      val input2 = Uuid(uuid2)
+
+      val expected1 = input1
+      val actual1   = input1
+
+      Result.all(
+        List(
+          Result.diffNamed("Uuid(value) === Uuid(value)", actual1, expected1)(_ === _),
+          Result.diffNamed("Uuid(value) =!= Uuid(different value)", input1, input2)(_ =!= _),
+        )
+      )
+    }
+
+  def testShowUuid: Property =
+    for {
+      uuid <- Gen.constant(UUID.randomUUID()).log("uuid")
+    } yield {
+      val input = Uuid(uuid)
+
+      val expected = uuid.show
       val actual   = input.show
 
       actual ==== expected

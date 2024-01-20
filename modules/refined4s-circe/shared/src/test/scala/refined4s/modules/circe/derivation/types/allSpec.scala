@@ -9,6 +9,8 @@ import refined4s.modules.circe.derivation.types.all.given
 import refined4s.types.all.*
 import refined4s.types.networkGens
 
+import java.util.UUID
+
 /** @author Kevin Lee
   * @since 2023-12-11
   */
@@ -113,6 +115,9 @@ object allSpec extends Properties {
     //
     property("test Encoder[NonEmptyString]", testEncoderNonEmptyString),
     property("test Decoder[NonEmptyString]", testDecoderNonEmptyString),
+    //
+    property("test Encoder[Uuid]", testEncoderUuid),
+    property("test Decoder[Uuid]", testDecoderUuid),
     //
     property("test Encoder[Uri]", testEncoderUri),
     property("test Decoder[Uri]", testDecoderUri),
@@ -1089,6 +1094,41 @@ object allSpec extends Properties {
 
       val expected = NonEmptyString.from(s)
       val actual   = decode[NonEmptyString](input.noSpaces)
+
+      actual ==== expected
+    }
+
+  //
+
+  @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+  def testEncoderUuid: Property =
+    for {
+      uuid <- Gen.constant(UUID.randomUUID()).log("uuid")
+    } yield {
+      val s     = uuid.toString
+      val input = Uuid.unsafeFrom(s)
+
+      val expected = uuid.asJson
+      val actual   = input.asJson
+
+      Result.all(
+        List(
+          actual ==== expected,
+          actual.noSpaces ==== expected.noSpaces,
+        )
+      )
+    }
+
+  @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+  def testDecoderUuid: Property =
+    for {
+      uuid <- Gen.constant(UUID.randomUUID()).log("uuid")
+    } yield {
+      val s     = uuid.toString
+      val input = s.asJson
+
+      val expected = Uuid.from(s)
+      val actual   = decode[Uuid](input.noSpaces)
 
       actual ==== expected
     }

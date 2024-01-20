@@ -12,6 +12,8 @@ import refined4s.modules.pureconfig.derivation.types.all.given
 import refined4s.types.all.*
 import refined4s.types.networkGens
 
+import java.util.UUID
+
 /** @author Kevin Lee
   * @since 2023-12-13
   */
@@ -148,6 +150,10 @@ object allSpec extends Properties {
     property("test ConfigReader[NonEmptyString]", testConfigReaderNonEmptyString),
     example("test ConfigReader[NonEmptyString] with invalid value", testConfigReaderNonEmptyStringInvalid),
     property("test ConfigWriter[NonEmptyString]", testConfigWriterNonEmptyString),
+    //
+    property("test ConfigReader[Uuid]", testConfigReaderUuid),
+    property("test ConfigReader[Uuid] with invalid value", testConfigReaderUuidInvalid),
+    property("test ConfigWriter[Uuid]", testConfigWriterUuid),
     //
     property("test ConfigReader[Uri]", testConfigReaderUri),
     property("test ConfigReader[Uri] with invalid value", testConfigReaderUriInvalid),
@@ -2389,6 +2395,77 @@ object allSpec extends Properties {
 
     }
   final case class NonEmptyStringConfig(name: NonEmptyString) derives ConfigReader
+
+  ///
+
+  @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+  def testConfigReaderUuid: Property =
+    for {
+      uuid <- Gen.constant(UUID.randomUUID()).log("uuid")
+    } yield {
+
+      val s = uuid.toString
+
+      val confString =
+        raw"""
+             |id = "$s"
+             |""".stripMargin
+
+      val expected = Uuid(uuid)
+
+      ConfigSource
+        .string(confString)
+        .load[UuidConfig] match {
+        case Right(UuidConfig(actual)) =>
+          actual ==== expected
+
+        case Left(err) =>
+          Result.failure.log(s"parse config failed with error: ${err.toString}")
+      }
+
+    }
+
+  def testConfigReaderUuidInvalid: Property =
+    for {
+      s <- Gen.string(Gen.alphaNum, Range.linear(0, 10)).log("s")
+    } yield {
+
+      val confString = s"""id = "$s""""
+
+      val expected = Uuid.from(s).leftMap { err =>
+        s"The value $s cannot be created as the expected type, ${typeTools.getTypeName[Uuid]}, due to the following error: $err"
+      }
+
+      ConfigSource
+        .string(confString)
+        .load[UuidConfig] match {
+        case Right(UuidConfig(actual)) =>
+          Result.failure.log(s"It should have failed to parse the config but got $actual")
+
+        case Left(ConfigReaderFailures(ConvertFailure(UserValidationFailed(err), _, _))) =>
+          err.asLeft ==== expected
+
+        case unexpected =>
+          Result.failure.log(s"Unexpected result: ${unexpected.toString}")
+      }
+
+    }
+
+  @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+  def testConfigWriterUuid: Property =
+    for {
+      uuid <- Gen.constant(UUID.randomUUID()).log("uuid")
+    } yield {
+
+      val input = Uuid(uuid)
+
+      val expected = ConfigWriter[String].to(uuid.toString)
+      val actual   = ConfigWriter[Uuid].to(input)
+
+      actual ==== expected
+
+    }
+  final case class UuidConfig(id: Uuid) derives ConfigReader
 
   ///
 

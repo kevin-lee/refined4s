@@ -7,6 +7,8 @@ import refined4s.modules.extras.derivation.types.all.given
 import refined4s.types.all.*
 import refined4s.types.networkGens
 
+import java.util.UUID
+
 /** @author Kevin Lee
   * @since 2024-01-01
   */
@@ -79,6 +81,8 @@ object allSpec extends Properties {
     property("test Render[NonPosBigDecimal]", testRenderNonPosBigDecimal),
     //
     property("test Render[NonEmptyString]", testRenderNonEmptyString),
+    //
+    property("test Render[Uuid]", testRenderUuid),
     //
     property("test Render[Uri]", testRenderUri),
 
@@ -485,6 +489,18 @@ object allSpec extends Properties {
       val input = NonEmptyString.unsafeFrom(s)
 
       val expected = s
+      val actual   = input.render
+
+      actual ==== expected
+    }
+
+  def testRenderUuid: Property =
+    for {
+      uuid <- Gen.constant(UUID.randomUUID()).log("uuid")
+    } yield {
+      val input = Uuid(uuid)
+
+      val expected = uuid.toString
       val actual   = input.render
 
       actual ==== expected

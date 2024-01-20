@@ -109,6 +109,9 @@ trait all {
   inline given derivedNonEmptyStringGet(using Show[String]): Get[NonEmptyString] = Get[String].temap(NonEmptyString.from)
   inline given derivedNonEmptyStringPut: Put[NonEmptyString]                     = Put[String].contramap(_.value)
 
+  inline given derivedUuidGet(using Show[String]): Get[Uuid] = Get[String].temap(Uuid.from)
+  inline given derivedUuidPut: Put[Uuid]                     = Put[String].contramap(_.value)
+
   // network
   inline given derivedUriGet(using Show[String]): Get[Uri] = Get[String].temap(Uri.from)
   inline given derivedUriPut: Put[Uri]                     = Put[String].contramap(_.value)
