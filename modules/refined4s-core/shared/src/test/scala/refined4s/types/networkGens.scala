@@ -101,4 +101,28 @@ object networkGens {
       uri = s"$scheme://$authority"
     } yield uri
 
+  def genUrlString: Gen[String] =
+    for {
+      uri  <- genUrlStringWithoutPath
+      path <- Gen
+                .frequency1(
+                  40 -> Gen.constant(""),
+                  60 -> Gen
+                    .string(Gen.alphaNum, Range.linear(1, 10))
+                    .list(Range.linear(1, 5))
+                    .map(_.mkString("/")),
+                )
+      urlWithPath = s"$uri${if (path.isEmpty) "" else "/" + path}"
+    } yield urlWithPath
+
+  def genUrlStringWithoutPath: Gen[String] =
+    for {
+      scheme    <- Gen.element1("http", "https", "ftp", "file")
+      authority <- Gen
+                     .string(Gen.alphaNum, Range.linear(3, 10))
+                     .list(Range.linear(1, 4))
+                     .map(_.mkString("."))
+      url = s"$scheme://$authority"
+    } yield url
+
 }

@@ -11,6 +11,9 @@ trait network {
   inline given derivedUriEncoder: Encoder[Uri] = Encoder[String].contramap[Uri](_.value)
   inline given derivedUriDecoder: Decoder[Uri] = Decoder[String].emap(Uri.from)
 
+  inline given derivedUrlEncoder: Encoder[Url] = Encoder[String].contramap[Url](_.value)
+  inline given derivedUrlDecoder: Decoder[Url] = Decoder[String].emap(Url.from)
+
   inline given derivedPortNumberEncoder: Encoder[PortNumber] = Encoder[Int].contramap[PortNumber](_.value)
   inline given derivedPortNumberDecoder: Decoder[PortNumber] = Decoder[Int].emap(PortNumber.from)
 

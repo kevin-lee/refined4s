@@ -4,10 +4,9 @@ import refined4s.*
 
 import scala.quoted.*
 import scala.util.control.NonFatal
-
 import network.*
 
-import java.net.URI
+import java.net.{URI, URL}
 
 /** @author Kevin Lee
   * @since 2023-12-09
@@ -18,6 +17,9 @@ trait network {
 
   final type Uri = network.Uri
   final val Uri = network.Uri
+
+  final type Url = network.Url
+  final val Url = network.Url
 
   final type PortNumber = network.PortNumber
   final val PortNumber = network.PortNumber
@@ -61,6 +63,33 @@ object network {
 
     extension (uri: Type) {
       def toURI: URI = new URI(uri.value)
+    }
+
+  }
+
+  type Url = Url.Type
+  object Url extends InlinedRefined[String] {
+
+    override def invalidReason(a: String): String =
+      expectedMessage(inlinedExpectedValue)
+
+    @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
+    override def predicate(a: String): Boolean =
+      try {
+        new URL(a)
+        true
+      } catch {
+        case NonFatal(_) =>
+          false
+      }
+
+    override inline val inlinedExpectedValue = "a URL String"
+
+    override inline def inlinedPredicate(inline url: String): Boolean = ${ isValidateUrl('url) }
+
+    extension (url: Type) {
+      @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
+      def toURL: URL = new URL(url.value)
     }
 
   }
@@ -134,6 +163,26 @@ object network {
         report.error(
           UnexpectedLiteralErrorMessage,
           uriExpr,
+        )
+        Expr(false)
+    }
+  }
+
+  @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
+  def isValidateUrl(urlExpr: Expr[String])(using Quotes): Expr[Boolean] = {
+    import quotes.reflect.*
+    urlExpr.asTerm match {
+      case Inlined(_, _, Literal(StringConstant(urlStr))) =>
+        try {
+          new java.net.URL(urlStr)
+          Expr(true)
+        } catch {
+          case _: Throwable => Expr(false)
+        }
+      case _ =>
+        report.error(
+          UnexpectedLiteralErrorMessage,
+          urlExpr,
         )
         Expr(false)
     }

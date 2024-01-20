@@ -105,6 +105,9 @@ object allSpec extends Properties, RunSyncCe2, RunWithDb {
     propertyWithDb("test Get[Uri] and Put[Uri]", postgresPortNumber.getAndIncrement(), testGetAndPutUri),
 
     //
+    propertyWithDb("test Get[Url] and Put[Url]", postgresPortNumber.getAndIncrement(), testGetAndPutUrl),
+
+    //
     propertyWithDb("test Get[PortNumber] and Put[PortNumber]", postgresPortNumber.getAndIncrement(), testGetAndPutPortNumber),
     //
     propertyWithDb(
@@ -1808,6 +1811,7 @@ object allSpec extends Properties, RunSyncCe2, RunWithDb {
     }
 
   ///
+  /* network.Uri */
 
   @SuppressWarnings(Array("org.wartremover.warts.ToString"))
   def testGetAndPutUri(testName: String, postgresPortNumber: Int): Property =
@@ -1833,6 +1837,58 @@ object allSpec extends Properties, RunSyncCe2, RunWithDb {
       val expectedFetchAfter  = uri.some
 
       val fetch = DbTools.fetchSingleRow[F][Uri](
+        sql"""
+            SELECT value
+              FROM db_tools_test.example
+        """
+      )(transactor)
+
+      val insert = DbTools.updateSingle[F](
+        sql"""
+             INSERT INTO db_tools_test.example (value) VALUES ($expected)
+        """
+      )(transactor)
+
+      for {
+        fetchResultBefore <- fetch.map(_ ==== expectedFetchBefore)
+        insertResult      <- insert.map(_ ==== expectedInsert)
+        fetchResultAfter  <- fetch.map(_ ==== expectedFetchAfter)
+      } yield Result.all(
+        List(
+          fetchResultBefore.log("Failed: fetch before"),
+          insertResult.log("Failed: insert"),
+          fetchResultAfter.log("Failed: fetch after"),
+        )
+      )
+
+    }
+
+  /* network.Url */
+
+  @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+  def testGetAndPutUrl(testName: String, postgresPortNumber: Int): Property =
+    for {
+      url <- networkGens.genUrlString.log("url")
+    } yield withDb[F](
+      testName,
+      postgresPortNumber,
+      sql"""CREATE SCHEMA IF NOT EXISTS db_tools_test""",
+      sql"""
+        CREATE TABLE IF NOT EXISTS db_tools_test.example
+        (
+           id SERIAL PRIMARY KEY,
+           value TEXT NOT NULL
+        )
+      """,
+    ) { transactor =>
+
+      val expected = url
+
+      val expectedFetchBefore = none[Url]
+      val expectedInsert      = 1
+      val expectedFetchAfter  = url.some
+
+      val fetch = DbTools.fetchSingleRow[F][Url](
         sql"""
             SELECT value
               FROM db_tools_test.example

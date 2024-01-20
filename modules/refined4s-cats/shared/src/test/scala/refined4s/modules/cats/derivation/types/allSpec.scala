@@ -118,6 +118,9 @@ object allSpec extends Properties {
     //
     property("test Eq[Uri]", testEqUri),
     property("test Show[Uri]", testShowUri),
+    //
+    property("test Eq[Url]", testEqUrl),
+    property("test Show[Url]", testShowUrl),
 
     //
     property("test Eq[PortNumber]", testEqPortNumber),
@@ -928,6 +931,8 @@ object allSpec extends Properties {
       actual ==== expected
     }
 
+  /* network.Uri */
+
   def testEqUri: Property =
     for {
       uri <- networkGens.genUriString.log("uri")
@@ -947,6 +952,32 @@ object allSpec extends Properties {
       val input = Uri.unsafeFrom(uri)
 
       val expected = uri
+      val actual   = input.show
+
+      actual ==== expected
+    }
+
+  /* network.Url */
+
+  def testEqUrl: Property =
+    for {
+      url <- networkGens.genUrlString.log("url")
+    } yield {
+      val input = Url.unsafeFrom(url)
+
+      val expected = input
+      val actual   = input
+
+      Result.diffNamed("Uri(value) === Uri(value)", actual, expected)(_ === _)
+    }
+
+  def testShowUrl: Property =
+    for {
+      url <- networkGens.genUrlString.log("url")
+    } yield {
+      val input = Url.unsafeFrom(url)
+
+      val expected = url
       val actual   = input.show
 
       actual ==== expected
