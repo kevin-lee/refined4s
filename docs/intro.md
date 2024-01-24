@@ -49,6 +49,12 @@ In `build.sbt`,
 ```scala
 "io.kevinlee" %% "refined4s-core" % "@VERSION@"
 ```
+or for Scala.js
+
+```scala
+"io.kevinlee" %%% "refined4s-core" % "@VERSION@"
+```
+
 
   </TabItem>
 
@@ -58,6 +64,11 @@ In `build.sbt`,
 
 ```scala
 libraryDependencies += "io.kevinlee" %% "refined4s-core" % "@VERSION@"
+```
+or for Scala.js
+
+```scala
+libraryDependencies += "io.kevinlee" %%% "refined4s-core" % "@VERSION@"
 ```
 
   </TabItem>
@@ -88,6 +99,11 @@ In `build.sbt`,
 ```scala
 "io.kevinlee" %% "refined4s-cats" % "@VERSION@"
 ```
+or for Scala.js
+
+```scala
+"io.kevinlee" %%% "refined4s-cats" % "@VERSION@"
+```
 
   </TabItem>
 
@@ -97,6 +113,11 @@ In `build.sbt`,
 
 ```scala
 libraryDependencies += "io.kevinlee" %% "refined4s-cats" % "@VERSION@"
+```
+or for Scala.js
+
+```scala
+libraryDependencies += "io.kevinlee" %%% "refined4s-cats" % "@VERSION@"
 ```
 
   </TabItem>
@@ -127,6 +148,11 @@ In `build.sbt`,
 ```scala
 "io.kevinlee" %% "refined4s-circe" % "@VERSION@"
 ```
+or for Scala.js
+
+```scala
+"io.kevinlee" %%% "refined4s-circe" % "@VERSION@"
+```
 
   </TabItem>
 
@@ -136,6 +162,11 @@ In `build.sbt`,
 
 ```scala
 libraryDependencies += "io.kevinlee" %% "refined4s-circe" % "@VERSION@"
+```
+or for Scala.js
+
+```scala
+libraryDependencies += "io.kevinlee" %%% "refined4s-circe" % "@VERSION@"
 ```
 
   </TabItem>
@@ -166,6 +197,11 @@ In `build.sbt`,
 ```scala
 "io.kevinlee" %% "refined4s-pureconfig" % "@VERSION@"
 ```
+or for Scala.js
+
+```scala
+"io.kevinlee" %%% "refined4s-pureconfig" % "@VERSION@"
+```
 
   </TabItem>
 
@@ -175,6 +211,11 @@ In `build.sbt`,
 
 ```scala
 libraryDependencies += "io.kevinlee" %% "refined4s-pureconfig" % "@VERSION@"
+```
+or for Scala.js
+
+```scala
+libraryDependencies += "io.kevinlee" %%% "refined4s-pureconfig" % "@VERSION@"
 ```
 
   </TabItem>
@@ -205,6 +246,11 @@ In `build.sbt`,
 ```scala
 "io.kevinlee" %% "refined4s-doobie-ce2" % "@VERSION@"
 ```
+or for Scala.js
+
+```scala
+"io.kevinlee" %%% "refined4s-doobie-ce2" % "@VERSION@"
+```
 
   </TabItem>
 
@@ -214,6 +260,11 @@ In `build.sbt`,
 
 ```scala
 libraryDependencies += "io.kevinlee" %% "refined4s-doobie-ce2" % "@VERSION@"
+```
+or for Scala.js
+
+```scala
+libraryDependencies += "io.kevinlee" %%% "refined4s-doobie-ce2" % "@VERSION@"
 ```
 
   </TabItem>
@@ -244,6 +295,11 @@ In `build.sbt`,
 ```scala
 "io.kevinlee" %% "refined4s-doobie-ce3" % "@VERSION@"
 ```
+or for Scala.js
+
+```scala
+"io.kevinlee" %%% "refined4s-doobie-ce3" % "@VERSION@"
+```
 
   </TabItem>
 
@@ -253,6 +309,11 @@ In `build.sbt`,
 
 ```scala
 libraryDependencies += "io.kevinlee" %% "refined4s-doobie-ce3" % "@VERSION@"
+```
+or for Scala.js
+
+```scala
+libraryDependencies += "io.kevinlee" %%% "refined4s-doobie-ce3" % "@VERSION@"
 ```
 
   </TabItem>
@@ -285,6 +346,11 @@ In `build.sbt`,
 ```scala
 "io.kevinlee" %% "refined4s-extras-render" % "@VERSION@"
 ```
+or for Scala.js
+
+```scala
+"io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@"
+```
 
   </TabItem>
 
@@ -294,6 +360,11 @@ In `build.sbt`,
 
 ```scala
 libraryDependencies += "io.kevinlee" %% "refined4s-extras-render" % "@VERSION@"
+```
+or for Scala.js
+
+```scala
+libraryDependencies += "io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@"
 ```
 
   </TabItem>
@@ -332,6 +403,17 @@ In `build.sbt`,
 "io.kevinlee" %% "refined4s-doobie-ce3" % "@VERSION@", // OR refined4s-doobie-ce3
 "io.kevinlee" %% "refined4s-extras-render" % "@VERSION@",
 ```
+or for Scala.js
+
+```scala
+"io.kevinlee" %%% "refined4s-core" % "@VERSION@",
+"io.kevinlee" %%% "refined4s-cats" % "@VERSION@",
+"io.kevinlee" %%% "refined4s-circe" % "@VERSION@",
+"io.kevinlee" %%% "refined4s-pureconfig" % "@VERSION@",
+"io.kevinlee" %%% "refined4s-doobie-ce2" % "@VERSION@", // Use either refined4s-doobie-ce2
+"io.kevinlee" %%% "refined4s-doobie-ce3" % "@VERSION@", // OR refined4s-doobie-ce3
+"io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@",
+```
 
   </TabItem>
 
@@ -348,6 +430,19 @@ libraryDependencies ++= Seq(
   "io.kevinlee" %% "refined4s-doobie-ce2" % "@VERSION@", // Use either refined4s-doobie-ce2
   "io.kevinlee" %% "refined4s-doobie-ce3" % "@VERSION@", // OR refined4s-doobie-ce3
   "io.kevinlee" %% "refined4s-extras-render" % "@VERSION@",
+)
+```
+or for Scala.js
+
+```scala
+libraryDependencies ++= Seq(
+  "io.kevinlee" %%% "refined4s-core" % "@VERSION@",
+  "io.kevinlee" %%% "refined4s-cats" % "@VERSION@",
+  "io.kevinlee" %%% "refined4s-circe" % "@VERSION@",
+  "io.kevinlee" %%% "refined4s-pureconfig" % "@VERSION@",
+  "io.kevinlee" %%% "refined4s-doobie-ce2" % "@VERSION@", // Use either refined4s-doobie-ce2
+  "io.kevinlee" %%% "refined4s-doobie-ce3" % "@VERSION@", // OR refined4s-doobie-ce3
+  "io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@",
 )
 ```
 
