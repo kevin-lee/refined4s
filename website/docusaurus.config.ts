@@ -71,6 +71,11 @@ const config: Config = {
   themeConfig: {
     // Replace with your project's social card
     image: 'img/refined4s-social-card.jpg',
+    docs: {
+      sidebar: {
+        hideable: true,
+      },
+    },
     navbar: {
       title: 'Refined4s',
       logo: {
