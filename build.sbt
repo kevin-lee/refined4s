@@ -75,6 +75,8 @@ lazy val refined4s = (project in file("."))
     refinedCompatScala2Js,
     refinedCompatScala3Jvm,
     refinedCompatScala3Js,
+    tapirJvm,
+    tapirJs,
   )
 
 lazy val core    = module("core", crossProject(JVMPlatform, JSPlatform))
@@ -195,6 +197,18 @@ lazy val refinedCompatScala3    = module("refined-compat-scala3", crossProject(J
 lazy val refinedCompatScala3Jvm = refinedCompatScala3.jvm
 lazy val refinedCompatScala3Js  = refinedCompatScala3.js.settings(jsSettingsForFuture)
 
+lazy val tapir    = module("tapir", crossProject(JVMPlatform, JSPlatform))
+  .settings(
+    libraryDependencies ++= List(
+      libs.tapirCore,
+    )
+  )
+  .dependsOn(
+    core % props.IncludeTest
+  )
+lazy val tapirJvm = tapir.jvm
+lazy val tapirJs  = tapir.js.settings(jsSettingsForFuture)
+
 lazy val docs = (project in file("docs-gen-tmp/docs"))
   .enablePlugins(MdocPlugin, DocusaurPlugin)
   .settings(
@@ -285,6 +299,8 @@ lazy val props =
     val LogbackVersion = "1.4.14"
 
     val KittensVersion = "3.0.0"
+
+    val TapirVersion = "1.0.6"
   }
 
 lazy val libs = new {
@@ -321,6 +337,8 @@ lazy val libs = new {
   lazy val hedgehogCore   = "qa.hedgehog" %% "hedgehog-core"   % props.HedgehogVersion
   lazy val hedgehogRunner = "qa.hedgehog" %% "hedgehog-runner" % props.HedgehogVersion
   lazy val hedgehogSbt    = "qa.hedgehog" %% "hedgehog-sbt"    % props.HedgehogVersion
+
+  lazy val tapirCore = "com.softwaremill.sttp.tapir" %% "tapir-core" % props.TapirVersion
 
   lazy val tests = new {
 
