@@ -10,7 +10,7 @@ import java.util.UUID
   * @since 2023-04-25
   */
 object stringsSpec extends Properties {
-  override def tests: List[Test] = NonEmptyStringSpec.tests ++ UuidSpec.tests
+  override def tests: List[Test] = NonEmptyStringSpec.tests ++ NonBlankStringSpec.tests ++ UuidSpec.tests
 
   object NonEmptyStringSpec {
     import all.NonEmptyString
@@ -129,6 +129,301 @@ object stringsSpec extends Properties {
         Result.diff(input1: Ordered[NonEmptyString], input2: NonEmptyString)(_.compare(_) == expected)
       }
 
+  }
+
+  object NonBlankStringSpec {
+    import all.NonBlankString
+
+    def tests: List[Test] = List(
+      example("test NonBlankString.apply", testApply),
+      example("test NonBlankString.apply (2)", testApply2),
+      example("test NonBlankString.apply with invalid", testApplyWithInvalid),
+      property("test NonBlankString.from(valid)", testFromValid),
+      property("test NonBlankString.from(invalid)", testFromInvalid),
+      property("test NonBlankString.unsafeFrom(valid)", testUnsafeFromValid),
+      property("test NonBlankString.unsafeFrom(invalid)", testUnsafeFromInvalid),
+      property("test NonBlankString.value", testValue),
+      property("test NonBlankString.unapply", testUnapplyWithPatternMatching),
+      property("test NonBlankString ++ NonBlankString", testNonBlankStringPlusNonBlankString),
+      property("test NonBlankString.prependString(String)", testNonBlankStringPrependStringString),
+      property("test NonBlankString.appendString(String)", testNonBlankStringAppendStringString),
+      property("test Ordering[NonBlankString]", testOrdering),
+      property("test Ordered[NonBlankString]", testOrdered),
+      example(
+        "test strings.isValidNotAllWhitespaceNonEmptyString with a valid value",
+        testStringsIsValidNotAllWhitespaceNonEmptyStringValid,
+      ),
+      example(
+        "test strings.isValidNotAllWhitespaceNonEmptyString with an invalid value",
+        testStringsIsValidNotAllWhitespaceNonEmptyStringInvalid,
+      ),
+      example(
+        "test strings.isValidNotAllWhitespaceNonEmptyString with an invalid String literal param value",
+        testStringsIsValidNotAllWhitespaceNonEmptyStringWithInvalidLiteral,
+      ),
+    )
+
+    def testApply: Result = {
+      /* The actual test is whether this compiles or not actual ==== expected is meaningless here */
+      val expected = NonBlankString("blah")
+      val actual   = NonBlankString("blah")
+      actual ==== expected
+    }
+
+    def testApply2: Result = {
+
+      import scala.compiletime.testing.typeChecks
+
+      val shouldCompile1 = typeChecks(
+        """
+          import strings.*
+          NonBlankString("blah")
+        """
+      )
+
+      Result.assert(shouldCompile1)
+    }
+
+    def testApplyWithInvalid: Result = {
+
+      import scala.compiletime.testing.{typeChecks, typeCheckErrors}
+
+      val shouldFail1 = typeChecks(
+        """
+          import strings.*
+          NonBlankString("")
+        """
+      )
+
+      val shouldFail2 = typeChecks(
+        """
+          import strings.*
+          NonBlankString(" ")
+        """
+      )
+
+      val shouldFail3 = typeChecks(
+        """
+          import strings.*
+          NonBlankString("\n")
+        """
+      )
+
+      val shouldFail4 = typeChecks(
+        """
+          import strings.*
+          NonBlankString("\t")
+        """
+      )
+
+      val shouldFail5 = typeCheckErrors(
+        """
+          import strings.*
+          val s = "abc"
+          NonBlankString(s)
+        """
+      )
+
+      Result.all(
+        List(
+          (shouldFail1 ==== false).log("Compilation should have been failed but it didn't for NonBlankString(\"\")"),
+          (shouldFail2 ==== false).log("Compilation should have been failed but it didn't for NonBlankString(\" \")"),
+          (shouldFail3 ==== false).log("Compilation should have been failed but it didn't for NonBlankString(\"\\n\")"),
+          (shouldFail4 ==== false).log("Compilation should have been failed but it didn't for NonBlankString(\"\\t\")"),
+          (shouldFail5
+            .matchPattern {
+              case List(
+                    scala
+                      .compiletime
+                      .testing
+                      .Error(
+                        "The argument passed to NotAllWhitespaceNonEmptyString.apply must be a string literal.",
+                        _,
+                        _,
+                        _,
+                      )
+                  ) =>
+            })
+            .log(
+              s"Compilation should have been failed but it didn't for NonBlankString(s) (non-literal String). Errors: ${shouldFail5.map(_.toString).mkString("[", ", ", "]")}"
+            ),
+        )
+      )
+    }
+
+    def testFromValid: Property =
+      for {
+        nonWhitespaceString <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("nonWhitespaceString")
+        whitespaceString    <-
+          Gen.string(hedgehog.extra.Gens.genCharByRange(strings.WhitespaceCharRange), Range.linear(1, 10)).log("whitespaceString")
+        s                   <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
+      } yield {
+        val expected = NonBlankString.unsafeFrom(s)
+        val actual   = NonBlankString.from(s)
+        actual ==== Right(expected)
+      }
+
+    def testFromInvalid: Property =
+      for {
+        s <-
+          Gen
+            .frequency1(
+              5  -> Gen.constant(""),
+              95 -> Gen.string(hedgehog.extra.Gens.genCharByRange(strings.WhitespaceCharRange), Range.linear(1, 10)),
+            )
+            .log("s")
+      } yield {
+        val expected = s"Invalid value: [$s]. It must be not all whitespace non-empty String"
+        val actual   = NonBlankString.from(s)
+        actual ==== Left(expected)
+      }
+
+    def testUnsafeFromValid: Property =
+      for {
+        nonWhitespaceString <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("nonWhitespaceString")
+        whitespaceString    <-
+          Gen.string(hedgehog.extra.Gens.genCharByRange(strings.WhitespaceCharRange), Range.linear(1, 10)).log("whitespaceString")
+        s                   <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
+      } yield {
+        val expected = NonBlankString.unsafeFrom(s)
+        val actual   = NonBlankString.unsafeFrom(s)
+        actual ==== expected
+      }
+
+    def testUnsafeFromInvalid: Property =
+      for {
+        s <-
+          Gen
+            .frequency1(
+              5  -> Gen.constant(""),
+              95 -> Gen.string(hedgehog.extra.Gens.genCharByRange(strings.WhitespaceCharRange), Range.linear(1, 10)),
+            )
+            .log("s")
+      } yield {
+        val expected = s"Invalid value: [$s]. It must be not all whitespace non-empty String"
+        try {
+          NonBlankString.unsafeFrom(s)
+          Result
+            .failure
+            .log("""IllegalArgumentException was expected from NonBlankString.unsafeFrom(""), but it was not thrown.""")
+        } catch {
+          case ex: IllegalArgumentException =>
+            ex.getMessage ==== expected
+
+        }
+      }
+
+    def testValue: Property =
+      for {
+        s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+      } yield {
+        val expected = s
+        val actual   = NonBlankString.unsafeFrom(s)
+        actual.value ==== expected
+      }
+
+    def testUnapplyWithPatternMatching: Property =
+      for {
+        s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+      } yield {
+        val expected = s
+        val nes      = NonBlankString.unsafeFrom(s)
+        nes match {
+          case NonBlankString(actual) =>
+            actual ==== expected
+        }
+      }
+
+    def testNonBlankStringPlusNonBlankString: Property =
+      for {
+        s1 <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("s1")
+        s2 <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("s2")
+
+        expected <- Gen.constant(s1 + s2).map(NonBlankString.unsafeFrom).log("expected")
+      } yield {
+        val nbs1   = NonBlankString.unsafeFrom(s1)
+        val nbs2   = NonBlankString.unsafeFrom(s2)
+        val actual = nbs1 ++ nbs2
+        actual ==== expected
+      }
+
+    def testNonBlankStringPrependStringString: Property =
+      for {
+        s1 <- Gen.string(Gen.unicode, Range.linear(1, 3)).log("s1")
+        s2 <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("s2")
+
+        expected <- Gen.constant(s1 + s2).map(NonBlankString.unsafeFrom).log("expected")
+      } yield {
+        val nbs    = NonBlankString.unsafeFrom(s2)
+        val actual = nbs.prependString(s1)
+        actual ==== expected
+      }
+
+    def testNonBlankStringAppendStringString: Property =
+      for {
+        s1 <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("s1")
+        s2 <- Gen.string(Gen.unicode, Range.linear(1, 3)).log("s2")
+
+        expected <- Gen.constant(s1 + s2).map(NonBlankString.unsafeFrom).log("expected")
+      } yield {
+        val nbs1   = NonBlankString.unsafeFrom(s1)
+        val actual = nbs1.appendString(s2)
+        actual ==== expected
+      }
+
+    def testOrdering: Property =
+      for {
+        s1 <- Gen.string(Gen.alphaNum, Range.linear(1, 10)).log("s1")
+        s2 <- Gen.string(Gen.alphaNum, Range.linear(1, 10)).log("s2")
+      } yield {
+        val input1   = NonBlankString.unsafeFrom(s1)
+        val input2   = NonBlankString.unsafeFrom(s2)
+        val expected = s1.compare(s2)
+        Result.diff(input1, input2)(Ordering[NonBlankString].compare(_, _) == expected)
+      }
+
+    def testOrdered: Property =
+      for {
+        s1 <- Gen.string(Gen.alphaNum, Range.linear(1, 10)).log("s1")
+        s2 <- Gen.string(Gen.alphaNum, Range.linear(1, 10)).log("s2")
+      } yield {
+        val input1   = NonBlankString.unsafeFrom(s1)
+        val input2   = NonBlankString.unsafeFrom(s2)
+        val expected = s1.compare(s2)
+        Result.diff(input1: Ordered[NonBlankString], input2: NonBlankString)(_.compare(_) == expected)
+      }
+
+    inline def runStringIsValidNotAllWhitespaceNonEmptyString(inline a: String): Boolean =
+      ${ strings.isValidNotAllWhitespaceNonEmptyString('a) }
+
+    def testStringsIsValidNotAllWhitespaceNonEmptyStringValid: Result = {
+      val expected = true
+      val actual   = runStringIsValidNotAllWhitespaceNonEmptyString("blah")
+      (actual ==== expected)
+        .log("""strings.runStringIsValidNotAllWhitespaceNonEmptyString("blah") should return true but it returned false.""")
+    }
+
+    def testStringsIsValidNotAllWhitespaceNonEmptyStringInvalid: Result = {
+      val expected = false
+      val actual   = runStringIsValidNotAllWhitespaceNonEmptyString(" \n\t\r")
+      (actual ==== expected)
+        .log("""strings.runStringIsValidNotAllWhitespaceNonEmptyString(" \n\t\r") should return false but it returned true""")
+    }
+
+    def testStringsIsValidNotAllWhitespaceNonEmptyStringWithInvalidLiteral: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expectedMessage = "The argument passed to NotAllWhitespaceNonEmptyString.apply must be a string literal."
+
+      val actual = typeCheckErrors(
+        """
+          val s = "blah blah"
+          runStringIsValidNotAllWhitespaceNonEmptyString(s)
+        """
+      )
+
+      val actualErrorMessage = actual.map(_.message).mkString
+      (actualErrorMessage ==== expectedMessage)
+    }
   }
 
   @SuppressWarnings(Array("org.wartremover.warts.ToString"))
