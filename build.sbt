@@ -259,7 +259,7 @@ lazy val props =
     val RepoName       = GitHubRepo.fold("refined4s")(_.nameToString)
 
     val Scala3Version = "3.1.3"
-//    val Scala3Version = "3.3.1"
+//    val Scala3Version = "3.3.3"
 
     val ProjectScalaVersion = Scala3Version
 
@@ -280,6 +280,7 @@ lazy val props =
     val IncludeTest = "compile->compile;test->test"
 
     val HedgehogVersion = "0.10.1"
+    val HedgehogExtraVersion = "0.8.0"
 
     val ExtrasVersion = "0.44.0"
 
@@ -348,6 +349,8 @@ lazy val libs = new {
         hedgehogRunner,
         hedgehogSbt,
       ).map(_ % Test)
+
+    lazy val hedgehogExtraCore = "io.kevinlee" %% "hedgehog-extra-core" % props.HedgehogExtraVersion % Test
   }
 }
 
@@ -381,7 +384,7 @@ def module(projectName: String, crossProject: CrossProject.Builder): CrossProjec
       ),
       scalacOptions ++= (if (isScala3(scalaVersion.value)) List("-no-indent") else List("-Xsource:3")),
 //      scalacOptions ~= (ops => ops.filter(_ != "UTF-8")),
-      libraryDependencies ++= libs.tests.hedgehog,
+      libraryDependencies ++= libs.tests.hedgehog ++ List(libs.tests.hedgehogExtraCore),
       wartremoverErrors ++= Warts.allBut(Wart.Any, Wart.Nothing, Wart.ImplicitConversion, Wart.ImplicitParameter),
       Compile / console / scalacOptions :=
         (console / scalacOptions)
