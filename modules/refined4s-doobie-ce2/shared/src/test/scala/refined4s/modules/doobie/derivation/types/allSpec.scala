@@ -2,18 +2,20 @@ package refined4s.modules.doobie.derivation.types
 
 import cats.effect.ContextShift
 import cats.syntax.all.*
-import hedgehog.*
-import hedgehog.runner.*
-import doobie.{Get, Put}
 import doobie.syntax.all.*
+import doobie.{Get, Put}
+import extras.core.syntax.all.*
 import extras.doobie.RunWithDb
 import extras.doobie.ce2.DbTools
 import extras.runner.ce2.RunSyncCe2
+import hedgehog.*
+import hedgehog.runner.*
 import refined4s.*
+import refined4s.modules.doobie.derivation.types.all.given
 import refined4s.types.all.*
 import refined4s.types.networkGens
-import refined4s.modules.doobie.derivation.types.all.given
 
+import java.nio.charset.StandardCharsets
 import java.util.UUID
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -102,6 +104,8 @@ object allSpec extends Properties, RunSyncCe2, RunWithDb {
     ),
     //
     propertyWithDb("test Get[NonEmptyString] and Put[NonEmptyString]", postgresPortNumber.getAndIncrement(), testGetAndPutNonEmptyString),
+    //
+    propertyWithDb("test Get[NonBlankString] and Put[NonBlankString]", postgresPortNumber.getAndIncrement(), testGetAndPutNonBlankString),
     //
     propertyWithDb("test Get[Uuid] and Put[Uuid]", postgresPortNumber.getAndIncrement(), testGetAndPutUuid),
     //
@@ -1803,6 +1807,78 @@ object allSpec extends Properties, RunSyncCe2, RunWithDb {
         fetchResultBefore <- fetch.map(_ ==== expectedFetchBefore)
         insertResult      <- insert.map(_ ==== expectedInsert)
         fetchResultAfter  <- fetch.map(_ ==== expectedFetchAfter)
+      } yield Result.all(
+        List(
+          fetchResultBefore.log("Failed: fetch before"),
+          insertResult.log("Failed: insert"),
+          fetchResultAfter.log("Failed: fetch after"),
+        )
+      )
+
+    }
+
+  ///
+
+  def testGetAndPutNonBlankString(testName: String, postgresPortNumber: Int): Property =
+    for {
+      nonWhitespaceString <- Gen
+                               .string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10))
+                               .map(s => if s === "\u0000" then "blah" else s)
+                               .map(s => new String(s.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8))
+                               .log("nonWhitespaceString")
+      whitespaceString    <- Gen
+                               .string(
+                                 hedgehog.extra.Gens.genCharByRange(refined4s.types.strings.WhitespaceCharRange),
+                                 Range.linear(1, 10),
+                               )
+                               .log("whitespaceString")
+
+      s <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
+    } yield withDb[F](
+      testName,
+      postgresPortNumber,
+      sql"""CREATE SCHEMA IF NOT EXISTS db_tools_test""",
+      sql"""
+        CREATE TABLE IF NOT EXISTS db_tools_test.example
+        (
+           id SERIAL PRIMARY KEY,
+           value TEXT NOT NULL
+        )
+      """,
+    ) { transactor =>
+
+      val expected = NonBlankString.unsafeFrom(s)
+
+      val expectedFetchBefore = none[NonBlankString]
+      val expectedInsert      = 1
+      val expectedFetchAfter  = expected.some
+
+      val fetch = DbTools.fetchSingleRow[F][NonBlankString](
+        sql"""
+            SELECT value
+              FROM db_tools_test.example
+        """
+      )(transactor)
+
+      val insert = DbTools.updateSingle[F](
+        sql"""
+             INSERT INTO db_tools_test.example (value) VALUES ($expected)
+        """
+      )(transactor)
+
+      for {
+        fetchResultBefore <- fetch.map(_ ==== expectedFetchBefore)
+        insertResult      <- insert.map(_ ==== expectedInsert)
+        fetchResultAfter  <- fetch.map(actual =>
+                               (actual ==== expectedFetchAfter).log(
+                                 show"""            actual: ${actual.map(_.value)}
+                                       |expectedFetchAfter: ${expectedFetchAfter.map(_.value)}
+                                       |
+                                       |            actual (unicode): ${actual.map(_.value.encodeToUnicode)}
+                                       |expectedFetchAfter (unicode): ${expectedFetchAfter.map(_.value.encodeToUnicode)}
+                                       |""".stripMargin
+                               )
+                             )
       } yield Result.all(
         List(
           fetchResultBefore.log("Failed: fetch before"),
