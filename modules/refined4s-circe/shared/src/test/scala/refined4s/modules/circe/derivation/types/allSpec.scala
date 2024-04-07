@@ -116,6 +116,9 @@ object allSpec extends Properties {
     property("test Encoder[NonEmptyString]", testEncoderNonEmptyString),
     property("test Decoder[NonEmptyString]", testDecoderNonEmptyString),
     //
+    property("test Encoder[NonBlankString]", testEncoderNonBlankString),
+    property("test Decoder[NonBlankString]", testDecoderNonBlankString),
+    //
     property("test Encoder[Uuid]", testEncoderUuid),
     property("test Decoder[Uuid]", testDecoderUuid),
     //
@@ -1094,6 +1097,53 @@ object allSpec extends Properties {
 
       val expected = NonEmptyString.from(s)
       val actual   = decode[NonEmptyString](input.noSpaces)
+
+      actual ==== expected
+    }
+
+  //
+
+  def testEncoderNonBlankString: Property =
+    for {
+      nonWhitespaceString <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("nonWhitespaceString")
+      whitespaceString    <- Gen
+                               .string(
+                                 hedgehog.extra.Gens.genCharByRange(refined4s.types.strings.WhitespaceCharRange),
+                                 Range.linear(1, 10),
+                               )
+                               .log("whitespaceString")
+
+      s <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
+    } yield {
+      val input = NonBlankString.unsafeFrom(s)
+
+      val expected = s.asJson
+      val actual   = input.asJson
+
+      Result.all(
+        List(
+          actual ==== expected,
+          actual.noSpaces ==== expected.noSpaces,
+        )
+      )
+    }
+
+  def testDecoderNonBlankString: Property =
+    for {
+      nonWhitespaceString <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("nonWhitespaceString")
+      whitespaceString    <- Gen
+                               .string(
+                                 hedgehog.extra.Gens.genCharByRange(refined4s.types.strings.WhitespaceCharRange),
+                                 Range.linear(1, 10),
+                               )
+                               .log("whitespaceString")
+
+      s <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
+    } yield {
+      val input = s.asJson
+
+      val expected = NonBlankString.from(s)
+      val actual   = decode[NonBlankString](input.noSpaces)
 
       actual ==== expected
     }
