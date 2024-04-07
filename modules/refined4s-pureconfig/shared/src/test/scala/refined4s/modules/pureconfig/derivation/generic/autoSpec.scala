@@ -155,6 +155,10 @@ object autoSpec extends Properties {
       example("test ConfigReader[NonEmptyString] with invalid value", testConfigReaderNonEmptyStringInvalid),
       property("test ConfigWriter[NonEmptyString]", testConfigWriterNonEmptyString),
       //
+      property("test ConfigReader[NonBlankString]", testConfigReaderNonBlankString),
+      property("test ConfigReader[NonBlankString] with invalid value", testConfigReaderNonBlankStringInvalid),
+      property("test ConfigWriter[NonBlankString]", testConfigWriterNonBlankString),
+      //
       property("test ConfigReader[Uuid]", testConfigReaderUuid),
       property("test ConfigReader[Uuid] with invalid value", testConfigReaderUuidInvalid),
       property("test ConfigWriter[Uuid]", testConfigWriterUuid),
@@ -2461,6 +2465,139 @@ object autoSpec extends Properties {
       }
 
     final case class NonEmptyStringConfig(name: NonEmptyString) derives ConfigReader
+
+    ///
+
+    def testConfigReaderNonBlankString: Property =
+      for {
+        nonWhitespaceString <- Gen
+                                 .string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10))
+                                 .map(s => if s.forall(_ === '\u0000') then "blah" else s)
+                                 .log("nonWhitespaceString")
+        whitespaceString    <- Gen
+                                 .string(
+                                   /*
+                                     strings.WhitespaceCharRange can be used here because of
+                                     ```
+                                     ConfigReaderFailures(CannotParse(Expecting a value but got wrong token: 'tab'
+                                     (JSON does not allow unescaped tab in quoted strings, use a backslash escape)
+                                     (if you intended 'tab' (JSON does not allow unescaped tab in quoted strings, use a backslash escape)
+                                     to be part of a key or string value, try enclosing the key or value in double quotes,
+                                     or you may be able to rename the file .properties rather than .conf),Some(ConfigOrigin(String))))
+                                     ```
+                                     It happens to '\t' (tab), '\n' (newline), '\r' (control character 0xd), '\b' (control character 0x8), and possibly more.
+                                 */
+                                   Gen.choice1(
+                                     Gen.char(32, 32),
+                                     Gen.char(8192, 8198),
+                                     Gen.char(8200, 8202),
+                                     Gen.char(8232, 8233),
+                                     Gen.char(8287, 8287),
+                                     Gen.char(12288, 12288),
+                                   ),
+                                   Range.linear(1, 10),
+                                 )
+                                 .log("whitespaceString")
+
+        s <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
+      } yield {
+
+        val confString =
+          raw"""
+               |name = "$s"
+               |""".stripMargin
+
+        val expected = NonBlankString.unsafeFrom(s)
+
+        ConfigSource
+          .string(confString)
+          .load[NonBlankStringConfig] match {
+          case Right(NonBlankStringConfig(actual)) =>
+            actual ==== expected
+
+          case Left(err) =>
+            Result.failure.log(s"parse config failed with error: ${err.toString}")
+        }
+
+      }
+
+    def testConfigReaderNonBlankStringInvalid: Property = for {
+      s <-
+        Gen
+          .frequency1(
+            5  -> Gen.constant(""),
+            /* strings.WhitespaceCharRange can be used here because of
+               ```
+               ConfigReaderFailures(CannotParse(Expecting a value but got wrong token: 'tab'
+               (JSON does not allow unescaped tab in quoted strings, use a backslash escape)
+               (if you intended 'tab' (JSON does not allow unescaped tab in quoted strings, use a backslash escape)
+               to be part of a key or string value, try enclosing the key or value in double quotes,
+               or you may be able to rename the file .properties rather than .conf),Some(ConfigOrigin(String))))
+               ```
+               It happens to '\t' (tab), '\n' (newline), '\r' (control character 0xd), '\b' (control character 0x8), and possibly more.
+             */
+            95 -> Gen.string(
+              Gen.choice1(
+                Gen.char(32, 32),
+                Gen.char(8192, 8198),
+                Gen.char(8200, 8202),
+                Gen.char(8232, 8233),
+                Gen.char(8287, 8287),
+                Gen.char(12288, 12288),
+              ),
+              Range.linear(1, 10),
+            ),
+          )
+          .log("s")
+    } yield {
+
+      val confString = s"""name = "$s""""
+
+      val expected = NonBlankString.from(s).leftMap { err =>
+        s"The value $s cannot be created as the expected type, ${typeTools.getTypeName[refined4s.types.strings.NonBlankString]}.Type, due to the following error: $err"
+      }
+
+      ConfigSource
+        .string(confString)
+        .load[NonBlankStringConfig] match {
+        case Right(NonBlankStringConfig(actual)) =>
+          Result.failure.log(s"It should have failed to parse the config but got $actual")
+
+        case Left(ConfigReaderFailures(ConvertFailure(UserValidationFailed(err), _, _))) =>
+          err.asLeft ==== expected
+
+        case unexpected =>
+          Result.failure.log(s"Unexpected result: ${unexpected.toString}")
+      }
+
+    }
+
+    def testConfigWriterNonBlankString: Property =
+      for {
+        nonWhitespaceString <- Gen
+                                 .string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10))
+                                 .map(s => if s === "\u0000" then "blah" else s)
+                                 .log("nonWhitespaceString")
+        whitespaceString    <- Gen
+                                 .string(
+                                   hedgehog.extra.Gens.genCharByRange(refined4s.types.strings.WhitespaceCharRange),
+                                   Range.linear(1, 10),
+                                 )
+                                 .log("whitespaceString")
+
+        s <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
+      } yield {
+
+        val input = NonBlankString.unsafeFrom(s)
+
+        val expected = ConfigWriter[String].to(s)
+        val actual   = ConfigWriter[NonBlankString].to(input)
+
+        actual ==== expected
+
+      }
+
+    final case class NonBlankStringConfig(name: NonBlankString) derives ConfigReader
 
     ///
 
