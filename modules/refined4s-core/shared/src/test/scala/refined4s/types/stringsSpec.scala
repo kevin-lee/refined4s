@@ -256,7 +256,8 @@ object stringsSpec extends Properties {
         nonWhitespaceString <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("nonWhitespaceString")
         whitespaceString    <-
           Gen.string(hedgehog.extra.Gens.genCharByRange(strings.WhitespaceCharRange), Range.linear(1, 10)).log("whitespaceString")
-        s                   <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
+
+        s <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
       } yield {
         val expected = NonBlankString.unsafeFrom(s)
         val actual   = NonBlankString.from(s)
@@ -283,7 +284,8 @@ object stringsSpec extends Properties {
         nonWhitespaceString <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("nonWhitespaceString")
         whitespaceString    <-
           Gen.string(hedgehog.extra.Gens.genCharByRange(strings.WhitespaceCharRange), Range.linear(1, 10)).log("whitespaceString")
-        s                   <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
+
+        s <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
       } yield {
         val expected = NonBlankString.unsafeFrom(s)
         val actual   = NonBlankString.unsafeFrom(s)
@@ -315,7 +317,11 @@ object stringsSpec extends Properties {
 
     def testValue: Property =
       for {
-        s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+        nonWhitespaceString <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("nonWhitespaceString")
+        whitespaceString    <-
+          Gen.string(hedgehog.extra.Gens.genCharByRange(strings.WhitespaceCharRange), Range.linear(1, 10)).log("whitespaceString")
+
+        s <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
       } yield {
         val expected = s
         val actual   = NonBlankString.unsafeFrom(s)
@@ -324,7 +330,11 @@ object stringsSpec extends Properties {
 
     def testUnapplyWithPatternMatching: Property =
       for {
-        s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+        nonWhitespaceString <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("nonWhitespaceString")
+        whitespaceString    <-
+          Gen.string(hedgehog.extra.Gens.genCharByRange(strings.WhitespaceCharRange), Range.linear(1, 10)).log("whitespaceString")
+
+        s <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
       } yield {
         val expected = s
         val nes      = NonBlankString.unsafeFrom(s)
@@ -373,8 +383,8 @@ object stringsSpec extends Properties {
 
     def testOrdering: Property =
       for {
-        s1 <- Gen.string(Gen.alphaNum, Range.linear(1, 10)).log("s1")
-        s2 <- Gen.string(Gen.alphaNum, Range.linear(1, 10)).log("s2")
+        s1 <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("s1")
+        s2 <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("s2")
       } yield {
         val input1   = NonBlankString.unsafeFrom(s1)
         val input2   = NonBlankString.unsafeFrom(s2)
@@ -384,8 +394,8 @@ object stringsSpec extends Properties {
 
     def testOrdered: Property =
       for {
-        s1 <- Gen.string(Gen.alphaNum, Range.linear(1, 10)).log("s1")
-        s2 <- Gen.string(Gen.alphaNum, Range.linear(1, 10)).log("s2")
+        s1 <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("s1")
+        s2 <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("s2")
       } yield {
         val input1   = NonBlankString.unsafeFrom(s1)
         val input2   = NonBlankString.unsafeFrom(s2)
