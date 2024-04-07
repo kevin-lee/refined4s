@@ -6,7 +6,6 @@ import hedgehog.runner.*
 import refined4s.modules.cats.derivation.types.all.given
 import refined4s.types.numeric.*
 import refined4s.types.network.*
-import refined4s.types.strings
 import refined4s.types.strings.*
 import refined4s.types.networkGens
 
@@ -948,12 +947,12 @@ object allSpec extends Properties {
       nonWhitespaceString <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("nonWhitespaceString")
       whitespaceString    <- Gen
                                .string(
-                                 hedgehog.extra.Gens.genCharByRange(strings.WhitespaceCharRange),
+                                 hedgehog.extra.Gens.genCharByRange(refined4s.types.strings.WhitespaceCharRange),
                                  Range.linear(1, 10),
                                )
                                .log("whitespaceString")
-      s                   <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
 
+      s <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
     } yield {
       val input = NonBlankString.unsafeFrom(s)
 
@@ -968,11 +967,12 @@ object allSpec extends Properties {
       nonWhitespaceString <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("nonWhitespaceString")
       whitespaceString    <- Gen
                                .string(
-                                 hedgehog.extra.Gens.genCharByRange(strings.WhitespaceCharRange),
+                                 hedgehog.extra.Gens.genCharByRange(refined4s.types.strings.WhitespaceCharRange),
                                  Range.linear(1, 10),
                                )
                                .log("whitespaceString")
-      s                   <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
+
+      s <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
     } yield {
       val input = NonBlankString.unsafeFrom(s)
 
