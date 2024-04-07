@@ -110,6 +110,9 @@ trait all {
   inline given derivedNonEmptyStringEq(using eqActual: Eq[String]): Eq[NonEmptyString]         = contraCoercible(eqActual)
   inline given derivedNonEmptyStringShow(using showActual: Show[String]): Show[NonEmptyString] = contraCoercible(showActual)
 
+  inline given derivedNonBlankStringEq(using eqActual: Eq[String]): Eq[NonBlankString]         = contraCoercible(eqActual)
+  inline given derivedNonBlankStringShow(using showActual: Show[String]): Show[NonBlankString] = contraCoercible(showActual)
+
   inline given derivedUuidEq(using eqActual: Eq[String]): Eq[Uuid]         = contraCoercible(eqActual)
   inline given derivedUuidShow(using showActual: Show[String]): Show[Uuid] = contraCoercible(showActual)
 

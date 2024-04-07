@@ -43,7 +43,7 @@ object strings {
     }
   }
 
-  private[types] val WhitespaceCharRange: List[(Int, Int)] =
+  val WhitespaceCharRange: List[(Int, Int)] =
     List(
       9     -> 13,
       28    -> 32,

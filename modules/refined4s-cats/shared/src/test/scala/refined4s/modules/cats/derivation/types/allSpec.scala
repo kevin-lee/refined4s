@@ -6,6 +6,7 @@ import hedgehog.runner.*
 import refined4s.modules.cats.derivation.types.all.given
 import refined4s.types.numeric.*
 import refined4s.types.network.*
+import refined4s.types.strings
 import refined4s.types.strings.*
 import refined4s.types.networkGens
 
@@ -116,6 +117,9 @@ object allSpec extends Properties {
     //
     property("test Eq[NonEmptyString]", testEqNonEmptyString),
     property("test Show[NonEmptyString]", testShowNonEmptyString),
+    //
+    property("test Eq[NonBlankString]", testEqNonBlankString),
+    property("test Show[NonBlankString]", testShowNonBlankString),
     //
     property("test Eq[Uuid]", testEqUuid),
     property("test Show[Uuid]", testShowUuid),
@@ -930,6 +934,47 @@ object allSpec extends Properties {
       s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
     } yield {
       val input = NonEmptyString.unsafeFrom(s)
+
+      val expected = s
+      val actual   = input.show
+
+      actual ==== expected
+    }
+
+  ///
+
+  def testEqNonBlankString: Property =
+    for {
+      nonWhitespaceString <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("nonWhitespaceString")
+      whitespaceString    <- Gen
+                               .string(
+                                 hedgehog.extra.Gens.genCharByRange(strings.WhitespaceCharRange),
+                                 Range.linear(1, 10),
+                               )
+                               .log("whitespaceString")
+      s                   <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
+
+    } yield {
+      val input = NonBlankString.unsafeFrom(s)
+
+      val expected = input
+      val actual   = input
+
+      Result.diffNamed("NonEmptyString(value) === NonEmptyString(value)", actual, expected)(_ === _)
+    }
+
+  def testShowNonBlankString: Property =
+    for {
+      nonWhitespaceString <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("nonWhitespaceString")
+      whitespaceString    <- Gen
+                               .string(
+                                 hedgehog.extra.Gens.genCharByRange(strings.WhitespaceCharRange),
+                                 Range.linear(1, 10),
+                               )
+                               .log("whitespaceString")
+      s                   <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
+    } yield {
+      val input = NonBlankString.unsafeFrom(s)
 
       val expected = s
       val actual   = input.show
