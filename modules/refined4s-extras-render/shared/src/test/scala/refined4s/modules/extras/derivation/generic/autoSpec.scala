@@ -8,6 +8,8 @@ import refined4s.modules.extras.derivation.generic.auto.given
 import refined4s.types.all.*
 import refined4s.types.networkGens
 
+import java.nio.charset.StandardCharsets
+
 /** @author Kevin Lee
   * @since 2024-01-01
   */
@@ -80,6 +82,8 @@ object autoSpec extends Properties {
     property("test Render[NonPosBigDecimal]", testRenderNonPosBigDecimal),
     //
     property("test Render[NonEmptyString]", testRenderNonEmptyString),
+    //
+    property("test Render[NonBlankString]", testRenderNonBlankString),
     //
     property("test Render[Uri]", testRenderUri),
 
@@ -488,6 +492,29 @@ object autoSpec extends Properties {
       s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
     } yield {
       val input = NonEmptyString.unsafeFrom(s)
+
+      val expected = s
+      val actual   = input.render
+
+      actual ==== expected
+    }
+
+  def testRenderNonBlankString: Property =
+    for {
+      nonWhitespaceString <- Gen
+                               .string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10))
+                               .map(s => new String(s.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8))
+                               .log("nonWhitespaceString")
+      whitespaceString    <- Gen
+                               .string(
+                                 hedgehog.extra.Gens.genCharByRange(refined4s.types.strings.WhitespaceCharRange),
+                                 Range.linear(1, 10),
+                               )
+                               .log("whitespaceString")
+
+      s <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
+    } yield {
+      val input = NonBlankString.unsafeFrom(s)
 
       val expected = s
       val actual   = input.render
