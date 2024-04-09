@@ -7,6 +7,7 @@ import refined4s.types.all.*
 import refined4s.types.networkGens
 import sttp.tapir.{Schema, ValidationError}
 
+import java.nio.charset.StandardCharsets
 import java.util.UUID
 
 /** @author Kevin Lee
@@ -80,6 +81,8 @@ object allSpec extends Properties {
     property("test Schema[NonPosBigDecimal]", testSchemaNonPosBigDecimal),
     //
     property("test Schema[NonEmptyString]", testSchemaNonEmptyString),
+    //
+    property("test Schema[NonBlankString]", testSchemaNonBlankString),
     //
     property("test Schema[Uuid]", testSchemaUuid),
     //
@@ -493,6 +496,29 @@ object allSpec extends Properties {
 
       val expected = List.empty[ValidationError[?]]
       val actual   = summon[Schema[NonEmptyString]].applyValidation(input)
+
+      actual ==== expected
+    }
+
+  def testSchemaNonBlankString: Property =
+    for {
+      nonWhitespaceString <- Gen
+                               .string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10))
+                               .map(s => new String(s.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8))
+                               .log("nonWhitespaceString")
+      whitespaceString    <- Gen
+                               .string(
+                                 hedgehog.extra.Gens.genCharByRange(refined4s.types.strings.WhitespaceCharRange),
+                                 Range.linear(1, 10),
+                               )
+                               .log("whitespaceString")
+
+      s <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
+    } yield {
+      val input = NonBlankString.unsafeFrom(s)
+
+      val expected = List.empty[ValidationError[?]]
+      val actual   = summon[Schema[NonBlankString]].applyValidation(input)
 
       actual ==== expected
     }
