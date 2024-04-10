@@ -200,7 +200,7 @@ lazy val refinedCompatScala3Js  = refinedCompatScala3.js.settings(jsSettingsForF
 lazy val tapir    = module("tapir", crossProject(JVMPlatform, JSPlatform))
   .settings(
     libraryDependencies ++= List(
-      libs.tapirCore,
+      libs.tapirCore
     )
   )
   .dependsOn(
@@ -225,11 +225,13 @@ lazy val docs = (project in file("docs-gen-tmp/docs"))
       val latestVersion = s"git describe --tags $tag".!!.trim.stripPrefix("v")
 
       List(
-        "io.kevinlee" %% "refined4s-core"       % latestVersion,
-        "io.kevinlee" %% "refined4s-cats"       % latestVersion,
-        "io.kevinlee" %% "refined4s-circe"      % latestVersion,
-        "io.kevinlee" %% "refined4s-pureconfig" % latestVersion,
-        "io.kevinlee" %% "refined4s-doobie-ce2" % latestVersion,
+        "io.kevinlee" %% "refined4s-core"          % latestVersion,
+        "io.kevinlee" %% "refined4s-cats"          % latestVersion,
+        "io.kevinlee" %% "refined4s-circe"         % latestVersion,
+        "io.kevinlee" %% "refined4s-pureconfig"    % latestVersion,
+        "io.kevinlee" %% "refined4s-doobie-ce2"    % latestVersion,
+        "io.kevinlee" %% "refined4s-extras-render" % latestVersion,
+        "io.kevinlee" %% "refined4s-tapir"         % latestVersion,
         libs.circeCore,
         libs.circeLiteral,
         libs.circeParser,
@@ -279,7 +281,7 @@ lazy val props =
 
     val IncludeTest = "compile->compile;test->test"
 
-    val HedgehogVersion = "0.10.1"
+    val HedgehogVersion      = "0.10.1"
     val HedgehogExtraVersion = "0.8.0"
 
     val ExtrasVersion = "0.44.0"
