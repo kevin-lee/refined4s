@@ -126,6 +126,9 @@ const config: Config = {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
       additionalLanguages: [
+        'bash',
+        'diff',
+        'json',
         'java',
         'scala',
       ],
