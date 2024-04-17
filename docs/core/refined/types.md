@@ -1527,6 +1527,56 @@ nonEmptyStringB.value
 
 ***
 
+## Refined `Uuid`
+
+### Compile-time Validation
+```scala mdoc:reset-object
+import refined4s.types.all.*
+Uuid("3596f062-a6bd-4d2c-978e-3ed6f97a264b")
+
+val uuid1 = java.util.UUID.randomUUID()
+Uuid(uuid1)
+```
+
+```scala
+Uuid("")
+^^^^^^^^
+Invalid value: [""]. It must be UUID
+
+Uuid("blah")
+^^^^^^^^^^^^
+Invalid value: ["blah"]. It must be UUID
+```
+
+### Runtime Validation
+```scala mdoc
+val validUuidString = "3596f062-a6bd-4d2c-978e-3ed6f97a264b" 
+Uuid.from(validUuidString)
+```
+```scala mdoc
+val invalidUuid = "iuhsfd9f-f32wfwf3-d1i2j" 
+Uuid.from(invalidUuid)
+```
+
+### To `java.util.UUID`
+
+```scala mdoc
+val uuid2 = Uuid("3596f062-a6bd-4d2c-978e-3ed6f97a264b")
+
+uuid2.toUUID
+```
+
+### Get Value
+
+```scala mdoc
+val uuid3 = Uuid("3596f062-a6bd-4d2c-978e-3ed6f97a264b")
+
+uuid3.value
+```
+
+
+***
+
 ## Refined `Uri`
 
 ### Compile-time Validation
