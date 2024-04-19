@@ -77,8 +77,10 @@ NonNegInt(0)
 NonNegInt(1)
 ```
 
-```scala mdoc:fail
+```scala
 NonNegInt(-2)
+// error:
+// Invalid value: [-2]. It must be a non-negative Int
 ```
 
 ### Runtime Validation
@@ -135,11 +137,15 @@ PosInt(1)
 PosInt(999)
 ```
 
-```scala mdoc:fail
+```scala
 PosInt(0)
+// error:
+// Invalid value: [0]. It must be a positive Int
 ```
-```scala mdoc:fail
+```scala
 PosInt(-2)
+// error:
+// Invalid value: [-2]. It must be a positive Int
 ```
 
 ### Runtime Validation
@@ -198,8 +204,10 @@ NonPosInt(0)
 NonPosInt(-999)
 ```
 
-```scala mdoc:fail
+```scala
 NonPosInt(1)
+// error:
+// Invalid value: [1]. It must be a non-positive Int
 ```
 
 ### Runtime Validation
@@ -261,11 +269,15 @@ NonPosInt.MaxValue
 ```scala mdoc
 NegLong(-1L)
 ```
-```scala mdoc:fail
+```scala
 NegLong(0L)
+// error:
+// Invalid value: [0L]. It must be a negative Long
 ```
-```scala mdoc:fail
+```scala
 NegLong(1L)
+// error:
+// Invalid value: [1L]. It must be a negative Long
 ```
 
 ### Runtime Validation
@@ -322,8 +334,10 @@ NonNegLong(0L)
 NonNegLong(1L)
 ```
 
-```scala mdoc:fail
+```scala
 NonNegLong(-2L)
+// error:
+// Invalid value: [-2L]. It must be a non-negative Long
 ```
 
 ### Runtime Validation
@@ -382,11 +396,15 @@ PosLong(1L)
 PosLong(999L)
 ```
 
-```scala mdoc:fail
+```scala
 PosLong(0L)
+// error:
+// Invalid value: [0L]. It must be a positive Long
 ```
-```scala mdoc:fail
+```scala
 PosLong(-2L)
+// error:
+// Invalid value: [-2L]. It must be a positive Long
 ```
 
 ### Runtime Validation
@@ -445,8 +463,10 @@ NonPosLong(0L)
 NonPosLong(-999L)
 ```
 
-```scala mdoc:fail
+```scala
 NonPosLong(1L)
+// error:
+// Invalid value: [1L]. It must be a non-positive Long
 ```
 
 ### Runtime Validation
@@ -511,11 +531,15 @@ NonPosLong.MaxValue
 NegDouble(-0.00001d)
 NegDouble(-999.999d)
 ```
-```scala mdoc:fail
+```scala
 NegDouble(0d)
+// error:
+// Invalid value: [0.0d]. It must be a negative Double
 ```
-```scala mdoc:fail
+```scala
 NegDouble(999.999d)
+// error:
+// Invalid value: [999.999d]. It must be a negative Double
 ```
 
 ### Runtime Validation
@@ -572,12 +596,15 @@ NonNegDouble(0d)
 NonNegDouble(999.999d)
 ```
 
-```scala mdoc:fail
+```scala
 NonNegDouble(-0.00001d)
+// error:
+// Invalid value: [-1.0E-5d]. It must be a non-negative Double
 ```
-```
-```scala mdoc:fail
+```scala
 NonNegDouble(-999.999d)
+// error:
+// Invalid value: [-999.999d]. It must be a non-negative Double
 ```
 
 ### Runtime Validation
@@ -639,11 +666,15 @@ PosDouble(0.00001d)
 PosDouble(999.999d)
 ```
 
-```scala mdoc:fail
+```scala
 PosDouble(0d)
+// error:
+// Invalid value: [0.0d]. It must be a positive Double
 ```
-```scala mdoc:fail
+```scala
 PosDouble(-999.999d)
+// error:
+// Invalid value: [-999.999d]. It must be a positive Double
 ```
 
 ### Runtime Validation
@@ -705,11 +736,15 @@ NonPosDouble(0d)
 NonPosDouble(-999.999d)
 ```
 
-```scala mdoc:fail
+```scala
 NonPosDouble(0.00001d)
+// error:
+// Invalid value: [1.0E-5d]. It must be a non-positive Double
 ```
-```scala mdoc:fail
+```scala
 NonPosDouble(999.999d)
+// error:
+// Invalid value: [999.999d]. It must be a non-positive Double
 ```
 
 ### Runtime Validation
@@ -774,11 +809,15 @@ NonPosDouble.MaxValue
 NegFloat(-0.00001f)
 NegFloat(-999.999f)
 ```
-```scala mdoc:fail
+```scala
 NegFloat(0f)
+// error:
+// Invalid value: [0.0f]. It must be a negative Float
 ```
-```scala mdoc:fail
+```scala
 NegFloat(999.999f)
+// error:
+// Invalid value: [999.999f]. It must be a negative Float
 ```
 
 ### Runtime Validation
@@ -835,11 +874,15 @@ NonNegFloat(0f)
 NonNegFloat(999.999f)
 ```
 
-```scala mdoc:fail
+```scala
 NonNegFloat(-0.00001f)
+// error:
+// Invalid value: [-1.0E-5f]. It must be a non-negative Float
 ```
-```scala mdoc:fail
+```scala
 NonNegFloat(-999.999f)
+// error:
+// Invalid value: [-999.999f]. It must be a non-negative Float
 ```
 
 ### Runtime Validation
@@ -901,11 +944,15 @@ PosFloat(0.00001f)
 PosFloat(999.999f)
 ```
 
-```scala mdoc:fail
+```scala
 PosFloat(0f)
+// error:
+// Invalid value: [0.0f]. It must be a positive Float
 ```
-```scala mdoc:fail
+```scala
 PosFloat(-999.999f)
+// error:
+// Invalid value: [-999.999f]. It must be a positive Float
 ```
 
 ### Runtime Validation
@@ -968,11 +1015,15 @@ NonPosFloat(0f)
 NonPosFloat(-999.999f)
 ```
 
-```scala mdoc:fail
+```scala
 NonPosFloat(0.00001f)
+// error:
+// Invalid value: [1.0E-5f]. It must be a non-positive Float
 ```
-```scala mdoc:fail
+```scala
 NonPosFloat(999.999f)
+// error:
+// Invalid value: [999.999f]. It must be a non-positive Float
 ```
 
 ### Runtime Validation
@@ -1035,11 +1086,15 @@ NonPosFloat.MaxValue
 ```scala mdoc
 NegBigInt(-1)
 ```
-```scala mdoc:fail
+```scala
 NegBigInt(0)
+// error:
+// Invalid value: [BigInt.apply(0)]. It must be a negative BigInt
 ```
-```scala mdoc:fail
+```scala
 NegBigInt(1)
+// error:
+// Invalid value: [BigInt.apply(1)]. It must be a negative BigInt
 ```
 
 ### Runtime Validation
@@ -1087,8 +1142,10 @@ NonNegBigInt(0)
 NonNegBigInt(1)
 ```
 
-```scala mdoc:fail
+```scala
 NonNegBigInt(-2)
+// error:
+// Invalid value: [BigInt.apply(-2)]. It must be a non-negative BigInt
 ```
 
 ### Runtime Validation
@@ -1138,11 +1195,15 @@ PosBigInt(1)
 PosBigInt(999)
 ```
 
-```scala mdoc:fail
+```scala
 PosBigInt(0)
+// error:
+// Invalid value: [BigInt.apply(0)]. It must be a positive BigInt
 ```
-```scala mdoc:fail
+```scala
 PosBigInt(-2)
+// error:
+// Invalid value: [BigInt.apply(-2)]. It must be a positive BigInt
 ```
 
 ### Runtime Validation
@@ -1194,8 +1255,10 @@ NonPosBigInt(0)
 NonPosBigInt(-999)
 ```
 
-```scala mdoc:fail
+```scala
 NonPosBigInt(1)
+// error:
+// Invalid value: [BigInt.apply(1)]. It must be a non-positive BigInt
 ```
 
 ### Runtime Validation
@@ -1253,11 +1316,15 @@ nonPosBigIntMinus999.value
 NegBigDecimal(-0.00001d)
 NegBigDecimal(-999.999d)
 ```
-```scala mdoc:fail
+```scala
 NegBigDecimal(0d)
+// error:
+// Invalid value: [BigDecimal.apply(0.0d)]. It must be a negative BigDecimal
 ```
-```scala mdoc:fail
+```scala
 NegBigDecimal(999.999d)
+// error:
+// Invalid value: [BigDecimal.apply(999.999d)]. It must be a negative BigDecimal
 ```
 
 ### Runtime Validation
@@ -1307,12 +1374,15 @@ NonNegBigDecimal(0d)
 NonNegBigDecimal(999.999d)
 ```
 
-```scala mdoc:fail
+```scala
 NonNegBigDecimal(-0.00001d)
+// error:
+// Invalid value: [BigDecimal.apply(-1.0E-5d)]. It must be a non-negative BigDecimal
 ```
-```
-```scala mdoc:fail
+```scala
 NonNegBigDecimal(-999.999d)
+// error:
+// Invalid value: [BigDecimal.apply(-999.999d)]. It must be a non-negative BigDecimal
 ```
 
 ### Runtime Validation
@@ -1367,11 +1437,15 @@ PosBigDecimal(0.00001d)
 PosBigDecimal(999.999d)
 ```
 
-```scala mdoc:fail
+```scala
 PosBigDecimal(0d)
+// error:
+// Invalid value: [BigDecimal.apply(0.0d)]. It must be a positive BigDecimal
 ```
-```scala mdoc:fail
+```scala
 PosBigDecimal(-999.999d)
+// error:
+// Invalid value: [BigDecimal.apply(-999.999d)]. It must be a positive BigDecimal
 ```
 
 ### Runtime Validation
@@ -1426,11 +1500,15 @@ NonPosBigDecimal(0d)
 NonPosBigDecimal(-999.999d)
 ```
 
-```scala mdoc:fail
+```scala
 NonPosBigDecimal(0.00001d)
+// error:
+// Invalid value: [BigDecimal.apply(1.0E-5d)]. It must be a non-positive BigDecimal
 ```
-```scala mdoc:fail
+```scala
 NonPosBigDecimal(999.999d)
+// error:
+// Invalid value: [BigDecimal.apply(999.999d)]. It must be a non-positive BigDecimal
 ```
 
 ### Runtime Validation
@@ -1540,12 +1618,12 @@ Uuid(uuid1)
 
 ```scala
 Uuid("")
-^^^^^^^^
-Invalid value: [""]. It must be UUID
+// error:
+// Invalid value: [""]. It must be UUID
 
 Uuid("blah")
-^^^^^^^^^^^^
-Invalid value: ["blah"]. It must be UUID
+// error:
+// Invalid value: ["blah"]. It must be UUID
 ```
 
 ### Runtime Validation
