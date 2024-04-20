@@ -1605,6 +1605,74 @@ nonEmptyStringB.value
 
 ***
 
+## Refined `NonBlankString`
+
+### Compile-time Validation
+```scala mdoc
+NonBlankString("blah")
+NonBlankString("Lorem Ipsum is simply dummy text of the printing and typesetting industry.")
+```
+```scala
+// error:
+// NonBlankString("")
+// ^^^^^^^^^^^^^^^^^^
+// Invalid value: [""]. It must be not all whitespace non-empty String
+
+NonBlankString(" ")
+// error:
+// NonBlankString(" ")
+// ^^^^^^^^^^^^^^^^^^^
+// Invalid value: [" "]. It must be not all whitespace non-empty String
+
+NonBlankString(" \t \n \r")
+// error:
+// NonBlankString(" \t \n \r")
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+// Invalid value: [" \t \n \r"]. It must be not all whitespace non-empty String
+```
+
+### Runtime Validation
+```scala mdoc
+val validNonBlankString1 = "blah"
+NonBlankString.from(validNonBlankString1)
+
+val validNonBlankString2 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+NonBlankString.from(validNonBlankString2)
+```
+```scala mdoc
+val invalidNonBlankString1 = ""
+NonBlankString.from(invalidNonBlankString1)
+
+val invalidNonBlankString2 = " "
+NonBlankString.from(invalidNonBlankString2)
+
+val invalidNonBlankString3 = " \t \n \r"
+NonBlankString.from(invalidNonBlankString3)
+```
+
+### Concatenation
+
+```scala mdoc
+val nonBlankString1 = NonBlankString("Hello")
+val nonBlankString2 = NonBlankString(" World")
+
+nonBlankString1 ++ nonBlankString2
+```
+
+### Get Value
+
+```scala mdoc
+val nonBlankStringA = NonBlankString("blah")
+val nonBlankStringB = NonBlankString("Lorem Ipsum is simply dummy text of the printing and typesetting industry.")
+
+nonBlankStringA.value
+
+nonBlankStringB.value
+```
+
+
+***
+
 ## Refined `Uuid`
 
 ### Compile-time Validation
