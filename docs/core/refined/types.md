@@ -1657,6 +1657,10 @@ val nonBlankString1 = NonBlankString("Hello")
 val nonBlankString2 = NonBlankString(" World")
 
 nonBlankString1 ++ nonBlankString2
+
+nonBlankString1.appendString("      ")
+
+nonBlankString1.prependString("      ")
 ```
 
 ### Get Value
