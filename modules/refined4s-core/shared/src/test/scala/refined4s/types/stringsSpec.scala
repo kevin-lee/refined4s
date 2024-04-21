@@ -245,7 +245,8 @@ object stringsSpec extends Properties {
                   ) =>
             })
             .log(
-              s"Compilation should have been failed but it didn't for NonBlankString(s) (non-literal String). Errors: ${shouldFail5.map(_.toString).mkString("[", ", ", "]")}"
+              "Compilation should have been failed but it didn't for NonBlankString(s) (non-literal String). " +
+                s"Errors: ${shouldFail5.map(_.toString).mkString("[", ", ", "]")}"
             ),
         )
       )
@@ -269,12 +270,14 @@ object stringsSpec extends Properties {
         s <-
           Gen
             .frequency1(
-              5  -> Gen.constant(""),
               95 -> Gen.string(hedgehog.extra.Gens.genCharByRange(strings.WhitespaceCharRange), Range.linear(1, 10)),
+              5  -> Gen.constant(""),
             )
             .log("s")
       } yield {
-        val expected = s"Invalid value: [$s]. It must be not all whitespace non-empty String"
+        val expected =
+          s"Invalid value: [$s], unicode=[${s.map(c => "\\u%04x".format(c.toInt)).mkString}]. " +
+            "It must be not all whitespace non-empty String"
         val actual   = NonBlankString.from(s)
         actual ==== Left(expected)
       }
@@ -302,7 +305,9 @@ object stringsSpec extends Properties {
             )
             .log("s")
       } yield {
-        val expected = s"Invalid value: [$s]. It must be not all whitespace non-empty String"
+        val expected =
+          s"Invalid value: [$s], unicode=[${s.map(c => "\\u%04x".format(c.toInt)).mkString}]. " +
+            "It must be not all whitespace non-empty String"
         try {
           NonBlankString.unsafeFrom(s)
           Result
