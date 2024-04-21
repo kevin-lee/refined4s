@@ -66,6 +66,16 @@ object strings {
     override def invalidReason(a: String): String =
       expectedMessage("not all whitespace non-empty String")
 
+    private val stringToType: Coercible[String, Type] = Coercible.instance[String, Type]
+
+    override def from(a: String): Either[String, Type] = {
+      Either.cond(
+        predicate(a),
+        stringToType(a),
+        "Invalid value: [" + a + s"], unicode=[${a.map(c => "\\u%04x".format(c.toInt)).mkString}]. " + invalidReason(a),
+      )
+    }
+
     override def predicate(a: String): Boolean = a != "" && !a.forall(c => WhitespaceCharRange.exists((min, max) => c >= min && c <= max))
 
     extension (inline thisNbs: Type) {
