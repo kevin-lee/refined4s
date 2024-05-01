@@ -18,3 +18,4 @@ trait strings {
   inline given derivedUuidDecoder: Decoder[Uuid] = Decoder[String].emap(Uuid.from)
 
 }
+object strings extends strings

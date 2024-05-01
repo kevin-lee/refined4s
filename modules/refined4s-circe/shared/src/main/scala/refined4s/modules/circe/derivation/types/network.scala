@@ -30,3 +30,4 @@ trait network {
   inline given derivedDynamicPortNumberDecoder: Decoder[DynamicPortNumber] = Decoder[Int].emap(DynamicPortNumber.from)
 
 }
+object network extends network
