@@ -105,3 +105,4 @@ trait numeric {
   inline given derivedNonPosBigDecimalDecoder: Decoder[NonPosBigDecimal] = Decoder[BigDecimal].emap(NonPosBigDecimal.from)
 
 }
+object numeric extends numeric
