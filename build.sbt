@@ -178,7 +178,7 @@ lazy val extrasRenderJs  = extrasRender.js.settings(jsSettingsForFuture)
 
 lazy val refinedCompatScala2    = module("refined-compat-scala2", crossProject(JVMPlatform, JSPlatform))
   .settings(
-    crossScalaVersions := List("2.12.15", "2.13.12"),
+    crossScalaVersions := List("2.12.15", "2.13.13"),
     libraryDependencies ++=
       (
         if (isScala3(scalaVersion.value))
