@@ -77,6 +77,8 @@ lazy val refined4s = (project in file("."))
     refinedCompatScala3Js,
     tapirJvm,
     tapirJs,
+    chimneyJvm,
+    chimneyJs,
   )
 
 lazy val core    = module("core", crossProject(JVMPlatform, JSPlatform))
@@ -175,6 +177,19 @@ lazy val extrasRender    = module("extras-render", crossProject(JVMPlatform, JSP
   )
 lazy val extrasRenderJvm = extrasRender.jvm
 lazy val extrasRenderJs  = extrasRender.js.settings(jsSettingsForFuture)
+
+lazy val chimney    = module("chimney", crossProject(JVMPlatform, JSPlatform))
+  .settings(
+    libraryDependencies ++= List(
+      libs.chimney,
+      libs.tests.hedgehogExtraRefined4s,
+    )
+  )
+  .dependsOn(
+    core % props.IncludeTest
+  )
+lazy val chimneyJvm = chimney.jvm
+lazy val chimneyJs  = chimney.js.settings(jsSettingsForFuture)
 
 lazy val refinedCompatScala2    = module("refined-compat-scala2", crossProject(JVMPlatform, JSPlatform))
   .settings(
@@ -282,7 +297,7 @@ lazy val props =
     val IncludeTest = "compile->compile;test->test"
 
     val HedgehogVersion      = "0.10.1"
-    val HedgehogExtraVersion = "0.8.0"
+    val HedgehogExtraVersion = "0.9.0"
 
     val ExtrasVersion = "0.44.0"
 
@@ -304,6 +319,8 @@ lazy val props =
     val KittensVersion = "3.0.0"
 
     val TapirVersion = "1.0.6"
+
+    val ChimneyVersion = "1.3.0"
   }
 
 lazy val libs = new {
@@ -343,6 +360,8 @@ lazy val libs = new {
 
   lazy val tapirCore = "com.softwaremill.sttp.tapir" %% "tapir-core" % props.TapirVersion
 
+  lazy val chimney = "io.scalaland" %% "chimney" % props.ChimneyVersion
+
   lazy val tests = new {
 
     lazy val hedgehog: List[ModuleID] =
@@ -353,6 +372,8 @@ lazy val libs = new {
       ).map(_ % Test)
 
     lazy val hedgehogExtraCore = "io.kevinlee" %% "hedgehog-extra-core" % props.HedgehogExtraVersion % Test
+
+    lazy val hedgehogExtraRefined4s = "io.kevinlee" %% "hedgehog-extra-refined4s" % props.HedgehogExtraVersion % Test
   }
 }
 
