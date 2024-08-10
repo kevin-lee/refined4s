@@ -11,8 +11,13 @@ import refined4s.types.strings.*
 /** @author Kevin Lee
   * @since 2024-08-06
   */
-object stringsSpec extends Properties {
-  override def tests: List[Test] = List(
+trait stringsSpec {
+
+  protected val stringsTypeClasses: refined4s.modules.chimney.derivation.types.strings
+
+  import stringsTypeClasses.given
+
+  def allTests: List[Test] = List(
     // NonEmptyString
     property("test from NonEmptyString to String", testFromNonEmptyString),
     property("test from String to NonEmptyString", testToNonEmptyString),
@@ -44,7 +49,6 @@ object stringsSpec extends Properties {
 
       val expected = chimney.partial.Result.fromValue(s)
 
-      import refined4s.modules.chimney.derivation.types.strings.derivedStringToNonEmptyStringPartialTransformer
       val actual = input.intoPartial[NonEmptyString].transform
 
       actual ==== expected
@@ -72,7 +76,6 @@ object stringsSpec extends Properties {
 
       val expected = chimney.partial.Result.fromValue(s)
 
-      import refined4s.modules.chimney.derivation.types.strings.derivedStringToNonBlankStringPartialTransformer
       val actual = input.intoPartial[NonBlankString].transform
 
       actual ==== expected
@@ -100,10 +103,17 @@ object stringsSpec extends Properties {
 
       val expected = chimney.partial.Result.fromValue(uuid)
 
-      import refined4s.modules.chimney.derivation.types.strings.derivedStringToUuidPartialTransformer
       val actual = input.intoPartial[Uuid].transform
 
       actual ==== expected
     }
+
+}
+object stringsSpec extends Properties, stringsSpec {
+
+  override protected val stringsTypeClasses: refined4s.modules.chimney.derivation.types.strings =
+    refined4s.modules.chimney.derivation.types.strings
+
+  override def tests: List[Test] = allTests
 
 }

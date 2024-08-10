@@ -10,8 +10,13 @@ import refined4s.types.networkGens
 /** @author Kevin Lee
   * @since 2024-08-06
   */
-object networkSpec extends Properties {
-  override def tests: List[Test] = List(
+trait networkSpec {
+
+  protected val networkTypeClasses: refined4s.modules.chimney.derivation.types.network
+
+  import networkTypeClasses.given
+
+  def allTests: List[Test] = List(
     // Uri
     property("test from Uri to String", testFromUri),
     property("test from String to Uri", testToUri),
@@ -34,8 +39,6 @@ object networkSpec extends Properties {
     property("test from DynamicPortNumber to Int", testFromDynamicPortNumber),
     property("test from Int to DynamicPortNumber", testToDynamicPortNumber),
   )
-
-  import refined4s.modules.chimney.derivation.types.network.given
 
   def testFromUri: Property =
     for {
@@ -225,5 +228,13 @@ object networkSpec extends Properties {
 
       actual ==== expected
     }
+
+}
+object networkSpec extends Properties, networkSpec {
+
+  override protected val networkTypeClasses: refined4s.modules.chimney.derivation.types.network =
+    refined4s.modules.chimney.derivation.types.network
+
+  override def tests: List[Prop] = allTests
 
 }

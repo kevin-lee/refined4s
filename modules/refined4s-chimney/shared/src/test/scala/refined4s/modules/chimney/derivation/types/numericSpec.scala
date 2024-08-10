@@ -13,8 +13,11 @@ import io.scalaland.chimney.dsl.*
 /** @author Kevin Lee
   * @since 2024-08-09
   */
-object numericSpec extends Properties {
-  override def tests: List[Test] = List(
+trait numericSpec {
+
+  protected val numericTypeClasses: refined4s.modules.chimney.derivation.types.numeric
+
+  def allTests: List[Test] = List(
     property("test Transformer[NegInt, Int]", testTransformerNegInt),
     property("test PartialTransformer[Int, NegInt]", testPartialTransformerNegInt),
     //
@@ -112,7 +115,7 @@ object numericSpec extends Properties {
     property("test PartialTransformer[BigDecimal, NonPosBigDecimal]", testPartialTransformerNonPosBigDecimal),
   )
 
-  import refined4s.modules.chimney.derivation.types.numeric.given
+  import numericTypeClasses.given
 
   def testTransformerNegInt: Property =
     for {
@@ -945,5 +948,13 @@ object numericSpec extends Properties {
     }
 
   //
+
+}
+object numericSpec extends Properties, numericSpec {
+
+  override protected val numericTypeClasses: refined4s.modules.chimney.derivation.types.numeric =
+    refined4s.modules.chimney.derivation.types.numeric
+
+  override def tests: List[Prop] = allTests
 
 }
