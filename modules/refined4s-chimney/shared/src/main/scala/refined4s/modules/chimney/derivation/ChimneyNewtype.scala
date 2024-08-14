@@ -11,9 +11,11 @@ trait ChimneyNewtype[A] {
 
   given wrapNewTypeForChimney: Transformer[A, self.Type] = wrap(_)
 
+  given unwrapNewTypeForChimney: Transformer[self.Type, A] = unwrap(_)
+
   given unwrapAndWrapNewTypeForChimney[C](
-    using anoterCoercible: Coercible[A, C]
+    using anotherCoercible: Coercible[A, C]
   ): Transformer[self.Type, C] =
-    b => anoterCoercible(unwrap(b))
+    b => anotherCoercible(unwrap(b))
 
 }
