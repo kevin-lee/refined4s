@@ -19,7 +19,8 @@ object ChimneyRefinedSpec extends Properties {
     property("test case class with Refined to non-Refined", testCaseClassWithRefinedToNonRefined),
   )
 
-  def testRefinedNewtype: Property =
+  def testRefinedNewtype: Property = {
+    import TestTypes1.*
     for {
       idNum <- NumGens.genPosIntMaxTo(PosInt(Int.MaxValue)).log("idNum")
       id = Foo.Id(idNum)
@@ -30,8 +31,11 @@ object ChimneyRefinedSpec extends Properties {
       val actual = id.into[Bar.Code].transform
       expected ==== actual
     }
+  }
 
-  def testRefined: Property =
+  def testRefined: Property = {
+    import TestTypes1.*
+
     for {
       usernameString <- Gen.string(Gen.alpha, Range.linear(3, 10)).log("usernameString")
       domainString   <- Gen.string(Gen.alpha, Range.linear(2, 3)).list(Range.linear(2, 3)).map(_.mkString(".")).log("domainString")
@@ -49,8 +53,11 @@ object ChimneyRefinedSpec extends Properties {
       val actual = email.intoPartial[Bar.Email].transform
       expected ==== actual
     }
+  }
 
-  def testRefinedRefined: Property =
+  def testRefinedRefined: Property = {
+    import TestTypes1.*
+
     for {
       noteString <- StringGens.genNonEmptyStringMinMax(Gen.alphaNum, PosInt(3), PosInt(20)).log("noteString")
       note = Foo.Note.unsafeFrom(noteString)
@@ -61,8 +68,11 @@ object ChimneyRefinedSpec extends Properties {
       val actual = note.intoPartial[Bar.Note].transform
       expected ==== actual
     }
+  }
 
-  def testCaseClassPartial: Property =
+  def testCaseClassPartial: Property = {
+    import TestTypes1.*
+
     for {
       idNum <- NumGens.genPosIntMaxTo(PosInt(Int.MaxValue)).log("idNum")
 
@@ -87,6 +97,7 @@ object ChimneyRefinedSpec extends Properties {
       val actual = Foo(id, Foo.Baz(email), note).intoPartial[Bar].transform
       expected ==== actual
     }
+  }
 
   def testCaseClassWithRefinedToNonRefined: Property = {
     import TestTypes2.*
@@ -106,60 +117,59 @@ object ChimneyRefinedSpec extends Properties {
       expected ==== actual
     }
   }
+  object TestTypes1 {
+    val emailRegEx =
+      """([a-zA-Z0-9]+([-_\.\+]+[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([-_]+[a-zA-Z0-9]+)*(?:[.][a-zA-Z0-9]+([-_]+[a-zA-Z0-9]+)*)+)""".r
 
-  val emailRegEx =
-    """([a-zA-Z0-9]+([-_\.\+]+[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([-_]+[a-zA-Z0-9]+)*(?:[.][a-zA-Z0-9]+([-_]+[a-zA-Z0-9]+)*)+)""".r
+    final case class Foo(id: Foo.Id, baz: Foo.Baz, note: Foo.Note)
+    object Foo {
 
-  final case class Foo(id: Foo.Id, baz: Foo.Baz, note: Foo.Note)
-  object Foo {
+      type Id = Id.Type
+      object Id extends Newtype[PosInt], ChimneyNewtype[PosInt]
 
-    type Id = Id.Type
-    object Id extends Newtype[PosInt], ChimneyNewtype[PosInt]
+      type Email = Email.Type
+      object Email extends Refined[String] {
 
-    type Email = Email.Type
-    object Email extends Refined[String] {
+        override def invalidReason(a: String): String = s"Invalid email: $a"
 
-      override def invalidReason(a: String): String = s"Invalid email: $a"
+        override def predicate(a: String): Boolean = emailRegEx.findFirstMatchIn(a).isDefined
+      }
 
-      override def predicate(a: String): Boolean = emailRegEx.findFirstMatchIn(a).isDefined
+      type Note = Note.Type
+      object Note extends Refined[NonEmptyString], ChimneyRefined[NonEmptyString] {
+        override def invalidReason(a: NonEmptyString): String =
+          s"It should be more than 2 chars. The length of the given String=${a.value.length}"
+
+        override def predicate(a: NonEmptyString): Boolean = a.value.length > 2
+      }
+
+      final case class Baz(email: Email)
     }
 
-    type Note = Note.Type
+    final case class Bar(id: Bar.Code, baz: Bar.Baz, note: Bar.Note)
+    object Bar {
 
-    object Note extends Refined[NonEmptyString], ChimneyRefined[NonEmptyString] {
-      override def invalidReason(a: NonEmptyString): String =
-        s"It should be more than 2 chars. The length of the given String=${a.value.length}"
+      type Code = Code.Type
+      object Code extends Newtype[PosInt], ChimneyNewtype[PosInt]
 
-      override def predicate(a: NonEmptyString): Boolean = a.value.length > 2
+      type Email = Email.Type
+      object Email extends Refined[String] {
+
+        override def invalidReason(a: String): String = s"Invalid email: $a"
+
+        override def predicate(a: String): Boolean = emailRegEx.findFirstMatchIn(a).isDefined
+      }
+
+      type Note = Note.Type
+      object Note extends Refined[NonEmptyString], ChimneyRefined[NonEmptyString] {
+        override def invalidReason(a: NonEmptyString): String =
+          s"It should be more than 2 chars. The length of the given String=${a.value.length}"
+
+        override def predicate(a: NonEmptyString): Boolean = a.value.length > 2
+      }
+
+      final case class Baz(email: Email)
     }
-
-    final case class Baz(email: Email)
-  }
-
-  final case class Bar(id: Bar.Code, baz: Bar.Baz, note: Bar.Note)
-  object Bar {
-
-    type Code = Code.Type
-    object Code extends Newtype[PosInt], ChimneyNewtype[PosInt]
-
-    type Email = Email.Type
-    object Email extends Refined[String] {
-
-      override def invalidReason(a: String): String = s"Invalid email: $a"
-
-      override def predicate(a: String): Boolean = emailRegEx.findFirstMatchIn(a).isDefined
-    }
-
-    type Note = Note.Type
-
-    object Note extends Refined[NonEmptyString], ChimneyRefined[NonEmptyString] {
-      override def invalidReason(a: NonEmptyString): String =
-        s"It should be more than 2 chars. The length of the given String=${a.value.length}"
-
-      override def predicate(a: NonEmptyString): Boolean = a.value.length > 2
-    }
-
-    final case class Baz(email: Email)
   }
 
   object TestTypes2 {
