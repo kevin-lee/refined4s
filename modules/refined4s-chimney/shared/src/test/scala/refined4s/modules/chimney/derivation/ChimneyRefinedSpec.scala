@@ -4,7 +4,6 @@ import hedgehog.*
 import hedgehog.extra.refined4s.gens.{NumGens, StringGens}
 import hedgehog.runner.*
 import io.scalaland.chimney
-import refined4s.modules.chimney.derivation.generic.auto.given
 import refined4s.types.all.*
 import refined4s.{Newtype, Refined}
 
@@ -17,6 +16,7 @@ object ChimneyRefinedSpec extends Properties {
     property("test Newtype[Refined]", testRefinedNewtype),
     property("test Refined (partial into)", testRefined),
     property("test case class (partial into)", testCaseClassPartial),
+    property("test case class with Refined to non-Refined", testCaseClassWithRefinedToNonRefined),
   )
 
   def testRefinedNewtype: Property =
@@ -42,6 +42,9 @@ object ChimneyRefinedSpec extends Properties {
       val expected = chimney.partial.Result.fromValue(Bar.Email.unsafeFrom(emailString))
 
       val email: Foo.Email = Foo.Email.unsafeFrom(emailString)
+
+      // FIXME: Remove it and add missing type-class
+      import refined4s.modules.chimney.derivation.generic.auto.given
 
       val actual = email.intoPartial[Bar.Email].transform
       expected ==== actual
@@ -78,9 +81,31 @@ object ChimneyRefinedSpec extends Properties {
       val expected =
         chimney.partial.Result.fromValue(Bar(Bar.Code(idNum), Bar.Baz(Bar.Email.unsafeFrom(emailString)), Bar.Note.unsafeFrom(noteString)))
 
+      // FIXME: Remove it and add missing type-class
+      import refined4s.modules.chimney.derivation.generic.auto.given
+
       val actual = Foo(id, Foo.Baz(email), note).intoPartial[Bar].transform
       expected ==== actual
     }
+
+  def testCaseClassWithRefinedToNonRefined: Property = {
+    import TestTypes2.*
+
+    for {
+      nonEmptyString <- StringGens.genNonEmptyString(Gen.alpha, PosInt(10)).log("nonEmptyString")
+      name           <- Gen.constant(Person.NotEmptyStr.unsafeFrom(nonEmptyString.value)).log("name")
+
+      person <- Gen.constant(Person(name)).log("person")
+
+    } yield {
+      import io.scalaland.chimney.dsl.*
+
+      val expected = User(nonEmptyString.value)
+      val actual   = person.into[User].transform
+
+      expected ==== actual
+    }
+  }
 
   val emailRegEx =
     """([a-zA-Z0-9]+([-_\.\+]+[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([-_]+[a-zA-Z0-9]+)*(?:[.][a-zA-Z0-9]+([-_]+[a-zA-Z0-9]+)*)+)""".r
@@ -137,4 +162,19 @@ object ChimneyRefinedSpec extends Properties {
     final case class Baz(email: Email)
   }
 
+  object TestTypes2 {
+    final case class Person(name: Person.NotEmptyStr)
+
+    object Person {
+      type NotEmptyStr = NotEmptyStr.Type
+      @SuppressWarnings(Array("org.wartremover.warts.Equals"))
+      object NotEmptyStr extends Refined[String], ChimneyRefined[String] {
+        inline def invalidReason(a: String): String = "non-empty String"
+
+        inline def predicate(a: String): Boolean = a != ""
+      }
+    }
+
+    final case class User(name: String)
+  }
 }
