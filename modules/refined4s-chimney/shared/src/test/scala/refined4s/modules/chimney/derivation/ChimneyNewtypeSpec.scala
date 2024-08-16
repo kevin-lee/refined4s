@@ -2,10 +2,10 @@ package refined4s.modules.chimney.derivation
 
 import cats.syntax.all.*
 import hedgehog.*
-import hedgehog.extra.refined4s.gens.NumGens
+import hedgehog.extra.refined4s.gens.{NumGens, StringGens}
 import hedgehog.runner.*
 import io.scalaland.chimney
-import refined4s.Newtype
+import refined4s.*
 import refined4s.types.all.PosInt
 
 /** @author Kevin Lee
@@ -19,6 +19,7 @@ object ChimneyNewtypeSpec extends Properties {
     property("test Newtype[Refined]", testRefinedNewtype),
     property("test case class", testCaseClass),
     property("test case class with Newtype to non-Newtype", testCaseClassWithNewtypeToNonNewtype),
+    property("test case class with Refined[A] to Newtype[Refined[A]]", testCaseClassWithRefinedToNewtypeRefined),
   )
 
   def testNewtypeToNewtype: Property = {
@@ -117,6 +118,24 @@ object ChimneyNewtypeSpec extends Properties {
     }
   }
 
+  def testCaseClassWithRefinedToNewtypeRefined: Property = {
+    import TestTypes3.*
+
+    for {
+      nonEmptyString <- StringGens.genNonEmptyString(Gen.alpha, PosInt(10)).log("nonEmptyString")
+
+      name <- Gen.constant(XMen.Name(nonEmptyString.value)).log("name")
+      xMen <- Gen.constant(XMen(name)).log("xMen")
+    } yield {
+      import io.scalaland.chimney.dsl.*
+
+      val expected = chimney.partial.Result.fromValue(MarvelCharacter(MarvelCharacter.Name(nonEmptyString)))
+      val actual   = xMen.intoPartial[MarvelCharacter].transform
+
+      expected ==== actual
+    }
+  }
+
   object TestType1 {
     final case class Foo(id: Foo.Id, baz: Foo.Baz)
 
@@ -153,4 +172,24 @@ object ChimneyNewtypeSpec extends Properties {
 
     final case class User(name: String)
   }
+
+  object TestTypes3 {
+
+    final case class XMen(name: XMen.Name)
+    object XMen {
+      type Name = Name.Type
+      object Name extends Newtype[String], ChimneyNewtype[String]
+    }
+
+    import refined4s.types.all.*
+
+    final case class MarvelCharacter(name: MarvelCharacter.Name)
+    object MarvelCharacter {
+      type Name = Name.Type
+
+      object Name extends Newtype[NonEmptyString], ChimneyNewtype[NonEmptyString]
+    }
+
+  }
+
 }
