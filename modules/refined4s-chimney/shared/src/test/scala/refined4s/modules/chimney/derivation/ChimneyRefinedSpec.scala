@@ -17,6 +17,7 @@ object ChimneyRefinedSpec extends Properties {
     property("test Refined (partial into)", testRefined),
     property("test case class (partial into)", testCaseClassPartial),
     property("test case class with Refined to non-Refined", testCaseClassWithRefinedToNonRefined),
+    property("test case class with Refined[A] to Newtype[Refined[A]]", testCaseClassWithRefinedToNewtypeRefined),
   )
 
   def testRefinedNewtype: Property = {
@@ -117,6 +118,25 @@ object ChimneyRefinedSpec extends Properties {
       expected ==== actual
     }
   }
+
+  def testCaseClassWithRefinedToNewtypeRefined: Property = {
+    import TestTypes3.*
+
+    for {
+      nonEmptyString <- StringGens.genNonEmptyString(Gen.alpha, PosInt(10)).log("nonEmptyString")
+
+      name <- Gen.constant(XMen.NotEmptyStr.unsafeFrom(nonEmptyString.value)).log("name")
+      xMen <- Gen.constant(XMen(name)).log("xMen")
+    } yield {
+      import io.scalaland.chimney.dsl.*
+
+      val expected = chimney.partial.Result.fromValue(MarvelCharacter(MarvelCharacter.Name(nonEmptyString)))
+      val actual   = xMen.intoPartial[MarvelCharacter].transform
+
+      expected ==== actual
+    }
+  }
+
   object TestTypes1 {
     val emailRegEx =
       """([a-zA-Z0-9]+([-_\.\+]+[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([-_]+[a-zA-Z0-9]+)*(?:[.][a-zA-Z0-9]+([-_]+[a-zA-Z0-9]+)*)+)""".r
@@ -187,4 +207,29 @@ object ChimneyRefinedSpec extends Properties {
 
     final case class User(name: String)
   }
+
+  object TestTypes3 {
+
+    final case class XMen(name: XMen.NotEmptyStr)
+    object XMen {
+      type NotEmptyStr = NotEmptyStr.Type
+      @SuppressWarnings(Array("org.wartremover.warts.Equals"))
+      object NotEmptyStr extends Refined[String], ChimneyRefined[String] {
+        inline def invalidReason(a: String): String = "non-empty String"
+
+        inline def predicate(a: String): Boolean = a != ""
+      }
+    }
+
+    import refined4s.types.all.*
+
+    final case class MarvelCharacter(name: MarvelCharacter.Name)
+    object MarvelCharacter {
+      type Name = Name.Type
+
+      object Name extends Newtype[NonEmptyString], ChimneyNewtype[NonEmptyString]
+    }
+
+  }
+
 }
