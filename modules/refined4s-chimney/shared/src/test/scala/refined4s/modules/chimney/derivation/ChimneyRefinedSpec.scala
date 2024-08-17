@@ -48,9 +48,6 @@ object ChimneyRefinedSpec extends Properties {
 
       val email: Foo.Email = Foo.Email.unsafeFrom(emailString)
 
-      // FIXME: Remove it and add missing type-class
-      import refined4s.modules.chimney.derivation.generic.auto.given
-
       val actual = email.intoPartial[Bar.Email].transform
       expected ==== actual
     }
@@ -91,9 +88,6 @@ object ChimneyRefinedSpec extends Properties {
 
       val expected =
         chimney.partial.Result.fromValue(Bar(Bar.Code(idNum), Bar.Baz(Bar.Email.unsafeFrom(emailString)), Bar.Note.unsafeFrom(noteString)))
-
-      // FIXME: Remove it and add missing type-class
-      import refined4s.modules.chimney.derivation.generic.auto.given
 
       val actual = Foo(id, Foo.Baz(email), note).intoPartial[Bar].transform
       expected ==== actual
@@ -148,7 +142,7 @@ object ChimneyRefinedSpec extends Properties {
       object Id extends Newtype[PosInt], ChimneyNewtype[PosInt]
 
       type Email = Email.Type
-      object Email extends Refined[String] {
+      object Email extends Refined[String], ChimneyRefined[String] {
 
         override def invalidReason(a: String): String = s"Invalid email: $a"
 
@@ -173,7 +167,7 @@ object ChimneyRefinedSpec extends Properties {
       object Code extends Newtype[PosInt], ChimneyNewtype[PosInt]
 
       type Email = Email.Type
-      object Email extends Refined[String] {
+      object Email extends Refined[String], ChimneyRefined[String] {
 
         override def invalidReason(a: String): String = s"Invalid email: $a"
 
