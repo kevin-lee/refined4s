@@ -242,6 +242,7 @@ lazy val docs = (project in file("docs-gen-tmp/docs"))
       List(
         "io.kevinlee" %% "refined4s-core"          % latestVersion,
         "io.kevinlee" %% "refined4s-cats"          % latestVersion,
+        "io.kevinlee" %% "refined4s-chimney"       % latestVersion,
         "io.kevinlee" %% "refined4s-circe"         % latestVersion,
         "io.kevinlee" %% "refined4s-pureconfig"    % latestVersion,
         "io.kevinlee" %% "refined4s-doobie-ce2"    % latestVersion,
@@ -275,7 +276,6 @@ lazy val props =
     val GitHubUsername = GitHubRepo.fold("kevin-lee")(_.orgToString)
     val RepoName       = GitHubRepo.fold("refined4s")(_.nameToString)
 
-//    val Scala3Version = "3.1.3"
     val Scala3Version = "3.3.3"
 
     val ProjectScalaVersion = Scala3Version
