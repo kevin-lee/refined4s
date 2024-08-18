@@ -26,19 +26,27 @@ object CirceCodecWithTypeClassesForTypesSpec extends Properties {
 
   def roundTripTest: Property =
     for {
-      name     <- Gen
-                    .string(Gen.alpha, Range.linear(1, 10))
-                    .list(Range.singleton(2))
-                    .map(_.mkString(" "))
-                    .map(NonEmptyString.unsafeFrom)
-                    .map(Name(_))
-                    .log("name")
-      created  <- Gen
-                    .long(Range.linear(0, Long.MaxValue))
-                    .map(Instant.ofEpochMilli)
-                    .map(Created(_))
-                    .log("created")
-      expected <- Gen.constant(TestData(name, created)).log("expected")
+      name    <- Gen
+                   .string(Gen.alpha, Range.linear(1, 10))
+                   .list(Range.singleton(2))
+                   .map(_.mkString(" "))
+                   .map(NonEmptyString.unsafeFrom)
+                   .map(Name(_))
+                   .log("name")
+      created <- Gen
+                   .long(Range.linear(0, Long.MaxValue))
+                   .map(Instant.ofEpochMilli)
+                   .map(Created(_))
+                   .log("created")
+
+      byName <- Gen
+                  .list(
+                    Gen.string(Gen.alpha, Range.linear(1, 10)).map(s => Name(NonEmptyString.unsafeFrom(s)) -> s.length)
+                  )
+                  .map(_.toMap)
+                  .log("byName")
+
+      expected <- Gen.constant(TestData(name, created, byName)).log("expected")
     } yield {
       RoundTripTester(expected).test()
     }
@@ -78,7 +86,7 @@ object CirceCodecWithTypeClassesForTypesSpec extends Properties {
       )
     }
 
-  final case class TestData(name: Name, created: Created) derives Codec.AsObject
+  final case class TestData(name: Name, created: Created, byName: Map[Name, Int]) derives Codec.AsObject
   object TestData {
     given testDataEq: Eq[TestData]     = Eq.fromUniversalEquals
     given testDataShow: Show[TestData] = Show.fromToString

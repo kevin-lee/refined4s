@@ -14,6 +14,7 @@ import io.circe.syntax.*
 object CirceEncoderSpec extends Properties {
   override def tests: List[Test] = List(
     property("test CirceEncoder for Newtype", testNewtypeEncoder),
+    property("test CirceKeyEncoder for Newtype", testNewtypeKeyEncoder),
     property("test CirceEncoder for Refined", testRefinedEncoder),
     property("test CirceEncoder for Newtype(Refined)", testRefinedNewtypeEncoder),
     property("test CirceEncoder for InlinedRefined", testInlinedRefinedEncoder),
@@ -26,6 +27,22 @@ object CirceEncoderSpec extends Properties {
     } yield {
       val input    = MyNewtype(s)
       val expected = Json.fromString(s)
+      val actual   = input.asJson
+      Result.all(
+        List(
+          actual ==== expected,
+          actual.noSpaces ==== expected.noSpaces,
+        )
+      )
+    }
+
+  def testNewtypeKeyEncoder: Property =
+    for {
+      s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+      i <- Gen.int(0 to 10)
+    } yield {
+      val input    = Map(MyNewtype(s) -> i)
+      val expected = Json.obj(s -> i.asJson)
       val actual   = input.asJson
       Result.all(
         List(

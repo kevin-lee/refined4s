@@ -16,6 +16,8 @@ object CirceDecoderSpec extends Properties {
     property("test CirceDecoder for Newtype", testNewtypeDecoder),
     property("test CirceDecoder for Refined", testRefinedDecoder),
     example("test CirceDecoder for Refined with invalid value", testRefinedDecoderInvalid),
+    property("test CirceKeyDecoder for Refined", testRefinedKeyDecoder),
+    example("test CirceKeyDecoder for Refined with invalid value", testRefinedKeyDecoderInvalid),
     property("test CirceDecoder for Newtype(Refined)", testRefinedNewtypeDecoder),
     example("test CirceDecoder for Newtype(Refined) with invalid value", testRefinedNewtypeDecoderInvalid),
     property("test CirceDecoder for InlinedRefined", testInlinedRefinedDecoder),
@@ -61,6 +63,22 @@ object CirceDecoderSpec extends Properties {
         actual ==== expected
       )
     )
+  }
+
+  def testRefinedKeyDecoder: Property =
+    for {
+      input <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+    } yield {
+      val expected = MyRefinedType.from(input).toOption
+      val actual   = KeyDecoder[MyRefinedType](input)
+      actual ==== expected
+    }
+
+  def testRefinedKeyDecoderInvalid: Result = {
+    val invalidStr = ""
+    val expected   = MyRefinedType.from(invalidStr).toOption
+    val actual     = KeyDecoder[MyRefinedType](invalidStr)
+    actual ==== expected
   }
 
   def testRefinedNewtypeDecoder: Property =

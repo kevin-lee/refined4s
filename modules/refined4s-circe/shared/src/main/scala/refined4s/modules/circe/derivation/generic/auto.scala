@@ -1,6 +1,6 @@
 package refined4s.modules.circe.derivation.generic
 
-import io.circe.{Decoder, Encoder}
+import io.circe.{Decoder, Encoder, KeyDecoder, KeyEncoder}
 import refined4s.modules.cats.syntax.contraCoercible
 import refined4s.{Coercible, RefinedCtor}
 
@@ -8,6 +8,15 @@ import refined4s.{Coercible, RefinedCtor}
   * @since 2023-12-11
   */
 trait auto {
+
+  inline given derivedKeyEncoder[A, B](using coercible: Coercible[A, B], encoder: KeyEncoder[B]): KeyEncoder[B] =
+    contraCoercible(encoder)
+
+  inline given derivedNewtypeKeyDecoder[A, B](using coercible: Coercible[A, B], decoder: KeyDecoder[A]): KeyDecoder[B] =
+    Coercible.unsafeWrapTC(decoder)
+
+  inline given derivedRefinedKeyDecoder[A, B](using refinedCtor: RefinedCtor[B, A], decoder: KeyDecoder[A]): KeyDecoder[B] =
+    KeyDecoder.instance(decoder(_).flatMap(refinedCtor.create(_).toOption))
 
   inline given derivedEncoder[A, B](using coercible: Coercible[A, B], encoder: Encoder[B]): Encoder[A] =
     contraCoercible(encoder)
