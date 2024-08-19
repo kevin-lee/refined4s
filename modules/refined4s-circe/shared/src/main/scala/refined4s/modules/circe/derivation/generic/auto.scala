@@ -9,7 +9,7 @@ import refined4s.{Coercible, RefinedCtor}
   */
 trait auto {
 
-  inline given derivedKeyEncoder[A, B](using coercible: Coercible[A, B], encoder: KeyEncoder[B]): KeyEncoder[B] =
+  inline given derivedKeyEncoder[A, B](using coercible: Coercible[A, B], encoder: KeyEncoder[B]): KeyEncoder[A] =
     contraCoercible(encoder)
 
   inline given derivedNewtypeKeyDecoder[A, B](using coercible: Coercible[A, B], decoder: KeyDecoder[A]): KeyDecoder[B] =
