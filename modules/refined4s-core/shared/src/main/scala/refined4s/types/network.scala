@@ -66,6 +66,8 @@ object network {
 
     extension (uri: Type) {
       def toURI: URI = new URI(uri.value)
+
+      def toUrl: Url = Url(toURI.toURL)
     }
 
   }
@@ -96,6 +98,8 @@ object network {
     extension (url: Type) {
       @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
       def toURL: URL = new URL(url.value)
+
+      def toUri: Uri = Uri(toURL.toURI)
     }
 
   }
