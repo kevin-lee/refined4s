@@ -25,6 +25,7 @@ object networkSpec extends Properties {
     property("test Uri.value", testUriValue),
     property("test Uri.unapply", testUriUnapply),
     property("test Uri.toURI", testUriToURI),
+    property("test Uri.toUrl", testUriToUrl),
     example("test network.isValidateUri(valid URI String)", testNetworkIsValidateUriValid),
     example("test network.isValidateUri(invalid URI String)", testNetworkIsValidateUriInvalid),
     example("test network.isValidateUri(non-String literal)", testNetworkIsValidateUriWithInvalidLiteral),
@@ -39,6 +40,7 @@ object networkSpec extends Properties {
     property("test Url.value", testUrlValue),
     property("test Url.unapply", testUrlUnapply),
     property("test Url.toURL", testUrlToURL),
+    property("test Url.toUri", testUrlToUri),
     example("test network.isValidateUrl(valid URL String)", testNetworkIsValidateUrlValid),
     example("test network.isValidateUrl(invalid URL String)", testNetworkIsValidateUrlInvalid),
     example("test network.isValidateUrl(non-String literal)", testNetworkIsValidateUrlWithInvalidLiteral),
@@ -216,6 +218,16 @@ object networkSpec extends Properties {
     } yield {
       val expected = new URI(uri)
       val actual   = Uri.unsafeFrom(uri).toURI
+
+      actual ==== expected
+    }
+
+  def testUriToUrl: Property =
+    for {
+      uri <- networkGens.genUrlString.log("uri")
+    } yield {
+      val expected = Url.unsafeFrom(uri)
+      val actual   = Uri.unsafeFrom(uri).toUrl
 
       actual ==== expected
     }
@@ -423,6 +435,16 @@ object networkSpec extends Properties {
     } yield {
       val expected = new URL(uri)
       val actual   = Url.unsafeFrom(uri).toURL
+
+      actual ==== expected
+    }
+
+  def testUrlToUri: Property =
+    for {
+      uri <- networkGens.genUrlString.log("uri")
+    } yield {
+      val expected = Uri.unsafeFrom(uri)
+      val actual   = Url.unsafeFrom(uri).toUri
 
       actual ==== expected
     }
