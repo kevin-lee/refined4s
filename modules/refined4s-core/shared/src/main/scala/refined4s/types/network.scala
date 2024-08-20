@@ -68,6 +68,8 @@ object network {
       def toURI: URI = new URI(uri.value)
 
       def toUrl: Url = Url(toURI.toURL)
+
+      def toURL: URL = toURI.toURL
     }
 
   }
@@ -100,6 +102,8 @@ object network {
       def toURL: URL = new URL(url.value)
 
       def toUri: Uri = Uri(toURL.toURI)
+
+      def toURI: URI = toURL.toURI
     }
 
   }
