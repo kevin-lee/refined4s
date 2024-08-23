@@ -74,11 +74,11 @@ trait networkSpec {
 
   def testEncoderUrl: Property =
     for {
-      uri <- networkGens.genUrlString.log("uri")
+      url <- networkGens.genUrlString.log("url")
     } yield {
-      val input = Url.unsafeFrom(uri)
+      val input = Url.unsafeFrom(url)
 
-      val expected = uri.asJson
+      val expected = url.asJson
       val actual   = input.asJson
 
       Result.all(
@@ -91,12 +91,12 @@ trait networkSpec {
 
   def testDecoderUrl: Property =
     for {
-      uri <- networkGens.genUrlString.log("uri")
+      url <- networkGens.genUrlString.log("url")
     } yield {
 
-      val input = uri.asJson
+      val input = url.asJson
 
-      val expected = Url.from(uri)
+      val expected = Url.from(url)
       val actual   = decode[Url](input.noSpaces)
 
       actual ==== expected
