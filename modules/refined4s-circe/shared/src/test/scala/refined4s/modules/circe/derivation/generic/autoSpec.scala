@@ -156,8 +156,16 @@ object autoSpec extends Properties {
       property("test Decoder[NonBlankString]", testDecoderNonBlankString),
 
       //
+      property("test Encoder[Uuid]", testEncoderUuid),
+      property("test Decoder[Uuid]", testDecoderUuid),
+
+      //
       property("test Encoder[Uri]", testEncoderUri),
       property("test Decoder[Uri]", testDecoderUri),
+
+      //
+      property("test Encoder[Url]", testEncoderUrl),
+      property("test Decoder[Url]", testDecoderUrl),
 
       //
       property("test Encoder[PortNumber]", testEncoderPortNumber),
