@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - "**"
+env:
+  GH_SBT_OPTS: "-Xss64m -Xms1024m -Xmx8G -XX:MaxMetaspaceSize=2G -XX:-UseGCOverheadLimit -XX:MaxInlineLevel=18 -XX:+UnlockExperimentalVMOptions"
+  GH_JVM_OPTS: "-Xss64m -Xms1024m -Xmx8G -XX:MaxMetaspaceSize=2G -XX:-UseGCOverheadLimit -XX:MaxInlineLevel=18 -XX:+UnlockExperimentalVMOptions"
 
 jobs:
   build-docusaurus:
@@ -54,6 +57,8 @@ jobs:
           ALGOLIA_INDEX_NAME: ${{ secrets.ALGOLIA_INDEX_NAME }}
           GA_TRACKING_ID: ${{ secrets.GA_TRACKING_ID }}
           GA_ANONYMIZE_IP: ${{ secrets.GA_ANONYMIZE_IP }}
+          JVM_OPTS: ${{ env.GH_JVM_OPTS }}
+          SBT_OPTS: ${{ env.GH_SBT_OPTS }}
         run: |
           sbt \
             ++${{ matrix.scala.version }}! \

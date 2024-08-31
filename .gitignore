@@ -31,6 +31,8 @@ local.properties
 # Locally stored "Eclipse launch configurations"
 *.launch
 
+.jvmopts
+
 # sbt
 .bsp/
 .bloop/
