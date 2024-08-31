@@ -181,7 +181,7 @@ object networkSpec extends Properties {
       val expected = s"Invalid value: [$input]. It must be a URI String"
 
       try {
-        Uri.unsafeFrom(input)
+        val _ = Uri.unsafeFrom(input)
         Result
           .failure
           .log(
@@ -408,7 +408,7 @@ object networkSpec extends Properties {
       val expected = s"Invalid value: [$input]. It must be a URL String"
 
       try {
-        Url.unsafeFrom(input)
+        val _ = Url.unsafeFrom(input)
         Result
           .failure
           .log(
@@ -586,7 +586,7 @@ object networkSpec extends Properties {
       val expected = s"Invalid value: [$p]. It has to be Int between 0 and 65535 (0 <= PortNumber <= 65535)"
 
       try {
-        PortNumber.unsafeFrom(p)
+        val _ = PortNumber.unsafeFrom(p)
         Result
           .failure
           .log(
@@ -696,7 +696,7 @@ object networkSpec extends Properties {
       val expected = s"Invalid value: [$p]. It has to be Int between 0 and 1023 (0 <= SystemPortNumber <= 1023)"
 
       try {
-        SystemPortNumber.unsafeFrom(p)
+        val _ = SystemPortNumber.unsafeFrom(p)
         Result
           .failure
           .log(
@@ -807,7 +807,7 @@ object networkSpec extends Properties {
       val expected = s"Invalid value: [$p]. It has to be Int between 1024 and 65535 (1024 <= NonSystemPortNumber <= 65535)"
 
       try {
-        NonSystemPortNumber.unsafeFrom(p)
+        val _ = NonSystemPortNumber.unsafeFrom(p)
         Result
           .failure
           .log(
@@ -917,7 +917,7 @@ object networkSpec extends Properties {
       val expected = s"Invalid value: [$p]. It has to be Int between 1024 and 49151 (1024 <= UserPortNumber <= 49151)"
 
       try {
-        UserPortNumber.unsafeFrom(p)
+        val _ = UserPortNumber.unsafeFrom(p)
         Result
           .failure
           .log(
@@ -1027,7 +1027,7 @@ object networkSpec extends Properties {
       val expected = s"Invalid value: [$p]. It has to be Int between 49152 and 65535 (49152 <= DynamicPortNumber <= 65535)"
 
       try {
-        DynamicPortNumber.unsafeFrom(p)
+        val _ = DynamicPortNumber.unsafeFrom(p)
         Result
           .failure
           .log(
