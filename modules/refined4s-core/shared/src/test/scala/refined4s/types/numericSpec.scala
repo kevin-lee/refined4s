@@ -77,7 +77,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a negative Int"
         try {
-          NegInt.unsafeFrom(n)
+          val _ = NegInt.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -217,7 +217,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a non-negative Int"
         try {
-          NonNegInt.unsafeFrom(n)
+          val _ = NonNegInt.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -357,7 +357,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a positive Int"
         try {
-          PosInt.unsafeFrom(n)
+          val _ = PosInt.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -503,7 +503,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a non-positive Int"
         try {
-          NonPosInt.unsafeFrom(n)
+          val _ = NonPosInt.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -642,7 +642,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a negative Long"
         try {
-          NegLong.unsafeFrom(n)
+          val _ = NegLong.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -789,7 +789,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a non-negative Long"
         try {
-          NonNegLong.unsafeFrom(n)
+          val _ = NonNegLong.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -929,7 +929,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a positive Long"
         try {
-          PosLong.unsafeFrom(n)
+          val _ = PosLong.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -1076,7 +1076,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a non-positive Long"
         try {
-          NonPosLong.unsafeFrom(n)
+          val _ = NonPosLong.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -1216,7 +1216,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a negative Short"
         try {
-          NegShort.unsafeFrom(n)
+          val _ = NegShort.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -1356,7 +1356,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a non-negative Short"
         try {
-          NonNegShort.unsafeFrom(n)
+          val _ = NonNegShort.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -1496,7 +1496,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a positive Short"
         try {
-          PosShort.unsafeFrom(n)
+          val _ = PosShort.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -1643,7 +1643,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a non-positive Short"
         try {
-          NonPosShort.unsafeFrom(n)
+          val _ = NonPosShort.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -1783,7 +1783,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a negative Byte"
         try {
-          NegByte.unsafeFrom(n)
+          val _ = NegByte.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -1923,7 +1923,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a non-negative Byte"
         try {
-          NonNegByte.unsafeFrom(n)
+          val _ = NonNegByte.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -2063,7 +2063,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a positive Byte"
         try {
-          PosByte.unsafeFrom(n)
+          val _ = PosByte.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -2210,7 +2210,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a non-positive Byte"
         try {
-          NonPosByte.unsafeFrom(n)
+          val _ = NonPosByte.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -2350,7 +2350,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a negative Float"
         try {
-          NegFloat.unsafeFrom(n)
+          val _ = NegFloat.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -2490,7 +2490,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a non-negative Float"
         try {
-          NonNegFloat.unsafeFrom(n)
+          val _ = NonNegFloat.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -2630,7 +2630,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a positive Float"
         try {
-          PosFloat.unsafeFrom(n)
+          val _ = PosFloat.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -2779,7 +2779,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a non-positive Float"
         try {
-          NonPosFloat.unsafeFrom(n)
+          val _ = NonPosFloat.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -2919,7 +2919,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a negative Double"
         try {
-          NegDouble.unsafeFrom(n)
+          val _ = NegDouble.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -3059,7 +3059,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a non-negative Double"
         try {
-          NonNegDouble.unsafeFrom(n)
+          val _ = NonNegDouble.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -3199,7 +3199,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a positive Double"
         try {
-          PosDouble.unsafeFrom(n)
+          val _ = PosDouble.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -3348,7 +3348,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a non-positive Double"
         try {
-          NonPosDouble.unsafeFrom(n)
+          val _ = NonPosDouble.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -3536,7 +3536,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a negative BigInt"
         try {
-          NegBigInt.unsafeFrom(n)
+          val _ = NegBigInt.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -3697,7 +3697,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a non-negative BigInt"
         try {
-          NonNegBigInt.unsafeFrom(n)
+          val _ = NonNegBigInt.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -3858,7 +3858,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a positive BigInt"
         try {
-          PosBigInt.unsafeFrom(n)
+          val _ = PosBigInt.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -4019,7 +4019,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a non-positive BigInt"
         try {
-          NonPosBigInt.unsafeFrom(n)
+          val _ = NonPosBigInt.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -4205,7 +4205,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a negative BigDecimal"
         try {
-          NegBigDecimal.unsafeFrom(n)
+          val _ = NegBigDecimal.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -4390,7 +4390,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a non-negative BigDecimal"
         try {
-          NonNegBigDecimal.unsafeFrom(n)
+          val _ = NonNegBigDecimal.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -4575,7 +4575,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a positive BigDecimal"
         try {
-          PosBigDecimal.unsafeFrom(n)
+          val _ = PosBigDecimal.unsafeFrom(n)
           Result
             .failure
             .log(
@@ -4760,7 +4760,7 @@ object numericSpec extends Properties {
       } yield {
         val expected = s"Invalid value: [$n]. It must be a non-positive BigDecimal"
         try {
-          NonPosBigDecimal.unsafeFrom(n)
+          val _ = NonPosBigDecimal.unsafeFrom(n)
           Result
             .failure
             .log(

@@ -62,7 +62,7 @@ object stringsSpec extends Properties {
     def testUnsafeFromInvalid: Result = {
       val expected = "Invalid value: []. It must be a non-empty String"
       try {
-        NonEmptyString.unsafeFrom("")
+        val _ = NonEmptyString.unsafeFrom("")
         Result
           .failure
           .log("""IllegalArgumentException was expected from NonEmptyString.unsafeFrom(""), but it was not thrown.""")
@@ -309,7 +309,7 @@ object stringsSpec extends Properties {
           s"Invalid value: [$s], unicode=[${s.map(c => "\\u%04x".format(c.toInt)).mkString}]. " +
             "It must be not all whitespace non-empty String"
         try {
-          NonBlankString.unsafeFrom(s)
+          val _ = NonBlankString.unsafeFrom(s)
           Result
             .failure
             .log("""IllegalArgumentException was expected from NonBlankString.unsafeFrom(""), but it was not thrown.""")
@@ -587,7 +587,7 @@ object stringsSpec extends Properties {
     def testUnsafeFromInvalid: Result = {
       val expected = "Invalid value: [blah]. It must be UUID"
       try {
-        Uuid.unsafeFrom("blah")
+        val _ = Uuid.unsafeFrom("blah")
         Result
           .failure
           .log("""IllegalArgumentException was expected from Uuid.unsafeFrom("blah"), but it was not thrown.""")

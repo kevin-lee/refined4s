@@ -14,7 +14,7 @@ object InlinedRefinedType {
       a.asTerm match {
         case Inlined(_, _, Literal(IntConstant(num))) =>
           try {
-            validate(num)
+            val _ = validate(num)
             Expr(true)
           } catch {
             case _: Throwable => Expr(false)
@@ -35,7 +35,7 @@ object InlinedRefinedType {
 
     override def predicate(a: Int): Boolean =
       try {
-        validate(a)
+        val _ = validate(a)
         true
       } catch {
         case _: Throwable => false

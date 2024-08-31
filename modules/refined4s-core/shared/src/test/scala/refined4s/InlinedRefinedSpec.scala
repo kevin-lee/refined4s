@@ -63,7 +63,7 @@ object InlinedInlinedRefinedSpec extends Properties {
   def testUnsafeFromInvalid: Result = {
     val expected = "Invalid value: []. It has to be a non-empty String but got \"\""
     try {
-      MyType.unsafeFrom("")
+      val _ = MyType.unsafeFrom("")
       Result.failure.log("""IllegalArgumentException was expected from MyType.unsafeFrom(""), but it was not thrown.""")
     } catch {
       case ex: IllegalArgumentException =>
