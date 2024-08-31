@@ -397,6 +397,15 @@ def module(projectName: String, crossProject: CrossProject.Builder): CrossProjec
     .settings(
       name := prefixedName,
       fork := true,
+      Compile / compile / javaOptions ++= Seq(
+        "-Xms512m",
+        "-Xmx6G",
+        "-Xss64m",
+        "-XX:-UseGCOverheadLimit",
+        "-XX:MaxInlineLevel=18",
+        "-XX:+UnlockExperimentalVMOptions",
+        "-XX:+UseJVMCICompiler",
+      ),
       semanticdbEnabled := true,
       semanticdbVersion := scalafixSemanticdb.revision,
       scalafixConfig := (
