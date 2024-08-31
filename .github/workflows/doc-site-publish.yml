@@ -3,6 +3,10 @@ name: "[Doc][M] Publish"
 on:
   workflow_dispatch:
 
+env:
+  GH_SBT_OPTS: "-Xss64m -Xms1024m -Xmx8G -XX:MaxMetaspaceSize=2G -XX:-UseGCOverheadLimit -XX:MaxInlineLevel=18 -XX:+UnlockExperimentalVMOptions"
+  GH_JVM_OPTS: "-Xss64m -Xms1024m -Xmx8G -XX:MaxMetaspaceSize=2G -XX:-UseGCOverheadLimit -XX:MaxInlineLevel=18 -XX:+UnlockExperimentalVMOptions"
+
 jobs:
   build_and_publish_doc_site:
     if: github.ref != 'refs/heads/gh-pages' && github.ref != 'gh-pages'
@@ -54,6 +58,8 @@ jobs:
           GA_TRACKING_ID: ${{ secrets.GA_TRACKING_ID }}
           GA_ANONYMIZE_IP: ${{ secrets.GA_ANONYMIZE_IP }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JVM_OPTS: ${{ env.GH_JVM_OPTS }}
+          SBT_OPTS: ${{ env.GH_SBT_OPTS }}
         run: |
           sbt \
             ++${{ matrix.scala.version }}! \
