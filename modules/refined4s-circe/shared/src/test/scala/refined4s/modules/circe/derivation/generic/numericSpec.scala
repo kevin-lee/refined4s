@@ -6,12 +6,13 @@ import cats.syntax.all.*
 import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.*
+import refined4s.modules.circe.derivation.types.NumericTestValues
 import refined4s.types.all.*
 
 /** @author Kevin Lee
   * @since 2024-08-23
   */
-object numericSpec {
+object numericSpec extends NumericTestValues {
 
   import refined4s.modules.circe.derivation.generic.auto.given
 
@@ -401,7 +402,7 @@ object numericSpec {
 
   def testEncoderNegLong: Property =
     for {
-      n <- Gen.long(Range.linear(-1L, Long.MinValue)).log("n")
+      n <- Gen.long(Range.linear(-1L, MinLongValue)).log("n")
     } yield {
       val input = NegLong.unsafeFrom(n)
 
@@ -417,7 +418,7 @@ object numericSpec {
 
   def testDecoderNegLong: Property =
     for {
-      n <- Gen.long(Range.linear(-1L, Long.MinValue)).log("n")
+      n <- Gen.long(Range.linear(-1L, MinLongValue)).log("n")
     } yield {
       val input = n.asJson
 
@@ -428,7 +429,7 @@ object numericSpec {
 
   def testKeyEncoderNegLong: Property =
     for {
-      ns1   <- Gen.long(Range.linear(-1L, Long.MinValue)).list(Range.linear(1, 10)).log("ns1")
+      ns1   <- Gen.long(Range.linear(-1L, MinLongValue)).list(Range.linear(1, 10)).log("ns1")
       ns2   <- Gen.int(Range.linear(0, Int.MaxValue)).list(Range.singleton(ns1.length)).log("ns2")
       map   <- Gen.constant(ns1.zip(ns2).toMap).log("map")
       input <- Gen.constant(map.map { case (key, value) => NegLong.unsafeFrom(key) -> value }).log("input")
@@ -446,7 +447,7 @@ object numericSpec {
 
   def testKeyDecoderNegLong: Property =
     for {
-      ns1      <- Gen.long(Range.linear(-1L, Long.MinValue)).list(Range.linear(1, 10)).log("ns1")
+      ns1      <- Gen.long(Range.linear(-1L, MinLongValue)).list(Range.linear(1, 10)).log("ns1")
       ns2      <- Gen.int(Range.linear(0, Int.MaxValue)).list(Range.singleton(ns1.length)).log("ns2")
       map      <- Gen.constant(ns1.zip(ns2).toMap).log("map")
       expected <- Gen.constant(map.map { case (key, value) => NegLong.unsafeFrom(key) -> value }).log("expected")
@@ -461,7 +462,7 @@ object numericSpec {
 
   def testEncoderNonNegLong: Property =
     for {
-      n <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n")
+      n <- Gen.long(Range.linear(0L, MaxLongValue)).log("n")
     } yield {
       val input = NonNegLong.unsafeFrom(n)
 
@@ -477,7 +478,7 @@ object numericSpec {
 
   def testDecoderNonNegLong: Property =
     for {
-      n <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n")
+      n <- Gen.long(Range.linear(0L, MaxLongValue)).log("n")
     } yield {
       val input = n.asJson
 
@@ -488,7 +489,7 @@ object numericSpec {
 
   def testKeyEncoderNonNegLong: Property =
     for {
-      ns1   <- Gen.long(Range.linear(0L, Long.MaxValue)).list(Range.linear(1, 10)).log("ns1")
+      ns1   <- Gen.long(Range.linear(0L, MaxLongValue)).list(Range.linear(1, 10)).log("ns1")
       ns2   <- Gen.int(Range.linear(0, Int.MaxValue)).list(Range.singleton(ns1.length)).log("ns2")
       map   <- Gen.constant(ns1.zip(ns2).toMap).log("map")
       input <- Gen.constant(map.map { case (key, value) => NonNegLong.unsafeFrom(key) -> value }).log("input")
@@ -506,7 +507,7 @@ object numericSpec {
 
   def testKeyDecoderNonNegLong: Property =
     for {
-      ns1      <- Gen.long(Range.linear(0L, Long.MaxValue)).list(Range.linear(1, 10)).log("ns1")
+      ns1      <- Gen.long(Range.linear(0L, MaxLongValue)).list(Range.linear(1, 10)).log("ns1")
       ns2      <- Gen.int(Range.linear(0, Int.MaxValue)).list(Range.singleton(ns1.length)).log("ns2")
       map      <- Gen.constant(ns1.zip(ns2).toMap).log("map")
       expected <- Gen.constant(map.map { case (key, value) => NonNegLong.unsafeFrom(key) -> value }).log("expected")
@@ -521,7 +522,7 @@ object numericSpec {
 
   def testEncoderPosLong: Property =
     for {
-      n <- Gen.long(Range.linear(1L, Long.MaxValue)).log("n")
+      n <- Gen.long(Range.linear(1L, MaxLongValue)).log("n")
     } yield {
       val input = PosLong.unsafeFrom(n)
 
@@ -537,7 +538,7 @@ object numericSpec {
 
   def testDecoderPosLong: Property =
     for {
-      n <- Gen.long(Range.linear(1L, Long.MaxValue)).log("n")
+      n <- Gen.long(Range.linear(1L, MaxLongValue)).log("n")
     } yield {
       val input = n.asJson
 
@@ -548,7 +549,7 @@ object numericSpec {
 
   def testKeyEncoderPosLong: Property =
     for {
-      ns1   <- Gen.long(Range.linear(1L, Long.MaxValue)).list(Range.linear(1, 10)).log("ns1")
+      ns1   <- Gen.long(Range.linear(1L, MaxLongValue)).list(Range.linear(1, 10)).log("ns1")
       ns2   <- Gen.int(Range.linear(0, Int.MaxValue)).list(Range.singleton(ns1.length)).log("ns2")
       map   <- Gen.constant(ns1.zip(ns2).toMap).log("map")
       input <- Gen.constant(map.map { case (key, value) => PosLong.unsafeFrom(key) -> value }).log("input")
@@ -566,7 +567,7 @@ object numericSpec {
 
   def testKeyDecoderPosLong: Property =
     for {
-      ns1      <- Gen.long(Range.linear(1L, Long.MaxValue)).list(Range.linear(1, 10)).log("ns1")
+      ns1      <- Gen.long(Range.linear(1L, MaxLongValue)).list(Range.linear(1, 10)).log("ns1")
       ns2      <- Gen.int(Range.linear(0, Int.MaxValue)).list(Range.singleton(ns1.length)).log("ns2")
       map      <- Gen.constant(ns1.zip(ns2).toMap).log("map")
       expected <- Gen.constant(map.map { case (key, value) => PosLong.unsafeFrom(key) -> value }).log("expected")
@@ -581,7 +582,7 @@ object numericSpec {
 
   def testEncoderNonPosLong: Property =
     for {
-      n <- Gen.long(Range.linear(0L, Long.MinValue)).log("n")
+      n <- Gen.long(Range.linear(0L, MinLongValue)).log("n")
     } yield {
       val input = NonPosLong.unsafeFrom(n)
 
@@ -597,7 +598,7 @@ object numericSpec {
 
   def testDecoderNonPosLong: Property =
     for {
-      n <- Gen.long(Range.linear(0L, Long.MinValue)).log("n")
+      n <- Gen.long(Range.linear(0L, MinLongValue)).log("n")
     } yield {
       val input = n.asJson
 
@@ -608,7 +609,7 @@ object numericSpec {
 
   def testKeyEncoderNonPosLong: Property =
     for {
-      ns1   <- Gen.long(Range.linear(0L, Long.MinValue)).list(Range.linear(1, 10)).log("ns1")
+      ns1   <- Gen.long(Range.linear(0L, MinLongValue)).list(Range.linear(1, 10)).log("ns1")
       ns2   <- Gen.int(Range.linear(0, Int.MaxValue)).list(Range.singleton(ns1.length)).log("ns2")
       map   <- Gen.constant(ns1.zip(ns2).toMap).log("map")
       input <- Gen.constant(map.map { case (key, value) => NonPosLong.unsafeFrom(key) -> value }).log("input")
@@ -626,7 +627,7 @@ object numericSpec {
 
   def testKeyDecoderNonPosLong: Property =
     for {
-      ns1      <- Gen.long(Range.linear(0L, Long.MinValue)).list(Range.linear(1, 10)).log("ns1")
+      ns1      <- Gen.long(Range.linear(0L, MinLongValue)).list(Range.linear(1, 10)).log("ns1")
       ns2      <- Gen.int(Range.linear(0, Int.MaxValue)).list(Range.singleton(ns1.length)).log("ns2")
       map      <- Gen.constant(ns1.zip(ns2).toMap).log("map")
       expected <- Gen.constant(map.map { case (key, value) => NonPosLong.unsafeFrom(key) -> value }).log("expected")
@@ -1353,7 +1354,7 @@ object numericSpec {
 
   def testEncoderNegBigInt: Property =
     for {
-      n <- Gen.long(Range.linear(-1L, Long.MinValue)).map(BigInt(_)).log("n")
+      n <- Gen.long(Range.linear(-1L, MinLongValue)).map(BigInt(_)).log("n")
     } yield {
       val input = NegBigInt.unsafeFrom(n)
 
@@ -1369,7 +1370,7 @@ object numericSpec {
 
   def testDecoderNegBigInt: Property =
     for {
-      n <- Gen.long(Range.linear(-1L, Long.MinValue)).map(BigInt(_)).log("n")
+      n <- Gen.long(Range.linear(-1L, MinLongValue)).map(BigInt(_)).log("n")
     } yield {
       val input = n.asJson
 
@@ -1380,7 +1381,7 @@ object numericSpec {
 
   def testKeyEncoderNegBigInt: Property =
     for {
-      ns1   <- Gen.long(Range.linear(-1L, Long.MinValue)).list(Range.linear(1, 10)).log("ns1")
+      ns1   <- Gen.long(Range.linear(-1L, MinLongValue)).list(Range.linear(1, 10)).log("ns1")
       ns2   <- Gen.int(Range.linear(0, Int.MaxValue)).list(Range.singleton(ns1.length)).log("ns2")
       map   <- Gen.constant(ns1.zip(ns2).toMap).log("map")
       input <- Gen.constant(map.map { case (key, value) => NegBigInt.unsafeFrom(key) -> value }).log("input")
@@ -1399,7 +1400,7 @@ object numericSpec {
   @SuppressWarnings(Array("org.wartremover.warts.ToString"))
   def testKeyDecoderNegBigInt: Property =
     for {
-      ns1      <- Gen.long(Range.linear(-1L, Long.MinValue)).map(BigInt(_)).list(Range.linear(1, 10)).log("ns1")
+      ns1      <- Gen.long(Range.linear(-1L, MinLongValue)).map(BigInt(_)).list(Range.linear(1, 10)).log("ns1")
       ns2      <- Gen.int(Range.linear(0, Int.MaxValue)).list(Range.singleton(ns1.length)).log("ns2")
       map      <- Gen.constant(ns1.zip(ns2).toMap).log("map")
       expected <- Gen.constant(map.map { case (key, value) => NegBigInt.unsafeFrom(key) -> value }).log("expected")
@@ -1414,7 +1415,7 @@ object numericSpec {
 
   def testEncoderNonNegBigInt: Property =
     for {
-      n <- Gen.long(Range.linear(0L, Long.MaxValue)).map(BigInt(_)).log("n")
+      n <- Gen.long(Range.linear(0L, MaxLongValue)).map(BigInt(_)).log("n")
     } yield {
       val input = NonNegBigInt.unsafeFrom(n)
 
@@ -1430,7 +1431,7 @@ object numericSpec {
 
   def testDecoderNonNegBigInt: Property =
     for {
-      n <- Gen.long(Range.linear(0L, Long.MaxValue)).map(BigInt(_)).log("n")
+      n <- Gen.long(Range.linear(0L, MaxLongValue)).map(BigInt(_)).log("n")
     } yield {
       val input = n.asJson
 
@@ -1442,7 +1443,7 @@ object numericSpec {
   @SuppressWarnings(Array("org.wartremover.warts.ToString"))
   def testKeyEncoderNonNegBigInt: Property =
     for {
-      ns1   <- Gen.long(Range.linear(0L, Long.MaxValue)).map(BigInt(_)).list(Range.linear(1, 10)).log("ns1")
+      ns1   <- Gen.long(Range.linear(0L, MaxLongValue)).map(BigInt(_)).list(Range.linear(1, 10)).log("ns1")
       ns2   <- Gen.int(Range.linear(0, Int.MaxValue)).list(Range.singleton(ns1.length)).log("ns2")
       map   <- Gen.constant(ns1.zip(ns2).toMap).log("map")
       input <- Gen.constant(map.map { case (key, value) => NonNegBigInt.unsafeFrom(key) -> value }).log("input")
@@ -1461,7 +1462,7 @@ object numericSpec {
   @SuppressWarnings(Array("org.wartremover.warts.ToString"))
   def testKeyDecoderNonNegBigInt: Property =
     for {
-      ns1      <- Gen.long(Range.linear(0L, Long.MaxValue)).map(BigInt(_)).list(Range.linear(1, 10)).log("ns1")
+      ns1      <- Gen.long(Range.linear(0L, MaxLongValue)).map(BigInt(_)).list(Range.linear(1, 10)).log("ns1")
       ns2      <- Gen.int(Range.linear(0, Int.MaxValue)).list(Range.singleton(ns1.length)).log("ns2")
       map      <- Gen.constant(ns1.zip(ns2).toMap).log("map")
       expected <- Gen.constant(map.map { case (key, value) => NonNegBigInt.unsafeFrom(key) -> value }).log("expected")
@@ -1476,7 +1477,7 @@ object numericSpec {
 
   def testEncoderPosBigInt: Property =
     for {
-      n <- Gen.long(Range.linear(1L, Long.MaxValue)).map(BigInt(_)).log("n")
+      n <- Gen.long(Range.linear(1L, MaxLongValue)).map(BigInt(_)).log("n")
     } yield {
       val input = PosBigInt.unsafeFrom(n)
 
@@ -1492,7 +1493,7 @@ object numericSpec {
 
   def testDecoderPosBigInt: Property =
     for {
-      n <- Gen.long(Range.linear(1L, Long.MaxValue)).map(BigInt(_)).log("n")
+      n <- Gen.long(Range.linear(1L, MaxLongValue)).map(BigInt(_)).log("n")
     } yield {
       val input = n.asJson
 
@@ -1504,7 +1505,7 @@ object numericSpec {
   @SuppressWarnings(Array("org.wartremover.warts.ToString"))
   def testKeyEncoderPosBigInt: Property =
     for {
-      ns1   <- Gen.long(Range.linear(1L, Long.MaxValue)).map(BigInt(_)).list(Range.linear(1, 10)).log("ns1")
+      ns1   <- Gen.long(Range.linear(1L, MaxLongValue)).map(BigInt(_)).list(Range.linear(1, 10)).log("ns1")
       ns2   <- Gen.int(Range.linear(0, Int.MaxValue)).list(Range.singleton(ns1.length)).log("ns2")
       map   <- Gen.constant(ns1.zip(ns2).toMap).log("map")
       input <- Gen.constant(map.map { case (key, value) => PosBigInt.unsafeFrom(key) -> value }).log("input")
@@ -1523,7 +1524,7 @@ object numericSpec {
   @SuppressWarnings(Array("org.wartremover.warts.ToString"))
   def testKeyDecoderPosBigInt: Property =
     for {
-      ns1      <- Gen.long(Range.linear(1L, Long.MaxValue)).map(BigInt(_)).list(Range.linear(1, 10)).log("ns1")
+      ns1      <- Gen.long(Range.linear(1L, MaxLongValue)).map(BigInt(_)).list(Range.linear(1, 10)).log("ns1")
       ns2      <- Gen.int(Range.linear(0, Int.MaxValue)).list(Range.singleton(ns1.length)).log("ns2")
       map      <- Gen.constant(ns1.zip(ns2).toMap).log("map")
       expected <- Gen.constant(map.map { case (key, value) => PosBigInt.unsafeFrom(key) -> value }).log("expected")
@@ -1538,7 +1539,7 @@ object numericSpec {
 
   def testEncoderNonPosBigInt: Property =
     for {
-      n <- Gen.long(Range.linear(0L, Long.MinValue)).map(BigInt(_)).log("n")
+      n <- Gen.long(Range.linear(0L, MinLongValue)).map(BigInt(_)).log("n")
     } yield {
       val input = NonPosBigInt.unsafeFrom(n)
 
@@ -1554,7 +1555,7 @@ object numericSpec {
 
   def testDecoderNonPosBigInt: Property =
     for {
-      n <- Gen.long(Range.linear(0L, Long.MinValue)).map(BigInt(_)).log("n")
+      n <- Gen.long(Range.linear(0L, MinLongValue)).map(BigInt(_)).log("n")
     } yield {
       val input = n.asJson
 
@@ -1566,7 +1567,7 @@ object numericSpec {
   @SuppressWarnings(Array("org.wartremover.warts.ToString"))
   def testKeyEncoderNonPosBigInt: Property =
     for {
-      ns1   <- Gen.long(Range.linear(0L, Long.MinValue)).map(BigInt(_)).list(Range.linear(1, 10)).log("ns1")
+      ns1   <- Gen.long(Range.linear(0L, MinLongValue)).map(BigInt(_)).list(Range.linear(1, 10)).log("ns1")
       ns2   <- Gen.int(Range.linear(0, Int.MaxValue)).list(Range.singleton(ns1.length)).log("ns2")
       map   <- Gen.constant(ns1.zip(ns2).toMap).log("map")
       input <- Gen.constant(map.map { case (key, value) => NonPosBigInt.unsafeFrom(key) -> value }).log("input")
@@ -1585,7 +1586,7 @@ object numericSpec {
   @SuppressWarnings(Array("org.wartremover.warts.ToString"))
   def testKeyDecoderNonPosBigInt: Property =
     for {
-      ns1      <- Gen.long(Range.linear(0L, Long.MinValue)).map(BigInt(_)).list(Range.linear(1, 10)).log("ns1")
+      ns1      <- Gen.long(Range.linear(0L, MinLongValue)).map(BigInt(_)).list(Range.linear(1, 10)).log("ns1")
       ns2      <- Gen.int(Range.linear(0, Int.MaxValue)).list(Range.singleton(ns1.length)).log("ns2")
       map      <- Gen.constant(ns1.zip(ns2).toMap).log("map")
       expected <- Gen.constant(map.map { case (key, value) => NonPosBigInt.unsafeFrom(key) -> value }).log("expected")

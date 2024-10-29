@@ -17,7 +17,7 @@ import java.time.Instant
 /** @author Kevin Lee
   * @since 2023-12-25
   */
-object CirceCodecWithTypeClassesForTypesSpec extends Properties {
+object CirceCodecWithTypeClassesForTypesSpec extends Properties, NumericTestValues {
 
   override def tests: List[Test] = List(
     property("round-trip test Newtype and Refined with derived and custom Codec", roundTripTest),
@@ -34,7 +34,7 @@ object CirceCodecWithTypeClassesForTypesSpec extends Properties {
                     .map(Name(_))
                     .log("name")
       created  <- Gen
-                    .long(Range.linear(0, Long.MaxValue))
+                    .long(Range.linear(0, MaxLongValue))
                     .map(Instant.ofEpochMilli)
                     .map(Created(_))
                     .log("created")
@@ -53,7 +53,7 @@ object CirceCodecWithTypeClassesForTypesSpec extends Properties {
                     .map(Name(_))
                     .log("name")
       created  <- Gen
-                    .long(Range.linear(0, Long.MaxValue))
+                    .long(Range.linear(0, MaxLongValue))
                     .map(Instant.ofEpochMilli)
                     .map(Created(_))
                     .log("created")

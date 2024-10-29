@@ -1,4 +1,3 @@
-import just.semver.SemVer
 import sbtcrossproject.CrossProject
 
 ThisBuild / scalaVersion := props.ProjectScalaVersion
@@ -50,11 +49,8 @@ lazy val refined4s = (project in file("."))
     circeJvm,
     circeJs,
     pureconfigJvm,
-    pureconfigJs,
     doobieCe2Jvm,
-    doobieCe2Js,
     doobieCe3Jvm,
-    doobieCe3Js,
     extrasRenderJvm,
     extrasRenderJs,
     refinedCompatScala2Jvm,
@@ -64,24 +60,33 @@ lazy val refined4s = (project in file("."))
     tapirJvm,
     tapirJs,
     chimneyJvm,
-    chimneyJs,
+//    chimneyJs,
   )
 
 lazy val core    = module("core", crossProject(JVMPlatform, JSPlatform))
   .settings(
+    scalacOptions ++= List("-Xprint-suspension"),
     libraryDependencies ++= List(
-      libs.extrasTypeInfo % Test,
-      libs.cats           % Test,
-    )
+      libs.extrasTypeInfo.value % Test,
+      libs.cats.value           % Test,
+    ),
   )
 lazy val coreJvm = core.jvm
-lazy val coreJs  = core.js.settings(jsSettingsForFuture)
+lazy val coreJs  = core
+  .js
+  .settings(jsSettingsForFuture)
+  .settings(
+    libraryDependencies ++= List(
+      libs.scalajsJavaSecurerandom.value,
+      libs.scalaJavaTime.value,
+    )
+  )
 
 lazy val cats    = module("cats", crossProject(JVMPlatform, JSPlatform))
   .settings(
     libraryDependencies ++= List(
-      libs.cats,
-      libs.extrasTypeInfo % Test,
+      libs.cats.value,
+      libs.extrasTypeInfo.value % Test,
     )
   )
   .dependsOn(core % props.IncludeTest)
@@ -91,11 +96,11 @@ lazy val catsJs  = cats.js.settings(jsSettingsForFuture)
 lazy val circe    = module("circe", crossProject(JVMPlatform, JSPlatform))
   .settings(
     libraryDependencies ++= List(
-      libs.circeCore,
-      libs.circeParser         % Test,
-      libs.circeLiteral        % Test,
-      libs.extrasTypeInfo      % Test,
-      libs.extrasHedgehogCirce % Test,
+      libs.circeCore.value,
+      libs.circeParser.value         % Test,
+      libs.circeLiteral.value        % Test,
+      libs.extrasTypeInfo.value      % Test,
+      libs.extrasHedgehogCirce.value % Test,
     )
   )
   .dependsOn(
@@ -105,25 +110,24 @@ lazy val circe    = module("circe", crossProject(JVMPlatform, JSPlatform))
 lazy val circeJvm = circe.jvm
 lazy val circeJs  = circe.js.settings(jsSettingsForFuture)
 
-lazy val pureconfig    = module("pureconfig", crossProject(JVMPlatform, JSPlatform))
+lazy val pureconfig    = module("pureconfig", crossProject(JVMPlatform))
   .settings(
     libraryDependencies ++= List(
       libs.pureconfigCore,
-      libs.extrasTypeInfo % Test,
+      libs.extrasTypeInfo.value % Test,
     )
   )
   .dependsOn(core % props.IncludeTest)
 lazy val pureconfigJvm = pureconfig.jvm
-lazy val pureconfigJs  = pureconfig.js.settings(jsSettingsForFuture)
 
-lazy val doobieCe2    = module("doobie-ce2", crossProject(JVMPlatform, JSPlatform))
+lazy val doobieCe2    = module("doobie-ce2", crossProject(JVMPlatform))
   .settings(
     libraryDependencies ++= List(
       libs.doobieCoreCe2,
-      libs.embeddedPostgres     % Test,
-      libs.effectieCe2          % Test,
-      libs.extrasDoobieToolsCe2 % Test,
-      libs.logback              % Test,
+      libs.embeddedPostgres           % Test,
+      libs.effectieCe2.value          % Test,
+      libs.extrasDoobieToolsCe2.value % Test,
+      libs.logback                    % Test,
 //      libs.kittens              % Test,
     )
   )
@@ -132,16 +136,15 @@ lazy val doobieCe2    = module("doobie-ce2", crossProject(JVMPlatform, JSPlatfor
     cats,
   )
 lazy val doobieCe2Jvm = doobieCe2.jvm
-lazy val doobieCe2Js  = doobieCe2.js.settings(jsSettingsForFuture)
 
-lazy val doobieCe3    = module("doobie-ce3", crossProject(JVMPlatform, JSPlatform))
+lazy val doobieCe3    = module("doobie-ce3", crossProject(JVMPlatform))
   .settings(
     libraryDependencies ++= List(
       libs.doobieCoreCe3,
-      libs.embeddedPostgres     % Test,
-      libs.effectieCe3          % Test,
-      libs.extrasDoobieToolsCe3 % Test,
-      libs.logback              % Test,
+      libs.embeddedPostgres           % Test,
+      libs.effectieCe3.value          % Test,
+      libs.extrasDoobieToolsCe3.value % Test,
+      libs.logback                    % Test,
 //      libs.kittens              % Test,
     )
   )
@@ -150,12 +153,11 @@ lazy val doobieCe3    = module("doobie-ce3", crossProject(JVMPlatform, JSPlatfor
     cats,
   )
 lazy val doobieCe3Jvm = doobieCe3.jvm
-lazy val doobieCe3Js  = doobieCe3.js.settings(jsSettingsForFuture)
 
 lazy val extrasRender    = module("extras-render", crossProject(JVMPlatform, JSPlatform))
   .settings(
     libraryDependencies ++= List(
-      libs.extrasRender
+      libs.extrasRender.value
     )
   )
   .dependsOn(
@@ -164,10 +166,12 @@ lazy val extrasRender    = module("extras-render", crossProject(JVMPlatform, JSP
 lazy val extrasRenderJvm = extrasRender.jvm
 lazy val extrasRenderJs  = extrasRender.js.settings(jsSettingsForFuture)
 
-lazy val chimney    = module("chimney", crossProject(JVMPlatform, JSPlatform))
+//lazy val chimney    = module("chimney", crossProject(JVMPlatform, JSPlatform))
+lazy val chimney    = module("chimney", crossProject(JVMPlatform))
   .settings(
     libraryDependencies ++= List(
-      libs.chimney,
+      libs.chimney.value,
+      libs.tests.hedgehogExtraCore.value,
       libs.tests.hedgehogExtraRefined4s,
     )
   )
@@ -175,7 +179,7 @@ lazy val chimney    = module("chimney", crossProject(JVMPlatform, JSPlatform))
     core % props.IncludeTest
   )
 lazy val chimneyJvm = chimney.jvm
-lazy val chimneyJs  = chimney.js.settings(jsSettingsForFuture)
+//lazy val chimneyJs  = chimney.js.settings(jsSettingsForFuture)
 
 lazy val refinedCompatScala2    = module("refined-compat-scala2", crossProject(JVMPlatform, JSPlatform))
   .settings(
@@ -185,7 +189,7 @@ lazy val refinedCompatScala2    = module("refined-compat-scala2", crossProject(J
         if (isScala3(scalaVersion.value))
           List.empty
         else
-          List("eu.timepit" %% "refined" % "0.9.29")
+          List("eu.timepit" %%% "refined" % "0.9.29")
       ),
   )
 lazy val refinedCompatScala2Jvm = refinedCompatScala2.jvm
@@ -201,7 +205,7 @@ lazy val refinedCompatScala3Js  = refinedCompatScala3.js.settings(jsSettingsForF
 lazy val tapir    = module("tapir", crossProject(JVMPlatform, JSPlatform))
   .settings(
     libraryDependencies ++= List(
-      libs.tapirCore
+      libs.tapirCore.value
     )
   )
   .dependsOn(
@@ -226,17 +230,17 @@ lazy val docs = (project in file("docs-gen-tmp/docs"))
       val latestVersion = s"git describe --tags $tag".!!.trim.stripPrefix("v")
 
       List(
-        "io.kevinlee" %% "refined4s-core"          % latestVersion,
-        "io.kevinlee" %% "refined4s-cats"          % latestVersion,
-        "io.kevinlee" %% "refined4s-chimney"       % latestVersion,
-        "io.kevinlee" %% "refined4s-circe"         % latestVersion,
-        "io.kevinlee" %% "refined4s-pureconfig"    % latestVersion,
-        "io.kevinlee" %% "refined4s-doobie-ce2"    % latestVersion,
-        "io.kevinlee" %% "refined4s-extras-render" % latestVersion,
-        "io.kevinlee" %% "refined4s-tapir"         % latestVersion,
-        libs.circeCore,
-        libs.circeLiteral,
-        libs.circeParser,
+        "io.kevinlee" %%% "refined4s-core"          % latestVersion,
+        "io.kevinlee" %%% "refined4s-cats"          % latestVersion,
+        "io.kevinlee" %%% "refined4s-chimney"       % latestVersion,
+        "io.kevinlee" %%% "refined4s-circe"         % latestVersion,
+        "io.kevinlee" %%% "refined4s-pureconfig"    % latestVersion,
+        "io.kevinlee" %%% "refined4s-doobie-ce2"    % latestVersion,
+        "io.kevinlee" %%% "refined4s-extras-render" % latestVersion,
+        "io.kevinlee" %%% "refined4s-tapir"         % latestVersion,
+        libs.circeCore.value,
+        libs.circeLiteral.value,
+        libs.circeParser.value,
       )
     },
     mdocVariables := Map(
@@ -283,7 +287,7 @@ lazy val props =
     val IncludeTest = "compile->compile;test->test"
 
     val HedgehogVersion      = "0.10.1"
-    val HedgehogExtraVersion = "0.9.0"
+    val HedgehogExtraVersion = "0.10.0"
 
     val ExtrasVersion = "0.44.0"
 
@@ -307,23 +311,27 @@ lazy val props =
     val TapirVersion = "1.0.6"
 
     val ChimneyVersion = "1.3.0"
+
+    val ScalajsJavaSecurerandomVersion = "1.0.0"
+
+    val ScalaJavaTimeVersion = "2.6.0"
   }
 
 lazy val libs = new {
 
-  lazy val extrasTypeInfo       = "io.kevinlee" %% "extras-type-info"        % props.ExtrasVersion
-  lazy val extrasHedgehogCirce  = "io.kevinlee" %% "extras-hedgehog-circe"   % props.ExtrasVersion
-  lazy val extrasDoobieToolsCe2 = "io.kevinlee" %% "extras-doobie-tools-ce2" % props.ExtrasVersion
-  lazy val extrasDoobieToolsCe3 = "io.kevinlee" %% "extras-doobie-tools-ce3" % props.ExtrasVersion
-  lazy val extrasRender         = "io.kevinlee" %% "extras-render"           % props.ExtrasVersion
+  lazy val extrasTypeInfo       = Def.setting("io.kevinlee" %%% "extras-type-info" % props.ExtrasVersion)
+  lazy val extrasHedgehogCirce  = Def.setting("io.kevinlee" %%% "extras-hedgehog-circe" % props.ExtrasVersion)
+  lazy val extrasDoobieToolsCe2 = Def.setting("io.kevinlee" %%% "extras-doobie-tools-ce2" % props.ExtrasVersion)
+  lazy val extrasDoobieToolsCe3 = Def.setting("io.kevinlee" %%% "extras-doobie-tools-ce3" % props.ExtrasVersion)
+  lazy val extrasRender         = Def.setting("io.kevinlee" %%% "extras-render" % props.ExtrasVersion)
 
-  lazy val cats = "org.typelevel" %% "cats-core" % props.CatsVersion
+  lazy val cats = Def.setting("org.typelevel" %%% "cats-core" % props.CatsVersion)
 
-  lazy val kittens = "org.typelevel" %% "kittens" % props.KittensVersion
+  lazy val kittens = Def.setting("org.typelevel" %%% "kittens" % props.KittensVersion)
 
-  lazy val circeCore    = "io.circe" %% "circe-core"    % props.CirceVersion
-  lazy val circeParser  = "io.circe" %% "circe-parser"  % props.CirceVersion
-  lazy val circeLiteral = "io.circe" %% "circe-literal" % props.CirceVersion
+  lazy val circeCore    = Def.setting("io.circe" %%% "circe-core" % props.CirceVersion)
+  lazy val circeParser  = Def.setting("io.circe" %%% "circe-parser" % props.CirceVersion)
+  lazy val circeLiteral = Def.setting("io.circe" %%% "circe-literal" % props.CirceVersion)
 
   lazy val pureconfigCore    = "com.github.pureconfig" %% "pureconfig-core"    % props.PureconfigVersion
   lazy val pureconfigGeneric = "com.github.pureconfig" %% "pureconfig-generic" % props.PureconfigVersion
@@ -333,31 +341,33 @@ lazy val libs = new {
 
   lazy val embeddedPostgres = "io.zonky.test" % "embedded-postgres" % props.EmbeddedPostgresVersion
 
-  lazy val effectieCore   = "io.kevinlee" %% "effectie-core"         % props.EffectieVersion
-  lazy val effectieSyntax = "io.kevinlee" %% "effectie-syntax"       % props.EffectieVersion
-  lazy val effectieCe2    = "io.kevinlee" %% "effectie-cats-effect2" % props.EffectieVersion
-  lazy val effectieCe3    = "io.kevinlee" %% "effectie-cats-effect3" % props.EffectieVersion
+  lazy val effectieCore   = Def.setting("io.kevinlee" %%% "effectie-core" % props.EffectieVersion)
+  lazy val effectieSyntax = Def.setting("io.kevinlee" %%% "effectie-syntax" % props.EffectieVersion)
+  lazy val effectieCe2    = Def.setting("io.kevinlee" %%% "effectie-cats-effect2" % props.EffectieVersion)
+  lazy val effectieCe3    = Def.setting("io.kevinlee" %%% "effectie-cats-effect3" % props.EffectieVersion)
 
   lazy val logback = "ch.qos.logback" % "logback-classic" % props.LogbackVersion
 
-  lazy val hedgehogCore   = "qa.hedgehog" %% "hedgehog-core"   % props.HedgehogVersion
-  lazy val hedgehogRunner = "qa.hedgehog" %% "hedgehog-runner" % props.HedgehogVersion
-  lazy val hedgehogSbt    = "qa.hedgehog" %% "hedgehog-sbt"    % props.HedgehogVersion
+  lazy val tapirCore = Def.setting("com.softwaremill.sttp.tapir" %%% "tapir-core" % props.TapirVersion)
 
-  lazy val tapirCore = "com.softwaremill.sttp.tapir" %% "tapir-core" % props.TapirVersion
+  lazy val chimney = Def.setting("io.scalaland" %%% "chimney" % props.ChimneyVersion)
 
-  lazy val chimney = "io.scalaland" %% "chimney" % props.ChimneyVersion
+  lazy val scalajsJavaSecurerandom =
+    Def.setting(("org.scala-js" %%% "scalajs-java-securerandom" % props.ScalajsJavaSecurerandomVersion).cross(CrossVersion.for3Use2_13))
+
+  lazy val scalaJavaTime = Def.setting("io.github.cquiroz" %%% "scala-java-time" % props.ScalaJavaTimeVersion)
 
   lazy val tests = new {
 
-    lazy val hedgehog: List[ModuleID] =
+    lazy val hedgehog = Def.setting {
       List(
-        hedgehogCore,
-        hedgehogRunner,
-        hedgehogSbt,
+        "qa.hedgehog" %%% "hedgehog-core"   % props.HedgehogVersion,
+        "qa.hedgehog" %%% "hedgehog-runner" % props.HedgehogVersion,
+        "qa.hedgehog" %%% "hedgehog-sbt"    % props.HedgehogVersion,
       ).map(_ % Test)
+    }
 
-    lazy val hedgehogExtraCore = "io.kevinlee" %% "hedgehog-extra-core" % props.HedgehogExtraVersion % Test
+    lazy val hedgehogExtraCore = Def.setting("io.kevinlee" %%% "hedgehog-extra-core" % props.HedgehogExtraVersion % Test)
 
     lazy val hedgehogExtraRefined4s = "io.kevinlee" %% "hedgehog-extra-refined4s" % props.HedgehogExtraVersion % Test
   }
@@ -393,7 +403,7 @@ def module(projectName: String, crossProject: CrossProject.Builder): CrossProjec
       ),
       scalacOptions ++= (if (isScala3(scalaVersion.value)) List("-no-indent") else List("-Xsource:3")),
 //      scalacOptions ~= (ops => ops.filter(_ != "UTF-8")),
-      libraryDependencies ++= libs.tests.hedgehog ++ List(libs.tests.hedgehogExtraCore),
+      libraryDependencies ++= libs.tests.hedgehog.value ++ List(libs.tests.hedgehogExtraCore.value),
       wartremoverErrors ++= Warts.allBut(Wart.Any, Wart.Nothing, Wart.ImplicitConversion, Wart.ImplicitParameter),
       Compile / console / scalacOptions :=
         (console / scalacOptions)
@@ -433,4 +443,5 @@ lazy val jsSettingsForFuture: SettingsDefinition = List(
                             else List("-P:scalajs:nowarnGlobalExecutionContext")),
   Test / compile / scalacOptions ++= (if (scalaVersion.value.startsWith("3")) List.empty
                                       else List("-P:scalajs:nowarnGlobalExecutionContext")),
+  coverageEnabled := false,
 )

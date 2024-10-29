@@ -15,11 +15,14 @@ trait network {
 
   // scalafix:off DisableSyntax.noFinalVal
 
+  final type Url = network.Url
+  final val Url = network.Url
+
   final type Uri = network.Uri
   final val Uri = network.Uri
 
-  final type Url = network.Url
-  final val Url = network.Url
+//  final type Url = network.Url
+//  final val Url = network.Url
 
   final type PortNumber = network.PortNumber
   final val PortNumber = network.PortNumber
@@ -41,6 +44,11 @@ trait network {
 }
 
 object network {
+
+  final type Url = networkCompat.Url
+  // scalafix:off DisableSyntax.noFinalVal
+  final val Url = networkCompat.Url
+  // scalafix:on
 
   type Uri = Uri.Type
   object Uri extends InlinedRefined[String] {
@@ -67,43 +75,9 @@ object network {
     extension (uri: Type) {
       def toURI: URI = new URI(uri.value)
 
-      def toUrl: Url = Url(toURI.toURL)
+      def toUrl: networkCompat.Url = networkCompat.Url.unsafeFrom(uri.value)
 
       def toURL: URL = toURI.toURL
-    }
-
-  }
-
-  type Url = Url.Type
-  object Url extends InlinedRefined[String] {
-
-    override def invalidReason(a: String): String =
-      expectedMessage(inlinedExpectedValue)
-
-    @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
-    override def predicate(a: String): Boolean =
-      try {
-        new URL(a)
-        true
-      } catch {
-        case NonFatal(_) =>
-          false
-      }
-
-    override inline val inlinedExpectedValue = "a URL String"
-
-    override inline def inlinedPredicate(inline url: String): Boolean = ${ isValidateUrl('url) }
-
-    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
-    def apply(a: URL): Type = unsafeFrom(a.toString)
-
-    extension (url: Type) {
-      @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
-      def toURL: URL = new URL(url.value)
-
-      def toUri: Uri = Uri(toURL.toURI)
-
-      def toURI: URI = toURL.toURI
     }
 
   }
@@ -177,26 +151,6 @@ object network {
         report.error(
           UnexpectedLiteralErrorMessage,
           uriExpr,
-        )
-        Expr(false)
-    }
-  }
-
-  @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
-  def isValidateUrl(urlExpr: Expr[String])(using Quotes): Expr[Boolean] = {
-    import quotes.reflect.*
-    urlExpr.asTerm match {
-      case Inlined(_, _, Literal(StringConstant(urlStr))) =>
-        try {
-          new java.net.URL(urlStr)
-          Expr(true)
-        } catch {
-          case _: Throwable => Expr(false)
-        }
-      case _ =>
-        report.error(
-          UnexpectedLiteralErrorMessage,
-          urlExpr,
         )
         Expr(false)
     }

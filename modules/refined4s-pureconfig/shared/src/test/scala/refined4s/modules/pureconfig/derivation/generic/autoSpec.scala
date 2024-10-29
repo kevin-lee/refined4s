@@ -2782,7 +2782,7 @@ object autoSpec extends Properties {
         val confString = raw"""url = "$url""""
 
         val expected = Url.from(url).leftMap { err =>
-          s"The value $url cannot be created as the expected type, ${typeTools.getTypeName[refined4s.types.network.Url]}.Type, due to the following error: $err"
+          s"The value $url cannot be created as the expected type, ${typeTools.getTypeName[refined4s.types.networkCompat.Url]}.Type, due to the following error: $err"
         }
 
         ConfigSource
