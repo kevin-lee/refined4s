@@ -15,6 +15,7 @@ trait networkCompatSpec {
 
   def compatTests: List[Test] = List(
     property("test Uri.toUrl", testUriToUrl),
+    property("test Uri.toURL", testUriToURL),
     //
     example("test Url(valid URL String)", testUrlApply),
     example("test Url(URL)", testUrlApplyURL),
@@ -40,6 +41,17 @@ trait networkCompatSpec {
     } yield {
       val expected = Url.unsafeFrom(uri)
       val actual   = Uri.unsafeFrom(uri).toUrl
+
+      actual ==== expected
+    }
+
+  def testUriToURL: Property =
+    for {
+      uri <- networkGens.genUrlString.log("uri")
+    } yield {
+      @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
+      val expected = new URL(uri)
+      val actual   = Uri.unsafeFrom(uri).toURL
 
       actual ==== expected
     }
