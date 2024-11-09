@@ -218,10 +218,10 @@ lazy val docs = (project in file("docs-gen-tmp/docs"))
   .settings(
     scalaVersion := props.Scala3Version,
     name := prefixedProjectName("docs"),
-    scalacOptions ~= (ops => ops.filter(op => !op.startsWith("-Wunused:imports") && op != "-Wnonunit-statement")),
-    mdocIn := file("docs"),
+    mdocIn := file("docs/latest"),
     mdocOut := file("generated-docs/docs"),
-    cleanFiles += file("generated-docs/docs"),
+    cleanFiles += ((ThisBuild / baseDirectory).value / "generated-docs" / "docs"),
+    scalacOptions ~= (ops => ops.filter(op => !op.startsWith("-Wunused:imports") && op != "-Wnonunit-statement")),
     libraryDependencies ++= {
       import sys.process.*
       "git fetch --tags".!
@@ -234,7 +234,7 @@ lazy val docs = (project in file("docs-gen-tmp/docs"))
         "io.kevinlee" %%% "refined4s-chimney"       % latestVersion,
         "io.kevinlee" %%% "refined4s-circe"         % latestVersion,
         "io.kevinlee" %%% "refined4s-pureconfig"    % latestVersion,
-        "io.kevinlee" %%% "refined4s-doobie-ce2"    % latestVersion,
+        "io.kevinlee" %% "refined4s-doobie-ce2"    % latestVersion,
         "io.kevinlee" %%% "refined4s-extras-render" % latestVersion,
         "io.kevinlee" %%% "refined4s-tapir"         % latestVersion,
         libs.circeCore.value,
@@ -252,6 +252,37 @@ lazy val docs = (project in file("docs-gen-tmp/docs"))
     ),
     docusaurDir := (ThisBuild / baseDirectory).value / "website",
     docusaurBuildDir := docusaurDir.value / "build",
+  )
+  .settings(noPublish)
+
+lazy val docsV0 = (project in file("docs-gen-tmp/docs-v0"))
+  .enablePlugins(MdocPlugin)
+  .settings(
+    scalaVersion := props.Scala3Version,
+    name := prefixedProjectName("docsV0"),
+    mdocIn := file("docs/v0"),
+    mdocOut := file("website/versioned_docs/version-v0/docs"),
+    cleanFiles += ((ThisBuild / baseDirectory).value / "website" / "versioned_docs" / "version-v0"),
+    scalacOptions ~= (ops => ops.filter(op => !op.startsWith("-Wunused:imports") && op != "-Wnonunit-statement")),
+    libraryDependencies ++= {
+      val theVersion = "0.19.0"
+      List(
+        "io.kevinlee" %%% "refined4s-core"          % theVersion,
+        "io.kevinlee" %%% "refined4s-cats"          % theVersion,
+        "io.kevinlee" %%% "refined4s-chimney"       % theVersion,
+        "io.kevinlee" %%% "refined4s-circe"         % theVersion,
+        "io.kevinlee" %%% "refined4s-pureconfig"    % theVersion,
+        "io.kevinlee" %% "refined4s-doobie-ce2"    % theVersion,
+        "io.kevinlee" %%% "refined4s-extras-render" % theVersion,
+        "io.kevinlee" %%% "refined4s-tapir"         % theVersion,
+        libs.circeCore.value,
+        libs.circeLiteral.value,
+        libs.circeParser.value,
+      )
+    },
+    mdocVariables := Map(
+      "VERSION" -> "0.19.0",
+    ),
   )
   .settings(noPublish)
 

@@ -47,13 +47,21 @@ const config: Config = {
 
   presets: [
     [
-      'classic',
+      '@docusaurus/preset-classic',
       {
         docs: {
           path: '../generated-docs/docs/',
-          sidebarPath: './sidebars.ts',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
+          sidebarPath: require.resolve('./sidebars.ts'),
+          "lastVersion": "current",
+          "versions": {
+            "v0": {
+              "label": "v0.x.0",
+              "path": "v0",
+            },
+            "current": {
+              "label": "latest",
+            },
+          }
         },
         blog: {
           showReadingTime: true,
@@ -88,6 +96,17 @@ const config: Config = {
           sidebarId: 'docsSidebar',
           position: 'left',
           label: 'Docs',
+        },
+        {
+          type: 'docsVersionDropdown',
+          position: 'right',
+          dropdownActiveClassDisabled: true,
+          dropdownItemsAfter: [
+            {
+              to: '/versions',
+              label: 'All versions',
+            },
+          ],
         },
         {
           href: 'https://github.com/kevin-lee/refined4s',
