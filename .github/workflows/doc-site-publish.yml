@@ -63,7 +63,9 @@ jobs:
         run: |
           sbt \
             ++${{ matrix.scala.version }}! \
+            docsV0/clean \
             docs/clean \
+            docsV0/mdoc \
             docs/mdoc \
             docs/docusaurGenerateAlgoliaConfigFile \
             docs/docusaurGenerateGoogleAnalyticsConfigFile \

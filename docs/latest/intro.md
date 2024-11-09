@@ -29,6 +29,7 @@ Newtypes and Refinement types for Scala 3
 |    refined4s-doobie-ce3 | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.kevinlee/refined4s-doobie-ce3_3/badge.svg)](https://search.maven.org/artifact/io.kevinlee/refined4s-doobie-ce3_3)       |
 | refined4s-extras-render | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.kevinlee/refined4s-extras-render_3/badge.svg)](https://search.maven.org/artifact/io.kevinlee/refined4s-extras-render_3) |
 |         refined4s-tapir | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.kevinlee/refined4s-tapir_3/badge.svg)](https://search.maven.org/artifact/io.kevinlee/refined4s-tapir_3)                 |
+|       refined4s-chimney | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.kevinlee/refined4s-chimney_3/badge.svg)](https://search.maven.org/artifact/io.kevinlee/refined4s-chimney_3)             |
 
 ## Getting Started
 
@@ -257,11 +258,9 @@ In `build.sbt`,
 "io.kevinlee" %% "refined4s-pureconfig" % "@VERSION@"
 ```
 
-or for Scala.js
-
-```scala
-"io.kevinlee" %%% "refined4s-pureconfig" % "@VERSION@"
-```
+:::note
+Pureconfig doesn't support Scala.js. So, `refined4s-pureconfig` is not available for Scala.js.
+:::
 
   </TabItem>
 
@@ -273,11 +272,9 @@ In `build.sbt`,
 libraryDependencies += "io.kevinlee" %% "refined4s-pureconfig" % "@VERSION@"
 ```
 
-or for Scala.js
-
-```scala
-libraryDependencies += "io.kevinlee" %%% "refined4s-pureconfig" % "@VERSION@"
-```
+:::note
+Pureconfig doesn't support Scala.js. So, `refined4s-pureconfig` is not available for Scala.js.
+:::
 
   </TabItem>
 
@@ -308,11 +305,9 @@ In `build.sbt`,
 "io.kevinlee" %% "refined4s-doobie-ce2" % "@VERSION@"
 ```
 
-or for Scala.js
-
-```scala
-"io.kevinlee" %%% "refined4s-doobie-ce2" % "@VERSION@"
-```
+:::note
+Doobie doesn't support Scala.js. So, `refined4s-doobie-ce2` is not available for Scala.js.
+:::
 
   </TabItem>
 
@@ -324,11 +319,9 @@ In `build.sbt`,
 libraryDependencies += "io.kevinlee" %% "refined4s-doobie-ce2" % "@VERSION@"
 ```
 
-or for Scala.js
-
-```scala
-libraryDependencies += "io.kevinlee" %%% "refined4s-doobie-ce2" % "@VERSION@"
-```
+:::note
+Doobie doesn't support Scala.js. So, `refined4s-doobie-ce2` is not available for Scala.js.
+:::
 
   </TabItem>
 
@@ -359,11 +352,9 @@ In `build.sbt`,
 "io.kevinlee" %% "refined4s-doobie-ce3" % "@VERSION@"
 ```
 
-or for Scala.js
-
-```scala
-"io.kevinlee" %%% "refined4s-doobie-ce3" % "@VERSION@"
-```
+:::note
+Doobie doesn't support Scala.js. So, `refined4s-doobie-ce3` is not available for Scala.js.
+:::
 
   </TabItem>
 
@@ -375,11 +366,9 @@ In `build.sbt`,
 libraryDependencies += "io.kevinlee" %% "refined4s-doobie-ce3" % "@VERSION@"
 ```
 
-or for Scala.js
-
-```scala
-libraryDependencies += "io.kevinlee" %%% "refined4s-doobie-ce3" % "@VERSION@"
-```
+:::note
+Doobie doesn't support Scala.js. So, `refined4s-doobie-ce3` is not available for Scala.js.
+:::
 
   </TabItem>
 
@@ -500,6 +489,59 @@ libraryDependencies += "io.kevinlee" %%% "refined4s-tapir" % "@VERSION@"
 
 ***
 
+### refined4s-chimney
+
+<Tabs
+groupId="refined4s"
+defaultValue="refined4s-sbt"
+values={[
+{label: 'sbt', value: 'refined4s-sbt'},
+{label: 'sbt (with libraryDependencies)', value: 'refined4s-sbt-lib'},
+{label: 'scala-cli', value: 'refined4s-scala-cli'},
+]}>
+<TabItem value="refined4s-sbt">
+
+In `build.sbt`,
+
+```scala
+"io.kevinlee" %% "refined4s-chimney" % "@VERSION@"
+```
+
+or for Scala.js
+
+```scala
+"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@"
+```
+
+  </TabItem>
+
+  <TabItem value="refined4s-sbt-lib">
+
+In `build.sbt`,
+
+```scala
+libraryDependencies += "io.kevinlee" %% "refined4s-chimney" % "@VERSION@"
+```
+
+or for Scala.js
+
+```scala
+libraryDependencies += "io.kevinlee" %%% "refined4s-chimney" % "@VERSION@"
+```
+
+  </TabItem>
+
+  <TabItem value="refined4s-scala-cli">
+
+```scala
+//> using dep "io.kevinlee::refined4s-chimney:@VERSION@"
+```
+
+  </TabItem>
+</Tabs>
+
+***
+
 ### All refined4s modules
 
 <Tabs
@@ -524,6 +566,7 @@ In `build.sbt`,
 "io.kevinlee" %% "refined4s-doobie-ce3" % "@VERSION@", // OR refined4s-doobie-ce3
 "io.kevinlee" %% "refined4s-extras-render" % "@VERSION@",
 "io.kevinlee" %% "refined4s-tapir" % "@VERSION@",
+"io.kevinlee" %% "refined4s-chimney" % "@VERSION@",
 ```
 
 or for Scala.js
@@ -533,11 +576,9 @@ or for Scala.js
 "io.kevinlee" %%% "refined4s-cats" % "@VERSION@",
 "io.kevinlee" %%% "refined4s-chimney" % "@VERSION@",
 "io.kevinlee" %%% "refined4s-circe" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-pureconfig" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-doobie-ce2" % "@VERSION@", // Use either refined4s-doobie-ce2
-"io.kevinlee" %%% "refined4s-doobie-ce3" % "@VERSION@", // OR refined4s-doobie-ce3
 "io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@",
 "io.kevinlee" %%% "refined4s-tapir" % "@VERSION@",
+"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@",
 ```
 
   </TabItem>
@@ -557,6 +598,7 @@ libraryDependencies ++= Seq(
   "io.kevinlee" %% "refined4s-doobie-ce3" % "@VERSION@", // OR refined4s-doobie-ce3
   "io.kevinlee" %% "refined4s-extras-render" % "@VERSION@",
   "io.kevinlee" %% "refined4s-tapir" % "@VERSION@",
+  "io.kevinlee" %% "refined4s-chimney" % "@VERSION@",
 )
 ```
 
@@ -568,11 +610,9 @@ libraryDependencies ++= Seq(
   "io.kevinlee" %%% "refined4s-cats" % "@VERSION@",
   "io.kevinlee" %%% "refined4s-chimney" % "@VERSION@",
   "io.kevinlee" %%% "refined4s-circe" % "@VERSION@",
-  "io.kevinlee" %%% "refined4s-pureconfig" % "@VERSION@",
-  "io.kevinlee" %%% "refined4s-doobie-ce2" % "@VERSION@", // Use either refined4s-doobie-ce2
-  "io.kevinlee" %%% "refined4s-doobie-ce3" % "@VERSION@", // OR refined4s-doobie-ce3
   "io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@",
   "io.kevinlee" %%% "refined4s-tapir" % "@VERSION@",
+  "io.kevinlee" %%% "refined4s-chimney" % "@VERSION@",
 )
 ```
 
@@ -590,6 +630,7 @@ libraryDependencies ++= Seq(
 //> using dep "io.kevinlee::refined4s-doobie-ce3:@VERSION@" // OR refined4s-doobie-ce3
 //> using dep "io.kevinlee::refined4s-extras-render:@VERSION@"
 //> using dep "io.kevinlee::refined4s-tapir:@VERSION@"
+//> using dep "io.kevinlee::refined4s-chimney:@VERSION@"
 ```
 
   </TabItem>
