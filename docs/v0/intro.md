@@ -52,12 +52,6 @@ In `build.sbt`,
 "io.kevinlee" %% "refined4s-core" % "@VERSION@"
 ```
 
-or for Scala.js
-
-```scala
-"io.kevinlee" %%% "refined4s-core" % "@VERSION@"
-```
-
   </TabItem>
 
   <TabItem value="refined4s-sbt-lib">
@@ -66,12 +60,6 @@ In `build.sbt`,
 
 ```scala
 libraryDependencies += "io.kevinlee" %% "refined4s-core" % "@VERSION@"
-```
-
-or for Scala.js
-
-```scala
-libraryDependencies += "io.kevinlee" %%% "refined4s-core" % "@VERSION@"
 ```
 
   </TabItem>
@@ -103,12 +91,6 @@ In `build.sbt`,
 "io.kevinlee" %% "refined4s-cats" % "@VERSION@"
 ```
 
-or for Scala.js
-
-```scala
-"io.kevinlee" %%% "refined4s-cats" % "@VERSION@"
-```
-
   </TabItem>
 
   <TabItem value="refined4s-sbt-lib">
@@ -117,12 +99,6 @@ In `build.sbt`,
 
 ```scala
 libraryDependencies += "io.kevinlee" %% "refined4s-cats" % "@VERSION@"
-```
-
-or for Scala.js
-
-```scala
-libraryDependencies += "io.kevinlee" %%% "refined4s-cats" % "@VERSION@"
 ```
 
   </TabItem>
@@ -155,12 +131,6 @@ In `build.sbt`,
 "io.kevinlee" %% "refined4s-chimney" % "@VERSION@"
 ```
 
-or for Scala.js
-
-```scala
-"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@"
-```
-
   </TabItem>
 
   <TabItem value="refined4s-sbt-lib">
@@ -169,12 +139,6 @@ In `build.sbt`,
 
 ```scala
 libraryDependencies += "io.kevinlee" %% "refined4s-chimney" % "@VERSION@"
-```
-
-or for Scala.js
-
-```scala
-libraryDependencies += "io.kevinlee" %%% "refined4s-chimney" % "@VERSION@"
 ```
 
   </TabItem>
@@ -206,12 +170,6 @@ In `build.sbt`,
 "io.kevinlee" %% "refined4s-circe" % "@VERSION@"
 ```
 
-or for Scala.js
-
-```scala
-"io.kevinlee" %%% "refined4s-circe" % "@VERSION@"
-```
-
   </TabItem>
 
   <TabItem value="refined4s-sbt-lib">
@@ -220,12 +178,6 @@ In `build.sbt`,
 
 ```scala
 libraryDependencies += "io.kevinlee" %% "refined4s-circe" % "@VERSION@"
-```
-
-or for Scala.js
-
-```scala
-libraryDependencies += "io.kevinlee" %%% "refined4s-circe" % "@VERSION@"
 ```
 
   </TabItem>
@@ -257,10 +209,6 @@ In `build.sbt`,
 "io.kevinlee" %% "refined4s-pureconfig" % "@VERSION@"
 ```
 
-:::note
-Pureconfig doesn't support Scala.js. So, `refined4s-pureconfig` is not available for Scala.js.
-:::
-
   </TabItem>
 
   <TabItem value="refined4s-sbt-lib">
@@ -270,10 +218,6 @@ In `build.sbt`,
 ```scala
 libraryDependencies += "io.kevinlee" %% "refined4s-pureconfig" % "@VERSION@"
 ```
-
-:::note
-Pureconfig doesn't support Scala.js. So, `refined4s-pureconfig` is not available for Scala.js.
-:::
 
   </TabItem>
 
@@ -304,10 +248,6 @@ In `build.sbt`,
 "io.kevinlee" %% "refined4s-doobie-ce2" % "@VERSION@"
 ```
 
-:::note
-Doobie doesn't support Scala.js. So, `refined4s-doobie-ce2` is not available for Scala.js.
-:::
-
   </TabItem>
 
   <TabItem value="refined4s-sbt-lib">
@@ -317,10 +257,6 @@ In `build.sbt`,
 ```scala
 libraryDependencies += "io.kevinlee" %% "refined4s-doobie-ce2" % "@VERSION@"
 ```
-
-:::note
-Doobie doesn't support Scala.js. So, `refined4s-doobie-ce2` is not available for Scala.js.
-:::
 
   </TabItem>
 
@@ -351,10 +287,6 @@ In `build.sbt`,
 "io.kevinlee" %% "refined4s-doobie-ce3" % "@VERSION@"
 ```
 
-:::note
-Doobie doesn't support Scala.js. So, `refined4s-doobie-ce3` is not available for Scala.js.
-:::
-
   </TabItem>
 
   <TabItem value="refined4s-sbt-lib">
@@ -364,10 +296,6 @@ In `build.sbt`,
 ```scala
 libraryDependencies += "io.kevinlee" %% "refined4s-doobie-ce3" % "@VERSION@"
 ```
-
-:::note
-Doobie doesn't support Scala.js. So, `refined4s-doobie-ce3` is not available for Scala.js.
-:::
 
   </TabItem>
 
@@ -400,12 +328,6 @@ In `build.sbt`,
 "io.kevinlee" %% "refined4s-extras-render" % "@VERSION@"
 ```
 
-or for Scala.js
-
-```scala
-"io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@"
-```
-
   </TabItem>
 
   <TabItem value="refined4s-sbt-lib">
@@ -414,12 +336,6 @@ In `build.sbt`,
 
 ```scala
 libraryDependencies += "io.kevinlee" %% "refined4s-extras-render" % "@VERSION@"
-```
-
-or for Scala.js
-
-```scala
-libraryDependencies += "io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@"
 ```
 
   </TabItem>
@@ -453,12 +369,6 @@ In `build.sbt`,
 "io.kevinlee" %% "refined4s-tapir" % "@VERSION@"
 ```
 
-or for Scala.js
-
-```scala
-"io.kevinlee" %%% "refined4s-tapir" % "@VERSION@"
-```
-
   </TabItem>
 
   <TabItem value="refined4s-sbt-lib">
@@ -467,12 +377,6 @@ In `build.sbt`,
 
 ```scala
 libraryDependencies += "io.kevinlee" %% "refined4s-tapir" % "@VERSION@"
-```
-
-or for Scala.js
-
-```scala
-libraryDependencies += "io.kevinlee" %%% "refined4s-tapir" % "@VERSION@"
 ```
 
   </TabItem>
@@ -514,20 +418,6 @@ In `build.sbt`,
 "io.kevinlee" %% "refined4s-tapir" % "@VERSION@",
 ```
 
-or for Scala.js
-
-```scala
-"io.kevinlee" %%% "refined4s-core" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-cats" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-circe" % "@VERSION@",
-"io.kevinlee" %%  "refined4s-pureconfig" % "@VERSION@",
-"io.kevinlee" %%  "refined4s-doobie-ce2" % "@VERSION@", // Use either refined4s-doobie-ce2
-"io.kevinlee" %%  "refined4s-doobie-ce3" % "@VERSION@", // OR refined4s-doobie-ce3
-"io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-tapir" % "@VERSION@",
-```
-
   </TabItem>
 
   <TabItem value="refined4s-sbt-lib">
@@ -545,22 +435,6 @@ libraryDependencies ++= Seq(
   "io.kevinlee" %% "refined4s-doobie-ce3" % "@VERSION@", // OR refined4s-doobie-ce3
   "io.kevinlee" %% "refined4s-extras-render" % "@VERSION@",
   "io.kevinlee" %% "refined4s-tapir" % "@VERSION@",
-)
-```
-
-or for Scala.js
-
-```scala
-libraryDependencies ++= Seq(
-  "io.kevinlee" %%% "refined4s-core" % "@VERSION@",
-  "io.kevinlee" %%% "refined4s-cats" % "@VERSION@",
-  "io.kevinlee" %%% "refined4s-chimney" % "@VERSION@",
-  "io.kevinlee" %%% "refined4s-circe" % "@VERSION@",
-  "io.kevinlee" %%  "refined4s-pureconfig" % "@VERSION@",
-  "io.kevinlee" %%  "refined4s-doobie-ce2" % "@VERSION@", // Use either refined4s-doobie-ce2
-  "io.kevinlee" %%  "refined4s-doobie-ce3" % "@VERSION@", // OR refined4s-doobie-ce3
-  "io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@",
-  "io.kevinlee" %%% "refined4s-tapir" % "@VERSION@",
 )
 ```
 

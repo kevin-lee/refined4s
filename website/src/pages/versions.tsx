@@ -17,19 +17,19 @@ import {
   type Version,
 } from '@docusaurus/plugin-content-docs/client';
 
+import { ArchivedVersion, LatestVersion } from '@types/commonTypes';
+
 import VersionsArchived from './versionsArchived.json';
 
-interface ArchivedVersion {
-  name: string;
-  label: string;
-  path?: string;
-}
+import LatestVersionImported from '../../latestVersion.json';
+const latestVersionFound = LatestVersionImported as LatestVersion;
 
 export default function Version(): React.JSX.Element {
 
   const {siteConfig} = useDocusaurusContext();
   const versions = useVersions();
   const latestVersion = useLatestVersion();
+  console.log(`latestVersion: ${JSON.stringify(latestVersion)}`);
   const currentVersion = versions.find((version) => version.name === 'current');
   const pastVersions = versions.filter(
     (version) => version !== latestVersion && version.name !== 'current',
@@ -91,7 +91,7 @@ export default function Version(): React.JSX.Element {
       return 1;
     }
   });
-  console.log(JSON.stringify(pastVersions));
+  console.log(`pastVersions: ${JSON.stringify(pastVersions)}`);
   // const stableVersion = pastVersions.shift();
   const stableVersion = currentVersion;
   const repoUrl = `https://github.com/${siteConfig.organizationName}/${siteConfig.projectName}`;
@@ -120,12 +120,12 @@ export default function Version(): React.JSX.Element {
             <table>
               <tbody>
               <tr>
-                <th>{stableVersion.label}</th>
+                <th>{latestVersionFound.version}</th>
                 <td>
                   <Link to={stableVersion.path}>Documentation</Link>
                 </td>
                 <td>
-                  <a href={`${repoUrl}/releases/tag/v${stableVersion.label}`}>
+                  <a href={`${repoUrl}/releases/tag/v${latestVersionFound.version}`}>
                     Release Notes
                   </a>
                 </td>
