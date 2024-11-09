@@ -234,7 +234,7 @@ lazy val docs = (project in file("docs-gen-tmp/docs"))
         "io.kevinlee" %%% "refined4s-chimney"       % latestVersion,
         "io.kevinlee" %%% "refined4s-circe"         % latestVersion,
         "io.kevinlee" %%% "refined4s-pureconfig"    % latestVersion,
-        "io.kevinlee" %% "refined4s-doobie-ce2"    % latestVersion,
+        "io.kevinlee"  %% "refined4s-doobie-ce2"    % latestVersion,
         "io.kevinlee" %%% "refined4s-extras-render" % latestVersion,
         "io.kevinlee" %%% "refined4s-tapir"         % latestVersion,
         libs.circeCore.value,
@@ -242,14 +242,22 @@ lazy val docs = (project in file("docs-gen-tmp/docs"))
         libs.circeParser.value,
       )
     },
-    mdocVariables := Map(
-      "VERSION" -> {
+    mdocVariables := {
+      val latestVersion = {
         import sys.process.*
         "git fetch --tags".!
         val tag = "git rev-list --tags --max-count=1".!!.trim
         s"git describe --tags $tag".!!.trim.stripPrefix("v")
       }
-    ),
+      val websiteDir    = docusaurDir.value
+
+      val latestVersionFile = websiteDir / "latestVersion.json"
+      val latestVersionJson = s"""{"version":"$latestVersion"}"""
+      IO.write(latestVersionFile, latestVersionJson)
+      Map(
+        "VERSION" -> latestVersion
+      )
+    },
     docusaurDir := (ThisBuild / baseDirectory).value / "website",
     docusaurBuildDir := docusaurDir.value / "build",
   )
@@ -265,14 +273,14 @@ lazy val docsV0 = (project in file("docs-gen-tmp/docs-v0"))
     cleanFiles += ((ThisBuild / baseDirectory).value / "website" / "versioned_docs" / "version-v0"),
     scalacOptions ~= (ops => ops.filter(op => !op.startsWith("-Wunused:imports") && op != "-Wnonunit-statement")),
     libraryDependencies ++= {
-      val theVersion = "0.19.0"
+      val theVersion          = "0.19.0"
       List(
         "io.kevinlee" %%% "refined4s-core"          % theVersion,
         "io.kevinlee" %%% "refined4s-cats"          % theVersion,
         "io.kevinlee" %%% "refined4s-chimney"       % theVersion,
         "io.kevinlee" %%% "refined4s-circe"         % theVersion,
         "io.kevinlee" %%% "refined4s-pureconfig"    % theVersion,
-        "io.kevinlee" %% "refined4s-doobie-ce2"    % theVersion,
+        "io.kevinlee"                              %% "refined4s-doobie-ce2" % theVersion,
         "io.kevinlee" %%% "refined4s-extras-render" % theVersion,
         "io.kevinlee" %%% "refined4s-tapir"         % theVersion,
         libs.circeCore.value,
@@ -281,7 +289,7 @@ lazy val docsV0 = (project in file("docs-gen-tmp/docs-v0"))
       )
     },
     mdocVariables := Map(
-      "VERSION" -> "0.19.0",
+      "VERSION" -> "0.19.0"
     ),
   )
   .settings(noPublish)

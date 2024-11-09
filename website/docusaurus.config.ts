@@ -2,6 +2,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
+import LatestVersion from '@types/commonTypes';
 
 const algoliaConfig = require('./algolia.config.json');
 const googleAnalyticsConfig = require('./google-analytics.config.json');
@@ -17,6 +18,8 @@ const isEmptyObject = (obj: object) => Object.keys(obj).length === 0;
 const isSearchable = !isEmptyObject(algoliaConfig);
 const hasGoogleAnalytics = !isEmptyObject(googleAnalyticsConfig);
 
+import LatestVersionImported from './latestVersion.json';
+const latestVersionFound = LatestVersionImported as LatestVersion;
 
 const config: Config = {
   title: 'Refined4s',
@@ -59,7 +62,7 @@ const config: Config = {
               "path": "v0",
             },
             "current": {
-              "label": "latest",
+              "label": `v${latestVersionFound.version}`,
             },
           }
         },
