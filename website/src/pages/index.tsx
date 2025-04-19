@@ -12,6 +12,11 @@ function HomepageHeader() {
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
+        <img
+          src="https://hits.sh/github.com/kevin-lee/refined4s.svg"
+          style={{ display: 'none' }}
+          alt="hit counter"
+        />
         <img src={`../../img/refined4s-400x400.png`} alt="Project Logo"/>
         <Heading as="h1" className="hero__title">
           {siteConfig.title}
