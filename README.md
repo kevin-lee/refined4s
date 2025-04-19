@@ -3,6 +3,7 @@
 [![Build Status](https://github.com/kevin-lee/refined4s/workflows/Build-All/badge.svg)](https://github.com/kevin-lee/refined4s/actions?workflow=Build-All)
 [![Release Status](https://github.com/kevin-lee/refined4s/workflows/Release/badge.svg)](https://github.com/kevin-lee/refined4s/actions?workflow=Release)
 [![Latest version](https://index.scala-lang.org/kevin-lee/refined4s/latest.svg)](https://index.scala-lang.org/kevin-lee/refined4s)
+[![Hits](https://hits.sh/github.com/kevin-lee/refined4s.svg)](https://hits.sh/github.com/kevin-lee/refined4s/)
 
 ![Refined4s Logo](https://refined4s.kevinly.dev/img/refined4s-400x400.png)
 
