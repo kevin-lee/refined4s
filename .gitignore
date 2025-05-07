@@ -33,11 +33,12 @@ local.properties
 
 .jvmopts
 
-# sbt
+# sbt and build tools
 .bsp/
 .bloop/
 .metals/
 .vscode/
+project/**/metals.sbt
 
 # sbteclipse plugin
 .target
