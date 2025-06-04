@@ -1,4 +1,4 @@
-addSbtPlugin("com.github.sbt" % "sbt-ci-release" % "1.6.1")
+addSbtPlugin("com.github.sbt" % "sbt-ci-release" % "1.11.1")
 
 addSbtPlugin("org.wartremover" % "sbt-wartremover" % "3.2.0")
 
