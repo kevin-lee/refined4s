@@ -26,8 +26,6 @@ ThisBuild / scmInfo :=
   )
 ThisBuild / licenses := props.licenses
 
-ThisBuild / resolvers += props.SonatypeSnapshots
-
 ThisBuild / scalafixDependencies += "com.github.xuwei-k" %% "scalafix-rules" % "0.4.5"
 
 ThisBuild / scalafixConfig := (
@@ -39,7 +37,6 @@ ThisBuild / scalafixConfig := (
 
 lazy val refined4s = (project in file("."))
   .enablePlugins(DevOopsGitHubReleasePlugin)
-  .settings(mavenCentralPublishSettings)
   .settings(noPublish)
   .aggregate(
     coreJvm,
@@ -310,11 +307,6 @@ lazy val props =
 
     lazy val licenses = List("MIT" -> url("http://opensource.org/licenses/MIT"))
 
-    val SonatypeCredentialHost = "s01.oss.sonatype.org"
-    val SonatypeRepository     = s"https://$SonatypeCredentialHost/service/local"
-
-    val SonatypeSnapshots = "sonatype-snapshots".at(s"https://$SonatypeCredentialHost/content/repositories/snapshots")
-
     val removeDottyIncompatible: ModuleID => Boolean =
       m =>
         m.name == "ammonite" ||
@@ -415,13 +407,6 @@ lazy val libs = new {
 def prefixedProjectName(name: String) = s"${props.RepoName}${if (name.isEmpty) "" else s"-$name"}"
 // scalafmt: on
 
-lazy val mavenCentralPublishSettings: SettingsDefinition = List(
-  /* Publish to Maven Central { */
-  sonatypeCredentialHost := props.SonatypeCredentialHost,
-  sonatypeRepository := props.SonatypeRepository,
-  /* } Publish to Maven Central */
-)
-
 def isScala3(scalaVersion: String): Boolean = scalaVersion.startsWith("3")
 
 def module(projectName: String, crossProject: CrossProject.Builder): CrossProject = {
@@ -472,7 +457,6 @@ def module(projectName: String, crossProject: CrossProject.Builder): CrossProjec
 //        "-language:implicitConversions",
 //      ),
     )
-    .settings(mavenCentralPublishSettings)
 }
 
 lazy val jsSettingsForFuture: SettingsDefinition = List(
