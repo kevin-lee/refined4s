@@ -417,7 +417,6 @@ def module(projectName: String, crossProject: CrossProject.Builder): CrossProjec
       name := prefixedName,
       fork := true,
       semanticdbEnabled := true,
-      semanticdbVersion := scalafixSemanticdb.revision,
       scalafixConfig := (
         if (scalaVersion.value.startsWith("3"))
           ((ThisBuild / baseDirectory).value / ".scalafix-scala3.conf").some
