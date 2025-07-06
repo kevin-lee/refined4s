@@ -184,6 +184,7 @@ object stringsSpec extends Properties {
       Result.assert(shouldCompile1)
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testApplyWithInvalid: Result = {
 
       import scala.compiletime.testing.{typeChecks, typeCheckErrors}

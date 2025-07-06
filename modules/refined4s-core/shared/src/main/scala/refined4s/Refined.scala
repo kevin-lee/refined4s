@@ -8,6 +8,7 @@ import compiletime.*
   */
 trait Refined[A] extends RefinedBase[A] {
 
+  @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
   inline def apply(a: A): Type =
     inline if predicate(a) then a.asInstanceOf[Type] // scalafix:ok DisableSyntax.asInstanceOf
     else error("Invalid value: [" + codeOf(a) + "]. " + invalidReason(a))

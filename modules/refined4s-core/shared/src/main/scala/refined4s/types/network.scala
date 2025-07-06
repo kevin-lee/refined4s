@@ -4,7 +4,6 @@ import refined4s.*
 
 import scala.quoted.*
 import scala.util.control.NonFatal
-import network.*
 
 import java.net.{URI, URL}
 
@@ -69,7 +68,7 @@ object network {
 
     override inline def inlinedPredicate(inline uri: String): Boolean = ${ isValidateUri('uri) }
 
-    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+    @SuppressWarnings(Array("org.wartremover.warts.ToString", "org.wartremover.warts.Overloading"))
     def apply(a: URI): Type = unsafeFrom(a.toString)
 
     extension (uri: Type) {

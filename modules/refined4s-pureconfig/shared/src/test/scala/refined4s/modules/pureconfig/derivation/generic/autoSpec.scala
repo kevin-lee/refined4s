@@ -218,6 +218,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNegIntInvalid: Property =
       for {
         n <- Gen.int(Range.linear(0, Int.MaxValue)).log("n")
@@ -287,6 +288,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNonNegIntInvalid: Property =
       for {
         n <- Gen.int(Range.linear(Int.MinValue, -1)).log("n")
@@ -356,6 +358,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderPosIntInvalid: Property =
       for {
         n <- Gen.int(Range.linear(Int.MinValue, 0)).log("n")
@@ -424,6 +427,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNonPosIntInvalid: Property =
       for {
         n <- Gen.int(Range.linear(1, Int.MaxValue)).log("n")
@@ -493,6 +497,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNegLongInvalid: Property =
       for {
         n <- Gen.long(Range.linear(0, Long.MaxValue)).log("n")
@@ -562,6 +567,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNonNegLongInvalid: Property =
       for {
         n <- Gen.long(Range.linear(Long.MinValue, -1L)).log("n")
@@ -631,6 +637,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderPosLongInvalid: Property =
       for {
         n <- Gen.long(Range.linear(Long.MinValue, 0L)).log("n")
@@ -700,6 +707,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNonPosLongInvalid: Property =
       for {
         n <- Gen.long(Range.linear(1, Long.MaxValue)).log("n")
@@ -769,6 +777,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNegShortInvalid: Property =
       for {
         n <- Gen.short(Range.linear(0, Short.MaxValue)).log("n")
@@ -838,6 +847,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNonNegShortInvalid: Property =
       for {
         n <- Gen.short(Range.linear(Short.MinValue, -1)).log("n")
@@ -907,6 +917,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderPosShortInvalid: Property =
       for {
         n <- Gen.short(Range.linear(Short.MinValue, 0)).log("n")
@@ -976,6 +987,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNonPosShortInvalid: Property =
       for {
         n <- Gen.short(Range.linear(1, Short.MaxValue)).log("n")
@@ -1045,6 +1057,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNegByteInvalid: Property =
       for {
         n <- Gen.byte(Range.linear(0, Byte.MaxValue)).log("n")
@@ -1114,6 +1127,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNonNegByteInvalid: Property =
       for {
         n <- Gen.byte(Range.linear(Byte.MinValue, -1)).log("n")
@@ -1183,6 +1197,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderPosByteInvalid: Property =
       for {
         n <- Gen.byte(Range.linear(Byte.MinValue, 0)).log("n")
@@ -1252,6 +1267,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNonPosByteInvalid: Property =
       for {
         n <- Gen.byte(Range.linear(1, Byte.MaxValue)).log("n")
@@ -1321,6 +1337,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNegFloatInvalid: Property =
       for {
         n <- Gen.double(Range.linearFrac(0d, Float.MaxValue)).map(_.toFloat).log("n")
@@ -1390,6 +1407,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNonNegFloatInvalid: Property =
       for {
         n <- Gen.double(Range.linearFrac(Float.MinValue, -0.00001d)).map(_.toFloat).log("n")
@@ -1459,6 +1477,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderPosFloatInvalid: Property =
       for {
         n <- Gen.double(Range.linearFrac(Float.MinValue, 0d)).map(_.toFloat).log("n")
@@ -1528,6 +1547,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNonPosFloatInvalid: Property =
       for {
         n <- Gen.double(Range.linearFrac(0.0001d, Float.MaxValue)).map(_.toFloat).log("n")
@@ -1597,6 +1617,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNegDoubleInvalid: Property =
       for {
         n <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).log("n")
@@ -1666,6 +1687,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNonNegDoubleInvalid: Property =
       for {
         n <- Gen.double(Range.linearFrac(Double.MinValue, -0.000001d)).log("n")
@@ -1735,6 +1757,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderPosDoubleInvalid: Property =
       for {
         n <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).log("n")
@@ -1804,6 +1827,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNonPosDoubleInvalid: Property =
       for {
         n <- Gen.double(Range.linearFrac(0.000001d, Double.MaxValue)).log("n")
@@ -1873,6 +1897,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNegBigIntInvalid: Property =
       for {
         n <- Gen.long(Range.linear(0L, Long.MaxValue)).map(BigInt(_)).log("n")
@@ -1942,6 +1967,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNonNegBigIntInvalid: Property =
       for {
         n <- Gen.long(Range.linear(Long.MinValue, -1L)).map(BigInt(_)).log("n")
@@ -2011,6 +2037,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderPosBigIntInvalid: Property =
       for {
         n <- Gen.long(Range.linear(Long.MinValue, 0L)).map(BigInt(_)).log("n")
@@ -2080,6 +2107,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNonPosBigIntInvalid: Property =
       for {
         n <- Gen.long(Range.linear(1L, Long.MaxValue)).map(BigInt(_)).log("n")
@@ -2149,6 +2177,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNegBigDecimalInvalid: Property =
       for {
         n <- Gen.double(Range.linearFrac(0, Double.MaxValue)).map(BigDecimal(_)).log("n")
@@ -2218,6 +2247,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNonNegBigDecimalInvalid: Property =
       for {
         n <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).map(BigDecimal(_)).log("n")
@@ -2288,6 +2318,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderPosBigDecimalInvalid: Property =
       for {
         n <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).map(BigDecimal(_)).log("n")
@@ -2357,6 +2388,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNonPosBigDecimalInvalid: Property =
       for {
         n <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).map(BigDecimal(_)).log("n")
@@ -2427,6 +2459,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNonEmptyStringInvalid: Result = {
 
       val confString = """name = """""
@@ -2523,6 +2556,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNonBlankStringInvalid: Property = for {
       s <-
         Gen
@@ -2632,6 +2666,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderUuidInvalid: Property =
       for {
         s <- Gen.string(Gen.alphaNum, Range.linear(0, 10)).log("s")
@@ -2843,6 +2878,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderPortNumberInvalid: Property =
       for {
         portNumber <- networkGens.genInvalidPortNumberInt.log("portNumber")
@@ -2911,6 +2947,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderSystemPortNumberInvalid: Property =
       for {
         systemPortNumber <- networkGens.genInvalidSystemPortNumberInt.log("systemPortNumber")
@@ -2980,6 +3017,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderNonSystemPortNumberInvalid: Property =
       for {
         nonSystemPortNumber <- networkGens.genInvalidNonSystemPortNumberInt.log("nonSystemPortNumber")
@@ -3049,6 +3087,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderUserPortNumberInvalid: Property =
       for {
         userPortNumber <- networkGens.genInvalidUserPortNumberInt.log("userPortNumber")
@@ -3118,6 +3157,7 @@ object autoSpec extends Properties {
 
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testConfigReaderDynamicPortNumberInvalid: Property =
       for {
         dynamicPortNumber <- networkGens.genInvalidDynamicPortNumberInt.log("dynamicPortNumber")

@@ -34,7 +34,7 @@ object networkCompat {
 
     override inline def inlinedPredicate(inline url: String): Boolean = ${ isValidateUrl('url) }
 
-    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+    @SuppressWarnings(Array("org.wartremover.warts.ToString", "org.wartremover.warts.Overloading"))
     def apply(a: URL): Type = unsafeFrom(a.toString)
 
     extension (url: Type) {
