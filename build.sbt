@@ -179,13 +179,16 @@ lazy val chimneyJs  = chimney.js.settings(jsSettingsForFuture)
 
 lazy val refinedCompatScala2    = module("refined-compat-scala2", crossProject(JVMPlatform, JSPlatform))
   .settings(
-    crossScalaVersions := List("2.12.16", "2.13.13"),
+    crossScalaVersions := List("2.12.18", "2.13.15"),
     libraryDependencies ++=
       (
         if (isScala3(scalaVersion.value))
           List.empty
         else
-          List("eu.timepit" %%% "refined" % "0.9.29")
+          List(
+            ("eu.timepit" %%% "refined" % "0.9.29")
+              .excludeAll("org.scala-lang.modules" %% "scala-xml")
+          )
       ),
   )
 lazy val refinedCompatScala2Jvm = refinedCompatScala2.jvm
