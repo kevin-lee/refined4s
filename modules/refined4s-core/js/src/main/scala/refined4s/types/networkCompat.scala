@@ -58,7 +58,7 @@ object networkCompat {
         then Right(url)
         else
           Left(
-            s"Invalid URL. URL: $url, The following propert${if errors.length > 1 then "ies are" else "y is"} invalid: ${errors.mkString("[", ", ", "]")}"
+            s"Invalid URL. URL: $url, The following propert${if errors.lengthIs > 1 then "ies are" else "y is"} invalid: ${errors.mkString("[", ", ", "]")}"
           )
       } catch {
         case NonFatal(err) =>

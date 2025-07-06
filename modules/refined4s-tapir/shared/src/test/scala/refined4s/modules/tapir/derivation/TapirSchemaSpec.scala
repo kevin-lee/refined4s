@@ -3,7 +3,6 @@ package refined4s.modules.tapir.derivation
 import hedgehog.*
 import hedgehog.runner.*
 import refined4s.*
-import refined4s.syntax.*
 import sttp.tapir.Schema
 
 /** @author Kevin Lee

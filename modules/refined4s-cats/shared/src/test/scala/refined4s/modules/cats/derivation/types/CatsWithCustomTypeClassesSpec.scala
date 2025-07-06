@@ -111,7 +111,9 @@ object CatsWithCustomTypeClassesSpec extends Properties {
                     .log("created")
       testData <- Gen.constant(TestData(id, name, created)).log("expected")
     } yield {
-      val names    = name.toValue.split("\\s+")
+      val names = name.toValue.split("\\s+")
+
+      @SuppressWarnings(Array("org.wartremover.warts.ToString"))
       val expected = s"TestData(${id.toString}, ${names(1)}, ${names(0)}, ${created.value.toEpochMilli.toString})"
       val actual   = testData.show
       actual ==== expected

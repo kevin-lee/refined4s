@@ -106,7 +106,7 @@ object strings {
           false
       }
 
-    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+    @SuppressWarnings(Array("org.wartremover.warts.ToString", "org.wartremover.warts.Overloading"))
     def apply(a: UUID): Type = unsafeFrom(a.toString)
 
     extension (uuid: Uuid) {

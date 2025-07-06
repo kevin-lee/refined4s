@@ -11,6 +11,7 @@ import refined4s.internal.typeTools.getTypeName
 trait PureconfigRefinedConfigReader[A: ConfigReader] {
   self: RefinedBase[A] =>
 
+  @SuppressWarnings(Array("org.wartremover.warts.ToString"))
   given derivedConfigReader: ConfigReader[Type] = ConfigReader[A].emap { a =>
     from(a).left.map { err =>
       val expectedType = getTypeName[Type]

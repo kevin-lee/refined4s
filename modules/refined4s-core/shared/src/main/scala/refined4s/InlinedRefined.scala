@@ -11,6 +11,7 @@ trait InlinedRefined[A] extends RefinedBase[A] {
 
   inline def inlinedPredicate(inline a: A): Boolean
 
+  @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
   inline def apply(inline a: A): Type =
     inline if inlinedPredicate(a) then a.asInstanceOf[Type] // scalafix:ok DisableSyntax.asInstanceOf
     else error("Invalid value: [" + codeOf(a) + "]. It must be " + inlinedExpectedValue)

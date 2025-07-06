@@ -131,6 +131,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = NegInt(Int.MinValue)
       val actual    = NegInt.MinValue
@@ -144,6 +145,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = NegInt(-1)
       val actual    = NegInt.MaxValue
@@ -271,6 +273,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = NonNegInt(0)
       val actual    = NonNegInt.MinValue
@@ -284,6 +287,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = NonNegInt(Int.MaxValue)
       val actual    = NonNegInt.MaxValue
@@ -411,6 +415,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = PosInt(1)
       val actual    = PosInt.MinValue
@@ -424,6 +429,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = PosInt(Int.MaxValue)
       val actual    = PosInt.MaxValue
@@ -557,6 +563,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = NonPosInt(Int.MinValue)
       val actual    = NonPosInt.MinValue
@@ -570,6 +577,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = NonPosInt(0)
       val actual    = NonPosInt.MaxValue
@@ -696,6 +704,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = NegLong(Long.MinValue)
       val actual    = NegLong.MinValue
@@ -709,6 +718,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = NegLong(-1L)
       val actual    = NegLong.MaxValue
@@ -843,6 +853,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = NonNegLong(0L)
       val actual    = NonNegLong.MinValue
@@ -856,6 +867,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = NonNegLong(Long.MaxValue)
       val actual    = NonNegLong.MaxValue
@@ -983,6 +995,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = PosLong(1L)
       val actual    = PosLong.MinValue
@@ -996,6 +1009,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = PosLong(Long.MaxValue)
       val actual    = PosLong.MaxValue
@@ -1130,6 +1144,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = NonPosLong(Long.MinValue)
       val actual    = NonPosLong.MinValue
@@ -1143,6 +1158,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = NonPosLong(0L)
       val actual    = NonPosLong.MaxValue
@@ -1270,6 +1286,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = NegShort(Short.MinValue)
       val actual    = NegShort.MinValue
@@ -1283,6 +1300,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = NegShort(-1)
       val actual    = NegShort.MaxValue
@@ -1410,6 +1428,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = NonNegShort(0)
       val actual    = NonNegShort.MinValue
@@ -1423,6 +1442,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = NonNegShort(Short.MaxValue)
       val actual    = NonNegShort.MaxValue
@@ -1550,6 +1570,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = PosShort(1)
       val actual    = PosShort.MinValue
@@ -1563,6 +1584,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = PosShort(Short.MaxValue)
       val actual    = PosShort.MaxValue
@@ -1697,6 +1719,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = NonPosShort(Short.MinValue)
       val actual    = NonPosShort.MinValue
@@ -1710,6 +1733,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = NonPosShort(0)
       val actual    = NonPosShort.MaxValue
@@ -1837,6 +1861,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = NegByte(Byte.MinValue)
       val actual    = NegByte.MinValue
@@ -1850,6 +1875,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = NegByte(-1)
       val actual    = NegByte.MaxValue
@@ -1977,6 +2003,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = NonNegByte(0)
       val actual    = NonNegByte.MinValue
@@ -1990,6 +2017,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = NonNegByte(Byte.MaxValue)
       val actual    = NonNegByte.MaxValue
@@ -2117,6 +2145,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = PosByte(1)
       val actual    = PosByte.MinValue
@@ -2130,6 +2159,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = PosByte(Byte.MaxValue)
       val actual    = PosByte.MaxValue
@@ -2264,6 +2294,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = NonPosByte(Byte.MinValue)
       val actual    = NonPosByte.MinValue
@@ -2277,6 +2308,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = NonPosByte(0)
       val actual    = NonPosByte.MaxValue
@@ -2404,6 +2436,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = NegFloat.unsafeFrom(Float.MinValue)
       val actual    = NegFloat.MinValue
@@ -2417,6 +2450,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = NegFloat.unsafeFrom(math.nextDown(0f))
       val actual    = NegFloat.MaxValue
@@ -2544,6 +2578,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = NonNegFloat(0f)
       val actual    = NonNegFloat.MinValue
@@ -2557,6 +2592,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = NonNegFloat(Float.MaxValue)
       val actual    = NonNegFloat.MaxValue
@@ -2684,6 +2720,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = PosFloat.unsafeFrom(math.nextUp(0f))
       val actual    = PosFloat.MinValue
@@ -2697,6 +2734,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = PosFloat(Float.MaxValue)
       val actual    = PosFloat.MaxValue
@@ -2833,6 +2871,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = NonPosFloat.unsafeFrom(Float.MinValue)
       val actual    = NonPosFloat.MinValue
@@ -2846,6 +2885,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = NonPosFloat(0f)
       val actual    = NonPosFloat.MaxValue
@@ -2973,6 +3013,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = NegDouble.unsafeFrom(Double.MinValue)
       val actual    = NegDouble.MinValue
@@ -2986,6 +3027,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = NegDouble.unsafeFrom(math.nextDown(0d))
       val actual    = NegDouble.MaxValue
@@ -3113,6 +3155,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = NonNegDouble(0d)
       val actual    = NonNegDouble.MinValue
@@ -3126,6 +3169,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = NonNegDouble(Double.MaxValue)
       val actual    = NonNegDouble.MaxValue
@@ -3253,6 +3297,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = PosDouble.unsafeFrom(math.nextUp(0d))
       val actual    = PosDouble.MinValue
@@ -3266,6 +3311,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = PosDouble(Double.MaxValue)
       val actual    = PosDouble.MaxValue
@@ -3402,6 +3448,7 @@ object numericSpec extends Properties {
         input1.compare(input2) ==== n1.compare(n2)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMinValue: Result = {
       val expected  = NonPosDouble.unsafeFrom(Double.MinValue)
       val actual    = NonPosDouble.MinValue
@@ -3415,6 +3462,7 @@ object numericSpec extends Properties {
       )
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     def testMaxValue: Result = {
       val expected  = NonPosDouble(0d)
       val actual    = NonPosDouble.MaxValue

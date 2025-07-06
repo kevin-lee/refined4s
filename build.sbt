@@ -26,7 +26,7 @@ ThisBuild / scmInfo :=
   )
 ThisBuild / licenses := props.licenses
 
-ThisBuild / scalafixDependencies += "com.github.xuwei-k" %% "scalafix-rules" % "0.4.5"
+ThisBuild / scalafixDependencies += "com.github.xuwei-k" %% "scalafix-rules" % "0.6.11"
 
 ThisBuild / scalafixConfig := (
   if (scalaVersion.value.startsWith("3"))
@@ -301,7 +301,7 @@ lazy val props =
     val GitHubUsername = GitHubRepo.fold("kevin-lee")(_.orgToString)
     val RepoName       = GitHubRepo.fold("refined4s")(_.nameToString)
 
-    val Scala3Version = "3.3.3"
+    val Scala3Version = "3.3.5"
 
     val ProjectScalaVersion = Scala3Version
 
