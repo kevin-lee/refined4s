@@ -2508,11 +2508,12 @@ object autoSpec extends Properties {
                                    hedgehog.extra.Gens.genCharByRange(hedgehog.extra.common.NonWhitespaceCharRange.drop(2)),
                                    Range.linear(1, 10),
                                  )
+                                 .map(s => if s === "\"" then """\"""" else s)
                                  .log("nonWhitespaceString")
         whitespaceString    <- Gen
                                  .string(
                                    /*
-                                     strings.WhitespaceCharRange can be used here because of
+                                     strings.WhitespaceCharRange can't be used here because of
                                      ```
                                      ConfigReaderFailures(CannotParse(Expecting a value but got wrong token: 'tab'
                                      (JSON does not allow unescaped tab in quoted strings, use a backslash escape)
