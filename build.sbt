@@ -40,24 +40,24 @@ lazy val refined4s = (project in file("."))
   .settings(noPublish)
   .aggregate(
     coreJvm,
-    coreJs,
+//    coreJs,
     catsJvm,
-    catsJs,
+//    catsJs,
     circeJvm,
-    circeJs,
+//    circeJs,
     pureconfigJvm,
     doobieCe2Jvm,
     doobieCe3Jvm,
     extrasRenderJvm,
-    extrasRenderJs,
+//    extrasRenderJs,
     refinedCompatScala2Jvm,
-    refinedCompatScala2Js,
+//    refinedCompatScala2Js,
     refinedCompatScala3Jvm,
-    refinedCompatScala3Js,
+//    refinedCompatScala3Js,
     tapirJvm,
-    tapirJs,
+//    tapirJs,
     chimneyJvm,
-    chimneyJs,
+//    chimneyJs,
   )
 
 lazy val core    = module("core", crossProject(JVMPlatform, JSPlatform))
