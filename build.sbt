@@ -40,32 +40,32 @@ lazy val refined4s = (project in file("."))
   .settings(noPublish)
   .aggregate(
     coreJvm,
-//    coreJs,
+    coreJs,
     catsJvm,
-//    catsJs,
+    catsJs,
     circeJvm,
-//    circeJs,
+    circeJs,
     pureconfigJvm,
     doobieCe2Jvm,
     doobieCe3Jvm,
     extrasRenderJvm,
-//    extrasRenderJs,
+    extrasRenderJs,
     refinedCompatScala2Jvm,
-//    refinedCompatScala2Js,
+    refinedCompatScala2Js,
     refinedCompatScala3Jvm,
-//    refinedCompatScala3Js,
+    refinedCompatScala3Js,
     tapirJvm,
-//    tapirJs,
+    tapirJs,
     chimneyJvm,
-//    chimneyJs,
+    chimneyJs,
   )
 
 lazy val core    = module("core", crossProject(JVMPlatform, JSPlatform))
   .settings(
     scalacOptions ++= List("-Xprint-suspension"),
     libraryDependencies ++= List(
-      libs.extrasTypeInfo.value % Test,
-      libs.cats.value           % Test,
+      libs.extrasCore.value % Test,
+      libs.cats.value       % Test,
     ),
   )
 lazy val coreJvm = core.jvm
@@ -83,7 +83,7 @@ lazy val cats    = module("cats", crossProject(JVMPlatform, JSPlatform))
   .settings(
     libraryDependencies ++= List(
       libs.cats.value,
-      libs.extrasTypeInfo.value % Test,
+      libs.extrasCore.value % Test,
     )
   )
   .dependsOn(core % props.IncludeTest)
@@ -96,7 +96,7 @@ lazy val circe    = module("circe", crossProject(JVMPlatform, JSPlatform))
       libs.circeCore.value,
       libs.circeParser.value         % Test,
       libs.circeLiteral.value        % Test,
-      libs.extrasTypeInfo.value      % Test,
+      libs.extrasCore.value          % Test,
       libs.extrasHedgehogCirce.value % Test,
     )
   )
@@ -111,7 +111,7 @@ lazy val pureconfig    = module("pureconfig", crossProject(JVMPlatform))
   .settings(
     libraryDependencies ++= List(
       libs.pureconfigCore,
-      libs.extrasTypeInfo.value % Test,
+      libs.extrasCore.value % Test,
     )
   )
   .dependsOn(core % props.IncludeTest)
@@ -234,7 +234,7 @@ lazy val docs = (project in file("docs-gen-tmp/docs"))
         "io.kevinlee" %%% "refined4s-chimney"       % latestVersion,
         "io.kevinlee" %%% "refined4s-circe"         % latestVersion,
         "io.kevinlee" %%% "refined4s-pureconfig"    % latestVersion,
-        "io.kevinlee"  %% "refined4s-doobie-ce2"    % latestVersion,
+        "io.kevinlee"                              %% "refined4s-doobie-ce2" % latestVersion,
         "io.kevinlee" %%% "refined4s-extras-render" % latestVersion,
         "io.kevinlee" %%% "refined4s-tapir"         % latestVersion,
         libs.circeCore.value,
@@ -352,7 +352,7 @@ lazy val props =
 
 lazy val libs = new {
 
-  lazy val extrasTypeInfo       = Def.setting("io.kevinlee" %%% "extras-type-info" % props.ExtrasVersion)
+  lazy val extrasCore           = Def.setting("io.kevinlee" %%% "extras-core" % props.ExtrasVersion)
   lazy val extrasHedgehogCirce  = Def.setting("io.kevinlee" %%% "extras-hedgehog-circe" % props.ExtrasVersion)
   lazy val extrasDoobieToolsCe2 = Def.setting("io.kevinlee" %%% "extras-doobie-tools-ce2" % props.ExtrasVersion)
   lazy val extrasDoobieToolsCe3 = Def.setting("io.kevinlee" %%% "extras-doobie-tools-ce3" % props.ExtrasVersion)
