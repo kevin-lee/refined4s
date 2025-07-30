@@ -17,15 +17,31 @@ Newtypes and Refinement types for Scala 3
 Check out the doc site
 [https://refined4s.kevinly.dev](https://refined4s.kevinly.dev)
 
-|                 Project | Maven Central                                                                                                                                                                          |
-|------------------------:|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|          refined4s-core | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-core_3)                                                                                          |
-|          refined4s-cats | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-cats_3)                   |
-|       refined4s-chimney | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-chimney_3)             |
-|         refined4s-circe | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-circe_3)                 |
-|    refined4s-pureconfig | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-pureconfig_3)       |
-|    refined4s-doobie-ce2 | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-doobie-ce2_3)       |
-|    refined4s-doobie-ce3 | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-doobie-ce3_3)       |
+|                 Project | Maven Central                                                                                          |
+|------------------------:|--------------------------------------------------------------------------------------------------------|
+|          refined4s-core | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-core_3)          |
+|          refined4s-cats | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-cats_3)          |
+|       refined4s-chimney | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-chimney_3)       |
+|         refined4s-circe | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-circe_3)         |
+|    refined4s-pureconfig | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-pureconfig_3)    |
+|    refined4s-doobie-ce2 | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-doobie-ce2_3)    |
+|    refined4s-doobie-ce3 | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-doobie-ce3_3)    |
 | refined4s-extras-render | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-extras-render_3) |
-|         refined4s-tapir | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-tapir_3)                 |
-|       refined4s-chimney | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-chimney_3)             |
+|         refined4s-tapir | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-tapir_3)         |
+|       refined4s-chimney | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-chimney_3)       |
+
+***
+
+## Test Coverage
+
+### Test Coverage Sunburst
+
+![Test Coverage Sunburst](https://codecov.io/gh/kevin-lee/refined4s/graphs/sunburst.svg?token=eRXmN9YMzk)
+
+### Test Coverage Grid
+
+![Test Coverage Grid](https://codecov.io/gh/kevin-lee/refined4s/graphs/tree.svg?token=eRXmN9YMzk)
+
+### Test Coverage Icicle
+
+![Test Coverage Icicle](https://codecov.io/gh/kevin-lee/refined4s/graphs/icicle.svg?token=eRXmN9YMzk)
