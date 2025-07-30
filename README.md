@@ -30,18 +30,22 @@ Check out the doc site
 |         refined4s-tapir | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-tapir_3)         |
 |       refined4s-chimney | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-chimney_3)       |
 
+[![Scala.js](https://www.scala-js.org/assets/badges/scalajs-1.16.0.svg)](https://www.scala-js.org)
+
+Refined4s supports Scala.js.
+
 ***
 
 ## Test Coverage
 
 ### Test Coverage Sunburst
 
-![Test Coverage Sunburst](https://codecov.io/gh/kevin-lee/refined4s/graphs/sunburst.svg?token=eRXmN9YMzk)
+[![Test Coverage Sunburst](https://codecov.io/gh/kevin-lee/refined4s/graphs/sunburst.svg?token=eRXmN9YMzk)](https://app.codecov.io/gh/kevin-lee/refined4s)
 
 ### Test Coverage Grid
 
-![Test Coverage Grid](https://codecov.io/gh/kevin-lee/refined4s/graphs/tree.svg?token=eRXmN9YMzk)
+[![Test Coverage Grid](https://codecov.io/gh/kevin-lee/refined4s/graphs/tree.svg?token=eRXmN9YMzk)](https://app.codecov.io/gh/kevin-lee/refined4s)
 
 ### Test Coverage Icicle
 
-![Test Coverage Icicle](https://codecov.io/gh/kevin-lee/refined4s/graphs/icicle.svg?token=eRXmN9YMzk)
+[![Test Coverage Icicle](https://codecov.io/gh/kevin-lee/refined4s/graphs/icicle.svg?token=eRXmN9YMzk)](https://app.codecov.io/gh/kevin-lee/refined4s)
