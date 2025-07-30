@@ -12,25 +12,34 @@ import TabItem from '@theme/TabItem';
 
 [![Build Status](https://github.com/kevin-lee/refined4s/workflows/Build-All/badge.svg)](https://github.com/kevin-lee/refined4s/actions?workflow=Build-All)
 [![Release Status](https://github.com/kevin-lee/refined4s/workflows/Release/badge.svg)](https://github.com/kevin-lee/refined4s/actions?workflow=Release)
+![GitHub Release Date](https://img.shields.io/github/release-date/kevin-lee/refined4s?logo=github)
+
+![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-core_3)
 [![Latest version](https://index.scala-lang.org/kevin-lee/refined4s/latest.svg)](https://index.scala-lang.org/kevin-lee/refined4s)
+
 [![Hits](https://hits.sh/github.com/kevin-lee/refined4s.svg)](https://hits.sh/github.com/kevin-lee/refined4s/)
+[![codecov](https://codecov.io/gh/kevin-lee/refined4s/graph/badge.svg?token=eRXmN9YMzk)](https://codecov.io/gh/kevin-lee/refined4s)
 
 ![Refined4s Logo](/img/refined4s-320x320.png)
 
 Newtypes and Refinement types for Scala 3
 
-|                 Project | Maven Central                                                                                                                                                                                 |
-|------------------------:|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|          refined4s-core | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.kevinlee/refined4s-core_3/badge.svg)](https://search.maven.org/artifact/io.kevinlee/refined4s-core_3)                   |
-|          refined4s-cats | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.kevinlee/refined4s-cats_3/badge.svg)](https://search.maven.org/artifact/io.kevinlee/refined4s-cats_3)                   |
-|       refined4s-chimney | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.kevinlee/refined4s-chimney_3/badge.svg)](https://search.maven.org/artifact/io.kevinlee/refined4s-chimney_3)             |
-|         refined4s-circe | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.kevinlee/refined4s-circe_3/badge.svg)](https://search.maven.org/artifact/io.kevinlee/refined4s-circe_3)                 |
-|    refined4s-pureconfig | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.kevinlee/refined4s-pureconfig_3/badge.svg)](https://search.maven.org/artifact/io.kevinlee/refined4s-pureconfig_3)       |
-|    refined4s-doobie-ce2 | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.kevinlee/refined4s-doobie-ce2_3/badge.svg)](https://search.maven.org/artifact/io.kevinlee/refined4s-doobie-ce2_3)       |
-|    refined4s-doobie-ce3 | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.kevinlee/refined4s-doobie-ce3_3/badge.svg)](https://search.maven.org/artifact/io.kevinlee/refined4s-doobie-ce3_3)       |
-| refined4s-extras-render | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.kevinlee/refined4s-extras-render_3/badge.svg)](https://search.maven.org/artifact/io.kevinlee/refined4s-extras-render_3) |
-|         refined4s-tapir | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.kevinlee/refined4s-tapir_3/badge.svg)](https://search.maven.org/artifact/io.kevinlee/refined4s-tapir_3)                 |
-|       refined4s-chimney | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.kevinlee/refined4s-chimney_3/badge.svg)](https://search.maven.org/artifact/io.kevinlee/refined4s-chimney_3)             |
+|                 Project | Maven Central                                                                                          |
+|------------------------:|--------------------------------------------------------------------------------------------------------|
+|          refined4s-core | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-core_3)          |
+|          refined4s-cats | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-cats_3)          |
+|       refined4s-chimney | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-chimney_3)       |
+|         refined4s-circe | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-circe_3)         |
+|    refined4s-pureconfig | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-pureconfig_3)    |
+|    refined4s-doobie-ce2 | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-doobie-ce2_3)    |
+|    refined4s-doobie-ce3 | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-doobie-ce3_3)    |
+| refined4s-extras-render | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-extras-render_3) |
+|         refined4s-tapir | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-tapir_3)         |
+|       refined4s-chimney | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-chimney_3)       |
+
+:::danger
+Scala.js support is currently broken. 😭
+:::
 
 ## Getting Started
 
@@ -137,7 +146,6 @@ libraryDependencies += "io.kevinlee" %%% "refined4s-cats" % "@VERSION@"
 
   </TabItem>
 </Tabs>
-
 
 ### refined4s-chimney
 
@@ -260,7 +268,8 @@ In `build.sbt`,
 ```
 
 :::note
-Pureconfig doesn't support Scala.js. So, `refined4s-pureconfig` is not available for Scala.js.
+Pureconfig doesn't support Scala.js. So, `refined4s-pureconfig` is not available
+for Scala.js.
 :::
 
   </TabItem>
@@ -274,7 +283,8 @@ libraryDependencies += "io.kevinlee" %% "refined4s-pureconfig" % "@VERSION@"
 ```
 
 :::note
-Pureconfig doesn't support Scala.js. So, `refined4s-pureconfig` is not available for Scala.js.
+Pureconfig doesn't support Scala.js. So, `refined4s-pureconfig` is not available
+for Scala.js.
 :::
 
   </TabItem>
@@ -307,7 +317,8 @@ In `build.sbt`,
 ```
 
 :::note
-Doobie doesn't support Scala.js. So, `refined4s-doobie-ce2` is not available for Scala.js.
+Doobie doesn't support Scala.js. So, `refined4s-doobie-ce2` is not available for
+Scala.js.
 :::
 
   </TabItem>
@@ -321,7 +332,8 @@ libraryDependencies += "io.kevinlee" %% "refined4s-doobie-ce2" % "@VERSION@"
 ```
 
 :::note
-Doobie doesn't support Scala.js. So, `refined4s-doobie-ce2` is not available for Scala.js.
+Doobie doesn't support Scala.js. So, `refined4s-doobie-ce2` is not available for
+Scala.js.
 :::
 
   </TabItem>
@@ -354,7 +366,8 @@ In `build.sbt`,
 ```
 
 :::note
-Doobie doesn't support Scala.js. So, `refined4s-doobie-ce3` is not available for Scala.js.
+Doobie doesn't support Scala.js. So, `refined4s-doobie-ce3` is not available for
+Scala.js.
 :::
 
   </TabItem>
@@ -368,7 +381,8 @@ libraryDependencies += "io.kevinlee" %% "refined4s-doobie-ce3" % "@VERSION@"
 ```
 
 :::note
-Doobie doesn't support Scala.js. So, `refined4s-doobie-ce3` is not available for Scala.js.
+Doobie doesn't support Scala.js. So, `refined4s-doobie-ce3` is not available for
+Scala.js.
 :::
 
   </TabItem>
@@ -558,28 +572,45 @@ values={[
 In `build.sbt`,
 
 ```scala
-"io.kevinlee" %% "refined4s-core" % "@VERSION@",
-"io.kevinlee" %% "refined4s-cats" % "@VERSION@",
-"io.kevinlee" %% "refined4s-chimney" % "@VERSION@",
-"io.kevinlee" %% "refined4s-circe" % "@VERSION@",
-"io.kevinlee" %% "refined4s-pureconfig" % "@VERSION@",
-"io.kevinlee" %% "refined4s-doobie-ce2" % "@VERSION@", // Use either refined4s-doobie-ce2
-"io.kevinlee" %% "refined4s-doobie-ce3" % "@VERSION@", // OR refined4s-doobie-ce3
-"io.kevinlee" %% "refined4s-extras-render" % "@VERSION@",
-"io.kevinlee" %% "refined4s-tapir" % "@VERSION@",
-"io.kevinlee" %% "refined4s-chimney" % "@VERSION@",
+"io.kevinlee" %% "refined4s-core" % "@VERSION@"
+,
+"io.kevinlee" %% "refined4s-cats" % "@VERSION@"
+,
+"io.kevinlee" %% "refined4s-chimney" % "@VERSION@"
+,
+"io.kevinlee" %% "refined4s-circe" % "@VERSION@"
+,
+"io.kevinlee" %% "refined4s-pureconfig" % "@VERSION@"
+,
+"io.kevinlee" %% "refined4s-doobie-ce2" % "@VERSION@"
+, // Use either refined4s-doobie-ce2
+"io.kevinlee" %% "refined4s-doobie-ce3" % "@VERSION@"
+, // OR refined4s-doobie-ce3
+"io.kevinlee" %% "refined4s-extras-render" % "@VERSION@"
+,
+"io.kevinlee" %% "refined4s-tapir" % "@VERSION@"
+,
+"io.kevinlee" %% "refined4s-chimney" % "@VERSION@"
+,
 ```
 
 or for Scala.js
 
 ```scala
-"io.kevinlee" %%% "refined4s-core" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-cats" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-circe" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-tapir" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@",
+"io.kevinlee" %%% "refined4s-core" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-cats" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-circe" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-tapir" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@"
+,
 ```
 
   </TabItem>
