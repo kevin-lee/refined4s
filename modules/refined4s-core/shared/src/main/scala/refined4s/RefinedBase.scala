@@ -4,7 +4,7 @@ package refined4s
   * @author Kevin Lee
   * @since 2022-03-23
   */
-trait RefinedBase[A] extends NewtypeBase[A] {
+trait RefinedBase[@specialized A] extends NewtypeBase[A] {
 
   override opaque type Type = A
 

@@ -110,25 +110,25 @@ trait numeric {
 }
 object numeric {
 
-  trait Numeric[A: math.Ordering] extends Refined[A], CanBeOrdered[A]
+  trait Numeric[@specialized(Int, Long, Short, Byte, Float, Double) A: math.Ordering] extends Refined[A], CanBeOrdered[A]
 
-  trait InlinedNumeric[A: math.Ordering] extends InlinedRefined[A], CanBeOrdered[A]
+  trait InlinedNumeric[@specialized(Int, Long, Short, Byte, Float, Double) A: math.Ordering] extends InlinedRefined[A], CanBeOrdered[A]
 
-  trait Min[A] {
+  trait Min[@specialized(Int, Long, Short, Byte, Float, Double) A] {
     self: NewtypeBase[A] =>
     def min: Type
 
     val MinValue: Type = min
   }
 
-  trait Max[A] {
+  trait Max[@specialized(Int, Long, Short, Byte, Float, Double) A] {
     self: NewtypeBase[A] =>
     def max: Type
 
     val MaxValue: Type = max
   }
 
-  trait MinMax[A] extends Min[A], Max[A] {
+  trait MinMax[@specialized(Int, Long, Short, Byte, Float, Double) A] extends Min[A], Max[A] {
     self: NewtypeBase[A] =>
   }
 
