@@ -3,7 +3,7 @@ package refined4s
 /** @author Kevin Lee
   * @since 2023-12-03
   */
-trait NewtypeBase[A] {
+trait NewtypeBase[@specialized A] {
   type Type
 
   given newRefinedCanEqual: CanEqual[Type, Type] = CanEqual.derived

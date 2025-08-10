@@ -3,7 +3,7 @@ package refined4s
 /** @author Kevin Lee
   * @since 2023-12-03
   */
-trait Newtype[A] extends NewtypeBase[A] {
+trait Newtype[@specialized A] extends NewtypeBase[A] {
   override opaque type Type = A
 
   def apply(a: A): Type = a

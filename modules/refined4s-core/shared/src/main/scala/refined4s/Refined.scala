@@ -6,7 +6,7 @@ import compiletime.*
   * @author Kevin Lee
   * @since 2022-03-23
   */
-trait Refined[A] extends RefinedBase[A] {
+trait Refined[@specialized A] extends RefinedBase[A] {
 
   @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
   inline def apply(a: A): Type =

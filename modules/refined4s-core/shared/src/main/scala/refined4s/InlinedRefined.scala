@@ -5,7 +5,7 @@ import scala.compiletime.*
 /** @author Kevin Lee
   * @since 2023-08-12
   */
-trait InlinedRefined[A] extends RefinedBase[A] {
+trait InlinedRefined[@specialized A] extends RefinedBase[A] {
 
   inline val inlinedExpectedValue: String
 
