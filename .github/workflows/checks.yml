@@ -10,7 +10,7 @@ on:
       - main
 
 env:
-  GH_JVM_OPTS: "-Xss64m -Xms1024m -Xmx8G -XX:MaxMetaspaceSize=2G -XX:-UseGCOverheadLimit -XX:MaxInlineLevel=18 -XX:+UnlockExperimentalVMOptions -XX:+UseJVMCICompiler"
+  GH_JVM_OPTS: "-Xss64m -Xms1024m -Xmx8G -XX:MaxMetaspaceSize=2G -XX:-UseGCOverheadLimit -XX:MaxInlineLevel=18 -XX:+UnlockExperimentalVMOptions"
 
 jobs:
 

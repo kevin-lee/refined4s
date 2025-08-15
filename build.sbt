@@ -44,21 +44,28 @@ lazy val refined4s = (project in file("."))
     coreNative,
     catsJvm,
     catsJs,
+    catsNative,
     circeJvm,
     circeJs,
+    circeNative,
     pureconfigJvm,
     doobieCe2Jvm,
     doobieCe3Jvm,
     extrasRenderJvm,
     extrasRenderJs,
+    extrasRenderNative,
     refinedCompatScala2Jvm,
     refinedCompatScala2Js,
+    refinedCompatScala2Native,
     refinedCompatScala3Jvm,
     refinedCompatScala3Js,
+    refinedCompatScala3Native,
     tapirJvm,
     tapirJs,
+//    tapirNative,
     chimneyJvm,
     chimneyJs,
+//    chimneyNative,
   )
 
 lazy val core       = module("core", crossProject(JVMPlatform, JSPlatform, NativePlatform))
@@ -80,7 +87,7 @@ lazy val coreJs     = core
   .settings(
     libraryDependencies ++= List(
       libs.scalajsJavaSecurerandom.value,
-      libs.scalaJavaTime.value,
+      libs.tests.scalaJavaTime.value,
     )
   )
   .settings(
@@ -97,7 +104,7 @@ lazy val coreNative = core
     )
   )
 
-lazy val cats    = module("cats", crossProject(JVMPlatform, JSPlatform))
+lazy val cats       = module("cats", crossProject(JVMPlatform, JSPlatform, NativePlatform))
   .settings(
     libraryDependencies ++= List(
       libs.cats.value,
@@ -105,10 +112,18 @@ lazy val cats    = module("cats", crossProject(JVMPlatform, JSPlatform))
     )
   )
   .dependsOn(core % props.IncludeTest)
-lazy val catsJvm = cats.jvm
-lazy val catsJs  = cats.js.settings(jsSettingsForFuture)
+lazy val catsJvm    = cats.jvm
+lazy val catsJs     = cats.js.settings(jsSettingsForFuture)
+lazy val catsNative = cats
+  .native
+  .settings(nativeSettings)
+  .settings(
+    libraryDependencies ++= List(
+      libs.tests.scalaJavaTime.value
+    )
+  )
 
-lazy val circe    = module("circe", crossProject(JVMPlatform, JSPlatform))
+lazy val circe       = module("circe", crossProject(JVMPlatform, JSPlatform, NativePlatform))
   .settings(
     libraryDependencies ++= List(
       libs.circeCore.value,
@@ -122,8 +137,16 @@ lazy val circe    = module("circe", crossProject(JVMPlatform, JSPlatform))
     core % props.IncludeTest,
     cats,
   )
-lazy val circeJvm = circe.jvm
-lazy val circeJs  = circe.js.settings(jsSettingsForFuture)
+lazy val circeJvm    = circe.jvm
+lazy val circeJs     = circe.js.settings(jsSettingsForFuture)
+lazy val circeNative = circe
+  .native
+  .settings(nativeSettings)
+  .settings(
+    libraryDependencies ++= List(
+      libs.tests.scalaJavaTime.value
+    )
+  )
 
 lazy val pureconfig    = module("pureconfig", crossProject(JVMPlatform))
   .settings(
@@ -169,7 +192,7 @@ lazy val doobieCe3    = module("doobie-ce3", crossProject(JVMPlatform))
   )
 lazy val doobieCe3Jvm = doobieCe3.jvm
 
-lazy val extrasRender    = module("extras-render", crossProject(JVMPlatform, JSPlatform))
+lazy val extrasRender       = module("extras-render", crossProject(JVMPlatform, JSPlatform, NativePlatform))
   .settings(
     libraryDependencies ++= List(
       libs.extrasRender.value
@@ -178,10 +201,11 @@ lazy val extrasRender    = module("extras-render", crossProject(JVMPlatform, JSP
   .dependsOn(
     core % props.IncludeTest
   )
-lazy val extrasRenderJvm = extrasRender.jvm
-lazy val extrasRenderJs  = extrasRender.js.settings(jsSettingsForFuture)
+lazy val extrasRenderJvm    = extrasRender.jvm
+lazy val extrasRenderJs     = extrasRender.js.settings(jsSettingsForFuture)
+lazy val extrasRenderNative = extrasRender.native.settings(nativeSettings)
 
-lazy val chimney    = module("chimney", crossProject(JVMPlatform, JSPlatform))
+lazy val chimney    = module("chimney", crossProject(JVMPlatform, JSPlatform)) // , NativePlatform))
   .settings(
     libraryDependencies ++= List(
       libs.chimney.value,
@@ -194,10 +218,15 @@ lazy val chimney    = module("chimney", crossProject(JVMPlatform, JSPlatform))
   )
 lazy val chimneyJvm = chimney.jvm
 lazy val chimneyJs  = chimney.js.settings(jsSettingsForFuture)
+//lazy val chimneyNative = chimney.native.settings(nativeSettings)
 
-lazy val refinedCompatScala2    = module("refined-compat-scala2", crossProject(JVMPlatform, JSPlatform))
+lazy val refinedCompatScala2       = module("refined-compat-scala2", crossProject(JVMPlatform, JSPlatform, NativePlatform))
   .settings(
-    crossScalaVersions := List("2.12.18", "2.13.16"),
+    crossScalaVersions := List("2.12.18", "2.13.16")
+  )
+lazy val refinedCompatScala2Jvm    = refinedCompatScala2
+  .jvm
+  .settings(
     libraryDependencies ++=
       (
         if (isScala3(scalaVersion.value))
@@ -207,19 +236,45 @@ lazy val refinedCompatScala2    = module("refined-compat-scala2", crossProject(J
             ("eu.timepit" %%% "refined" % "0.9.29")
               .excludeAll("org.scala-lang.modules" %% "scala-xml")
           )
-      ),
+      )
   )
-lazy val refinedCompatScala2Jvm = refinedCompatScala2.jvm
-lazy val refinedCompatScala2Js  = refinedCompatScala2.js.settings(jsSettingsForFuture)
+lazy val refinedCompatScala2Js     = refinedCompatScala2
+  .js
+  .settings(jsSettingsForFuture)
+  .settings(
+    libraryDependencies ++=
+      (
+        if (isScala3(scalaVersion.value))
+          List.empty
+        else
+          List(
+            ("eu.timepit" %%% "refined" % "0.9.29")
+              .excludeAll("org.scala-lang.modules" %% "scala-xml")
+          )
+      )
+  )
+lazy val refinedCompatScala2Native = refinedCompatScala2
+  .native
+  .settings(nativeSettings)
+  .settings(
+    libraryDependencies ++=
+      (
+        if (isScala3(scalaVersion.value))
+          List.empty
+        else
+          List("eu.timepit" %%% "refined" % "0.11.3")
+      )
+  )
 
-lazy val refinedCompatScala3    = module("refined-compat-scala3", crossProject(JVMPlatform, JSPlatform))
+lazy val refinedCompatScala3       = module("refined-compat-scala3", crossProject(JVMPlatform, JSPlatform, NativePlatform))
   .dependsOn(
     core % props.IncludeTest
   )
-lazy val refinedCompatScala3Jvm = refinedCompatScala3.jvm
-lazy val refinedCompatScala3Js  = refinedCompatScala3.js.settings(jsSettingsForFuture)
+lazy val refinedCompatScala3Jvm    = refinedCompatScala3.jvm
+lazy val refinedCompatScala3Js     = refinedCompatScala3.js.settings(jsSettingsForFuture)
+lazy val refinedCompatScala3Native = refinedCompatScala3.native.settings(nativeSettings)
 
-lazy val tapir    = module("tapir", crossProject(JVMPlatform, JSPlatform))
+lazy val tapir       = module("tapir", crossProject(JVMPlatform, JSPlatform))//, NativePlatform))
   .settings(
     libraryDependencies ++= List(
       libs.tapirCore.value
@@ -228,8 +283,9 @@ lazy val tapir    = module("tapir", crossProject(JVMPlatform, JSPlatform))
   .dependsOn(
     core % props.IncludeTest
   )
-lazy val tapirJvm = tapir.jvm
-lazy val tapirJs  = tapir.js.settings(jsSettingsForFuture)
+lazy val tapirJvm    = tapir.jvm
+lazy val tapirJs     = tapir.js.settings(jsSettingsForFuture)
+//lazy val tapirNative = tapir.native.settings(nativeSettings)
 
 lazy val docs = (project in file("docs-gen-tmp/docs"))
   .enablePlugins(MdocPlugin, DocusaurPlugin)
@@ -344,7 +400,7 @@ lazy val props =
 
     val CatsVersion = "2.12.0"
 
-    val CirceVersion = "0.14.3"
+    val CirceVersion = "0.14.12"
 
     val PureconfigVersion = "0.17.1"
 
@@ -359,7 +415,7 @@ lazy val props =
 
     val KittensVersion = "3.0.0"
 
-    val TapirVersion = "1.0.6"
+    val TapirVersion = "1.11.28"
 
     val ChimneyVersion = "1.3.0"
 
@@ -409,8 +465,6 @@ lazy val libs = new {
   lazy val scalajsJavaSecurerandom =
     Def.setting(("org.scala-js" %%% "scalajs-java-securerandom" % props.ScalajsJavaSecurerandomVersion).cross(CrossVersion.for3Use2_13))
 
-  lazy val scalaJavaTime = Def.setting("io.github.cquiroz" %%% "scala-java-time" % props.ScalaJavaTimeVersion)
-
   lazy val tests = new {
 
     lazy val hedgehog = Def.setting {
@@ -427,6 +481,8 @@ lazy val libs = new {
 
     lazy val scalaNativeCrypto =
       Def.setting("com.github.lolgab" %%% "scala-native-crypto" % props.ScalaNativeCryptoVersion % Test)
+
+    lazy val scalaJavaTime = Def.setting("io.github.cquiroz" %%% "scala-java-time" % props.ScalaJavaTimeVersion % Test)
 
   }
 }
