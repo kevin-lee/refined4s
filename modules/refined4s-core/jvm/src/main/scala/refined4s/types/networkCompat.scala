@@ -1,7 +1,7 @@
 package refined4s.types
 
 import refined4s.InlinedRefined
-import refined4s.types.network.{UnexpectedLiteralErrorMessage, Uri}
+import refined4s.types.network.Uri
 
 import scala.quoted.*
 
@@ -61,7 +61,7 @@ object networkCompat {
         }
       case _ =>
         report.error(
-          UnexpectedLiteralErrorMessage,
+          UriValidator.UnexpectedLiteralErrorMessage,
           urlExpr,
         )
         Expr(false)

@@ -219,7 +219,7 @@ trait networkSpec extends Properties, networkCompatSpec {
 //      actual ==== expected
 //    }
 
-  inline def runNetworkIsValidateUri(inline a: String): Boolean = ${ network.isValidateUri('a) }
+  inline def runNetworkIsValidateUri(inline a: String): Boolean = ${ UriValidator.isValidateUri('a) }
 
   def testNetworkIsValidateUriValid: Result = {
     val expected = true
@@ -237,7 +237,7 @@ trait networkSpec extends Properties, networkCompatSpec {
 
   def testNetworkIsValidateUriWithInvalidLiteral: Result = {
     import scala.compiletime.testing.typeCheckErrors
-    val expectedMessage = network.UnexpectedLiteralErrorMessage
+    val expectedMessage = UriValidator.UnexpectedLiteralErrorMessage
 
     val actual = typeCheckErrors(
       """

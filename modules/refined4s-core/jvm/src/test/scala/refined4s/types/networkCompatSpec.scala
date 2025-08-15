@@ -282,7 +282,7 @@ trait networkCompatSpec {
 
   def testNetworkIsValidateUrlWithInvalidLiteral: Result = {
     import scala.compiletime.testing.typeCheckErrors
-    val expectedMessage = network.UnexpectedLiteralErrorMessage
+    val expectedMessage = UriValidator.UnexpectedLiteralErrorMessage
 
     val actual = typeCheckErrors(
       """

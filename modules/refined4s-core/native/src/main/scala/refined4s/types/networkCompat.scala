@@ -25,7 +25,7 @@ object networkCompat {
     override def predicate(a: String): Boolean =
       validate(a) match {
         case Left(err) =>
-//          println(err)
+          //          println(err)
           false
         case Right(_) =>
           true
@@ -37,7 +37,7 @@ object networkCompat {
 
         val isValidSchemas   = validUrlSchemes.contains(uri.getScheme)
         /* URI.getHost works different from Java.'s URI.getHost */
-//        val isValidHost      = Option(uri.getHost).isDefined
+        //        val isValidHost      = Option(uri.getHost).isDefined
         val isValidAuthority = Option(uri.getAuthority).isDefined
         val isAbsolute       = uri.isAbsolute
         val isValidPath      = {
@@ -47,7 +47,7 @@ object networkCompat {
 
         val errors = List(
           if isValidSchemas then None else Some("Schema"),
-//          if isValidHost then None else Some("Host"),
+          //          if isValidHost then None else Some("Host"),
           if isValidAuthority then None else Some("Authority"),
           if isAbsolute then None else Some("Absolute URL"),
           if isValidPath then None else Some("Path"),
@@ -68,12 +68,12 @@ object networkCompat {
 
     override inline def inlinedPredicate(inline url: String): Boolean = ${ isValidateUrl('url) }
 
-//    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
-//    def apply(a: URL): Type = unsafeFrom(a.toString)
+    //    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+    //    def apply(a: URL): Type = unsafeFrom(a.toString)
 
     extension (url: Type) {
-//      @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
-//      def toURL: URL = new URL(url.value)
+      //      @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
+      //      def toURL: URL = new URL(url.value)
 
       def toUri: Uri = Uri(toURI)
 
@@ -94,7 +94,7 @@ object networkCompat {
           val uri = new URI(urlStr)
 
           val isValidSchemas   = validUrlSchemes.contains(uri.getScheme)
-//          val isValidHost      = Option(uri.getHost).isDefined
+          //          val isValidHost      = Option(uri.getHost).isDefined
           val isValidAuthority = Option(uri.getAuthority).isDefined
           val isAbsolute       = uri.isAbsolute
           val isValidPath      = {
@@ -103,13 +103,13 @@ object networkCompat {
           }
 
           debug(isValidSchemas, "Schema")
-//          debug(isValidHost, "Host")
+          //          debug(isValidHost, "Host")
           debug(isValidAuthority, "Authority")
           debug(isAbsolute, "It should be absolute but ")
           debug(isValidPath, "Path")
 
           val validity = isValidSchemas &&
-//            isValidHost &&
+            //            isValidHost &&
             isValidAuthority &&
             isAbsolute && isValidPath
           Expr(validity)

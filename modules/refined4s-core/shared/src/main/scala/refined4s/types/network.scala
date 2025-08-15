@@ -66,7 +66,7 @@ object network {
 
     override inline val inlinedExpectedValue = "a URI String"
 
-    override inline def inlinedPredicate(inline uri: String): Boolean = ${ isValidateUri('uri) }
+    override inline def inlinedPredicate(inline uri: String): Boolean = ${ UriValidator.isValidateUri('uri) }
 
     @SuppressWarnings(Array("org.wartremover.warts.ToString", "org.wartremover.warts.Overloading"))
     def apply(a: URI): Type = unsafeFrom(a.toString)
@@ -129,30 +129,6 @@ object network {
 
     override inline def predicate(a: Int): Boolean =
       49152 <= a && a <= 65535
-  }
-
-  val UnexpectedLiteralErrorMessage: String =
-    """Uri must be a string literal.
-      |If it's unknown in compile-time, use `Uri.from` or `Uri.unsafeFrom` instead.
-      |(unsafeFrom is not recommended)""".stripMargin
-
-  def isValidateUri(uriExpr: Expr[String])(using Quotes): Expr[Boolean] = {
-    import quotes.reflect.*
-    uriExpr.asTerm match {
-      case Inlined(_, _, Literal(StringConstant(uriStr))) =>
-        try {
-          new java.net.URI(uriStr)
-          Expr(true)
-        } catch {
-          case _: Throwable => Expr(false)
-        }
-      case _ =>
-        report.error(
-          UnexpectedLiteralErrorMessage,
-          uriExpr,
-        )
-        Expr(false)
-    }
   }
 
 }
