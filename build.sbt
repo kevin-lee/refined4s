@@ -41,6 +41,7 @@ lazy val refined4s = (project in file("."))
   .aggregate(
     coreJvm,
     coreJs,
+    coreNative,
     catsJvm,
     catsJs,
     circeJvm,
@@ -60,22 +61,39 @@ lazy val refined4s = (project in file("."))
     chimneyJs,
   )
 
-lazy val core    = module("core", crossProject(JVMPlatform, JSPlatform))
+lazy val core       = module("core", crossProject(JVMPlatform, JSPlatform, NativePlatform))
   .settings(
     scalacOptions ++= List("-Xprint-suspension"),
     libraryDependencies ++= List(
-      libs.extrasCore.value % Test,
       libs.cats.value       % Test,
+      libs.extrasCore.value % Test,
     ),
   )
-lazy val coreJvm = core.jvm
-lazy val coreJs  = core
+lazy val coreJvm    = core
+  .jvm
+  .settings(
+    libraryDependencies ++= List(libs.tests.hedgehogExtraCore.value)
+  )
+lazy val coreJs     = core
   .js
   .settings(jsSettingsForFuture)
   .settings(
     libraryDependencies ++= List(
       libs.scalajsJavaSecurerandom.value,
       libs.scalaJavaTime.value,
+    )
+  )
+  .settings(
+    libraryDependencies ++= List(
+      libs.tests.hedgehogExtraCore.value
+    )
+  )
+lazy val coreNative = core
+  .native
+  .settings(nativeSettings)
+  .settings(
+    libraryDependencies ++= List(
+      libs.tests.scalaNativeCrypto.value
     )
   )
 
@@ -179,7 +197,7 @@ lazy val chimneyJs  = chimney.js.settings(jsSettingsForFuture)
 
 lazy val refinedCompatScala2    = module("refined-compat-scala2", crossProject(JVMPlatform, JSPlatform))
   .settings(
-    crossScalaVersions := List("2.12.18", "2.13.15"),
+    crossScalaVersions := List("2.12.18", "2.13.16"),
     libraryDependencies ++=
       (
         if (isScala3(scalaVersion.value))
@@ -319,12 +337,12 @@ lazy val props =
 
     val IncludeTest = "compile->compile;test->test"
 
-    val HedgehogVersion      = "0.10.1"
-    val HedgehogExtraVersion = "0.11.0"
+    val HedgehogVersion      = "0.13.0"
+    val HedgehogExtraVersion = "0.12.0"
 
-    val ExtrasVersion = "0.47.0"
+    val ExtrasVersion = "0.48.0"
 
-    val CatsVersion = "2.8.0"
+    val CatsVersion = "2.12.0"
 
     val CirceVersion = "0.14.3"
 
@@ -335,7 +353,7 @@ lazy val props =
 
     val EmbeddedPostgresVersion = "2.0.7"
 
-    val EffectieVersion = "2.0.0-beta14"
+    val EffectieVersion = "2.0.0"
 
     val LogbackVersion = "1.5.6"
 
@@ -348,6 +366,9 @@ lazy val props =
     val ScalajsJavaSecurerandomVersion = "1.0.0"
 
     val ScalaJavaTimeVersion = "2.6.0"
+
+    val ScalaNativeCryptoVersion = "0.2.1"
+
   }
 
 lazy val libs = new {
@@ -403,6 +424,10 @@ lazy val libs = new {
     lazy val hedgehogExtraCore = Def.setting("io.kevinlee" %%% "hedgehog-extra-core" % props.HedgehogExtraVersion % Test)
 
     lazy val hedgehogExtraRefined4s = Def.setting("io.kevinlee" %%% "hedgehog-extra-refined4s" % props.HedgehogExtraVersion % Test)
+
+    lazy val scalaNativeCrypto =
+      Def.setting("com.github.lolgab" %%% "scala-native-crypto" % props.ScalaNativeCryptoVersion % Test)
+
   }
 }
 
@@ -428,7 +453,7 @@ def module(projectName: String, crossProject: CrossProject.Builder): CrossProjec
       ),
       scalacOptions ++= (if (isScala3(scalaVersion.value)) List("-no-indent") else List("-Xsource:3")),
 //      scalacOptions ~= (ops => ops.filter(_ != "UTF-8")),
-      libraryDependencies ++= libs.tests.hedgehog.value ++ List(libs.tests.hedgehogExtraCore.value),
+      libraryDependencies ++= libs.tests.hedgehog.value,
       wartremoverErrors ++= Warts.allBut(Wart.Any, Wart.Nothing, Wart.ImplicitConversion, Wart.ImplicitParameter),
       Compile / console / scalacOptions :=
         (console / scalacOptions)
@@ -468,4 +493,8 @@ lazy val jsSettingsForFuture: SettingsDefinition = List(
   Test / compile / scalacOptions ++= (if (scalaVersion.value.startsWith("3")) List.empty
                                       else List("-P:scalajs:nowarnGlobalExecutionContext")),
   coverageEnabled := false,
+)
+
+lazy val nativeSettings: SettingsDefinition = List(
+  Test / fork := false
 )
