@@ -552,5 +552,6 @@ lazy val jsSettingsForFuture: SettingsDefinition = List(
 )
 
 lazy val nativeSettings: SettingsDefinition = List(
-  Test / fork := false
+  Test / fork := false,
+  coverageEnabled := false,
 )
