@@ -38,9 +38,11 @@ Newtypes and Refinement types for Scala 3
 |       refined4s-chimney | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-chimney_3)       |
 
 :::info
-[![Scala.js](https://www.scala-js.org/assets/badges/scalajs-1.16.0.svg)](https://www.scala-js.org)
+[![Scala.js](https://www.scala-js.org/assets/badges/scalajs-1.18.0.svg)](https://www.scala-js.org)
+[![cats-core Scala version support](https://index.scala-lang.org/kevin-lee/refined4s/refined4s-core/latest-by-scala-version.svg?platform=native0.5)](https://index.scala-lang.org/kevin-lee/refined4s/refined4s-core)
 
-Refined4s supports Scala.js.
+Refined4s supports Scala.js and Scala Native.
+
 :::
 
 ## Getting Started
@@ -65,7 +67,7 @@ In `build.sbt`,
 "io.kevinlee" %% "refined4s-core" % "@VERSION@"
 ```
 
-or for Scala.js
+or for Scala.js and Scala Native
 
 ```scala
 "io.kevinlee" %%% "refined4s-core" % "@VERSION@"
@@ -81,7 +83,7 @@ In `build.sbt`,
 libraryDependencies += "io.kevinlee" %% "refined4s-core" % "@VERSION@"
 ```
 
-or for Scala.js
+or for Scala.js and Scala Native
 
 ```scala
 libraryDependencies += "io.kevinlee" %%% "refined4s-core" % "@VERSION@"
@@ -116,7 +118,7 @@ In `build.sbt`,
 "io.kevinlee" %% "refined4s-cats" % "@VERSION@"
 ```
 
-or for Scala.js
+or for Scala.js and Scala Native
 
 ```scala
 "io.kevinlee" %%% "refined4s-cats" % "@VERSION@"
@@ -132,7 +134,7 @@ In `build.sbt`,
 libraryDependencies += "io.kevinlee" %% "refined4s-cats" % "@VERSION@"
 ```
 
-or for Scala.js
+or for Scala.js and Scala Native
 
 ```scala
 libraryDependencies += "io.kevinlee" %%% "refined4s-cats" % "@VERSION@"
@@ -218,7 +220,7 @@ In `build.sbt`,
 "io.kevinlee" %% "refined4s-circe" % "@VERSION@"
 ```
 
-or for Scala.js
+or for Scala.js and Scala Native
 
 ```scala
 "io.kevinlee" %%% "refined4s-circe" % "@VERSION@"
@@ -234,7 +236,7 @@ In `build.sbt`,
 libraryDependencies += "io.kevinlee" %% "refined4s-circe" % "@VERSION@"
 ```
 
-or for Scala.js
+or for Scala.js and Scala Native
 
 ```scala
 libraryDependencies += "io.kevinlee" %%% "refined4s-circe" % "@VERSION@"
@@ -418,7 +420,7 @@ In `build.sbt`,
 "io.kevinlee" %% "refined4s-extras-render" % "@VERSION@"
 ```
 
-or for Scala.js
+or for Scala.js and Scala Native
 
 ```scala
 "io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@"
@@ -434,7 +436,7 @@ In `build.sbt`,
 libraryDependencies += "io.kevinlee" %% "refined4s-extras-render" % "@VERSION@"
 ```
 
-or for Scala.js
+or for Scala.js and Scala Native
 
 ```scala
 libraryDependencies += "io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@"
@@ -615,6 +617,21 @@ or for Scala.js
 ,
 ```
 
+or for Scala Native
+
+```scala
+"io.kevinlee" %%% "refined4s-core" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-cats" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-circe" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@"
+,
+```
+
   </TabItem>
 
   <TabItem value="refined4s-sbt-lib">
@@ -647,6 +664,18 @@ libraryDependencies ++= Seq(
   "io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@",
   "io.kevinlee" %%% "refined4s-tapir" % "@VERSION@",
   "io.kevinlee" %%% "refined4s-chimney" % "@VERSION@",
+)
+```
+
+or for Scala Native
+
+```scala
+libraryDependencies ++= Seq(
+  "io.kevinlee" %%% "refined4s-core" % "@VERSION@",
+  "io.kevinlee" %%% "refined4s-cats" % "@VERSION@",
+  "io.kevinlee" %%% "refined4s-chimney" % "@VERSION@",
+  "io.kevinlee" %%% "refined4s-circe" % "@VERSION@",
+  "io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@",
 )
 ```
 
