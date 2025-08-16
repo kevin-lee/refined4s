@@ -65,7 +65,7 @@ lazy val refined4s = (project in file("."))
 //    tapirNative,
     chimneyJvm,
     chimneyJs,
-//    chimneyNative,
+    chimneyNative,
   )
 
 lazy val core       = module("core", crossProject(JVMPlatform, JSPlatform, NativePlatform))
@@ -205,7 +205,7 @@ lazy val extrasRenderJvm    = extrasRender.jvm
 lazy val extrasRenderJs     = extrasRender.js.settings(jsSettingsForFuture)
 lazy val extrasRenderNative = extrasRender.native.settings(nativeSettings)
 
-lazy val chimney    = module("chimney", crossProject(JVMPlatform, JSPlatform)) // , NativePlatform))
+lazy val chimney    = module("chimney", crossProject(JVMPlatform, JSPlatform, NativePlatform))
   .settings(
     libraryDependencies ++= List(
       libs.chimney.value,
@@ -218,7 +218,7 @@ lazy val chimney    = module("chimney", crossProject(JVMPlatform, JSPlatform)) /
   )
 lazy val chimneyJvm = chimney.jvm
 lazy val chimneyJs  = chimney.js.settings(jsSettingsForFuture)
-//lazy val chimneyNative = chimney.native.settings(nativeSettings)
+lazy val chimneyNative = chimney.native.settings(nativeSettings)
 
 lazy val refinedCompatScala2       = module("refined-compat-scala2", crossProject(JVMPlatform, JSPlatform, NativePlatform))
   .settings(
@@ -394,7 +394,7 @@ lazy val props =
     val IncludeTest = "compile->compile;test->test"
 
     val HedgehogVersion      = "0.13.0"
-    val HedgehogExtraVersion = "0.12.0"
+    val HedgehogExtraVersion = "0.13.0"
 
     val ExtrasVersion = "0.48.0"
 
