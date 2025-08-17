@@ -35,7 +35,6 @@ Newtypes and Refinement types for Scala 3
 |    refined4s-doobie-ce3 | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-doobie-ce3_3)    |
 | refined4s-extras-render | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-extras-render_3) |
 |         refined4s-tapir | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-tapir_3)         |
-|       refined4s-chimney | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-chimney_3)       |
 
 :::info
 [![Scala.js](https://www.scala-js.org/assets/badges/scalajs-1.18.0.svg)](https://www.scala-js.org)
@@ -185,7 +184,7 @@ In `build.sbt`,
 libraryDependencies += "io.kevinlee" %% "refined4s-chimney" % "@VERSION@"
 ```
 
-or for Scala.js
+or for Scala.js and Scala Native
 
 ```scala
 libraryDependencies += "io.kevinlee" %%% "refined4s-chimney" % "@VERSION@"
@@ -508,58 +507,6 @@ libraryDependencies += "io.kevinlee" %%% "refined4s-tapir" % "@VERSION@"
 
 ***
 
-### refined4s-chimney
-
-<Tabs
-groupId="refined4s"
-defaultValue="refined4s-sbt"
-values={[
-{label: 'sbt', value: 'refined4s-sbt'},
-{label: 'sbt (with libraryDependencies)', value: 'refined4s-sbt-lib'},
-{label: 'scala-cli', value: 'refined4s-scala-cli'},
-]}>
-<TabItem value="refined4s-sbt">
-
-In `build.sbt`,
-
-```scala
-"io.kevinlee" %% "refined4s-chimney" % "@VERSION@"
-```
-
-or for Scala.js
-
-```scala
-"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@"
-```
-
-  </TabItem>
-
-  <TabItem value="refined4s-sbt-lib">
-
-In `build.sbt`,
-
-```scala
-libraryDependencies += "io.kevinlee" %% "refined4s-chimney" % "@VERSION@"
-```
-
-or for Scala.js
-
-```scala
-libraryDependencies += "io.kevinlee" %%% "refined4s-chimney" % "@VERSION@"
-```
-
-  </TabItem>
-
-  <TabItem value="refined4s-scala-cli">
-
-```scala
-//> using dep "io.kevinlee::refined4s-chimney:@VERSION@"
-```
-
-  </TabItem>
-</Tabs>
-
-***
 
 ### All refined4s modules
 
@@ -576,45 +523,28 @@ values={[
 In `build.sbt`,
 
 ```scala
-"io.kevinlee" %% "refined4s-core" % "@VERSION@"
-,
-"io.kevinlee" %% "refined4s-cats" % "@VERSION@"
-,
-"io.kevinlee" %% "refined4s-chimney" % "@VERSION@"
-,
-"io.kevinlee" %% "refined4s-circe" % "@VERSION@"
-,
-"io.kevinlee" %% "refined4s-pureconfig" % "@VERSION@"
-,
-"io.kevinlee" %% "refined4s-doobie-ce2" % "@VERSION@"
-, // Use either refined4s-doobie-ce2
-"io.kevinlee" %% "refined4s-doobie-ce3" % "@VERSION@"
-, // OR refined4s-doobie-ce3
-"io.kevinlee" %% "refined4s-extras-render" % "@VERSION@"
-,
-"io.kevinlee" %% "refined4s-tapir" % "@VERSION@"
-,
-"io.kevinlee" %% "refined4s-chimney" % "@VERSION@"
-,
+"io.kevinlee" %% "refined4s-core" % "@VERSION@",
+"io.kevinlee" %% "refined4s-cats" % "@VERSION@",
+"io.kevinlee" %% "refined4s-chimney" % "@VERSION@",
+"io.kevinlee" %% "refined4s-circe" % "@VERSION@",
+"io.kevinlee" %% "refined4s-pureconfig" % "@VERSION@",
+"io.kevinlee" %% "refined4s-doobie-ce2" % "@VERSION@", // Use either refined4s-doobie-ce2
+"io.kevinlee" %% "refined4s-doobie-ce3" % "@VERSION@", // OR refined4s-doobie-ce3
+"io.kevinlee" %% "refined4s-extras-render" % "@VERSION@",
+"io.kevinlee" %% "refined4s-tapir" % "@VERSION@",
+"io.kevinlee" %% "refined4s-chimney" % "@VERSION@",
 ```
 
 or for Scala.js
 
 ```scala
-"io.kevinlee" %%% "refined4s-core" % "@VERSION@"
-,
-"io.kevinlee" %%% "refined4s-cats" % "@VERSION@"
-,
-"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@"
-,
-"io.kevinlee" %%% "refined4s-circe" % "@VERSION@"
-,
-"io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@"
-,
-"io.kevinlee" %%% "refined4s-tapir" % "@VERSION@"
-,
-"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@"
-,
+"io.kevinlee" %%% "refined4s-core" % "@VERSION@",
+"io.kevinlee" %%% "refined4s-cats" % "@VERSION@",
+"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@",
+"io.kevinlee" %%% "refined4s-circe" % "@VERSION@",
+"io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@",
+"io.kevinlee" %%% "refined4s-tapir" % "@VERSION@",
+"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@",
 ```
 
 or for Scala Native
