@@ -169,7 +169,7 @@ In `build.sbt`,
 "io.kevinlee" %% "refined4s-chimney" % "@VERSION@"
 ```
 
-or for Scala.js
+or for Scala.js and Scala Native
 
 ```scala
 "io.kevinlee" %%% "refined4s-chimney" % "@VERSION@"
@@ -620,16 +620,12 @@ or for Scala.js
 or for Scala Native
 
 ```scala
-"io.kevinlee" %%% "refined4s-core" % "@VERSION@"
-,
-"io.kevinlee" %%% "refined4s-cats" % "@VERSION@"
-,
-"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@"
-,
-"io.kevinlee" %%% "refined4s-circe" % "@VERSION@"
-,
-"io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@"
-,
+"io.kevinlee" %%% "refined4s-core" % "@VERSION@",
+"io.kevinlee" %%% "refined4s-cats" % "@VERSION@",
+"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@",
+"io.kevinlee" %%% "refined4s-circe" % "@VERSION@",
+"io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@",
+"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@",
 ```
 
   </TabItem>
@@ -676,6 +672,7 @@ libraryDependencies ++= Seq(
   "io.kevinlee" %%% "refined4s-chimney" % "@VERSION@",
   "io.kevinlee" %%% "refined4s-circe" % "@VERSION@",
   "io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@",
+  "io.kevinlee" %%% "refined4s-chimney" % "@VERSION@",
 )
 ```
 
