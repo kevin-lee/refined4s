@@ -3,7 +3,6 @@ package refined4s.modules.doobie.derivation
 import cats.*
 import refined4s.*
 import refined4s.modules.cats.derivation.*
-import refined4s.modules.cats.derivation.types.all.given
 import refined4s.modules.doobie.derivation.generic.auto.given
 import refined4s.types.all.*
 

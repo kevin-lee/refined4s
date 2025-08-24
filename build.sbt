@@ -42,6 +42,9 @@ lazy val refined4s = (project in file("."))
     coreJvm,
     coreJs,
     coreNative,
+    testCoreWithoutCatsJvm,
+    testCoreWithoutCatsJs,
+    testCoreWithoutCatsNative,
     catsJvm,
     catsJs,
     catsNative,
@@ -72,7 +75,8 @@ lazy val core       = module("core", crossProject(JVMPlatform, JSPlatform, Nativ
   .settings(
     scalacOptions ++= List("-Xprint-suspension"),
     libraryDependencies ++= List(
-      libs.cats.value       % Test,
+      libs.orphanCats.value,
+      libs.cats.value       % Optional,
       libs.extrasCore.value % Test,
     ),
   )
@@ -103,6 +107,19 @@ lazy val coreNative = core
       libs.tests.scalaNativeCrypto.value
     )
   )
+
+lazy val testCoreWithoutCats       = testModule("core-without-cats", crossProject(JVMPlatform, JSPlatform, NativePlatform))
+  .settings(noPublish)
+  .settings(
+    scalacOptions ++= List("-Xprint-suspension"),
+    libraryDependencies ++= List(
+      libs.extrasCore.value % Test
+    ),
+  )
+  .dependsOn(core)
+lazy val testCoreWithoutCatsJvm    = testCoreWithoutCats.jvm
+lazy val testCoreWithoutCatsJs     = testCoreWithoutCats.js.settings(jsSettingsForFuture)
+lazy val testCoreWithoutCatsNative = testCoreWithoutCats.native.settings(nativeSettings)
 
 lazy val cats       = module("cats", crossProject(JVMPlatform, JSPlatform, NativePlatform))
   .settings(
@@ -152,6 +169,7 @@ lazy val pureconfig    = module("pureconfig", crossProject(JVMPlatform))
   .settings(
     libraryDependencies ++= List(
       libs.pureconfigCore,
+      libs.cats.value       % Test,
       libs.extrasCore.value % Test,
     )
   )
@@ -195,7 +213,8 @@ lazy val doobieCe3Jvm = doobieCe3.jvm
 lazy val extrasRender       = module("extras-render", crossProject(JVMPlatform, JSPlatform, NativePlatform))
   .settings(
     libraryDependencies ++= List(
-      libs.extrasRender.value
+      libs.extrasRender.value,
+      libs.cats.value % Test,
     )
   )
   .dependsOn(
@@ -205,10 +224,11 @@ lazy val extrasRenderJvm    = extrasRender.jvm
 lazy val extrasRenderJs     = extrasRender.js.settings(jsSettingsForFuture)
 lazy val extrasRenderNative = extrasRender.native.settings(nativeSettings)
 
-lazy val chimney    = module("chimney", crossProject(JVMPlatform, JSPlatform, NativePlatform))
+lazy val chimney       = module("chimney", crossProject(JVMPlatform, JSPlatform, NativePlatform))
   .settings(
     libraryDependencies ++= List(
       libs.chimney.value,
+      libs.cats.value % Test,
       libs.tests.hedgehogExtraCore.value,
       libs.tests.hedgehogExtraRefined4s.value,
     )
@@ -216,8 +236,8 @@ lazy val chimney    = module("chimney", crossProject(JVMPlatform, JSPlatform, Na
   .dependsOn(
     core % props.IncludeTest
   )
-lazy val chimneyJvm = chimney.jvm
-lazy val chimneyJs  = chimney.js.settings(jsSettingsForFuture)
+lazy val chimneyJvm    = chimney.jvm
+lazy val chimneyJs     = chimney.js.settings(jsSettingsForFuture)
 lazy val chimneyNative = chimney.native.settings(nativeSettings)
 
 lazy val refinedCompatScala2       = module("refined-compat-scala2", crossProject(JVMPlatform, JSPlatform, NativePlatform))
@@ -267,6 +287,11 @@ lazy val refinedCompatScala2Native = refinedCompatScala2
   )
 
 lazy val refinedCompatScala3       = module("refined-compat-scala3", crossProject(JVMPlatform, JSPlatform, NativePlatform))
+  .settings(
+    libraryDependencies ++= List(
+      libs.cats.value % Test
+    )
+  )
   .dependsOn(
     core % props.IncludeTest
   )
@@ -274,17 +299,18 @@ lazy val refinedCompatScala3Jvm    = refinedCompatScala3.jvm
 lazy val refinedCompatScala3Js     = refinedCompatScala3.js.settings(jsSettingsForFuture)
 lazy val refinedCompatScala3Native = refinedCompatScala3.native.settings(nativeSettings)
 
-lazy val tapir       = module("tapir", crossProject(JVMPlatform, JSPlatform))//, NativePlatform))
+lazy val tapir    = module("tapir", crossProject(JVMPlatform, JSPlatform)) // , NativePlatform))
   .settings(
     libraryDependencies ++= List(
-      libs.tapirCore.value
+      libs.tapirCore.value,
+      libs.cats.value % Test,
     )
   )
   .dependsOn(
     core % props.IncludeTest
   )
-lazy val tapirJvm    = tapir.jvm
-lazy val tapirJs     = tapir.js.settings(jsSettingsForFuture)
+lazy val tapirJvm = tapir.jvm
+lazy val tapirJs  = tapir.js.settings(jsSettingsForFuture)
 //lazy val tapirNative = tapir.native.settings(nativeSettings)
 
 lazy val docs = (project in file("docs-gen-tmp/docs"))
@@ -413,6 +439,8 @@ lazy val props =
 
     val LogbackVersion = "1.5.6"
 
+    val OrphanVersion = "0.5.0"
+
     val KittensVersion = "3.0.0"
 
     val TapirVersion = "1.11.28"
@@ -428,6 +456,8 @@ lazy val props =
   }
 
 lazy val libs = new {
+
+  lazy val orphanCats = Def.setting("io.kevinlee" %%% "orphan-cats" % props.OrphanVersion)
 
   lazy val extrasCore           = Def.setting("io.kevinlee" %%% "extras-core" % props.ExtrasVersion)
   lazy val extrasHedgehogCirce  = Def.setting("io.kevinlee" %%% "extras-hedgehog-circe" % props.ExtrasVersion)
@@ -495,6 +525,15 @@ def isScala3(scalaVersion: String): Boolean = scalaVersion.startsWith("3")
 
 def module(projectName: String, crossProject: CrossProject.Builder): CrossProject = {
   val prefixedName = prefixedProjectName(projectName)
+  commonModule(prefixedName, crossProject)
+}
+
+def testModule(projectName: String, crossProject: CrossProject.Builder): CrossProject = {
+  val prefixedName = s"test-${prefixedProjectName(projectName)}"
+  commonModule(prefixedName, crossProject)
+}
+
+def commonModule(prefixedName: String, crossProject: CrossProject.Builder): CrossProject = {
   crossProject
     .in(file(s"modules/$prefixedName"))
     .settings(

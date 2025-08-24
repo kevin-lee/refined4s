@@ -7,7 +7,6 @@ import hedgehog.runner.*
 import io.circe.{Codec, Decoder, Encoder}
 import refined4s.*
 import refined4s.modules.cats.derivation.*
-import refined4s.modules.cats.derivation.types.all.given
 import refined4s.modules.circe.derivation.CirceNewtypeCodec
 import refined4s.modules.circe.derivation.types.all.given
 import refined4s.types.all.*
