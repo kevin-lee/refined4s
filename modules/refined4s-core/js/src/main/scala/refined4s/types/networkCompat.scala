@@ -1,10 +1,10 @@
 package refined4s.types
 
+import orphan.{OrphanCats, OrphanCatsKernel}
 import refined4s.InlinedRefined
 import refined4s.types.network.Uri
 
 import scala.quoted.*
-
 import java.net.URI
 import scala.quoted.{Expr, Quotes}
 import scala.util.control.NonFatal
@@ -12,7 +12,7 @@ import scala.util.control.NonFatal
 /** @author Kevin Lee
   * @since 2024-09-04
   */
-object networkCompat {
+object networkCompat extends OrphanCats, OrphanCatsKernel {
   val validUrlSchemes = Set("http", "https", "ftp", "file")
 
   type Url = Url.Type
@@ -79,6 +79,16 @@ object networkCompat {
 
       def toURI: URI = new URI(url.value)
     }
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedUrlEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[String]): F[Url] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[String]])
+    }.asInstanceOf[F[Url]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedUrlShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[String]): F[Url] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[String]])
+    }.asInstanceOf[F[Url]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
