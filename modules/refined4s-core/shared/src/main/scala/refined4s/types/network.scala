@@ -1,10 +1,10 @@
 package refined4s.types
 
+import orphan.{OrphanCats, OrphanCatsKernel}
 import refined4s.*
 
 import scala.quoted.*
 import scala.util.control.NonFatal
-
 import java.net.{URI, URL}
 
 /** @author Kevin Lee
@@ -42,7 +42,7 @@ trait network {
 
 }
 
-object network {
+object network extends OrphanCats, OrphanCatsKernel {
 
   final type Url = networkCompat.Url
   // scalafix:off DisableSyntax.noFinalVal
@@ -79,6 +79,16 @@ object network {
       def toURL: URL = toURI.toURL
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedUriEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[String]): F[Uri] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[String]])
+    }.asInstanceOf[F[Uri]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedUriShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[String]): F[Uri] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[String]])
+    }.asInstanceOf[F[Uri]] // scalafix:ok DisableSyntax.asInstanceOf
+
   }
 
   type PortNumber = PortNumber.Type
@@ -89,6 +99,17 @@ object network {
 
     override inline def predicate(a: Int): Boolean =
       0 <= a && a <= 65535
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedPortNumberEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Int]): F[PortNumber] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Int]])
+    }.asInstanceOf[F[PortNumber]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedPortNumberShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[PortNumber] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Int]])
+    }.asInstanceOf[F[PortNumber]] // scalafix:ok DisableSyntax.asInstanceOf
+
   }
 
   type SystemPortNumber = SystemPortNumber.Type
@@ -99,6 +120,17 @@ object network {
 
     override inline def predicate(a: Int): Boolean =
       0 <= a && a <= 1023
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedSystemPortNumberEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Int]): F[SystemPortNumber] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Int]])
+    }.asInstanceOf[F[SystemPortNumber]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedSystemPortNumberShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[SystemPortNumber] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Int]])
+    }.asInstanceOf[F[SystemPortNumber]] // scalafix:ok DisableSyntax.asInstanceOf
+
   }
 
   type NonSystemPortNumber = NonSystemPortNumber.Type
@@ -109,6 +141,17 @@ object network {
 
     override inline def predicate(a: Int): Boolean =
       1024 <= a && a <= 65535
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonSystemPortNumberEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Int]): F[NonSystemPortNumber] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Int]])
+    }.asInstanceOf[F[NonSystemPortNumber]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonSystemPortNumberShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[NonSystemPortNumber] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Int]])
+    }.asInstanceOf[F[NonSystemPortNumber]] // scalafix:ok DisableSyntax.asInstanceOf
+
   }
 
   type UserPortNumber = UserPortNumber.Type
@@ -119,6 +162,16 @@ object network {
 
     override inline def predicate(a: Int): Boolean =
       1024 <= a && a <= 49151
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedUserPortNumberEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Int]): F[UserPortNumber] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Int]])
+    }.asInstanceOf[F[UserPortNumber]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedUserPortNumberShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[UserPortNumber] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Int]])
+    }.asInstanceOf[F[UserPortNumber]] // scalafix:ok DisableSyntax.asInstanceOf
   }
 
   type DynamicPortNumber = DynamicPortNumber.Type
@@ -129,6 +182,17 @@ object network {
 
     override inline def predicate(a: Int): Boolean =
       49152 <= a && a <= 65535
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedDynamicPortNumberEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Int]): F[DynamicPortNumber] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Int]])
+    }.asInstanceOf[F[DynamicPortNumber]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedDynamicPortNumberShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[DynamicPortNumber] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Int]])
+    }.asInstanceOf[F[DynamicPortNumber]] // scalafix:ok DisableSyntax.asInstanceOf
+
   }
 
 }

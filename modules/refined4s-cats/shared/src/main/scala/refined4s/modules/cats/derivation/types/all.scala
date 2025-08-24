@@ -109,26 +109,5 @@ trait all {
 
   // network
 
-  inline given derivedUriEq(using eqActual: Eq[String]): Eq[Uri]         = contraCoercible(eqActual)
-  inline given derivedUriShow(using showActual: Show[String]): Show[Uri] = contraCoercible(showActual)
-
-  inline given derivedUrlEq(using eqActual: Eq[String]): Eq[Url]         = contraCoercible(eqActual)
-  inline given derivedUrlShow(using showActual: Show[String]): Show[Url] = contraCoercible(showActual)
-
-  inline given derivedPortNumberEq(using eqActual: Eq[Int]): Eq[PortNumber]         = contraCoercible(eqActual)
-  inline given derivedPortNumberShow(using showActual: Show[Int]): Show[PortNumber] = contraCoercible(showActual)
-
-  inline given derivedSystemPortNumberEq(using eqActual: Eq[Int]): Eq[SystemPortNumber]         = contraCoercible(eqActual)
-  inline given derivedSystemPortNumberShow(using showActual: Show[Int]): Show[SystemPortNumber] = contraCoercible(showActual)
-
-  inline given derivedNonSystemPortNumberEq(using eqActual: Eq[Int]): Eq[NonSystemPortNumber]         = contraCoercible(eqActual)
-  inline given derivedNonSystemPortNumberShow(using showActual: Show[Int]): Show[NonSystemPortNumber] = contraCoercible(showActual)
-
-  inline given derivedUserPortNumberEq(using eqActual: Eq[Int]): Eq[UserPortNumber]         = contraCoercible(eqActual)
-  inline given derivedUserPortNumberShow(using showActual: Show[Int]): Show[UserPortNumber] = contraCoercible(showActual)
-
-  inline given derivedDynamicPortNumberEq(using eqActual: Eq[Int]): Eq[DynamicPortNumber]         = contraCoercible(eqActual)
-  inline given derivedDynamicPortNumberShow(using showActual: Show[Int]): Show[DynamicPortNumber] = contraCoercible(showActual)
-
 }
 object all extends all
