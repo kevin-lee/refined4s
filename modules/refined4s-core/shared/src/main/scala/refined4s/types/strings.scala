@@ -1,5 +1,7 @@
 package refined4s.types
 
+import orphan.OrphanCats
+import orphan.OrphanCatsKernel
 import refined4s.*
 
 import java.util.UUID
@@ -26,7 +28,7 @@ trait strings {
   // scalafix:on
 
 }
-object strings {
+object strings extends OrphanCats, OrphanCatsKernel {
 
   type NonEmptyString = NonEmptyString.Type
   @SuppressWarnings(Array("org.wartremover.warts.Equals"))
@@ -41,6 +43,17 @@ object strings {
       @targetName("plus")
       def ++(thatNes: NonEmptyString): NonEmptyString = NonEmptyString.unsafeFrom(thisNes.value + thatNes.value)
     }
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonEmptyStringEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[String]): F[NonEmptyString] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[String]])
+    }.asInstanceOf[F[NonEmptyString]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonEmptyStringShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[String]): F[NonEmptyString] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[String]])
+    }.asInstanceOf[F[NonEmptyString]] // scalafix:ok DisableSyntax.asInstanceOf
+
   }
 
   val WhitespaceCharRange: List[(Int, Int)] =
@@ -87,6 +100,16 @@ object strings {
       inline def appendString(that: String): Type = NonBlankString.unsafeFrom(thisNbs.value + that)
     }
 
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonBlankStringEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[String]): F[NonBlankString] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[String]])
+    }.asInstanceOf[F[NonBlankString]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonBlankStringShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[String]): F[NonBlankString] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[String]])
+    }.asInstanceOf[F[NonBlankString]] // scalafix:ok DisableSyntax.asInstanceOf
+
   }
 
   type Uuid = Uuid.Type
@@ -112,6 +135,16 @@ object strings {
     extension (uuid: Uuid) {
       def toUUID: UUID = UUID.fromString(uuid.value)
     }
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedUuidEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[String]): F[Uuid] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[String]])
+    }.asInstanceOf[F[Uuid]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedUuidShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[String]): F[Uuid] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[String]])
+    }.asInstanceOf[F[Uuid]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
