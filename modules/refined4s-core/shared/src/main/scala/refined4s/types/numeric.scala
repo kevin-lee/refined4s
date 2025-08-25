@@ -141,6 +141,9 @@ object numeric {
 
     override inline def predicate(a: Int): Boolean = a < 0
 
+    inline given derivedNegIntEq(using eqActual: cats.Eq[Int]): cats.Eq[NegInt]         = internalDef.contraCoercible(eqActual)
+    inline given derivedNegIntShow(using showActual: cats.Show[Int]): cats.Show[NegInt] = internalDef.contraCoercible(showActual)
+
   }
 
   type NonNegInt = NonNegInt.Type
@@ -151,6 +154,9 @@ object numeric {
     override inline def invalidReason(a: Int): String = expectedMessage("a non-negative Int")
 
     override inline def predicate(a: Int): Boolean = a >= 0
+
+    inline given derivedNonNegIntEq(using eqActual: cats.Eq[Int]): cats.Eq[NonNegInt]         = internalDef.contraCoercible(eqActual)
+    inline given derivedNonNegIntShow(using showActual: cats.Show[Int]): cats.Show[NonNegInt] = internalDef.contraCoercible(showActual)
 
   }
 
@@ -163,6 +169,9 @@ object numeric {
 
     override inline def predicate(a: Int): Boolean = a > 0
 
+    inline given derivedPosIntEq(using eqActual: cats.Eq[Int]): cats.Eq[PosInt]         = internalDef.contraCoercible(eqActual)
+    inline given derivedPosIntShow(using showActual: cats.Show[Int]): cats.Show[PosInt] = internalDef.contraCoercible(showActual)
+
   }
 
   type NonPosInt = NonPosInt.Type
@@ -173,6 +182,9 @@ object numeric {
     override inline def invalidReason(a: Int): String = expectedMessage("a non-positive Int")
 
     override inline def predicate(a: Int): Boolean = a <= 0
+
+    inline given derivedNonPosIntEq(using eqActual: cats.Eq[Int]): cats.Eq[NonPosInt]         = internalDef.contraCoercible(eqActual)
+    inline given derivedNonPosIntShow(using showActual: cats.Show[Int]): cats.Show[NonPosInt] = internalDef.contraCoercible(showActual)
 
   }
 
@@ -185,6 +197,9 @@ object numeric {
 
     override inline def predicate(a: Long): Boolean = a < 0L
 
+    inline given derivedNegLongEq(using eqActual: cats.Eq[Long]): cats.Eq[NegLong]         = internalDef.contraCoercible(eqActual)
+    inline given derivedNegLongShow(using showActual: cats.Show[Long]): cats.Show[NegLong] = internalDef.contraCoercible(showActual)
+
   }
 
   type NonNegLong = NonNegLong.Type
@@ -195,6 +210,9 @@ object numeric {
     override inline def invalidReason(a: Long): String = expectedMessage("a non-negative Long")
 
     override inline def predicate(a: Long): Boolean = a >= 0L
+
+    inline given derivedNonNegLongEq(using eqActual: cats.Eq[Long]): cats.Eq[NonNegLong]         = internalDef.contraCoercible(eqActual)
+    inline given derivedNonNegLongShow(using showActual: cats.Show[Long]): cats.Show[NonNegLong] = internalDef.contraCoercible(showActual)
 
   }
 
@@ -207,6 +225,9 @@ object numeric {
 
     override inline def predicate(a: Long): Boolean = a > 0L
 
+    inline given derivedPosLongEq(using eqActual: cats.Eq[Long]): cats.Eq[PosLong]         = internalDef.contraCoercible(eqActual)
+    inline given derivedPosLongShow(using showActual: cats.Show[Long]): cats.Show[PosLong] = internalDef.contraCoercible(showActual)
+
   }
 
   type NonPosLong = NonPosLong.Type
@@ -217,6 +238,9 @@ object numeric {
     override inline def invalidReason(a: Long): String = expectedMessage("a non-positive Long")
 
     override inline def predicate(a: Long): Boolean = a <= 0L
+
+    inline given derivedNonPosLongEq(using eqActual: cats.Eq[Long]): cats.Eq[NonPosLong]         = internalDef.contraCoercible(eqActual)
+    inline given derivedNonPosLongShow(using showActual: cats.Show[Long]): cats.Show[NonPosLong] = internalDef.contraCoercible(showActual)
 
   }
 
@@ -229,6 +253,9 @@ object numeric {
 
     override inline def predicate(a: Short): Boolean = a < 0
 
+    inline given derivedNegShortEq(using eqActual: cats.Eq[Short]): cats.Eq[NegShort]         = internalDef.contraCoercible(eqActual)
+    inline given derivedNegShortShow(using showActual: cats.Show[Short]): cats.Show[NegShort] = internalDef.contraCoercible(showActual)
+
   }
 
   type NonNegShort = NonNegShort.Type
@@ -239,6 +266,10 @@ object numeric {
     override inline def invalidReason(a: Short): String = expectedMessage("a non-negative Short")
 
     override inline def predicate(a: Short): Boolean = a >= 0
+
+    inline given derivedNonNegShortEq(using eqActual: cats.Eq[Short]): cats.Eq[NonNegShort]         = internalDef.contraCoercible(eqActual)
+    inline given derivedNonNegShortShow(using showActual: cats.Show[Short]): cats.Show[NonNegShort] =
+      internalDef.contraCoercible(showActual)
 
   }
 
@@ -251,6 +282,9 @@ object numeric {
 
     override inline def predicate(a: Short): Boolean = a > 0
 
+    inline given derivedPosShortEq(using eqActual: cats.Eq[Short]): cats.Eq[PosShort]         = internalDef.contraCoercible(eqActual)
+    inline given derivedPosShortShow(using showActual: cats.Show[Short]): cats.Show[PosShort] = internalDef.contraCoercible(showActual)
+
   }
 
   type NonPosShort = NonPosShort.Type
@@ -261,6 +295,10 @@ object numeric {
     override inline def invalidReason(a: Short): String = expectedMessage("a non-positive Short")
 
     override inline def predicate(a: Short): Boolean = a <= 0
+
+    inline given derivedNonPosShortEq(using eqActual: cats.Eq[Short]): cats.Eq[NonPosShort]         = internalDef.contraCoercible(eqActual)
+    inline given derivedNonPosShortShow(using showActual: cats.Show[Short]): cats.Show[NonPosShort] =
+      internalDef.contraCoercible(showActual)
 
   }
 
@@ -273,6 +311,9 @@ object numeric {
 
     override inline def predicate(a: Byte): Boolean = a < 0
 
+    inline given derivedNegByteEq(using eqActual: cats.Eq[Byte]): cats.Eq[NegByte]         = internalDef.contraCoercible(eqActual)
+    inline given derivedNegByteShow(using showActual: cats.Show[Byte]): cats.Show[NegByte] = internalDef.contraCoercible(showActual)
+
   }
 
   type NonNegByte = NonNegByte.Type
@@ -283,6 +324,9 @@ object numeric {
     override inline def invalidReason(a: Byte): String = expectedMessage("a non-negative Byte")
 
     override inline def predicate(a: Byte): Boolean = a >= 0
+
+    inline given derivedNonNegByteEq(using eqActual: cats.Eq[Byte]): cats.Eq[NonNegByte]         = internalDef.contraCoercible(eqActual)
+    inline given derivedNonNegByteShow(using showActual: cats.Show[Byte]): cats.Show[NonNegByte] = internalDef.contraCoercible(showActual)
 
   }
 
@@ -295,6 +339,9 @@ object numeric {
 
     override inline def predicate(a: Byte): Boolean = a > 0
 
+    inline given derivedPosByteEq(using eqActual: cats.Eq[Byte]): cats.Eq[PosByte]         = internalDef.contraCoercible(eqActual)
+    inline given derivedPosByteShow(using showActual: cats.Show[Byte]): cats.Show[PosByte] = internalDef.contraCoercible(showActual)
+
   }
 
   type NonPosByte = NonPosByte.Type
@@ -305,6 +352,9 @@ object numeric {
     override inline def invalidReason(a: Byte): String = expectedMessage("a non-positive Byte")
 
     override inline def predicate(a: Byte): Boolean = a <= 0
+
+    inline given derivedNonPosByteEq(using eqActual: cats.Eq[Byte]): cats.Eq[NonPosByte]         = internalDef.contraCoercible(eqActual)
+    inline given derivedNonPosByteShow(using showActual: cats.Show[Byte]): cats.Show[NonPosByte] = internalDef.contraCoercible(showActual)
 
   }
 
@@ -317,6 +367,9 @@ object numeric {
 
     override inline def predicate(a: Float): Boolean = a < 0f
 
+    inline given derivedNegFloatEq(using eqActual: cats.Eq[Float]): cats.Eq[NegFloat]         = internalDef.contraCoercible(eqActual)
+    inline given derivedNegFloatShow(using showActual: cats.Show[Float]): cats.Show[NegFloat] = internalDef.contraCoercible(showActual)
+
   }
 
   type NonNegFloat = NonNegFloat.Type
@@ -327,6 +380,10 @@ object numeric {
     override inline def invalidReason(a: Float): String = expectedMessage("a non-negative Float")
 
     override inline def predicate(a: Float): Boolean = a >= 0f
+
+    inline given derivedNonNegFloatEq(using eqActual: cats.Eq[Float]): cats.Eq[NonNegFloat]         = internalDef.contraCoercible(eqActual)
+    inline given derivedNonNegFloatShow(using showActual: cats.Show[Float]): cats.Show[NonNegFloat] =
+      internalDef.contraCoercible(showActual)
 
   }
 
@@ -339,6 +396,9 @@ object numeric {
 
     override inline def predicate(a: Float): Boolean = a > 0f
 
+    inline given derivedPosFloatEq(using eqActual: cats.Eq[Float]): cats.Eq[PosFloat]         = internalDef.contraCoercible(eqActual)
+    inline given derivedPosFloatShow(using showActual: cats.Show[Float]): cats.Show[PosFloat] = internalDef.contraCoercible(showActual)
+
   }
 
   type NonPosFloat = NonPosFloat.Type
@@ -349,6 +409,10 @@ object numeric {
     override inline def invalidReason(a: Float): String = expectedMessage("a non-positive Float")
 
     override inline def predicate(a: Float): Boolean = a <= 0f
+
+    inline given derivedNonPosFloatEq(using eqActual: cats.Eq[Float]): cats.Eq[NonPosFloat]         = internalDef.contraCoercible(eqActual)
+    inline given derivedNonPosFloatShow(using showActual: cats.Show[Float]): cats.Show[NonPosFloat] =
+      internalDef.contraCoercible(showActual)
 
   }
 
@@ -361,6 +425,9 @@ object numeric {
 
     override inline def predicate(a: Double): Boolean = a < 0d
 
+    inline given derivedNegDoubleEq(using eqActual: cats.Eq[Double]): cats.Eq[NegDouble]         = internalDef.contraCoercible(eqActual)
+    inline given derivedNegDoubleShow(using showActual: cats.Show[Double]): cats.Show[NegDouble] = internalDef.contraCoercible(showActual)
+
   }
 
   type NonNegDouble = NonNegDouble.Type
@@ -371,6 +438,10 @@ object numeric {
     override inline def invalidReason(a: Double): String = expectedMessage("a non-negative Double")
 
     override inline def predicate(a: Double): Boolean = a >= 0d
+
+    inline given derivedNonNegDoubleEq(using eqActual: cats.Eq[Double]): cats.Eq[NonNegDouble] = internalDef.contraCoercible(eqActual)
+    inline given derivedNonNegDoubleShow(using showActual: cats.Show[Double]): cats.Show[NonNegDouble] =
+      internalDef.contraCoercible(showActual)
 
   }
 
@@ -383,6 +454,9 @@ object numeric {
 
     override inline def predicate(a: Double): Boolean = a > 0d
 
+    inline given derivedPosDoubleEq(using eqActual: cats.Eq[Double]): cats.Eq[PosDouble]         = internalDef.contraCoercible(eqActual)
+    inline given derivedPosDoubleShow(using showActual: cats.Show[Double]): cats.Show[PosDouble] = internalDef.contraCoercible(showActual)
+
   }
 
   type NonPosDouble = NonPosDouble.Type
@@ -393,6 +467,10 @@ object numeric {
     override inline def invalidReason(a: Double): String = expectedMessage("a non-positive Double")
 
     override inline def predicate(a: Double): Boolean = a <= 0d
+
+    inline given derivedNonPosDoubleEq(using eqActual: cats.Eq[Double]): cats.Eq[NonPosDouble] = internalDef.contraCoercible(eqActual)
+    inline given derivedNonPosDoubleShow(using showActual: cats.Show[Double]): cats.Show[NonPosDouble] =
+      internalDef.contraCoercible(showActual)
 
   }
 
@@ -419,6 +497,9 @@ object numeric {
 
     inline def apply(inline a: String): Type = apply(BigInt(a))
 
+    inline given derivedNegBigIntEq(using eqActual: cats.Eq[BigInt]): cats.Eq[NegBigInt]         = internalDef.contraCoercible(eqActual)
+    inline given derivedNegBigIntShow(using showActual: cats.Show[BigInt]): cats.Show[NegBigInt] = internalDef.contraCoercible(showActual)
+
   }
 
   type NonNegBigInt = NonNegBigInt.Type
@@ -437,6 +518,11 @@ object numeric {
     inline def apply(inline a: Long): Type = apply(BigInt(a))
 
     inline def apply(inline a: String): Type = apply(BigInt(a))
+
+    inline given derivedNonNegBigIntEq(using eqActual: cats.Eq[BigInt]): cats.Eq[NonNegBigInt] = internalDef.contraCoercible(eqActual)
+    inline given derivedNonNegBigIntShow(using showActual: cats.Show[BigInt]): cats.Show[NonNegBigInt] =
+      internalDef.contraCoercible(showActual)
+
   }
 
   type PosBigInt = PosBigInt.Type
@@ -455,6 +541,10 @@ object numeric {
     inline def apply(inline a: Long): Type = apply(BigInt(a))
 
     inline def apply(inline a: String): Type = apply(BigInt(a))
+
+    inline given derivedPosBigIntEq(using eqActual: cats.Eq[BigInt]): cats.Eq[PosBigInt]         = internalDef.contraCoercible(eqActual)
+    inline given derivedPosBigIntShow(using showActual: cats.Show[BigInt]): cats.Show[PosBigInt] = internalDef.contraCoercible(showActual)
+
   }
 
   type NonPosBigInt = NonPosBigInt.Type
@@ -473,6 +563,11 @@ object numeric {
     inline def apply(inline a: Long): Type = apply(BigInt(a))
 
     inline def apply(inline a: String): Type = apply(BigInt(a))
+
+    inline given derivedNonPosBigIntEq(using eqActual: cats.Eq[BigInt]): cats.Eq[NonPosBigInt] = internalDef.contraCoercible(eqActual)
+    inline given derivedNonPosBigIntShow(using showActual: cats.Show[BigInt]): cats.Show[NonPosBigInt] =
+      internalDef.contraCoercible(showActual)
+
   }
 
   type NegBigDecimal = NegBigDecimal.Type
@@ -495,6 +590,11 @@ object numeric {
     inline def apply(inline a: Double): Type = apply(BigDecimal(a))
 
     inline def apply(inline a: String): Type = apply(BigDecimal(a))
+
+    inline given derivedNegBigDecimalEq(using eqActual: cats.Eq[BigDecimal]): cats.Eq[NegBigDecimal] = internalDef.contraCoercible(eqActual)
+    inline given derivedNegBigDecimalShow(using showActual: cats.Show[BigDecimal]): cats.Show[NegBigDecimal] =
+      internalDef.contraCoercible(showActual)
+
   }
 
   type NonNegBigDecimal = NonNegBigDecimal.Type
@@ -517,6 +617,12 @@ object numeric {
     inline def apply(inline a: Double): Type = apply(BigDecimal(a))
 
     inline def apply(inline a: String): Type = apply(BigDecimal(a))
+
+    inline given derivedNonNegBigDecimalEq(using eqActual: cats.Eq[BigDecimal]): cats.Eq[NonNegBigDecimal]         =
+      internalDef.contraCoercible(eqActual)
+    inline given derivedNonNegBigDecimalShow(using showActual: cats.Show[BigDecimal]): cats.Show[NonNegBigDecimal] =
+      internalDef.contraCoercible(showActual)
+
   }
 
   type PosBigDecimal = PosBigDecimal.Type
@@ -539,6 +645,11 @@ object numeric {
     inline def apply(inline a: Double): Type = apply(BigDecimal(a))
 
     inline def apply(inline a: String): Type = apply(BigDecimal(a))
+
+    inline given derivedPosBigDecimalEq(using eqActual: cats.Eq[BigDecimal]): cats.Eq[PosBigDecimal] = internalDef.contraCoercible(eqActual)
+    inline given derivedPosBigDecimalShow(using showActual: cats.Show[BigDecimal]): cats.Show[PosBigDecimal] =
+      internalDef.contraCoercible(showActual)
+
   }
 
   type NonPosBigDecimal = NonPosBigDecimal.Type
@@ -561,6 +672,12 @@ object numeric {
     inline def apply(inline a: Double): Type = apply(BigDecimal(a))
 
     inline def apply(inline a: String): Type = apply(BigDecimal(a))
+
+    inline given derivedNonPosBigDecimalEq(using eqActual: cats.Eq[BigDecimal]): cats.Eq[NonPosBigDecimal]         =
+      internalDef.contraCoercible(eqActual)
+    inline given derivedNonPosBigDecimalShow(using showActual: cats.Show[BigDecimal]): cats.Show[NonPosBigDecimal] =
+      internalDef.contraCoercible(showActual)
+
   }
 
 }
