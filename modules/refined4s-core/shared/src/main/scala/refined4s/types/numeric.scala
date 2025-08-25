@@ -1,5 +1,6 @@
 package refined4s.types
 
+import orphan.{OrphanCats, OrphanCatsKernel}
 import refined4s.*
 import refined4s.internal.numericTools
 
@@ -108,7 +109,7 @@ trait numeric {
 
   // scalafix:on
 }
-object numeric {
+object numeric extends OrphanCats, OrphanCatsKernel {
 
   trait Numeric[@specialized(Int, Long, Short, Byte, Float, Double) A: math.Ordering] extends Refined[A], CanBeOrdered[A]
 
@@ -141,8 +142,15 @@ object numeric {
 
     override inline def predicate(a: Int): Boolean = a < 0
 
-    inline given derivedNegIntEq(using eqActual: cats.Eq[Int]): cats.Eq[NegInt]         = internalDef.contraCoercible(eqActual)
-    inline given derivedNegIntShow(using showActual: cats.Show[Int]): cats.Show[NegInt] = internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNegIntEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Int]): F[NegInt] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Int]])
+    }.asInstanceOf[F[NegInt]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNegIntShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[NegInt] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Int]])
+    }.asInstanceOf[F[NegInt]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -155,8 +163,15 @@ object numeric {
 
     override inline def predicate(a: Int): Boolean = a >= 0
 
-    inline given derivedNonNegIntEq(using eqActual: cats.Eq[Int]): cats.Eq[NonNegInt]         = internalDef.contraCoercible(eqActual)
-    inline given derivedNonNegIntShow(using showActual: cats.Show[Int]): cats.Show[NonNegInt] = internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonNegIntEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Int]): F[NonNegInt] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Int]])
+    }.asInstanceOf[F[NonNegInt]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonNegIntShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[NonNegInt] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Int]])
+    }.asInstanceOf[F[NonNegInt]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -169,8 +184,15 @@ object numeric {
 
     override inline def predicate(a: Int): Boolean = a > 0
 
-    inline given derivedPosIntEq(using eqActual: cats.Eq[Int]): cats.Eq[PosInt]         = internalDef.contraCoercible(eqActual)
-    inline given derivedPosIntShow(using showActual: cats.Show[Int]): cats.Show[PosInt] = internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedPosIntEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Int]): F[PosInt] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Int]])
+    }.asInstanceOf[F[PosInt]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedPosIntShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[PosInt] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Int]])
+    }.asInstanceOf[F[PosInt]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -183,8 +205,15 @@ object numeric {
 
     override inline def predicate(a: Int): Boolean = a <= 0
 
-    inline given derivedNonPosIntEq(using eqActual: cats.Eq[Int]): cats.Eq[NonPosInt]         = internalDef.contraCoercible(eqActual)
-    inline given derivedNonPosIntShow(using showActual: cats.Show[Int]): cats.Show[NonPosInt] = internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonPosIntEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Int]): F[NonPosInt] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Int]])
+    }.asInstanceOf[F[NonPosInt]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonPosIntShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[NonPosInt] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Int]])
+    }.asInstanceOf[F[NonPosInt]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -197,8 +226,15 @@ object numeric {
 
     override inline def predicate(a: Long): Boolean = a < 0L
 
-    inline given derivedNegLongEq(using eqActual: cats.Eq[Long]): cats.Eq[NegLong]         = internalDef.contraCoercible(eqActual)
-    inline given derivedNegLongShow(using showActual: cats.Show[Long]): cats.Show[NegLong] = internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNegLongEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Long]): F[NegLong] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Long]])
+    }.asInstanceOf[F[NegLong]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNegLongShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Long]): F[NegLong] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Long]])
+    }.asInstanceOf[F[NegLong]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -211,8 +247,15 @@ object numeric {
 
     override inline def predicate(a: Long): Boolean = a >= 0L
 
-    inline given derivedNonNegLongEq(using eqActual: cats.Eq[Long]): cats.Eq[NonNegLong]         = internalDef.contraCoercible(eqActual)
-    inline given derivedNonNegLongShow(using showActual: cats.Show[Long]): cats.Show[NonNegLong] = internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonNegLongEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Long]): F[NonNegLong] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Long]])
+    }.asInstanceOf[F[NonNegLong]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonNegLongShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Long]): F[NonNegLong] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Long]])
+    }.asInstanceOf[F[NonNegLong]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -225,8 +268,15 @@ object numeric {
 
     override inline def predicate(a: Long): Boolean = a > 0L
 
-    inline given derivedPosLongEq(using eqActual: cats.Eq[Long]): cats.Eq[PosLong]         = internalDef.contraCoercible(eqActual)
-    inline given derivedPosLongShow(using showActual: cats.Show[Long]): cats.Show[PosLong] = internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedPosLongEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Long]): F[PosLong] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Long]])
+    }.asInstanceOf[F[PosLong]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedPosLongShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Long]): F[PosLong] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Long]])
+    }.asInstanceOf[F[PosLong]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -239,8 +289,15 @@ object numeric {
 
     override inline def predicate(a: Long): Boolean = a <= 0L
 
-    inline given derivedNonPosLongEq(using eqActual: cats.Eq[Long]): cats.Eq[NonPosLong]         = internalDef.contraCoercible(eqActual)
-    inline given derivedNonPosLongShow(using showActual: cats.Show[Long]): cats.Show[NonPosLong] = internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonPosLongEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Long]): F[NonPosLong] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Long]])
+    }.asInstanceOf[F[NonPosLong]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonPosLongShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Long]): F[NonPosLong] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Long]])
+    }.asInstanceOf[F[NonPosLong]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -253,8 +310,15 @@ object numeric {
 
     override inline def predicate(a: Short): Boolean = a < 0
 
-    inline given derivedNegShortEq(using eqActual: cats.Eq[Short]): cats.Eq[NegShort]         = internalDef.contraCoercible(eqActual)
-    inline given derivedNegShortShow(using showActual: cats.Show[Short]): cats.Show[NegShort] = internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNegShortEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Short]): F[NegShort] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Short]])
+    }.asInstanceOf[F[NegShort]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNegShortShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Short]): F[NegShort] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Short]])
+    }.asInstanceOf[F[NegShort]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -267,9 +331,15 @@ object numeric {
 
     override inline def predicate(a: Short): Boolean = a >= 0
 
-    inline given derivedNonNegShortEq(using eqActual: cats.Eq[Short]): cats.Eq[NonNegShort]         = internalDef.contraCoercible(eqActual)
-    inline given derivedNonNegShortShow(using showActual: cats.Show[Short]): cats.Show[NonNegShort] =
-      internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonNegShortEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Short]): F[NonNegShort] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Short]])
+    }.asInstanceOf[F[NonNegShort]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonNegShortShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Short]): F[NonNegShort] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Short]])
+    }.asInstanceOf[F[NonNegShort]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -282,8 +352,15 @@ object numeric {
 
     override inline def predicate(a: Short): Boolean = a > 0
 
-    inline given derivedPosShortEq(using eqActual: cats.Eq[Short]): cats.Eq[PosShort]         = internalDef.contraCoercible(eqActual)
-    inline given derivedPosShortShow(using showActual: cats.Show[Short]): cats.Show[PosShort] = internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedPosShortEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Short]): F[PosShort] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Short]])
+    }.asInstanceOf[F[PosShort]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedPosShortShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Short]): F[PosShort] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Short]])
+    }.asInstanceOf[F[PosShort]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -296,9 +373,15 @@ object numeric {
 
     override inline def predicate(a: Short): Boolean = a <= 0
 
-    inline given derivedNonPosShortEq(using eqActual: cats.Eq[Short]): cats.Eq[NonPosShort]         = internalDef.contraCoercible(eqActual)
-    inline given derivedNonPosShortShow(using showActual: cats.Show[Short]): cats.Show[NonPosShort] =
-      internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonPosShortEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Short]): F[NonPosShort] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Short]])
+    }.asInstanceOf[F[NonPosShort]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonPosShortShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Short]): F[NonPosShort] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Short]])
+    }.asInstanceOf[F[NonPosShort]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -311,8 +394,15 @@ object numeric {
 
     override inline def predicate(a: Byte): Boolean = a < 0
 
-    inline given derivedNegByteEq(using eqActual: cats.Eq[Byte]): cats.Eq[NegByte]         = internalDef.contraCoercible(eqActual)
-    inline given derivedNegByteShow(using showActual: cats.Show[Byte]): cats.Show[NegByte] = internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNegByteEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Byte]): F[NegByte] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Byte]])
+    }.asInstanceOf[F[NegByte]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNegByteShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Byte]): F[NegByte] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Byte]])
+    }.asInstanceOf[F[NegByte]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -325,8 +415,15 @@ object numeric {
 
     override inline def predicate(a: Byte): Boolean = a >= 0
 
-    inline given derivedNonNegByteEq(using eqActual: cats.Eq[Byte]): cats.Eq[NonNegByte]         = internalDef.contraCoercible(eqActual)
-    inline given derivedNonNegByteShow(using showActual: cats.Show[Byte]): cats.Show[NonNegByte] = internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonNegByteEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Byte]): F[NonNegByte] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Byte]])
+    }.asInstanceOf[F[NonNegByte]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonNegByteShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Byte]): F[NonNegByte] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Byte]])
+    }.asInstanceOf[F[NonNegByte]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -339,8 +436,15 @@ object numeric {
 
     override inline def predicate(a: Byte): Boolean = a > 0
 
-    inline given derivedPosByteEq(using eqActual: cats.Eq[Byte]): cats.Eq[PosByte]         = internalDef.contraCoercible(eqActual)
-    inline given derivedPosByteShow(using showActual: cats.Show[Byte]): cats.Show[PosByte] = internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedPosByteEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Byte]): F[PosByte] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Byte]])
+    }.asInstanceOf[F[PosByte]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedPosByteShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Byte]): F[PosByte] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Byte]])
+    }.asInstanceOf[F[PosByte]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -353,8 +457,15 @@ object numeric {
 
     override inline def predicate(a: Byte): Boolean = a <= 0
 
-    inline given derivedNonPosByteEq(using eqActual: cats.Eq[Byte]): cats.Eq[NonPosByte]         = internalDef.contraCoercible(eqActual)
-    inline given derivedNonPosByteShow(using showActual: cats.Show[Byte]): cats.Show[NonPosByte] = internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonPosByteEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Byte]): F[NonPosByte] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Byte]])
+    }.asInstanceOf[F[NonPosByte]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonPosByteShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Byte]): F[NonPosByte] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Byte]])
+    }.asInstanceOf[F[NonPosByte]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -367,8 +478,15 @@ object numeric {
 
     override inline def predicate(a: Float): Boolean = a < 0f
 
-    inline given derivedNegFloatEq(using eqActual: cats.Eq[Float]): cats.Eq[NegFloat]         = internalDef.contraCoercible(eqActual)
-    inline given derivedNegFloatShow(using showActual: cats.Show[Float]): cats.Show[NegFloat] = internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNegFloatEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Float]): F[NegFloat] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Float]])
+    }.asInstanceOf[F[NegFloat]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNegFloatShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Float]): F[NegFloat] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Float]])
+    }.asInstanceOf[F[NegFloat]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -381,9 +499,15 @@ object numeric {
 
     override inline def predicate(a: Float): Boolean = a >= 0f
 
-    inline given derivedNonNegFloatEq(using eqActual: cats.Eq[Float]): cats.Eq[NonNegFloat]         = internalDef.contraCoercible(eqActual)
-    inline given derivedNonNegFloatShow(using showActual: cats.Show[Float]): cats.Show[NonNegFloat] =
-      internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonNegFloatEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Float]): F[NonNegFloat] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Float]])
+    }.asInstanceOf[F[NonNegFloat]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonNegFloatShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Float]): F[NonNegFloat] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Float]])
+    }.asInstanceOf[F[NonNegFloat]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -396,8 +520,15 @@ object numeric {
 
     override inline def predicate(a: Float): Boolean = a > 0f
 
-    inline given derivedPosFloatEq(using eqActual: cats.Eq[Float]): cats.Eq[PosFloat]         = internalDef.contraCoercible(eqActual)
-    inline given derivedPosFloatShow(using showActual: cats.Show[Float]): cats.Show[PosFloat] = internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedPosFloatEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Float]): F[PosFloat] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Float]])
+    }.asInstanceOf[F[PosFloat]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedPosFloatShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Float]): F[PosFloat] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Float]])
+    }.asInstanceOf[F[PosFloat]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -410,9 +541,15 @@ object numeric {
 
     override inline def predicate(a: Float): Boolean = a <= 0f
 
-    inline given derivedNonPosFloatEq(using eqActual: cats.Eq[Float]): cats.Eq[NonPosFloat]         = internalDef.contraCoercible(eqActual)
-    inline given derivedNonPosFloatShow(using showActual: cats.Show[Float]): cats.Show[NonPosFloat] =
-      internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonPosFloatEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Float]): F[NonPosFloat] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Float]])
+    }.asInstanceOf[F[NonPosFloat]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonPosFloatShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Float]): F[NonPosFloat] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Float]])
+    }.asInstanceOf[F[NonPosFloat]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -425,8 +562,15 @@ object numeric {
 
     override inline def predicate(a: Double): Boolean = a < 0d
 
-    inline given derivedNegDoubleEq(using eqActual: cats.Eq[Double]): cats.Eq[NegDouble]         = internalDef.contraCoercible(eqActual)
-    inline given derivedNegDoubleShow(using showActual: cats.Show[Double]): cats.Show[NegDouble] = internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNegDoubleEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Double]): F[NegDouble] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Double]])
+    }.asInstanceOf[F[NegDouble]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNegDoubleShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Double]): F[NegDouble] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Double]])
+    }.asInstanceOf[F[NegDouble]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -439,9 +583,15 @@ object numeric {
 
     override inline def predicate(a: Double): Boolean = a >= 0d
 
-    inline given derivedNonNegDoubleEq(using eqActual: cats.Eq[Double]): cats.Eq[NonNegDouble] = internalDef.contraCoercible(eqActual)
-    inline given derivedNonNegDoubleShow(using showActual: cats.Show[Double]): cats.Show[NonNegDouble] =
-      internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonNegDoubleEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Double]): F[NonNegDouble] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Double]])
+    }.asInstanceOf[F[NonNegDouble]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonNegDoubleShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Double]): F[NonNegDouble] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Double]])
+    }.asInstanceOf[F[NonNegDouble]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -454,8 +604,15 @@ object numeric {
 
     override inline def predicate(a: Double): Boolean = a > 0d
 
-    inline given derivedPosDoubleEq(using eqActual: cats.Eq[Double]): cats.Eq[PosDouble]         = internalDef.contraCoercible(eqActual)
-    inline given derivedPosDoubleShow(using showActual: cats.Show[Double]): cats.Show[PosDouble] = internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedPosDoubleEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Double]): F[PosDouble] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Double]])
+    }.asInstanceOf[F[PosDouble]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedPosDoubleShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Double]): F[PosDouble] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Double]])
+    }.asInstanceOf[F[PosDouble]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -468,9 +625,15 @@ object numeric {
 
     override inline def predicate(a: Double): Boolean = a <= 0d
 
-    inline given derivedNonPosDoubleEq(using eqActual: cats.Eq[Double]): cats.Eq[NonPosDouble] = internalDef.contraCoercible(eqActual)
-    inline given derivedNonPosDoubleShow(using showActual: cats.Show[Double]): cats.Show[NonPosDouble] =
-      internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonPosDoubleEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Double]): F[NonPosDouble] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Double]])
+    }.asInstanceOf[F[NonPosDouble]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonPosDoubleShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Double]): F[NonPosDouble] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Double]])
+    }.asInstanceOf[F[NonPosDouble]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -497,8 +660,15 @@ object numeric {
 
     inline def apply(inline a: String): Type = apply(BigInt(a))
 
-    inline given derivedNegBigIntEq(using eqActual: cats.Eq[BigInt]): cats.Eq[NegBigInt]         = internalDef.contraCoercible(eqActual)
-    inline given derivedNegBigIntShow(using showActual: cats.Show[BigInt]): cats.Show[NegBigInt] = internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNegBigIntEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[BigInt]): F[NegBigInt] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[BigInt]])
+    }.asInstanceOf[F[NegBigInt]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNegBigIntShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[BigInt]): F[NegBigInt] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[BigInt]])
+    }.asInstanceOf[F[NegBigInt]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -519,9 +689,15 @@ object numeric {
 
     inline def apply(inline a: String): Type = apply(BigInt(a))
 
-    inline given derivedNonNegBigIntEq(using eqActual: cats.Eq[BigInt]): cats.Eq[NonNegBigInt] = internalDef.contraCoercible(eqActual)
-    inline given derivedNonNegBigIntShow(using showActual: cats.Show[BigInt]): cats.Show[NonNegBigInt] =
-      internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonNegBigIntEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[BigInt]): F[NonNegBigInt] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[BigInt]])
+    }.asInstanceOf[F[NonNegBigInt]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonNegBigIntShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[BigInt]): F[NonNegBigInt] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[BigInt]])
+    }.asInstanceOf[F[NonNegBigInt]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -542,8 +718,15 @@ object numeric {
 
     inline def apply(inline a: String): Type = apply(BigInt(a))
 
-    inline given derivedPosBigIntEq(using eqActual: cats.Eq[BigInt]): cats.Eq[PosBigInt]         = internalDef.contraCoercible(eqActual)
-    inline given derivedPosBigIntShow(using showActual: cats.Show[BigInt]): cats.Show[PosBigInt] = internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedPosBigIntEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[BigInt]): F[PosBigInt] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[BigInt]])
+    }.asInstanceOf[F[PosBigInt]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedPosBigIntShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[BigInt]): F[PosBigInt] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[BigInt]])
+    }.asInstanceOf[F[PosBigInt]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -564,9 +747,15 @@ object numeric {
 
     inline def apply(inline a: String): Type = apply(BigInt(a))
 
-    inline given derivedNonPosBigIntEq(using eqActual: cats.Eq[BigInt]): cats.Eq[NonPosBigInt] = internalDef.contraCoercible(eqActual)
-    inline given derivedNonPosBigIntShow(using showActual: cats.Show[BigInt]): cats.Show[NonPosBigInt] =
-      internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonPosBigIntEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[BigInt]): F[NonPosBigInt] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[BigInt]])
+    }.asInstanceOf[F[NonPosBigInt]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonPosBigIntShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[BigInt]): F[NonPosBigInt] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[BigInt]])
+    }.asInstanceOf[F[NonPosBigInt]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -591,9 +780,15 @@ object numeric {
 
     inline def apply(inline a: String): Type = apply(BigDecimal(a))
 
-    inline given derivedNegBigDecimalEq(using eqActual: cats.Eq[BigDecimal]): cats.Eq[NegBigDecimal] = internalDef.contraCoercible(eqActual)
-    inline given derivedNegBigDecimalShow(using showActual: cats.Show[BigDecimal]): cats.Show[NegBigDecimal] =
-      internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNegBigDecimalEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[BigDecimal]): F[NegBigDecimal] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[BigDecimal]])
+    }.asInstanceOf[F[NegBigDecimal]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNegBigDecimalShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[BigDecimal]): F[NegBigDecimal] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[BigDecimal]])
+    }.asInstanceOf[F[NegBigDecimal]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -618,10 +813,15 @@ object numeric {
 
     inline def apply(inline a: String): Type = apply(BigDecimal(a))
 
-    inline given derivedNonNegBigDecimalEq(using eqActual: cats.Eq[BigDecimal]): cats.Eq[NonNegBigDecimal]         =
-      internalDef.contraCoercible(eqActual)
-    inline given derivedNonNegBigDecimalShow(using showActual: cats.Show[BigDecimal]): cats.Show[NonNegBigDecimal] =
-      internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonNegBigDecimalEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[BigDecimal]): F[NonNegBigDecimal] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[BigDecimal]])
+    }.asInstanceOf[F[NonNegBigDecimal]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonNegBigDecimalShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[BigDecimal]): F[NonNegBigDecimal] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[BigDecimal]])
+    }.asInstanceOf[F[NonNegBigDecimal]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -646,9 +846,15 @@ object numeric {
 
     inline def apply(inline a: String): Type = apply(BigDecimal(a))
 
-    inline given derivedPosBigDecimalEq(using eqActual: cats.Eq[BigDecimal]): cats.Eq[PosBigDecimal] = internalDef.contraCoercible(eqActual)
-    inline given derivedPosBigDecimalShow(using showActual: cats.Show[BigDecimal]): cats.Show[PosBigDecimal] =
-      internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedPosBigDecimalEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[BigDecimal]): F[PosBigDecimal] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[BigDecimal]])
+    }.asInstanceOf[F[PosBigDecimal]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedPosBigDecimalShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[BigDecimal]): F[PosBigDecimal] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[BigDecimal]])
+    }.asInstanceOf[F[PosBigDecimal]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
@@ -673,10 +879,15 @@ object numeric {
 
     inline def apply(inline a: String): Type = apply(BigDecimal(a))
 
-    inline given derivedNonPosBigDecimalEq(using eqActual: cats.Eq[BigDecimal]): cats.Eq[NonPosBigDecimal]         =
-      internalDef.contraCoercible(eqActual)
-    inline given derivedNonPosBigDecimalShow(using showActual: cats.Show[BigDecimal]): cats.Show[NonPosBigDecimal] =
-      internalDef.contraCoercible(showActual)
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonPosBigDecimalEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[BigDecimal]): F[NonPosBigDecimal] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[BigDecimal]])
+    }.asInstanceOf[F[NonPosBigDecimal]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedNonPosBigDecimalShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[BigDecimal]): F[NonPosBigDecimal] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[BigDecimal]])
+    }.asInstanceOf[F[NonPosBigDecimal]] // scalafix:ok DisableSyntax.asInstanceOf
 
   }
 
