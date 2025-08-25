@@ -3,7 +3,6 @@ package refined4s.modules.cats.derivation.types
 import cats.syntax.all.*
 import hedgehog.*
 import hedgehog.runner.*
-import refined4s.modules.cats.derivation.types.all.given
 import refined4s.types.numeric.*
 import refined4s.types.network.*
 import refined4s.types.strings.*

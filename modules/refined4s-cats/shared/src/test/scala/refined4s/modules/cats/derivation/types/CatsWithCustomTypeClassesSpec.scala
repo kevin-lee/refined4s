@@ -5,7 +5,6 @@ import cats.{Eq, Show}
 import hedgehog.*
 import hedgehog.runner.*
 import refined4s.*
-import refined4s.modules.cats.derivation.types.all.given
 import refined4s.types.all.*
 
 import java.time.Instant
