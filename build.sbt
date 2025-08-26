@@ -113,13 +113,21 @@ lazy val testCoreWithoutCats       = testModule("core-without-cats", crossProjec
   .settings(
     scalacOptions ++= List("-Xprint-suspension"),
     libraryDependencies ++= List(
-      libs.extrasCore.value % Test
+      libs.tests.hedgehogExtraCore.value
     ),
+    libraryDependencies ~= (libs => libs.filterNot(_.name.startsWith("cats"))),
   )
   .dependsOn(core)
 lazy val testCoreWithoutCatsJvm    = testCoreWithoutCats.jvm
 lazy val testCoreWithoutCatsJs     = testCoreWithoutCats.js.settings(jsSettingsForFuture)
-lazy val testCoreWithoutCatsNative = testCoreWithoutCats.native.settings(nativeSettings)
+lazy val testCoreWithoutCatsNative = testCoreWithoutCats
+  .native
+  .settings(nativeSettings)
+  .settings(
+    libraryDependencies ++= List(
+      libs.tests.scalaNativeCrypto.value
+    )
+  )
 
 lazy val cats       = module("cats", crossProject(JVMPlatform, JSPlatform, NativePlatform))
   .settings(
@@ -128,7 +136,10 @@ lazy val cats       = module("cats", crossProject(JVMPlatform, JSPlatform, Nativ
       libs.extrasCore.value % Test,
     )
   )
-  .dependsOn(core % props.IncludeTest)
+  .dependsOn(
+    core                % props.IncludeTest,
+    testCoreWithoutCats % props.IncludeTest,
+  )
 lazy val catsJvm    = cats.jvm
 lazy val catsJs     = cats.js.settings(jsSettingsForFuture)
 lazy val catsNative = cats
@@ -151,7 +162,8 @@ lazy val circe       = module("circe", crossProject(JVMPlatform, JSPlatform, Nat
     )
   )
   .dependsOn(
-    core % props.IncludeTest,
+    core                % props.IncludeTest,
+    testCoreWithoutCats % props.IncludeTest,
     cats,
   )
 lazy val circeJvm    = circe.jvm
@@ -173,7 +185,10 @@ lazy val pureconfig    = module("pureconfig", crossProject(JVMPlatform))
       libs.extrasCore.value % Test,
     )
   )
-  .dependsOn(core % props.IncludeTest)
+  .dependsOn(
+    core                % props.IncludeTest,
+    testCoreWithoutCats % props.IncludeTest,
+  )
 lazy val pureconfigJvm = pureconfig.jvm
 
 lazy val doobieCe2    = module("doobie-ce2", crossProject(JVMPlatform))
@@ -188,7 +203,8 @@ lazy val doobieCe2    = module("doobie-ce2", crossProject(JVMPlatform))
     )
   )
   .dependsOn(
-    core % props.IncludeTest,
+    core                % props.IncludeTest,
+    testCoreWithoutCats % props.IncludeTest,
     cats,
   )
 lazy val doobieCe2Jvm = doobieCe2.jvm
@@ -205,7 +221,8 @@ lazy val doobieCe3    = module("doobie-ce3", crossProject(JVMPlatform))
     )
   )
   .dependsOn(
-    core % props.IncludeTest,
+    core                % props.IncludeTest,
+    testCoreWithoutCats % props.IncludeTest,
     cats,
   )
 lazy val doobieCe3Jvm = doobieCe3.jvm
@@ -218,7 +235,8 @@ lazy val extrasRender       = module("extras-render", crossProject(JVMPlatform, 
     )
   )
   .dependsOn(
-    core % props.IncludeTest
+    core                % props.IncludeTest,
+    testCoreWithoutCats % props.IncludeTest,
   )
 lazy val extrasRenderJvm    = extrasRender.jvm
 lazy val extrasRenderJs     = extrasRender.js.settings(jsSettingsForFuture)
@@ -234,7 +252,8 @@ lazy val chimney       = module("chimney", crossProject(JVMPlatform, JSPlatform,
     )
   )
   .dependsOn(
-    core % props.IncludeTest
+    core                % props.IncludeTest,
+    testCoreWithoutCats % props.IncludeTest,
   )
 lazy val chimneyJvm    = chimney.jvm
 lazy val chimneyJs     = chimney.js.settings(jsSettingsForFuture)
@@ -307,7 +326,8 @@ lazy val tapir    = module("tapir", crossProject(JVMPlatform, JSPlatform)) // , 
     )
   )
   .dependsOn(
-    core % props.IncludeTest
+    core                % props.IncludeTest,
+    testCoreWithoutCats % props.IncludeTest,
   )
 lazy val tapirJvm = tapir.jvm
 lazy val tapirJs  = tapir.js.settings(jsSettingsForFuture)

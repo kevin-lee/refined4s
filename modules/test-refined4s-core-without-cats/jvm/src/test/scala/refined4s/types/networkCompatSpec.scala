@@ -1,10 +1,10 @@
 package refined4s.types
 
-import cats.syntax.all.*
+import refined4s.predef4testing.*
 import hedgehog.*
 import hedgehog.runner.*
 
-import java.net.URI
+import java.net.{URI, URL}
 
 /** @author Kevin Lee
   * @since 2024-09-05
@@ -15,9 +15,10 @@ trait networkCompatSpec {
 
   def compatTests: List[Test] = List(
     property("test Uri.toUrl", testUriToUrl),
+    property("test Uri.toURL", testUriToURL),
     //
     example("test Url(valid URL String)", testUrlApply),
-//    example("test Url(URL)", testUrlApplyURL),
+    example("test Url(URL)", testUrlApplyURL),
     example("test Url(invalid URL String)", testUrlApplyInvalid),
     property("test Url.from(valid)", testUrlFromValid),
     property("test Url.from(invalid)", testUrlFromInvalid),
@@ -25,7 +26,7 @@ trait networkCompatSpec {
     property("test Url.unsafeFrom(invalid)", testUrlUnsafeFromInvalid),
     property("test Url.value", testUrlValue),
     property("test Url.unapply", testUrlUnapply),
-//    property("test Url.toURL", testUrlToURL),
+    property("test Url.toURL", testUrlToURL),
     property("test Url.toUri", testUrlToUri),
     property("test Url.toURI", testUrlToURI),
     example("test network.isValidateUrl(valid URL String)", testNetworkIsValidateUrlValid),
@@ -44,32 +45,43 @@ trait networkCompatSpec {
       actual ==== expected
     }
 
+  def testUriToURL: Property =
+    for {
+      uri <- networkGens.genUrlString.log("uri")
+    } yield {
+      @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
+      val expected = new URL(uri)
+      val actual   = Uri.unsafeFrom(uri).toURL
+
+      actual ==== expected
+    }
+
   //
 
   def testUrlApply: Result = {
     @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
-    val expected = URI("https://github.com/kevin-lee/refined4s")
+    val expected = new URL("https://github.com/kevin-lee/refined4s")
     val actual   = Url("https://github.com/kevin-lee/refined4s")
     Result.all(
       List(
         actual.value ==== expected.toString,
-        actual.toURI ==== expected,
+        actual.toURL ==== expected,
       )
     )
   }
 
-//  def testUrlApplyURL: Result = {
-//    @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
-//    val url      = new URL("https://github.com/kevin-lee/refined4s")
-//    val expected = url
-//    val actual   = Url(url)
-//    Result.all(
-//      List(
-//        actual.value ==== expected.toString,
-//        actual.toURL ==== expected,
-//      )
-//    )
-//  }
+  def testUrlApplyURL: Result = {
+    @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
+    val url      = new URL("https://github.com/kevin-lee/refined4s")
+    val expected = url
+    val actual   = Url(url)
+    Result.all(
+      List(
+        actual.value ==== expected.toString,
+        actual.toURL ==== expected,
+      )
+    )
+  }
 
   def testUrlApplyInvalid: Result = {
     import scala.compiletime.testing.typeChecks
@@ -98,14 +110,19 @@ trait networkCompatSpec {
 
   def testUrlFromValid: Property =
     for {
-      url <- networkGens.genUrlString.log("url")
+      uri <- networkGens.genUrlString.log("uri")
     } yield {
-      val expected = Url.unsafeFrom(url).asRight
-      val actual   = Url.from(url)
+      val expected = Url.unsafeFrom(uri).asRight
+      val actual   = Url.from(uri)
+
+      @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
+      val expectedUrl = new URL(uri).asRight
+      val actualUrl   = actual.map(_.toURL)
 
       Result.all(
         List(
-          actual ==== expected
+          actual ==== expected,
+          actualUrl ==== expectedUrl,
         )
       )
     }
@@ -137,15 +154,19 @@ trait networkCompatSpec {
 
   def testUrlUnsafeFromValid: Property =
     for {
-      url <- networkGens.genUrlString.log("url")
+      uri <- networkGens.genUrlString.log("uri")
     } yield {
-      val expected = Url.from(url)
-      val actual   = Url.unsafeFrom(url)
+      val expected = Url.from(uri)
+      val actual   = Url.unsafeFrom(uri)
+
+      @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
+      val expectedUrl = new URL(uri)
+      val actualUrl   = actual.toURL
 
       Result.all(
         List(
           actual.asRight ==== expected,
-          expected.fold(err => Result.failure.log(s"expected Url.from(url) results in error: $err"), actual ==== _),
+          actualUrl ==== expectedUrl,
         )
       )
     }
@@ -205,16 +226,16 @@ trait networkCompatSpec {
       }
     }
 
-//  def testUrlToURL: Property =
-//    for {
-//      uri <- networkGens.genUrlString.log("uri")
-//    } yield {
-//      @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
-//      val expected = new URL(uri)
-//      val actual   = Url.unsafeFrom(uri).toURL
-//
-//      actual ==== expected
-//    }
+  def testUrlToURL: Property =
+    for {
+      uri <- networkGens.genUrlString.log("uri")
+    } yield {
+      @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
+      val expected = new URL(uri)
+      val actual   = Url.unsafeFrom(uri).toURL
+
+      actual ==== expected
+    }
 
   def testUrlToUri: Property =
     for {
