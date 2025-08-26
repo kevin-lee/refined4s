@@ -7,7 +7,7 @@ import refined4s.ExpectedErrorMessages
 /** @author Kevin Lee
   * @since 2025-08-24
   */
-object networkSpec extends Properties {
+object networkWithoutCatsSpec extends Properties {
   override def tests: List[Test] =
     uriSpec.tests ++ urlSpec.tests ++ portNumberSpec.tests ++ systemPortNumberSpec.tests ++ nonSystemPortNumberSpec.tests ++ userPortNumberSpec.tests
 
