@@ -7,7 +7,7 @@ import refined4s.*
 /** @author Kevin Lee
   * @since 2023-04-25
   */
-object stringsSpec extends Properties {
+object stringsWithoutCatsSpec extends Properties {
   override def tests: List[Test] = NonEmptyStringSpec.tests ++ NonBlankStringSpec.tests ++ UuidSpec.tests
 
   object NonEmptyStringSpec {

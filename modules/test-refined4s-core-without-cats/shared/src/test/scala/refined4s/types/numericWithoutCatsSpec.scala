@@ -7,7 +7,7 @@ import refined4s.ExpectedErrorMessages
 /** @author Kevin Lee
   * @since 2025-08-24
   */
-object numericSpec extends Properties {
+object numericWithoutCatsSpec extends Properties {
   override def tests: List[Test] =
     negIntSpec.tests ++ nonNegIntSpec.tests ++ posIntSpec.tests ++ nonPosIntSpec.tests ++
       negLongSpec.tests ++ nonNegLongSpec.tests ++ posLongSpec.tests ++ nonPosLongSpec.tests ++
