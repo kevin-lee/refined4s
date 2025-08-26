@@ -1,9 +1,9 @@
 package refined4s.types
 
-import refined4s.*
-import cats.syntax.all.*
 import hedgehog.*
 import hedgehog.runner.*
+import refined4s.*
+import refined4s.predef4testing.*
 
 //import java.net.{URI, URL}
 import java.net.URI
