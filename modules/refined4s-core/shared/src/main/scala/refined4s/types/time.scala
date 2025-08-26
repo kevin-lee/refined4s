@@ -1,5 +1,6 @@
 package refined4s.types
 
+import orphan.{OrphanCats, OrphanCatsKernel}
 import refined4s.types
 import refined4s.types.numeric.{InlinedNumeric, MinMax}
 
@@ -26,7 +27,7 @@ trait time {
   final val Millis = time.Millis // scalafix:ok DisableSyntax.noFinalVal
 
 }
-object time {
+object time extends OrphanCats, OrphanCatsKernel {
   type Month = Month.Type
   object Month extends InlinedNumeric[Int], MinMax[Int] {
 
@@ -41,6 +42,17 @@ object time {
     override def invalidReason(a: Int): String = expectedMessage(inlinedExpectedValue)
 
     override def predicate(a: Int): Boolean = a >= 1 && a <= 12
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedMonthEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Int]): F[Month] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Int]])
+    }.asInstanceOf[F[Month]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedMonthShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[Month] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Int]])
+    }.asInstanceOf[F[Month]] // scalafix:ok DisableSyntax.asInstanceOf
+
   }
 
   type Day = Day.Type
@@ -57,6 +69,17 @@ object time {
     override def invalidReason(a: Int): String = expectedMessage(inlinedExpectedValue)
 
     override def predicate(a: Int): Boolean = a >= 1 && a <= 31
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedDayEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Int]): F[Day] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Int]])
+    }.asInstanceOf[F[Day]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedDayShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[Day] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Int]])
+    }.asInstanceOf[F[Day]] // scalafix:ok DisableSyntax.asInstanceOf
+
   }
 
   type Hour = Hour.Type
@@ -73,6 +96,17 @@ object time {
     override def invalidReason(a: Int): String = expectedMessage(inlinedExpectedValue)
 
     override def predicate(a: Int): Boolean = a >= 0 && a <= 23
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedHourEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Int]): F[Hour] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Int]])
+    }.asInstanceOf[F[Hour]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedHourShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[Hour] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Int]])
+    }.asInstanceOf[F[Hour]] // scalafix:ok DisableSyntax.asInstanceOf
+
   }
 
   type Minute = Minute.Type
@@ -89,6 +123,17 @@ object time {
     override def invalidReason(a: Int): String = expectedMessage(inlinedExpectedValue)
 
     override def predicate(a: Int): Boolean = a >= 0 && a <= 59
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedMinuteEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Int]): F[Minute] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Int]])
+    }.asInstanceOf[F[Minute]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedMinuteShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[Minute] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Int]])
+    }.asInstanceOf[F[Minute]] // scalafix:ok DisableSyntax.asInstanceOf
+
   }
 
   type Second = Second.Type
@@ -105,6 +150,17 @@ object time {
     override def invalidReason(a: Int): String = expectedMessage(inlinedExpectedValue)
 
     override def predicate(a: Int): Boolean = a >= 0 && a <= 59
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedSecondEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Int]): F[Second] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Int]])
+    }.asInstanceOf[F[Second]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedSecondShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[Second] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Int]])
+    }.asInstanceOf[F[Second]] // scalafix:ok DisableSyntax.asInstanceOf
+
   }
 
   type Millis = Millis.Type
@@ -121,6 +177,17 @@ object time {
     override def invalidReason(a: Int): String = expectedMessage(inlinedExpectedValue)
 
     override def predicate(a: Int): Boolean = a >= 0 && a <= 999
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedMillisEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[Int]): F[Millis] = {
+      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[Int]])
+    }.asInstanceOf[F[Millis]] // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedMillisShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[Millis] = {
+      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[Int]])
+    }.asInstanceOf[F[Millis]] // scalafix:ok DisableSyntax.asInstanceOf
+
   }
 
 }
