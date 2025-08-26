@@ -6,6 +6,7 @@ import hedgehog.runner.*
 import refined4s.types.numeric.*
 import refined4s.types.network.*
 import refined4s.types.strings.*
+import refined4s.types.time.*
 import refined4s.types.networkGens
 
 import java.util.UUID
@@ -143,7 +144,7 @@ object allSpec extends Properties {
     //
     property("test Eq[DynamicPortNumber]", testEqDynamicPortNumber),
     property("test Show[DynamicPortNumber]", testShowDynamicPortNumber),
-  )
+  ) ++ timeSpec.tests
 
   def testEqNegInt: Property =
     for {
@@ -1233,4 +1234,249 @@ object allSpec extends Properties {
       actual ==== expected
     }
 
+  object timeSpec {
+    def tests: List[Test] =
+      monthSpec.tests ++ daySpec.tests ++ hourSpec.tests ++ minuteSpec.tests ++ secondSpec.tests ++ millisSpec.tests
+
+    object monthSpec {
+      def tests: List[Test] = List(
+        property("test Eq[Month]", testEq),
+        property("test Show[Month]", testShow),
+      )
+
+      def testEq: Property =
+        for {
+          month1 <- Gen.int(Range.linear(1, 12)).log("month1")
+          month2 <- Gen
+                      .int(Range.linear(1, 12))
+                      .map {
+                        case `month1` => if month1 === 12 then month1 - 1 else month1 + 1
+                        case n => n
+                      }
+                      .log("month2")
+        } yield {
+          val input1 = Month.unsafeFrom(month1)
+          val input2 = Month.unsafeFrom(month2)
+          Result.all(
+            List(
+              Result.diffNamed("Comparing the same objects with ===", input1, input1)(_ === _),
+              Result.diffNamed("Comparing the different objects with =!=", input2, input2)(_ === _),
+            )
+          )
+        }
+
+      def testShow: Property =
+        for {
+          month <- Gen.int(Range.linear(1, 12)).log("month")
+        } yield {
+          val input = Month.unsafeFrom(month)
+
+          val expected = month.toString
+          val actual   = input.show
+
+          actual ==== expected
+        }
+    }
+
+    object daySpec {
+      def tests: List[Test] = List(
+        property("test Eq[Day]", testEq),
+        property("test Show[Day]", testShow),
+      )
+
+      def testEq: Property =
+        for {
+          day1 <- Gen.int(Range.linear(1, 31)).log("day1")
+          day2 <- Gen
+                    .int(Range.linear(1, 31))
+                    .map {
+                      case `day1` => if day1 === 31 then day1 - 1 else day1 + 1
+                      case n => n
+                    }
+                    .log("day2")
+        } yield {
+          val input1 = Day.unsafeFrom(day1)
+          val input2 = Day.unsafeFrom(day2)
+          Result.all(
+            List(
+              Result.diffNamed("Comparing the same objects with ===", input1, input1)(_ === _),
+              Result.diffNamed("Comparing the different objects with =!=", input2, input2)(_ === _),
+            )
+          )
+        }
+
+      def testShow: Property =
+        for {
+          day <- Gen.int(Range.linear(1, 31)).log("day")
+        } yield {
+          val input = Day.unsafeFrom(day)
+
+          val expected = day.toString
+          val actual   = input.show
+
+          actual ==== expected
+        }
+    }
+
+    object hourSpec {
+      def tests: List[Test] = List(
+        property("test Eq[Hour]", testEq),
+        property("test Show[Hour]", testShow),
+      )
+
+      def testEq: Property =
+        for {
+          hour1 <- Gen.int(Range.linear(0, 23)).log("hour1")
+          hour2 <- Gen
+                     .int(Range.linear(0, 23))
+                     .map {
+                       case `hour1` => if hour1 === 23 then hour1 - 1 else hour1 + 1
+                       case n => n
+                     }
+                     .log("hour2")
+        } yield {
+          val input1 = Hour.unsafeFrom(hour1)
+          val input2 = Hour.unsafeFrom(hour2)
+          Result.all(
+            List(
+              Result.diffNamed("Comparing the same objects with ===", input1, input1)(_ === _),
+              Result.diffNamed("Comparing the different objects with =!=", input2, input2)(_ === _),
+            )
+          )
+        }
+
+      def testShow: Property =
+        for {
+          hour <- Gen.int(Range.linear(0, 23)).log("hour")
+        } yield {
+          val input = Hour.unsafeFrom(hour)
+
+          val expected = hour.toString
+          val actual   = input.show
+
+          actual ==== expected
+        }
+    }
+
+    object minuteSpec {
+      def tests: List[Test] = List(
+        property("test Eq[Minute]", testEq),
+        property("test Show[Minute]", testShow),
+      )
+
+      def testEq: Property =
+        for {
+          minute1 <- Gen.int(Range.linear(0, 59)).log("minute1")
+          minute2 <- Gen
+                       .int(Range.linear(0, 59))
+                       .map {
+                         case `minute1` => if minute1 === 59 then minute1 - 1 else minute1 + 1
+                         case n => n
+                       }
+                       .log("minute2")
+        } yield {
+          val input1 = Minute.unsafeFrom(minute1)
+          val input2 = Minute.unsafeFrom(minute2)
+          Result.all(
+            List(
+              Result.diffNamed("Comparing the same objects with ===", input1, input1)(_ === _),
+              Result.diffNamed("Comparing the different objects with =!=", input2, input2)(_ === _),
+            )
+          )
+        }
+
+      def testShow: Property =
+        for {
+          minute <- Gen.int(Range.linear(0, 59)).log("minute")
+        } yield {
+          val input = Minute.unsafeFrom(minute)
+
+          val expected = minute.toString
+          val actual   = input.show
+
+          actual ==== expected
+        }
+    }
+
+    object secondSpec {
+      def tests: List[Test] = List(
+        property("test Eq[Second]", testEq),
+        property("test Show[Second]", testShow),
+      )
+
+      def testEq: Property =
+        for {
+          second1 <- Gen.int(Range.linear(0, 59)).log("second1")
+          second2 <- Gen
+                       .int(Range.linear(0, 59))
+                       .map {
+                         case `second1` => if second1 === 59 then second1 - 1 else second1 + 1
+                         case n => n
+                       }
+                       .log("second2")
+        } yield {
+          val input1 = Second.unsafeFrom(second1)
+          val input2 = Second.unsafeFrom(second2)
+          Result.all(
+            List(
+              Result.diffNamed("Comparing the same objects with ===", input1, input1)(_ === _),
+              Result.diffNamed("Comparing the different objects with =!=", input2, input2)(_ === _),
+            )
+          )
+        }
+
+      def testShow: Property =
+        for {
+          second <- Gen.int(Range.linear(0, 59)).log("second")
+        } yield {
+          val input = Second.unsafeFrom(second)
+
+          val expected = second.toString
+          val actual   = input.show
+
+          actual ==== expected
+        }
+    }
+
+    object millisSpec {
+      def tests: List[Test] = List(
+        property("test Eq[Millis]", testEq),
+        property("test Show[Millis]", testShow),
+      )
+
+      def testEq: Property =
+        for {
+          millis1 <- Gen.int(Range.linear(0, 999)).log("millis1")
+          millis2 <- Gen
+                       .int(Range.linear(0, 999))
+                       .map {
+                         case `millis1` => if millis1 === 59 then millis1 - 1 else millis1 + 1
+                         case n => n
+                       }
+                       .log("millis2")
+        } yield {
+          val input1 = Millis.unsafeFrom(millis1)
+          val input2 = Millis.unsafeFrom(millis2)
+          Result.all(
+            List(
+              Result.diffNamed("Comparing the same objects with ===", input1, input1)(_ === _),
+              Result.diffNamed("Comparing the different objects with =!=", input2, input2)(_ === _),
+            )
+          )
+        }
+
+      def testShow: Property =
+        for {
+          millis <- Gen.int(Range.linear(0, 999)).log("millis")
+        } yield {
+          val input = Millis.unsafeFrom(millis)
+
+          val expected = millis.toString
+          val actual   = input.show
+
+          actual ==== expected
+        }
+    }
+
+  }
 }
