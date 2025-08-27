@@ -4,23 +4,31 @@ title: "cats module"
 ---
 
 ## Import
-```scala
-import refined4s.modules.cats.derivation.types.all.given
-```
+
 ```scala
 import refined4s.modules.cats.derivation.*
 ```
-
-## Use Drived Instances for Pre-defined Types
-To make `Newtype`, `Refined` and `InlinedRefined` have `Eq` and `Show` type-class instances derived from the actual values, you can simply use
+***
+:::note
+The following import is required only for versions prior to `1.8.0`.
 ```scala
 import refined4s.modules.cats.derivation.types.all.given
 ```
+If you are using `refined4s` `1.8.0` or later, **you don't need it**.
+:::
+
+## Use Drived Instances for Pre-defined Types
+
+:::info NOTE
+Since `refined4s` `1.8.0`, you no longer need to import anything to use the predefined `Eq` and `Show` type-class instances derived from the actual values. As soon as you project includes `cats`, `refined4s` will automatically provide the predefined `Eq` and `Show` type-class instances derived from the actual values.
+:::
+
 :::warning NOTE
 This works only when the actual type already has `Eq` and `Show`.
 :::
+
 :::info
-Using `refined4s.modules.cats.derivation.types.all.given` is required only when `Eq` and/or `Show` is used.<br/>
+`Eq` and/or `Show` type-class instances are provided only for the types from `refined4s.types.all`.
 So if you want your `Newtype` or `Refined` or `InlinedRefined` to have `Eq` and `Show` instances,<br/>
 you can use [pre-defined traits for cats](#with-explicit-pre-defined-cats-support) or the [`deriving` method](#with-deriving-method) instead.<br/>
 :::
@@ -42,60 +50,45 @@ import cats.syntax.all.*
 
 def hello[A: Show](a: A): Unit = println(show"Hello $a")
 
-def equal[A: Eq](a1: A, a2: A): Unit =
-  if Eq[A].eqv(a1, a1) then println("The given values are equal.")
+def equal[A: Eq](a1: A, a2: A): Unit = 
+  if Eq[A].eqv(a1, a2) then println("The given values are equal.")
   else println("The given values are not equal.")
 ```
 
-**With `derivation.types.all`,**
+**For `refined4s.types.all.*`, `Eq` and `Show` type-class instances are already provided if the underlying type has `Eq` and `Show` instances.**
 
-```scala {1}
-import refined4s.modules.cats.derivation.types.all.given
+e.g.)
+```scala mdoc
+import refined4s.types.all.*
 
 hello(NonEmptyString("Peter Parker"))
-// Hello Peter Parker
 
-hello(Name("Tony Stark"))
-// Hello Tony Stark
+hello(PosInt(999))
 
-hello(NotEmptyStr("Thor Odinson"))
-// Hello Thor Odinson
 
 equal(NonEmptyString("Peter Parker"), NonEmptyString("Peter Parker"))
-// The given values are equal.
+
 equal(NonEmptyString("Peter Parker"), NonEmptyString("Natasha Romanoff"))
-// The given values are not equal.
 
+equal(NonNegInt(0), NonNegInt(0))
+
+equal(NegInt(-123), NegInt(-999))
+
+```
+
+**Custom types without `Eq` and `Show` type-class instances,**
+
+```scala mdoc:fail
+hello(Name("Tony Stark"))
+```
+```scala mdoc:fail
+hello(NotEmptyStr("Thor Odinson"))
+```
+```scala mdoc:fail
 equal(Name("Tony Stark"), Name("Tony Stark"))
-// The given values are equal.
-equal(Name("Tony Stark"), Name("Steve Rogers"))
-// The given values are not equal.
-
+```
+```scala mdoc:fail
 equal(NotEmptyStr("Thor Odinson"), NotEmptyStr("Thor Odinson"))
-// The given values are equal.
-equal(NotEmptyStr("Thor Odinson"), NotEmptyStr("Bruce Banner"))
-// The given values are not equal.
-```
-
-**Without `derivation.types.all`,**
-
-```scala mdoc:fail
-hello(NonEmptyString("Kevin"))
-```
-```scala mdoc:fail
-hello(Name("Kevin"))
-```
-```scala mdoc:fail
-hello(NotEmptyStr("Kevin"))
-```
-```scala mdoc:fail
-equal(NonEmptyString("Kevin"), NonEmptyString("Kevin"))
-```
-```scala mdoc:fail
-equal(Name("Kevin"), Name("Kevin"))
-```
-```scala mdoc:fail
-equal(NotEmptyStr("Kevin"), NotEmptyStr("Kevin"))
 ```
 
 
