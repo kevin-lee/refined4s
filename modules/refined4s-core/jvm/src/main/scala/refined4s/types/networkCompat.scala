@@ -20,10 +20,9 @@ object networkCompat extends OrphanCats, OrphanCatsKernel {
     override def invalidReason(a: String): String =
       expectedMessage(inlinedExpectedValue)
 
-    @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
     override def predicate(a: String): Boolean =
       try {
-        new URL(a)
+        new URI(a).toURL
         true
       } catch {
         case NonFatal(_) =>
@@ -38,8 +37,7 @@ object networkCompat extends OrphanCats, OrphanCatsKernel {
     def apply(a: URL): Type = unsafeFrom(a.toString)
 
     extension (url: Type) {
-      @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
-      def toURL: URL = new URL(url.value)
+      def toURL: URL = new URI(url.value).toURL
 
       def toUri: Uri = Uri(toURL.toURI)
 
@@ -58,13 +56,12 @@ object networkCompat extends OrphanCats, OrphanCatsKernel {
 
   }
 
-  @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
   def isValidateUrl(urlExpr: Expr[String])(using Quotes): Expr[Boolean] = {
     import quotes.reflect.*
     urlExpr.asTerm match {
       case Inlined(_, _, Literal(StringConstant(urlStr))) =>
         try {
-          new java.net.URL(urlStr)
+          new java.net.URI(urlStr).toURL
           Expr(true)
         } catch {
           case _: Throwable => Expr(false)
