@@ -1,10 +1,10 @@
 package refined4s.types
 
-import refined4s.predef4testing.*
 import hedgehog.*
 import hedgehog.runner.*
+import refined4s.predef4testing.*
 
-import java.net.{URI, URL}
+import java.net.URI
 
 /** @author Kevin Lee
   * @since 2024-09-05
@@ -50,7 +50,7 @@ trait networkCompatSpec {
       uri <- networkGens.genUrlString.log("uri")
     } yield {
       @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
-      val expected = new URL(uri)
+      val expected = new URI(uri).toURL
       val actual   = Uri.unsafeFrom(uri).toURL
 
       actual ==== expected
@@ -60,7 +60,7 @@ trait networkCompatSpec {
 
   def testUrlApply: Result = {
     @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
-    val expected = new URL("https://github.com/kevin-lee/refined4s")
+    val expected = new URI("https://github.com/kevin-lee/refined4s").toURL
     val actual   = Url("https://github.com/kevin-lee/refined4s")
     Result.all(
       List(
@@ -72,7 +72,7 @@ trait networkCompatSpec {
 
   def testUrlApplyURL: Result = {
     @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
-    val url      = new URL("https://github.com/kevin-lee/refined4s")
+    val url      = new URI("https://github.com/kevin-lee/refined4s").toURL
     val expected = url
     val actual   = Url(url)
     Result.all(
@@ -116,7 +116,7 @@ trait networkCompatSpec {
       val actual   = Url.from(uri)
 
       @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
-      val expectedUrl = new URL(uri).asRight
+      val expectedUrl = new URI(uri).toURL.asRight
       val actualUrl   = actual.map(_.toURL)
 
       Result.all(
@@ -160,7 +160,7 @@ trait networkCompatSpec {
       val actual   = Url.unsafeFrom(uri)
 
       @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
-      val expectedUrl = new URL(uri)
+      val expectedUrl = new URI(uri).toURL
       val actualUrl   = actual.toURL
 
       Result.all(
@@ -231,7 +231,7 @@ trait networkCompatSpec {
       uri <- networkGens.genUrlString.log("uri")
     } yield {
       @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
-      val expected = new URL(uri)
+      val expected = new URI(uri).toURL
       val actual   = Url.unsafeFrom(uri).toURL
 
       actual ==== expected
