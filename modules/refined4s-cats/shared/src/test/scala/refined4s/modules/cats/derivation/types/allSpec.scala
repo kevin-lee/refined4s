@@ -2124,6 +2124,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[Uri] === case", testEq),
       property("test   Eq[Uri] =!= case", testEqNotEqual),
+      property("test Hash[Uri]", testHash),
       property("test Show[Uri]", testShow),
     )
 
@@ -2150,6 +2151,24 @@ object allSpec extends Properties {
         Result.diffNamed("Uri(value) =!= Uri(different value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        uri <- networkGens.genUriString.log("uri")
+      } yield {
+        val input = Uri.unsafeFrom(uri)
+
+        val expected       = uri.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("Uri(value).hash === uri.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("Uri(value).## === uri.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         uri <- networkGens.genUriString.log("uri")
@@ -2170,6 +2189,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[Url] === case", testEq),
       property("test   Eq[Url] =!= case", testEqNotEqual),
+      property("test Hash[Url]", testHash),
       property("test Show[Url]", testShow),
     )
 
@@ -2196,6 +2216,24 @@ object allSpec extends Properties {
         Result.diffNamed("Uri(value) =!= Uri(different value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        url <- networkGens.genUrlString.log("url")
+      } yield {
+        val input = Url.unsafeFrom(url)
+
+        val expected       = url.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("Uri(value).hash === url.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("Uri(value).## === url.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         url <- networkGens.genUrlString.log("url")
@@ -2217,6 +2255,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[PortNumber] === case", testEq),
       property("test   Eq[PortNumber] =!= case", testEqNotEqual),
+      property("test Hash[PortNumber]", testHash),
       property("test Show[PortNumber]", testShow),
     )
 
@@ -2256,6 +2295,24 @@ object allSpec extends Properties {
       Result.diffNamed("PortNumber(value) =!= PortNumber(different value)", input1, input2)(_ =!= _)
     }
 
+    def testHash: Property =
+      for {
+        portNumber <- networkGens.genPortNumberInt.log("portNumber")
+      } yield {
+        val input = PortNumber.unsafeFrom(portNumber)
+
+        val expected       = portNumber.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("PortNumber(value).hash === portNumber.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("PortNumber(value).## === portNumber.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         portNumber <- networkGens.genPortNumberInt.log("portNumber")
@@ -2276,6 +2333,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[SystemPortNumber] === case", testEq),
       property("test   Eq[SystemPortNumber] =!= case", testEqNotEqual),
+      property("test Hash[SystemPortNumber]", testHash),
       property("test Show[SystemPortNumber]", testShow),
     )
 
@@ -2316,6 +2374,24 @@ object allSpec extends Properties {
       Result.diffNamed("SystemPortNumber(value) =!= SystemPortNumber(different value)", input1, input2)(_ =!= _)
     }
 
+    def testHash: Property =
+      for {
+        systemPortNumber <- networkGens.genSystemPortNumberInt.log("systemPortNumber")
+      } yield {
+        val input = SystemPortNumber.unsafeFrom(systemPortNumber)
+
+        val expected       = systemPortNumber.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("SystemPortNumber(value).hash === systemPortNumber.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("SystemPortNumber(value).## === systemPortNumber.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property = for {
       systemPortNumber <- networkGens.genSystemPortNumberInt.log("systemPortNumber")
     } yield {
@@ -2335,6 +2411,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NonSystemPortNumber] === case", testEq),
       property("test   Eq[NonSystemPortNumber] =!= case", testEqNotEqual),
+      property("test Hash[NonSystemPortNumber]", testHash),
       property("test Show[NonSystemPortNumber]", testShow),
     )
 
@@ -2374,6 +2451,24 @@ object allSpec extends Properties {
       Result.diffNamed("NonSystemPortNumber(value) =!= NonSystemPortNumber(different value)", input1, input2)(_ =!= _)
     }
 
+    def testHash: Property =
+      for {
+        nonSystemPortNumber <- networkGens.genNonSystemPortNumberInt.log("nonSystemPortNumber")
+      } yield {
+        val input = NonSystemPortNumber.unsafeFrom(nonSystemPortNumber)
+
+        val expected       = nonSystemPortNumber.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NonSystemPortNumber(value).hash === nonSystemPortNumber.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NonSystemPortNumber(value).## === nonSystemPortNumber.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property = for {
       nonSystemPortNumber <- networkGens.genNonSystemPortNumberInt.log("nonSystemPortNumber")
     } yield {
@@ -2393,6 +2488,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[UserPortNumber] === case", testEq),
       property("test   Eq[UserPortNumber] =!= case", testEqNotEqual),
+      property("test Hash[UserPortNumber]", testHash),
       property("test Show[UserPortNumber]", testShow),
     )
 
@@ -2433,6 +2529,24 @@ object allSpec extends Properties {
       Result.diffNamed("UserPortNumber(value) =!= UserPortNumber(different value)", input1, input2)(_ =!= _)
     }
 
+    def testHash: Property =
+      for {
+        userPortNumber <- networkGens.genUserPortNumberInt.log("userPortNumber")
+      } yield {
+        val input = UserPortNumber.unsafeFrom(userPortNumber)
+
+        val expected       = userPortNumber.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("UserPortNumber(value).hash === userPortNumber.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("UserPortNumber(value).## === userPortNumber.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property = for {
       userPortNumber <- networkGens.genUserPortNumberInt.log("userPortNumber")
     } yield {
@@ -2452,6 +2566,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[DynamicPortNumber] === case", testEq),
       property("test   Eq[DynamicPortNumber] =!= case", testEqNotEqual),
+      property("test Hash[DynamicPortNumber]", testHash),
       property("test Show[DynamicPortNumber]", testShow),
     )
 
@@ -2491,6 +2606,24 @@ object allSpec extends Properties {
       val input2 = DynamicPortNumber.unsafeFrom(dynamicPortNumber2)
       Result.diffNamed("DynamicPortNumber(value) =!= DynamicPortNumber(different value)", input1, input2)(_ =!= _)
     }
+
+    def testHash: Property =
+      for {
+        dynamicPortNumber <- networkGens.genDynamicPortNumberInt.log("dynamicPortNumber")
+      } yield {
+        val input = DynamicPortNumber.unsafeFrom(dynamicPortNumber)
+
+        val expected       = dynamicPortNumber.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("DynamicPortNumber(value).hash === dynamicPortNumber.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("DynamicPortNumber(value).## === dynamicPortNumber.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
 
     def testShow: Property =
       for {

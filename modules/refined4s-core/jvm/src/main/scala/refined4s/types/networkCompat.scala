@@ -12,10 +12,10 @@ import scala.util.control.NonFatal
 /** @author Kevin Lee
   * @since 2024-09-04
   */
-object networkCompat extends OrphanCats, OrphanCatsKernel {
+object networkCompat {
 
   type Url = Url.Type
-  object Url extends InlinedRefined[String] {
+  object Url extends InlinedRefined[String], UrlTypeClassInstances {
 
     override def invalidReason(a: String): String =
       expectedMessage(inlinedExpectedValue)
@@ -44,16 +44,24 @@ object networkCompat extends OrphanCats, OrphanCatsKernel {
       def toURI: URI = toURL.toURI
     }
 
+  }
+  private[types] trait UrlTypeClassInstances extends UrlTypeClassInstance1 {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     inline given derivedUrlEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[String]): F[Url] = {
-      internalDef.contraCoercible(eqActual.asInstanceOf[cats.Eq[String]])
+      internalDef.contraCoercible[cats.Eq, Url, String, cats.Contravariant](eqActual.asInstanceOf[cats.Eq[String]])
     }.asInstanceOf[F[Url]] // scalafix:ok DisableSyntax.asInstanceOf
-
+  }
+  private[types] trait UrlTypeClassInstance1 extends UrlTypeClassInstance2 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    inline given derivedUrlHash[F[*]: CatsHash, G[*]: CatsHash](using hashActual: G[String]): F[Url] = {
+      internalDef.contraCoercible[cats.Hash, Url, String, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[String]])
+    }.asInstanceOf[F[Url]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait UrlTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     inline given derivedUrlShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[String]): F[Url] = {
-      internalDef.contraCoercible(showActual.asInstanceOf[cats.Show[String]])
+      internalDef.contraCoercible[cats.Show, Url, String, cats.Contravariant](showActual.asInstanceOf[cats.Show[String]])
     }.asInstanceOf[F[Url]] // scalafix:ok DisableSyntax.asInstanceOf
-
   }
 
   def isValidateUrl(urlExpr: Expr[String])(using Quotes): Expr[Boolean] = {
