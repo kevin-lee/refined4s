@@ -566,7 +566,7 @@ def commonModule(prefixedName: String, crossProject: CrossProject.Builder): Cros
         else
           ((ThisBuild / baseDirectory).value / ".scalafix-scala2.conf").some
       ),
-      scalacOptions ++= (if (isScala3(scalaVersion.value)) List("-no-indent") else List("-Xsource:3")),
+      scalacOptions ++= (if (isScala3(scalaVersion.value)) List("-no-indent", "-explain") else List("-Xsource:3")),
 //      scalacOptions ~= (ops => ops.filter(_ != "UTF-8")),
       libraryDependencies ++= libs.tests.hedgehog.value,
       wartremoverErrors ++= Warts.allBut(Wart.Any, Wart.Nothing, Wart.ImplicitConversion, Wart.ImplicitParameter),

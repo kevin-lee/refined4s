@@ -8,6 +8,8 @@ import orphan.OrphanCatsMessages
 object ExpectedErrorMessages {
   def missingEq: String = OrphanCatsMessages.MissingCatsEq
 
+  def missingHash: String = OrphanCatsMessages.MissingCatsHash
+
   def missingShow: String = OrphanCatsMessages.MissingCatsShow
 
 }
