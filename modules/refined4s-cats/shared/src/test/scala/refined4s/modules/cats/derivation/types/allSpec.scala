@@ -1887,6 +1887,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NonEmptyString] === case", testEq),
       property("test   Eq[NonEmptyString] =!= case", testEqNotEqual),
+      property("test Hash[NonEmptyString]", testHash),
       property("test Show[NonEmptyString]", testShow),
     )
 
@@ -1913,6 +1914,24 @@ object allSpec extends Properties {
         Result.diffNamed("NonEmptyString(value) =!= NonEmptyString(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+      } yield {
+        val input = NonEmptyString.unsafeFrom(s)
+
+        val expected       = s.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NonEmptyString(value).hash === s.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NonEmptyString(value).## === s.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
@@ -1934,6 +1953,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NonBlankString] === case", testEq),
       property("test   Eq[NonBlankString] =!= case", testEqNotEqual),
+      property("test Hash[NonBlankString]", testHash),
       property("test Show[NonBlankString]", testShow),
     )
 
@@ -1978,6 +1998,32 @@ object allSpec extends Properties {
         Result.diffNamed("NonBlankString(value) =!= NonBlankString(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        nonWhitespaceString <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("nonWhitespaceString")
+        whitespaceString    <- Gen
+                                 .string(
+                                   hedgehog.extra.Gens.genCharByRange(refined4s.types.strings.WhitespaceCharRange),
+                                   Range.linear(1, 10),
+                                 )
+                                 .log("whitespaceString")
+
+        s <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString + whitespaceString).toList).mkString).log("s")
+      } yield {
+        val input = NonBlankString.unsafeFrom(s)
+
+        val expected       = s.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NonBlankString(value).hash === s.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NonBlankString(value).## === s.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         nonWhitespaceString <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("nonWhitespaceString")
@@ -2006,6 +2052,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[Uuid] === case", testEq),
       property("test   Eq[Uuid] =!= case", testEqNotEqual),
+      property("test Hash[Uuid]", testHash),
       property("test Show[Uuid]", testShow),
     )
 
@@ -2037,6 +2084,24 @@ object allSpec extends Properties {
         val input2 = Uuid(uuid2)
 
         Result.diffNamed("Uuid(value) =!= Uuid(different value)", input1, input2)(_ =!= _)
+      }
+
+    def testHash: Property =
+      for {
+        uuid <- Gen.constant(UUID.randomUUID()).log("uuid")
+      } yield {
+        val input = Uuid(uuid)
+
+        val expected       = uuid.toString.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("Uuid(value).hash === UUID.toString.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("Uuid(value).## === UUID.toString.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
       }
 
     def testShow: Property =

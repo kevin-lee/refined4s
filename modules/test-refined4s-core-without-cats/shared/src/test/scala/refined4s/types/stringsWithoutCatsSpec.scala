@@ -14,6 +14,7 @@ object stringsWithoutCatsSpec extends Properties {
 
     def tests: List[Test] = List(
       example("test Eq[NonEmptyString]", testEq),
+      example("test Hash[NonEmptyString]", testHash),
       example("test Show[NonEmptyString]", testShow),
     )
 
@@ -24,6 +25,24 @@ object stringsWithoutCatsSpec extends Properties {
       val actual = typeCheckErrors(
         """
           val _ = refined4s.types.strings.NonEmptyString.derivedNonEmptyStringEq
+        """
+      )
+
+      val actualErrorMessage = actual.map(_.message).mkString
+      (actualErrorMessage ==== expectedMessage)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expectedMessage = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+          val _ = refined4s.types.strings.NonEmptyString.derivedNonEmptyStringHash
         """
       )
 
@@ -59,6 +78,7 @@ object stringsWithoutCatsSpec extends Properties {
 
     def tests: List[Test] = List(
       example("test Eq[NonBlankString]", testEq),
+      example("test Hash[NonBlankString]", testHash),
       example("test Show[NonBlankString]", testShow),
     )
 
@@ -69,6 +89,24 @@ object stringsWithoutCatsSpec extends Properties {
       val actual = typeCheckErrors(
         """
           val _ = refined4s.types.strings.NonBlankString.derivedNonBlankStringEq
+        """
+      )
+
+      val actualErrorMessage = actual.map(_.message).mkString
+      (actualErrorMessage ==== expectedMessage)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expectedMessage = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+          val _ = refined4s.types.strings.NonBlankString.derivedNonBlankStringHash
         """
       )
 
@@ -105,6 +143,7 @@ object stringsWithoutCatsSpec extends Properties {
 
     def tests: List[Test] = List(
       example("test Eq[Uuid]", testEq),
+      example("test Hash[Uuid]", testHash),
       example("test Show[Uuid]", testShow),
     )
 
@@ -115,6 +154,24 @@ object stringsWithoutCatsSpec extends Properties {
       val actual = typeCheckErrors(
         """
           val _ = refined4s.types.strings.Uuid.derivedUuidEq
+        """
+      )
+
+      val actualErrorMessage = actual.map(_.message).mkString
+      (actualErrorMessage ==== expectedMessage)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expectedMessage = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+          val _ = refined4s.types.strings.Uuid.derivedUuidHash
         """
       )
 
