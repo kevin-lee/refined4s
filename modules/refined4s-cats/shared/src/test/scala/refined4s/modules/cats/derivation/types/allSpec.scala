@@ -2648,6 +2648,7 @@ object allSpec extends Properties {
       def tests: List[Test] = List(
         property("test   Eq[Month] === case", testEq),
         property("test   Eq[Month] =!= case", testEqNotEqual),
+        property("test Hash[Month]", testHash),
         property("test Show[Month]", testShow),
       )
 
@@ -2688,6 +2689,24 @@ object allSpec extends Properties {
           Result.diffNamed("Month(value) =!= Month(different value)", input1, input2)(_ =!= _)
         }
 
+      def testHash: Property =
+        for {
+          month <- Gen.int(Range.linear(1, 12)).log("month")
+        } yield {
+          val input = Month.unsafeFrom(month)
+
+          val expected       = month.hashCode
+          val actual         = input.hash
+          val actualHashCode = input.##
+
+          Result.all(
+            List(
+              Result.diffNamed("Month(value).hash === month.hashCode", actual, expected)(_ === _),
+              Result.diffNamed("Month(value).## === month.hashCode", actualHashCode, expected)(_ === _),
+            )
+          )
+        }
+
       def testShow: Property =
         for {
           month <- Gen.int(Range.linear(1, 12)).log("month")
@@ -2705,6 +2724,7 @@ object allSpec extends Properties {
       def tests: List[Test] = List(
         property("test   Eq[Day] === case", testEq),
         property("test   Eq[Day] =!= case", testEqNotEqual),
+        property("test Hash[Day]", testHash),
         property("test Show[Day]", testShow),
       )
 
@@ -2745,6 +2765,24 @@ object allSpec extends Properties {
           Result.diffNamed("Day(value) =!= Day(different value)", input1, input2)(_ =!= _)
         }
 
+      def testHash: Property =
+        for {
+          day <- Gen.int(Range.linear(1, 31)).log("day")
+        } yield {
+          val input = Day.unsafeFrom(day)
+
+          val expected       = day.hashCode
+          val actual         = input.hash
+          val actualHashCode = input.##
+
+          Result.all(
+            List(
+              Result.diffNamed("Day(value).hash === day.hashCode", actual, expected)(_ === _),
+              Result.diffNamed("Day(value).## === day.hashCode", actualHashCode, expected)(_ === _),
+            )
+          )
+        }
+
       def testShow: Property =
         for {
           day <- Gen.int(Range.linear(1, 31)).log("day")
@@ -2762,6 +2800,7 @@ object allSpec extends Properties {
       def tests: List[Test] = List(
         property("test   Eq[Hour] === case", testEq),
         property("test   Eq[Hour] =!= case", testEqNotEqual),
+        property("test Hash[Hour]", testHash),
         property("test Show[Hour]", testShow),
       )
 
@@ -2802,6 +2841,24 @@ object allSpec extends Properties {
           Result.diffNamed("Hour(value) =!= Hour(different value)", input1, input2)(_ =!= _)
         }
 
+      def testHash: Property =
+        for {
+          hour <- Gen.int(Range.linear(0, 23)).log("hour")
+        } yield {
+          val input = Hour.unsafeFrom(hour)
+
+          val expected       = hour.hashCode
+          val actual         = input.hash
+          val actualHashCode = input.##
+
+          Result.all(
+            List(
+              Result.diffNamed("Hour(value).hash === hour.hashCode", actual, expected)(_ === _),
+              Result.diffNamed("Hour(value).## === hour.hashCode", actualHashCode, expected)(_ === _),
+            )
+          )
+        }
+
       def testShow: Property =
         for {
           hour <- Gen.int(Range.linear(0, 23)).log("hour")
@@ -2819,6 +2876,7 @@ object allSpec extends Properties {
       def tests: List[Test] = List(
         property("test   Eq[Minute] === case", testEq),
         property("test   Eq[Minute] =!= case", testEqNotEqual),
+        property("test Hash[Minute]", testHash),
         property("test Show[Minute]", testShow),
       )
 
@@ -2859,6 +2917,24 @@ object allSpec extends Properties {
           Result.diffNamed("Minute(value) =!= Minute(different value)", input1, input2)(_ =!= _)
         }
 
+      def testHash: Property =
+        for {
+          minute <- Gen.int(Range.linear(0, 59)).log("minute")
+        } yield {
+          val input = Minute.unsafeFrom(minute)
+
+          val expected       = minute.hashCode
+          val actual         = input.hash
+          val actualHashCode = input.##
+
+          Result.all(
+            List(
+              Result.diffNamed("Minute(value).hash === minute.hashCode", actual, expected)(_ === _),
+              Result.diffNamed("Minute(value).## === minute.hashCode", actualHashCode, expected)(_ === _),
+            )
+          )
+        }
+
       def testShow: Property =
         for {
           minute <- Gen.int(Range.linear(0, 59)).log("minute")
@@ -2876,6 +2952,7 @@ object allSpec extends Properties {
       def tests: List[Test] = List(
         property("test   Eq[Second] === case", testEq),
         property("test   Eq[Second] =!= case", testEqNotEqual),
+        property("test Hash[Second]", testHash),
         property("test Show[Second]", testShow),
       )
 
@@ -2916,6 +2993,24 @@ object allSpec extends Properties {
           Result.diffNamed("Second(value) =!= Second(different value)", input1, input2)(_ =!= _)
         }
 
+      def testHash: Property =
+        for {
+          second <- Gen.int(Range.linear(0, 59)).log("second")
+        } yield {
+          val input = Second.unsafeFrom(second)
+
+          val expected       = second.hashCode
+          val actual         = input.hash
+          val actualHashCode = input.##
+
+          Result.all(
+            List(
+              Result.diffNamed("Second(value).hash === second.hashCode", actual, expected)(_ === _),
+              Result.diffNamed("Second(value).## === second.hashCode", actualHashCode, expected)(_ === _),
+            )
+          )
+        }
+
       def testShow: Property =
         for {
           second <- Gen.int(Range.linear(0, 59)).log("second")
@@ -2933,6 +3028,7 @@ object allSpec extends Properties {
       def tests: List[Test] = List(
         property("test   Eq[Millis] === case", testEq),
         property("test   Eq[Millis] =!= case", testEqNotEqual),
+        property("test Hash[Millis]", testHash),
         property("test Show[Millis]", testShow),
       )
 
@@ -2971,6 +3067,24 @@ object allSpec extends Properties {
           val input1 = Millis.unsafeFrom(millis1)
           val input2 = Millis.unsafeFrom(millis2)
           Result.diffNamed("Millis(value) =!= Millis(different value)", input1, input2)(_ =!= _)
+        }
+
+      def testHash: Property =
+        for {
+          millis <- Gen.int(Range.linear(0, 999)).log("millis")
+        } yield {
+          val input = Millis.unsafeFrom(millis)
+
+          val expected       = millis.hashCode
+          val actual         = input.hash
+          val actualHashCode = input.##
+
+          Result.all(
+            List(
+              Result.diffNamed("Millis(value).hash === millis.hashCode", actual, expected)(_ === _),
+              Result.diffNamed("Millis(value).## === millis.hashCode", actualHashCode, expected)(_ === _),
+            )
+          )
         }
 
       def testShow: Property =
