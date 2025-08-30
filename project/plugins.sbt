@@ -1,12 +1,12 @@
-addSbtPlugin("com.github.sbt" % "sbt-ci-release" % "1.11.1")
+addSbtPlugin("com.github.sbt" % "sbt-ci-release" % "1.11.2")
 
 addSbtPlugin("org.wartremover" % "sbt-wartremover" % "3.4.0")
 
-addSbtPlugin("ch.epfl.scala" % "sbt-scalafix"  % "0.12.1")
-addSbtPlugin("org.scalameta" % "sbt-scalafmt"  % "2.5.2")
+addSbtPlugin("ch.epfl.scala" % "sbt-scalafix"  % "0.14.3")
+addSbtPlugin("org.scalameta" % "sbt-scalafmt"  % "2.5.5")
 addSbtPlugin("org.scoverage" % "sbt-scoverage" % "2.2.2")
-addSbtPlugin("org.scalameta" % "sbt-mdoc"      % "2.5.4")
-addSbtPlugin("io.kevinlee"   % "sbt-docusaur"  % "0.16.0")
+addSbtPlugin("org.scalameta" % "sbt-mdoc"      % "2.7.2")
+addSbtPlugin("io.kevinlee"   % "sbt-docusaur"  % "0.17.0")
 
 addSbtPlugin("org.scala-js"       % "sbt-scalajs"              % "1.18.2")
 addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "1.3.2")
