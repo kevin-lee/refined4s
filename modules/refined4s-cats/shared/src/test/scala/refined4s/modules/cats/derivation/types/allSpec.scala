@@ -39,6 +39,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NegInt] === case", testEq),
       property("test   Eq[NegInt] =!= case", testEqNotEqual),
+      property("test Hash[NegInt]", testHash),
       property("test Show[NegInt]", testShow),
     )
 
@@ -76,6 +77,24 @@ object allSpec extends Properties {
         Result.diffNamed("NegInt(value) =!= NegInt(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.int(Range.linear(-1, Int.MinValue)).log("n")
+      } yield {
+        val input = NegInt.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NegInt(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NegInt(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.int(Range.linear(-1, Int.MinValue)).log("n")
@@ -94,6 +113,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NonNegInt] === case", testEq),
       property("test   Eq[NonNegInt] =!= case", testEqNotEqual),
+      property("test Hash[NonNegInt]", testHash),
       property("test Show[NonNegInt]", testShow),
     )
 
@@ -131,6 +151,24 @@ object allSpec extends Properties {
         Result.diffNamed("NonNegInt(value) =!= NonNegInt(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.int(Range.linear(0, Int.MaxValue)).log("n")
+      } yield {
+        val input = NonNegInt.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NonNegInt(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NonNegInt(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.int(Range.linear(0, Int.MaxValue)).log("n")
@@ -149,6 +187,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[PosInt] === case", testEq),
       property("test   Eq[PosInt] =!= case", testEqNotEqual),
+      property("test Hash[PosInt]", testHash),
       property("test Show[PosInt]", testShow),
     )
 
@@ -186,6 +225,24 @@ object allSpec extends Properties {
         Result.diffNamed("PosInt(value) =!= PosInt(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.int(Range.linear(1, Int.MaxValue)).log("n")
+      } yield {
+        val input = PosInt.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("PosInt(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("PosInt(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.int(Range.linear(1, Int.MaxValue)).log("n")
@@ -203,6 +260,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NonPosInt] === case", testEq),
       property("test   Eq[NonPosInt] =!= case", testEqNotEqual),
+      property("test Hash[NonPosInt]", testHash),
       property("test Show[NonPosInt]", testShow),
     )
 
@@ -240,6 +298,24 @@ object allSpec extends Properties {
         Result.diffNamed("NonPosInt(value) =!= NonPosInt(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.int(Range.linear(0, Int.MinValue)).log("n")
+      } yield {
+        val input = NonPosInt.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NonPosInt(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NonPosInt(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.int(Range.linear(0, Int.MinValue)).log("n")
@@ -258,6 +334,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NegLong] === case", testEq),
       property("test   Eq[NegLong] =!= case", testEqNotEqual),
+      property("test Hash[NegLong]", testHash),
       property("test Show[NegLong]", testShow),
     )
 
@@ -295,6 +372,24 @@ object allSpec extends Properties {
         Result.diffNamed("NegLong(value) =!= NegLong(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.long(Range.linear(-1L, Long.MinValue)).log("n")
+      } yield {
+        val input = NegLong.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NegLong(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NegLong(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.long(Range.linear(-1L, Long.MinValue)).log("n")
@@ -314,6 +409,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NonNegLong] === case", testEq),
       property("test   Eq[NonNegLong] =!= case", testEqNotEqual),
+      property("test Hash[NonNegLong]", testHash),
       property("test Show[NonNegLong]", testShow),
     )
 
@@ -351,6 +447,24 @@ object allSpec extends Properties {
         Result.diffNamed("NonNegLong(value) =!= NonNegLong(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n")
+      } yield {
+        val input = NonNegLong.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NonNegLong(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NonNegLong(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n")
@@ -369,6 +483,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[PosLong] === case", testEq),
       property("test   Eq[PosLong] =!= case", testEqNotEqual),
+      property("test Hash[PosLong]", testHash),
       property("test Show[PosLong]", testShow),
     )
 
@@ -406,6 +521,24 @@ object allSpec extends Properties {
         Result.diffNamed("PosLong(value) =!= PosLong(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.long(Range.linear(1L, Long.MaxValue)).log("n")
+      } yield {
+        val input = PosLong.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("PosLong(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("PosLong(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.long(Range.linear(1L, Long.MaxValue)).log("n")
@@ -425,6 +558,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NonPosLong] === case", testEq),
       property("test   Eq[NonPosLong] =!= case", testEqNotEqual),
+      property("test Hash[NonPosLong]", testHash),
       property("test Show[NonPosLong]", testShow),
     )
 
@@ -462,6 +596,24 @@ object allSpec extends Properties {
         Result.diffNamed("NonPosLong(value) =!= NonPosLong(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.long(Range.linear(0, Long.MinValue)).log("n")
+      } yield {
+        val input = NonPosLong.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NonPosLong(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NonPosLong(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.long(Range.linear(0, Long.MinValue)).log("n")
@@ -481,6 +633,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NegShort] === case", testEq),
       property("test   Eq[NegShort] =!= case", testEqNotEqual),
+      property("test Hash[NegShort]", testHash),
       property("test Show[NegShort]", testShow),
     )
 
@@ -520,6 +673,24 @@ object allSpec extends Properties {
         Result.diffNamed("NegShort(value) =!= NegShort(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.short(Range.linear(-1, Short.MinValue)).log("n")
+      } yield {
+        val input = NegShort.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NegShort(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NegShort(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.short(Range.linear(-1, Short.MinValue)).log("n")
@@ -539,6 +710,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NonNegShort] === case", testEq),
       property("test   Eq[NonNegShort] =!= case", testEqNotEqual),
+      property("test Hash[NonNegShort]", testHash),
       property("test Show[NonNegShort]", testShow),
     )
 
@@ -578,6 +750,24 @@ object allSpec extends Properties {
         Result.diffNamed("NonNegShort(value) =!= NonNegShort(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.short(Range.linear(0, Short.MaxValue)).log("n")
+      } yield {
+        val input = NonNegShort.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NonNegShort(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NonNegShort(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.short(Range.linear(0, Short.MaxValue)).log("n")
@@ -597,6 +787,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[PosShort] === case", testEq),
       property("test   Eq[PosShort] =!= case", testEqNotEqual),
+      property("test Hash[PosShort]", testHash),
       property("test Show[PosShort]", testShow),
     )
 
@@ -636,6 +827,24 @@ object allSpec extends Properties {
         Result.diffNamed("PosShort(value) =!= PosShort(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.short(Range.linear(1, Short.MaxValue)).log("n")
+      } yield {
+        val input = PosShort.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("PosShort(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("PosShort(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.short(Range.linear(1, Short.MaxValue)).log("n")
@@ -654,6 +863,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NonPosShort] === case", testEq),
       property("test   Eq[NonPosShort] =!= case", testEqNotEqual),
+      property("test Hash[NonPosShort]", testHash),
       property("test Show[NonPosShort]", testShow),
     )
 
@@ -693,6 +903,24 @@ object allSpec extends Properties {
         Result.diffNamed("NonPosShort(value) =!= NonPosShort(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.short(Range.linear(0, Short.MinValue)).log("n")
+      } yield {
+        val input = NonPosShort.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NonPosShort(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NonPosShort(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.short(Range.linear(0, Short.MinValue)).log("n")
@@ -712,6 +940,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NegByte] === case", testEq),
       property("test   Eq[NegByte] =!= case", testEqNotEqual),
+      property("test Hash[NegByte]", testHash),
       property("test Show[NegByte]", testShow),
     )
 
@@ -750,6 +979,24 @@ object allSpec extends Properties {
         Result.diffNamed("NegByte(value) =!= NegByte(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.byte(Range.linear(-1, Byte.MinValue)).log("n")
+      } yield {
+        val input = NegByte.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NegByte(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NegByte(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.byte(Range.linear(-1, Byte.MinValue)).log("n")
@@ -769,6 +1016,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NonNegByte] === case", testEq),
       property("test   Eq[NonNegByte] =!= case", testEqNotEqual),
+      property("test Hash[NonNegByte]", testHash),
       property("test Show[NonNegByte]", testShow),
     )
 
@@ -808,6 +1056,24 @@ object allSpec extends Properties {
         Result.diffNamed("NonNegByte(value) =!= NonNegByte(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.byte(Range.linear(0, Byte.MaxValue)).log("n")
+      } yield {
+        val input = NonNegByte.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NonNegByte(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NonNegByte(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.byte(Range.linear(0, Byte.MaxValue)).log("n")
@@ -827,6 +1093,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[PosByte] === case", testEq),
       property("test   Eq[PosByte] =!= case", testEqNotEqual),
+      property("test Hash[PosByte]", testHash),
       property("test Show[PosByte]", testShow),
     )
 
@@ -866,6 +1133,24 @@ object allSpec extends Properties {
         Result.diffNamed("PosByte(value) =!= PosByte(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.byte(Range.linear(1, Byte.MaxValue)).log("n")
+      } yield {
+        val input = PosByte.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("PosByte(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("PosByte(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.byte(Range.linear(1, Byte.MaxValue)).log("n")
@@ -885,6 +1170,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NonPosByte] === case", testEq),
       property("test   Eq[NonPosByte] =!= case", testEqNotEqual),
+      property("test Hash[NonPosByte]", testHash),
       property("test Show[NonPosByte]", testShow),
     )
 
@@ -924,6 +1210,24 @@ object allSpec extends Properties {
         Result.diffNamed("NonPosByte(value) =!= NonPosByte(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.byte(Range.linear(0, Byte.MinValue)).log("n")
+      } yield {
+        val input = NonPosByte.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NonPosByte(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NonPosByte(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.byte(Range.linear(0, Byte.MinValue)).log("n")
@@ -943,6 +1247,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NegFloat] === case", testEq),
       property("test   Eq[NegFloat] =!= case", testEqNotEqual),
+      property("test Hash[NegFloat]", testHash),
       property("test Show[NegFloat]", testShow),
     )
 
@@ -983,6 +1288,24 @@ object allSpec extends Properties {
         Result.diffNamed("NegFloat(value) =!= NegFloat(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(-0.00001d, Float.MinValue)).map(_.toFloat).log("n")
+      } yield {
+        val input = NegFloat.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NegFloat(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NegFloat(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.double(Range.linearFrac(-0.00001d, Float.MinValue)).map(_.toFloat).log("n")
@@ -1002,6 +1325,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NonNegFloat] === case", testEq),
       property("test   Eq[NonNegFloat] =!= case", testEqNotEqual),
+      property("test Hash[NonNegFloat]", testHash),
       property("test Show[NonNegFloat]", testShow),
     )
 
@@ -1042,6 +1366,24 @@ object allSpec extends Properties {
         Result.diffNamed("NonNegFloat(value) =!= NonNegFloat(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0d, Float.MaxValue)).map(_.toFloat).log("n")
+      } yield {
+        val input = NonNegFloat.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NonNegFloat(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NonNegFloat(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.double(Range.linearFrac(0d, Float.MaxValue)).map(_.toFloat).log("n")
@@ -1061,6 +1403,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[PosFloat] === case", testEq),
       property("test   Eq[PosFloat] =!= case", testEqNotEqual),
+      property("test Hash[PosFloat]", testHash),
       property("test Show[PosFloat]", testShow),
     )
 
@@ -1101,6 +1444,24 @@ object allSpec extends Properties {
         Result.diffNamed("PosFloat(value) =!= PosFloat(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0.0001d, Float.MaxValue)).map(_.toFloat).log("n")
+      } yield {
+        val input = PosFloat.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("PosFloat(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("PosFloat(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.double(Range.linearFrac(0.0001d, Float.MaxValue)).map(_.toFloat).log("n")
@@ -1120,6 +1481,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NonPosFloat] === case", testEq),
       property("test   Eq[NonPosFloat] =!= case", testEqNotEqual),
+      property("test Hash[NonPosFloat]", testHash),
       property("test Show[NonPosFloat]", testShow),
     )
 
@@ -1160,6 +1522,24 @@ object allSpec extends Properties {
         Result.diffNamed("NonPosFloat(value) =!= NonPosFloat(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0d, Float.MinValue)).map(_.toFloat).log("n")
+      } yield {
+        val input = NonPosFloat.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NonPosFloat(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NonPosFloat(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.double(Range.linearFrac(0d, Float.MinValue)).map(_.toFloat).log("n")
@@ -1179,6 +1559,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NegDouble] === case", testEq),
       property("test   Eq[NegDouble] =!= case", testEqNotEqual),
+      property("test Hash[NegDouble]", testHash),
       property("test Show[NegDouble]", testShow),
     )
 
@@ -1218,6 +1599,24 @@ object allSpec extends Properties {
         Result.diffNamed("NegDouble(value) =!= NegDouble(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(-0.000001d, Double.MinValue)).log("n")
+      } yield {
+        val input = NegDouble.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NegDouble(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NegDouble(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.double(Range.linearFrac(-0.000001d, Double.MinValue)).log("n")
@@ -1237,6 +1636,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NonNegDouble] === case", testEq),
       property("test   Eq[NonNegDouble] =!= case", testEqNotEqual),
+      property("test Hash[NonNegDouble]", testHash),
       property("test Show[NonNegDouble]", testShow),
     )
 
@@ -1276,6 +1676,24 @@ object allSpec extends Properties {
         Result.diffNamed("NonNegDouble(value) =!= NonNegDouble(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).log("n")
+      } yield {
+        val input = NonNegDouble.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NonNegDouble(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NonNegDouble(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).log("n")
@@ -1295,6 +1713,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[PosDouble] === case", testEq),
       property("test   Eq[PosDouble] =!= case", testEqNotEqual),
+      property("test Hash[PosDouble]", testHash),
       property("test Show[PosDouble]", testShow),
     )
 
@@ -1334,6 +1753,24 @@ object allSpec extends Properties {
         Result.diffNamed("PosDouble(value) =!= PosDouble(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0.000001d, Double.MaxValue)).log("n")
+      } yield {
+        val input = PosDouble.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("PosDouble(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("PosDouble(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.double(Range.linearFrac(0.000001d, Double.MaxValue)).log("n")
@@ -1353,6 +1790,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NonPosDouble] === case", testEq),
       property("test   Eq[NonPosDouble] =!= case", testEqNotEqual),
+      property("test Hash[NonPosDouble]", testHash),
       property("test Show[NonPosDouble]", testShow),
     )
 
@@ -1391,6 +1829,24 @@ object allSpec extends Properties {
         Result.diffNamed("NonPosDouble(value) =!= NonPosDouble(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0d, Double.MinValue)).log("n")
+      } yield {
+        val input = NonPosDouble.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NonPosDouble(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NonPosDouble(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.double(Range.linearFrac(0d, Double.MinValue)).log("n")
@@ -1410,6 +1866,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NegBigInt] === case", testEq),
       property("test   Eq[NegBigInt] =!= case", testEqNotEqual),
+      property("test Hash[NegBigInt]", testHash),
       property("test Show[NegBigInt]", testShow),
     )
 
@@ -1450,6 +1907,24 @@ object allSpec extends Properties {
         Result.diffNamed("NegBigInt(value) =!= NegBigInt(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.long(Range.linear(-1L, Long.MinValue)).map(BigInt(_)).log("n")
+      } yield {
+        val input = NegBigInt.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NegBigInt(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NegBigInt(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.long(Range.linear(-1L, Long.MinValue)).map(BigInt(_)).log("n")
@@ -1468,6 +1943,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NonNegBigInt] === case", testEq),
       property("test   Eq[NonNegBigInt] =!= case", testEqNotEqual),
+      property("test Hash[NonNegBigInt]", testHash),
       property("test Show[NonNegBigInt]", testShow),
     )
 
@@ -1507,6 +1983,24 @@ object allSpec extends Properties {
         Result.diffNamed("NonNegBigInt(value) =!= NonNegBigInt(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.long(Range.linear(0L, Long.MaxValue)).map(BigInt(_)).log("n")
+      } yield {
+        val input = NonNegBigInt.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NonNegBigInt(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NonNegBigInt(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.long(Range.linear(0L, Long.MaxValue)).map(BigInt(_)).log("n")
@@ -1526,6 +2020,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[PosBigInt] === case", testEq),
       property("test   Eq[PosBigInt] =!= case", testEqNotEqual),
+      property("test Hash[PosBigInt]", testHash),
       property("test Show[PosBigInt]", testShow),
     )
 
@@ -1566,6 +2061,24 @@ object allSpec extends Properties {
         Result.diffNamed("PosBigInt(value) =!= PosBigInt(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.long(Range.linear(1L, Long.MaxValue)).map(BigInt(_)).log("n")
+      } yield {
+        val input = PosBigInt.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("PosBigInt(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("PosBigInt(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.long(Range.linear(1L, Long.MaxValue)).map(BigInt(_)).log("n")
@@ -1585,6 +2098,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NonPosBigInt] === case", testEq),
       property("test   Eq[NonPosBigInt] =!= case", testEqNotEqual),
+      property("test Hash[NonPosBigInt]", testHash),
       property("test Show[NonPosBigInt]", testShow),
     )
 
@@ -1625,6 +2139,24 @@ object allSpec extends Properties {
         Result.diffNamed("NonPosBigInt(value) =!= NonPosBigInt(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.long(Range.linear(0L, Long.MinValue)).map(BigInt(_)).log("n")
+      } yield {
+        val input = NonPosBigInt.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NonPosBigInt(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NonPosBigInt(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.long(Range.linear(0L, Long.MinValue)).map(BigInt(_)).log("n")
@@ -1651,6 +2183,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NegBigDecimal] === case", testEq),
       property("test   Eq[NegBigDecimal] =!= case", testEqNotEqual),
+      property("test Hash[NegBigDecimal]", testHash),
       property("test Show[NegBigDecimal]", testShow),
     )
 
@@ -1690,6 +2223,24 @@ object allSpec extends Properties {
         Result.diffNamed("NegBigDecimal(value) =!= NegBigDecimal(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(-0.0000001d, Double.MinValue)).map(BigDecimal(_)).log("n")
+      } yield {
+        val input = NegBigDecimal.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NegBigDecimal(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NegBigDecimal(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.double(Range.linearFrac(-0.0000001d, Double.MinValue)).map(BigDecimal(_)).log("n")
@@ -1708,6 +2259,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NonNegBigDecimal] === case", testEq),
       property("test   Eq[NonNegBigDecimal] =!= case", testEqNotEqual),
+      property("test Hash[NonNegBigDecimal]", testHash),
       property("test Show[NonNegBigDecimal]", testShow),
     )
 
@@ -1748,6 +2300,24 @@ object allSpec extends Properties {
         Result.diffNamed("NonNegBigDecimal(value) =!= NonNegBigDecimal(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).map(BigDecimal(_)).log("n")
+      } yield {
+        val input = NonNegBigDecimal.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NonNegBigDecimal(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NonNegBigDecimal(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).map(BigDecimal(_)).log("n")
@@ -1767,6 +2337,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[PosBigDecimal] === case", testEq),
       property("test   Eq[PosBigDecimal] =!= case", testEqNotEqual),
+      property("test Hash[PosBigDecimal]", testHash),
       property("test Show[PosBigDecimal]", testShow),
     )
 
@@ -1807,6 +2378,24 @@ object allSpec extends Properties {
         Result.diffNamed("PosBigDecimal(value) =!= PosBigDecimal(value)", input1, input2)(_ =!= _)
       }
 
+    def testHash: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).map(BigDecimal(_)).log("n")
+      } yield {
+        val input = PosBigDecimal.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("PosBigDecimal(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("PosBigDecimal(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
     def testShow: Property =
       for {
         n <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).map(BigDecimal(_)).log("n")
@@ -1826,6 +2415,7 @@ object allSpec extends Properties {
     def tests: List[Test] = List(
       property("test   Eq[NonPosBigDecimal] === case", testEq),
       property("test   Eq[NonPosBigDecimal] =!= case", testEqNotEqual),
+      property("test Hash[NonPosBigDecimal]", testHash),
       property("test Show[NonPosBigDecimal]", testShow),
     )
 
@@ -1864,6 +2454,24 @@ object allSpec extends Properties {
         val input2 = NonPosBigDecimal.unsafeFrom(n2)
 
         Result.diffNamed("NonPosBigDecimal(value) =!= NonPosBigDecimal(value)", input1, input2)(_ =!= _)
+      }
+
+    def testHash: Property =
+      for {
+        n <- Gen.double(Range.linearFrac(0d, Double.MinValue)).map(BigDecimal(_)).log("n")
+      } yield {
+        val input = NonPosBigDecimal.unsafeFrom(n)
+
+        val expected       = n.hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("NonPosBigDecimal(n).hash === n.hashCode", actual, expected)(_ === _),
+            Result.diffNamed("NonPosBigDecimal(n).## === n.hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
       }
 
     def testShow: Property =
