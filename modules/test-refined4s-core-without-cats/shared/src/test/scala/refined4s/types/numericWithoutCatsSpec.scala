@@ -20,7 +20,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object negIntSpec {
     def tests: List[Test] = List(
-      example("test Eq[NegInt]", testEq),
+      example("test   Eq[NegInt]", testEq),
+      example("test Hash[NegInt]", testHash),
       example("test Show[NegInt]", testShow),
     )
 
@@ -30,8 +31,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NegInt.derivedNegIntEq
-      """
+        val _ = refined4s.types.numeric.NegInt.derivedNegIntEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NegInt.derivedNegIntHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -47,8 +65,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NegInt.derivedNegIntShow
-      """
+        val _ = refined4s.types.numeric.NegInt.derivedNegIntShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -61,7 +79,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object nonNegIntSpec {
     def tests: List[Test] = List(
-      example("test Eq[NonNegInt]", testEq),
+      example("test   Eq[NonNegInt]", testEq),
+      example("test Hash[NonNegInt]", testHash),
       example("test Show[NonNegInt]", testShow),
     )
 
@@ -71,8 +90,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonNegInt.derivedNonNegIntEq
-      """
+        val _ = refined4s.types.numeric.NonNegInt.derivedNonNegIntEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NonNegInt.derivedNonNegIntHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -88,8 +124,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonNegInt.derivedNonNegIntShow
-      """
+        val _ = refined4s.types.numeric.NonNegInt.derivedNonNegIntShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -102,7 +138,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object posIntSpec {
     def tests: List[Test] = List(
-      example("test Eq[PosInt]", testEq),
+      example("test   Eq[PosInt]", testEq),
+      example("test Hash[PosInt]", testHash),
       example("test Show[PosInt]", testShow),
     )
 
@@ -112,8 +149,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.PosInt.derivedPosIntEq
-      """
+        val _ = refined4s.types.numeric.PosInt.derivedPosIntEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.PosInt.derivedPosIntHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -129,8 +183,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.PosInt.derivedPosIntShow
-      """
+        val _ = refined4s.types.numeric.PosInt.derivedPosIntShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -143,7 +197,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object nonPosIntSpec {
     def tests: List[Test] = List(
-      example("test Eq[NonPosInt]", testEq),
+      example("test   Eq[NonPosInt]", testEq),
+      example("test Hash[NonPosInt]", testHash),
       example("test Show[NonPosInt]", testShow),
     )
 
@@ -153,8 +208,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonPosInt.derivedNonPosIntEq
-      """
+        val _ = refined4s.types.numeric.NonPosInt.derivedNonPosIntEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NonPosInt.derivedNonPosIntHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -170,8 +242,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonPosInt.derivedNonPosIntShow
-      """
+        val _ = refined4s.types.numeric.NonPosInt.derivedNonPosIntShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -184,7 +256,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object negLongSpec {
     def tests: List[Test] = List(
-      example("test Eq[NegLong]", testEq),
+      example("test   Eq[NegLong]", testEq),
+      example("test Hash[NegLong]", testHash),
       example("test Show[NegLong]", testShow),
     )
 
@@ -194,8 +267,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NegLong.derivedNegLongEq
-      """
+        val _ = refined4s.types.numeric.NegLong.derivedNegLongEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NegLong.derivedNegLongHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -211,8 +301,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NegLong.derivedNegLongShow
-      """
+        val _ = refined4s.types.numeric.NegLong.derivedNegLongShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -225,7 +315,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object nonNegLongSpec {
     def tests: List[Test] = List(
-      example("test Eq[NonNegLong]", testEq),
+      example("test   Eq[NonNegLong]", testEq),
+      example("test Hash[NonNegLong]", testHash),
       example("test Show[NonNegLong]", testShow),
     )
 
@@ -235,8 +326,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonNegLong.derivedNonNegLongEq
-      """
+        val _ = refined4s.types.numeric.NonNegLong.derivedNonNegLongEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NonNegLong.derivedNonNegLongHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -252,8 +360,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonNegLong.derivedNonNegLongShow
-      """
+        val _ = refined4s.types.numeric.NonNegLong.derivedNonNegLongShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -266,7 +374,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object posLongSpec {
     def tests: List[Test] = List(
-      example("test Eq[PosLong]", testEq),
+      example("test   Eq[PosLong]", testEq),
+      example("test Hash[PosLong]", testHash),
       example("test Show[PosLong]", testShow),
     )
 
@@ -276,8 +385,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.PosLong.derivedPosLongEq
-      """
+        val _ = refined4s.types.numeric.PosLong.derivedPosLongEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.PosLong.derivedPosLongHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -293,8 +419,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.PosLong.derivedPosLongShow
-      """
+        val _ = refined4s.types.numeric.PosLong.derivedPosLongShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -307,7 +433,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object nonPosLongSpec {
     def tests: List[Test] = List(
-      example("test Eq[NonPosLong]", testEq),
+      example("test   Eq[NonPosLong]", testEq),
+      example("test Hash[NonPosLong]", testHash),
       example("test Show[NonPosLong]", testShow),
     )
 
@@ -317,8 +444,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonPosLong.derivedNonPosLongEq
-      """
+        val _ = refined4s.types.numeric.NonPosLong.derivedNonPosLongEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NonPosLong.derivedNonPosLongHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -334,8 +478,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonPosLong.derivedNonPosLongShow
-      """
+        val _ = refined4s.types.numeric.NonPosLong.derivedNonPosLongShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -348,7 +492,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object negShortSpec {
     def tests: List[Test] = List(
-      example("test Eq[NegShort]", testEq),
+      example("test   Eq[NegShort]", testEq),
+      example("test Hash[NegShort]", testHash),
       example("test Show[NegShort]", testShow),
     )
 
@@ -358,8 +503,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NegShort.derivedNegShortEq
-      """
+        val _ = refined4s.types.numeric.NegShort.derivedNegShortEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NegShort.derivedNegShortHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -375,8 +537,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NegShort.derivedNegShortShow
-      """
+        val _ = refined4s.types.numeric.NegShort.derivedNegShortShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -389,7 +551,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object nonNegShortSpec {
     def tests: List[Test] = List(
-      example("test Eq[NonNegShort]", testEq),
+      example("test   Eq[NonNegShort]", testEq),
+      example("test Hash[NonNegShort]", testHash),
       example("test Show[NonNegShort]", testShow),
     )
 
@@ -399,8 +562,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonNegShort.derivedNonNegShortEq
-      """
+        val _ = refined4s.types.numeric.NonNegShort.derivedNonNegShortEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NonNegShort.derivedNonNegShortHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -416,8 +596,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonNegShort.derivedNonNegShortShow
-      """
+        val _ = refined4s.types.numeric.NonNegShort.derivedNonNegShortShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -430,7 +610,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object posShortSpec {
     def tests: List[Test] = List(
-      example("test Eq[PosShort]", testEq),
+      example("test   Eq[PosShort]", testEq),
+      example("test Hash[PosShort]", testHash),
       example("test Show[PosShort]", testShow),
     )
 
@@ -440,8 +621,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.PosShort.derivedPosShortEq
-      """
+        val _ = refined4s.types.numeric.PosShort.derivedPosShortEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.PosShort.derivedPosShortHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -457,8 +655,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.PosShort.derivedPosShortShow
-      """
+        val _ = refined4s.types.numeric.PosShort.derivedPosShortShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -471,7 +669,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object nonPosShortSpec {
     def tests: List[Test] = List(
-      example("test Eq[NonPosShort]", testEq),
+      example("test   Eq[NonPosShort]", testEq),
+      example("test Hash[NonPosShort]", testHash),
       example("test Show[NonPosShort]", testShow),
     )
 
@@ -481,8 +680,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonPosShort.derivedNonPosShortEq
-      """
+        val _ = refined4s.types.numeric.NonPosShort.derivedNonPosShortEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NonPosShort.derivedNonPosShortHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -498,8 +714,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonPosShort.derivedNonPosShortShow
-      """
+        val _ = refined4s.types.numeric.NonPosShort.derivedNonPosShortShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -512,7 +728,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object negByteSpec {
     def tests: List[Test] = List(
-      example("test Eq[NegByte]", testEq),
+      example("test   Eq[NegByte]", testEq),
+      example("test Hash[NegByte]", testHash),
       example("test Show[NegByte]", testShow),
     )
 
@@ -522,8 +739,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NegByte.derivedNegByteEq
-      """
+        val _ = refined4s.types.numeric.NegByte.derivedNegByteEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NegByte.derivedNegByteHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -539,8 +773,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NegByte.derivedNegByteShow
-      """
+        val _ = refined4s.types.numeric.NegByte.derivedNegByteShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -553,7 +787,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object nonNegByteSpec {
     def tests: List[Test] = List(
-      example("test Eq[NonNegByte]", testEq),
+      example("test   Eq[NonNegByte]", testEq),
+      example("test Hash[NonNegByte]", testHash),
       example("test Show[NonNegByte]", testShow),
     )
 
@@ -563,8 +798,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonNegByte.derivedNonNegByteEq
-      """
+        val _ = refined4s.types.numeric.NonNegByte.derivedNonNegByteEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NonNegByte.derivedNonNegByteHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -580,8 +832,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonNegByte.derivedNonNegByteShow
-      """
+        val _ = refined4s.types.numeric.NonNegByte.derivedNonNegByteShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -594,7 +846,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object posByteSpec {
     def tests: List[Test] = List(
-      example("test Eq[PosByte]", testEq),
+      example("test   Eq[PosByte]", testEq),
+      example("test Hash[PosByte]", testHash),
       example("test Show[PosByte]", testShow),
     )
 
@@ -604,8 +857,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.PosByte.derivedPosByteEq
-      """
+        val _ = refined4s.types.numeric.PosByte.derivedPosByteEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.PosByte.derivedPosByteHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -621,8 +891,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.PosByte.derivedPosByteShow
-      """
+        val _ = refined4s.types.numeric.PosByte.derivedPosByteShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -635,7 +905,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object nonPosByteSpec {
     def tests: List[Test] = List(
-      example("test Eq[NonPosByte]", testEq),
+      example("test   Eq[NonPosByte]", testEq),
+      example("test Hash[NonPosByte]", testHash),
       example("test Show[NonPosByte]", testShow),
     )
 
@@ -645,8 +916,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonPosByte.derivedNonPosByteEq
-      """
+        val _ = refined4s.types.numeric.NonPosByte.derivedNonPosByteEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NonPosByte.derivedNonPosByteHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -662,8 +950,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonPosByte.derivedNonPosByteShow
-      """
+        val _ = refined4s.types.numeric.NonPosByte.derivedNonPosByteShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -676,7 +964,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object negFloatSpec {
     def tests: List[Test] = List(
-      example("test Eq[NegFloat]", testEq),
+      example("test   Eq[NegFloat]", testEq),
+      example("test Hash[NegFloat]", testHash),
       example("test Show[NegFloat]", testShow),
     )
 
@@ -686,8 +975,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NegFloat.derivedNegFloatEq
-      """
+        val _ = refined4s.types.numeric.NegFloat.derivedNegFloatEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NegFloat.derivedNegFloatHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -703,8 +1009,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NegFloat.derivedNegFloatShow
-      """
+        val _ = refined4s.types.numeric.NegFloat.derivedNegFloatShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -717,7 +1023,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object nonNegFloatSpec {
     def tests: List[Test] = List(
-      example("test Eq[NonNegFloat]", testEq),
+      example("test   Eq[NonNegFloat]", testEq),
+      example("test Hash[NonNegFloat]", testHash),
       example("test Show[NonNegFloat]", testShow),
     )
 
@@ -727,8 +1034,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonNegFloat.derivedNonNegFloatEq
-      """
+        val _ = refined4s.types.numeric.NonNegFloat.derivedNonNegFloatEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NonNegFloat.derivedNonNegFloatHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -744,8 +1068,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonNegFloat.derivedNonNegFloatShow
-      """
+        val _ = refined4s.types.numeric.NonNegFloat.derivedNonNegFloatShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -758,7 +1082,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object posFloatSpec {
     def tests: List[Test] = List(
-      example("test Eq[PosFloat]", testEq),
+      example("test   Eq[PosFloat]", testEq),
+      example("test Hash[PosFloat]", testHash),
       example("test Show[PosFloat]", testShow),
     )
 
@@ -768,8 +1093,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.PosFloat.derivedPosFloatEq
-      """
+        val _ = refined4s.types.numeric.PosFloat.derivedPosFloatEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.PosFloat.derivedPosFloatHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -785,8 +1127,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.PosFloat.derivedPosFloatShow
-      """
+        val _ = refined4s.types.numeric.PosFloat.derivedPosFloatShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -799,7 +1141,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object nonPosFloatSpec {
     def tests: List[Test] = List(
-      example("test Eq[NonPosFloat]", testEq),
+      example("test   Eq[NonPosFloat]", testEq),
+      example("test Hash[NonPosFloat]", testHash),
       example("test Show[NonPosFloat]", testShow),
     )
 
@@ -809,8 +1152,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonPosFloat.derivedNonPosFloatEq
-      """
+        val _ = refined4s.types.numeric.NonPosFloat.derivedNonPosFloatEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NonPosFloat.derivedNonPosFloatHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -826,8 +1186,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonPosFloat.derivedNonPosFloatShow
-      """
+        val _ = refined4s.types.numeric.NonPosFloat.derivedNonPosFloatShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -840,7 +1200,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object negDoubleSpec {
     def tests: List[Test] = List(
-      example("test Eq[NegDouble]", testEq),
+      example("test   Eq[NegDouble]", testEq),
+      example("test Hash[NegDouble]", testHash),
       example("test Show[NegDouble]", testShow),
     )
 
@@ -850,8 +1211,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NegDouble.derivedNegDoubleEq
-      """
+        val _ = refined4s.types.numeric.NegDouble.derivedNegDoubleEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NegDouble.derivedNegDoubleHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -867,8 +1245,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NegDouble.derivedNegDoubleShow
-      """
+        val _ = refined4s.types.numeric.NegDouble.derivedNegDoubleShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -881,7 +1259,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object nonNegDoubleSpec {
     def tests: List[Test] = List(
-      example("test Eq[NonNegDouble]", testEq),
+      example("test   Eq[NonNegDouble]", testEq),
+      example("test Hash[NonNegDouble]", testHash),
       example("test Show[NonNegDouble]", testShow),
     )
 
@@ -891,8 +1270,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonNegDouble.derivedNonNegDoubleEq
-      """
+        val _ = refined4s.types.numeric.NonNegDouble.derivedNonNegDoubleEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NonNegDouble.derivedNonNegDoubleHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -908,8 +1304,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonNegDouble.derivedNonNegDoubleShow
-      """
+        val _ = refined4s.types.numeric.NonNegDouble.derivedNonNegDoubleShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -922,7 +1318,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object posDoubleSpec {
     def tests: List[Test] = List(
-      example("test Eq[PosDouble]", testEq),
+      example("test   Eq[PosDouble]", testEq),
+      example("test Hash[PosDouble]", testHash),
       example("test Show[PosDouble]", testShow),
     )
 
@@ -932,8 +1329,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.PosDouble.derivedPosDoubleEq
-      """
+        val _ = refined4s.types.numeric.PosDouble.derivedPosDoubleEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.PosDouble.derivedPosDoubleHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -949,8 +1363,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.PosDouble.derivedPosDoubleShow
-      """
+        val _ = refined4s.types.numeric.PosDouble.derivedPosDoubleShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -963,7 +1377,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object nonPosDoubleSpec {
     def tests: List[Test] = List(
-      example("test Eq[NonPosDouble]", testEq),
+      example("test   Eq[NonPosDouble]", testEq),
+      example("test Hash[NonPosDouble]", testHash),
       example("test Show[NonPosDouble]", testShow),
     )
 
@@ -973,8 +1388,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonPosDouble.derivedNonPosDoubleEq
-      """
+        val _ = refined4s.types.numeric.NonPosDouble.derivedNonPosDoubleEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NonPosDouble.derivedNonPosDoubleHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -990,8 +1422,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonPosDouble.derivedNonPosDoubleShow
-      """
+        val _ = refined4s.types.numeric.NonPosDouble.derivedNonPosDoubleShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -1004,7 +1436,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object negBigIntSpec {
     def tests: List[Test] = List(
-      example("test Eq[NegBigInt]", testEq),
+      example("test   Eq[NegBigInt]", testEq),
+      example("test Hash[NegBigInt]", testHash),
       example("test Show[NegBigInt]", testShow),
     )
 
@@ -1014,8 +1447,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NegBigInt.derivedNegBigIntEq
-      """
+        val _ = refined4s.types.numeric.NegBigInt.derivedNegBigIntEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NegBigInt.derivedNegBigIntHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -1031,8 +1481,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NegBigInt.derivedNegBigIntShow
-      """
+        val _ = refined4s.types.numeric.NegBigInt.derivedNegBigIntShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -1045,7 +1495,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object nonNegBigIntSpec {
     def tests: List[Test] = List(
-      example("test Eq[NonNegBigInt]", testEq),
+      example("test   Eq[NonNegBigInt]", testEq),
+      example("test Hash[NonNegBigInt]", testHash),
       example("test Show[NonNegBigInt]", testShow),
     )
 
@@ -1055,8 +1506,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonNegBigInt.derivedNonNegBigIntEq
-      """
+        val _ = refined4s.types.numeric.NonNegBigInt.derivedNonNegBigIntEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NonNegBigInt.derivedNonNegBigIntHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -1072,8 +1540,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonNegBigInt.derivedNonNegBigIntShow
-      """
+        val _ = refined4s.types.numeric.NonNegBigInt.derivedNonNegBigIntShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -1086,7 +1554,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object posBigIntSpec {
     def tests: List[Test] = List(
-      example("test Eq[PosBigInt]", testEq),
+      example("test   Eq[PosBigInt]", testEq),
+      example("test Hash[PosBigInt]", testHash),
       example("test Show[PosBigInt]", testShow),
     )
 
@@ -1096,8 +1565,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.PosBigInt.derivedPosBigIntEq
-      """
+        val _ = refined4s.types.numeric.PosBigInt.derivedPosBigIntEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.PosBigInt.derivedPosBigIntHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -1113,8 +1599,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.PosBigInt.derivedPosBigIntShow
-      """
+        val _ = refined4s.types.numeric.PosBigInt.derivedPosBigIntShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -1127,7 +1613,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object nonPosBigIntSpec {
     def tests: List[Test] = List(
-      example("test Eq[NonPosBigInt]", testEq),
+      example("test   Eq[NonPosBigInt]", testEq),
+      example("test Hash[NonPosBigInt]", testHash),
       example("test Show[NonPosBigInt]", testShow),
     )
 
@@ -1137,8 +1624,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonPosBigInt.derivedNonPosBigIntEq
-      """
+        val _ = refined4s.types.numeric.NonPosBigInt.derivedNonPosBigIntEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NonPosBigInt.derivedNonPosBigIntHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -1154,8 +1658,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonPosBigInt.derivedNonPosBigIntShow
-      """
+        val _ = refined4s.types.numeric.NonPosBigInt.derivedNonPosBigIntShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -1168,7 +1672,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object negBigDecimalSpec {
     def tests: List[Test] = List(
-      example("test Eq[NegBigDecimal]", testEq),
+      example("test   Eq[NegBigDecimal]", testEq),
+      example("test Hash[NegBigDecimal]", testHash),
       example("test Show[NegBigDecimal]", testShow),
     )
 
@@ -1178,8 +1683,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NegBigDecimal.derivedNegBigDecimalEq
-      """
+        val _ = refined4s.types.numeric.NegBigDecimal.derivedNegBigDecimalEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NegBigDecimal.derivedNegBigDecimalHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -1195,8 +1717,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NegBigDecimal.derivedNegBigDecimalShow
-      """
+        val _ = refined4s.types.numeric.NegBigDecimal.derivedNegBigDecimalShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -1209,7 +1731,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object nonNegBigDecimalSpec {
     def tests: List[Test] = List(
-      example("test Eq[NonNegBigDecimal]", testEq),
+      example("test   Eq[NonNegBigDecimal]", testEq),
+      example("test Hash[NonNegBigDecimal]", testHash),
       example("test Show[NonNegBigDecimal]", testShow),
     )
 
@@ -1219,8 +1742,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonNegBigDecimal.derivedNonNegBigDecimalEq
-      """
+        val _ = refined4s.types.numeric.NonNegBigDecimal.derivedNonNegBigDecimalEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NonNegBigDecimal.derivedNonNegBigDecimalHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -1236,8 +1776,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonNegBigDecimal.derivedNonNegBigDecimalShow
-      """
+        val _ = refined4s.types.numeric.NonNegBigDecimal.derivedNonNegBigDecimalShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -1250,7 +1790,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object posBigDecimalSpec {
     def tests: List[Test] = List(
-      example("test Eq[PosBigDecimal]", testEq),
+      example("test   Eq[PosBigDecimal]", testEq),
+      example("test Hash[PosBigDecimal]", testHash),
       example("test Show[PosBigDecimal]", testShow),
     )
 
@@ -1260,8 +1801,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.PosBigDecimal.derivedPosBigDecimalEq
-      """
+        val _ = refined4s.types.numeric.PosBigDecimal.derivedPosBigDecimalEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.PosBigDecimal.derivedPosBigDecimalHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -1277,8 +1835,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.PosBigDecimal.derivedPosBigDecimalShow
-      """
+        val _ = refined4s.types.numeric.PosBigDecimal.derivedPosBigDecimalShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -1291,7 +1849,8 @@ object numericWithoutCatsSpec extends Properties {
 
   object nonPosBigDecimalSpec {
     def tests: List[Test] = List(
-      example("test Eq[NonPosBigDecimal]", testEq),
+      example("test   Eq[NonPosBigDecimal]", testEq),
+      example("test Hash[NonPosBigDecimal]", testHash),
       example("test Show[NonPosBigDecimal]", testShow),
     )
 
@@ -1301,8 +1860,25 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonPosBigDecimal.derivedNonPosBigDecimalEq
-      """
+        val _ = refined4s.types.numeric.NonPosBigDecimal.derivedNonPosBigDecimalEq
+        """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testHash: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingHash
+
+      val actual = typeCheckErrors(
+        """
+        val _ = refined4s.types.numeric.NonPosBigDecimal.derivedNonPosBigDecimalHash
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
@@ -1318,8 +1894,8 @@ object numericWithoutCatsSpec extends Properties {
 
       val actual = typeCheckErrors(
         """
-         val _ = refined4s.types.numeric.NonPosBigDecimal.derivedNonPosBigDecimalShow
-      """
+        val _ = refined4s.types.numeric.NonPosBigDecimal.derivedNonPosBigDecimalShow
+        """
       ).map(_.message).mkString
 
       (actual ==== expected)
