@@ -132,4 +132,4 @@ trait all {
     renderActual.contramap(_.value)
 
 }
-object all extends all
+object all extends all, time

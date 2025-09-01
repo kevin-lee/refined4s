@@ -101,7 +101,7 @@ object allSpec extends Properties {
     property("test Render[UserPortNumber]", testRenderUserPortNumber),
     //
     property("test Render[DynamicPortNumber]", testRenderDynamicPortNumber),
-  )
+  ) ++ timeSpec.tests
 
   def testRenderNegInt: Property =
     for {
