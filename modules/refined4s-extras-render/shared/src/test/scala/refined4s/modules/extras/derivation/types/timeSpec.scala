@@ -3,11 +3,14 @@ package refined4s.modules.extras.derivation.types
 import extras.render.syntax.*
 import hedgehog.*
 import hedgehog.runner.*
-import refined4s.modules.extras.derivation.types.all.given
 import refined4s.types.time.*
 
-object timeSpec extends Properties {
-  def tests: List[Test] = List(
+trait timeSpec {
+
+  protected val timeTypeClasses: refined4s.modules.extras.derivation.types.time
+  import timeTypeClasses.given
+
+  def allTests: List[Test] = List(
     property("test Render[Month]", testRenderMonth),
     property("test Render[Day]", testRenderDay),
     property("test Render[Hour]", testRenderHour),
@@ -87,4 +90,12 @@ object timeSpec extends Properties {
 
       actual ==== expected
     }
+
+}
+object timeSpec extends Properties, timeSpec {
+
+  override protected object timeTypeClasses extends refined4s.modules.extras.derivation.types.time
+
+  override def tests: List[Test] = allTests
+
 }
