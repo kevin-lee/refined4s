@@ -9,22 +9,44 @@ import refined4s.types.strings.*
   */
 trait strings {
 
-  inline given derivedNonEmptyStringToStringTransformer: Transformer[NonEmptyString, String] with {
+  /* NonEmptyString */
+  inline given derivedNonEmptyStringToStringTransformer: Transformer[NonEmptyString, String] =
+    strings.derivedNonEmptyStringToStringTransformer
+
+  inline given derivedStringToNonEmptyStringPartialTransformer: PartialTransformer[String, NonEmptyString] =
+    strings.derivedStringToNonEmptyStringPartialTransformer
+
+  /* NonBlankString */
+  inline given derivedNonBlankStringToStringTransformer: Transformer[NonBlankString, String] =
+    strings.derivedNonBlankStringToStringTransformer
+
+  inline given derivedStringToNonBlankStringPartialTransformer: PartialTransformer[String, NonBlankString] =
+    strings.derivedStringToNonBlankStringPartialTransformer
+
+  /* Uuid */
+  inline given derivedUuidToStringTransformer: Transformer[Uuid, String] = strings.derivedUuidToStringTransformer
+
+  inline given derivedStringToUuidPartialTransformer: PartialTransformer[String, Uuid] = strings.derivedStringToUuidPartialTransformer
+
+}
+object strings {
+
+  given derivedNonEmptyStringToStringTransformer: Transformer[NonEmptyString, String] with {
     override def transform(src: NonEmptyString): String = src.value
   }
-  inline given derivedStringToNonEmptyStringPartialTransformer: PartialTransformer[String, NonEmptyString] =
+  given derivedStringToNonEmptyStringPartialTransformer: PartialTransformer[String, NonEmptyString] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NonEmptyString.from(value)))
 
-  inline given derivedNonBlankStringToStringTransformer: Transformer[NonBlankString, String] with {
+  given derivedNonBlankStringToStringTransformer: Transformer[NonBlankString, String] with {
     override def transform(src: NonBlankString): String = src.value
   }
-  inline given derivedStringToNonBlankStringPartialTransformer: PartialTransformer[String, NonBlankString] =
+  given derivedStringToNonBlankStringPartialTransformer: PartialTransformer[String, NonBlankString] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NonBlankString.from(value)))
 
-  inline given derivedUuidToStringTransformer: Transformer[Uuid, String] with {
+  given derivedUuidToStringTransformer: Transformer[Uuid, String] with {
     override def transform(src: Uuid): String = src.value
   }
-  inline given derivedStringToUuidPartialTransformer: PartialTransformer[String, Uuid] =
+  given derivedStringToUuidPartialTransformer: PartialTransformer[String, Uuid] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(Uuid.from(value)))
+
 }
-object strings extends strings

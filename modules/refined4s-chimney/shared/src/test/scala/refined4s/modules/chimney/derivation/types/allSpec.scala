@@ -22,6 +22,6 @@ object allSpec extends Properties {
   }
 
   override def tests: List[Test] =
-    numericSpec.allTests ++ stringsSpec.allTests ++ networkSpec.allTests ++ timeSpecWithAll.allTests
+    numericSpecWithAll.allTests ++ stringsSpecWithAll.allTests ++ networkSpecWithAll.allTests ++ timeSpecWithAll.allTests
 
 }

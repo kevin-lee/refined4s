@@ -30,40 +30,40 @@ trait time {
 }
 object time {
 
-  inline given derivedMonthToIntTransformer: Transformer[Month, Int] with {
+  given derivedMonthToIntTransformer: Transformer[Month, Int] with {
     override def transform(src: Month): Int = src.value
   }
-  inline given derivedIntToMonthPartialTransformer: PartialTransformer[Int, Month] =
+  given derivedIntToMonthPartialTransformer: PartialTransformer[Int, Month] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(Month.from(value)))
 
-  inline given derivedDayToIntTransformer: Transformer[Day, Int] with {
+  given derivedDayToIntTransformer: Transformer[Day, Int] with {
     override def transform(src: Day): Int = src.value
   }
-  inline given derivedIntToDayPartialTransformer: PartialTransformer[Int, Day] =
+  given derivedIntToDayPartialTransformer: PartialTransformer[Int, Day] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(Day.from(value)))
 
-  inline given derivedHourToIntTransformer: Transformer[Hour, Int] with {
+  given derivedHourToIntTransformer: Transformer[Hour, Int] with {
     override def transform(src: Hour): Int = src.value
   }
-  inline given derivedIntToHourPartialTransformer: PartialTransformer[Int, Hour] =
+  given derivedIntToHourPartialTransformer: PartialTransformer[Int, Hour] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(Hour.from(value)))
 
-  inline given derivedMinuteToIntTransformer: Transformer[Minute, Int] with {
+  given derivedMinuteToIntTransformer: Transformer[Minute, Int] with {
     override def transform(src: Minute): Int = src.value
   }
-  inline given derivedIntToMinutePartialTransformer: PartialTransformer[Int, Minute] =
+  given derivedIntToMinutePartialTransformer: PartialTransformer[Int, Minute] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(Minute.from(value)))
 
-  inline given derivedSecondToIntTransformer: Transformer[Second, Int] with {
+  given derivedSecondToIntTransformer: Transformer[Second, Int] with {
     override def transform(src: Second): Int = src.value
   }
-  inline given derivedIntToSecondPartialTransformer: PartialTransformer[Int, Second] =
+  given derivedIntToSecondPartialTransformer: PartialTransformer[Int, Second] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(Second.from(value)))
 
-  inline given derivedMillisToIntTransformer: Transformer[Millis, Int] with {
+  given derivedMillisToIntTransformer: Transformer[Millis, Int] with {
     override def transform(src: Millis): Int = src.value
   }
-  inline given derivedIntToMillisPartialTransformer: PartialTransformer[Int, Millis] =
+  given derivedIntToMillisPartialTransformer: PartialTransformer[Int, Millis] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(Millis.from(value)))
 
 }
