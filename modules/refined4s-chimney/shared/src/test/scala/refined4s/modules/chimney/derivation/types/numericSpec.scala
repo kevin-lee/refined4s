@@ -952,8 +952,7 @@ trait numericSpec {
 }
 object numericSpec extends Properties, numericSpec {
 
-  override protected val numericTypeClasses: refined4s.modules.chimney.derivation.types.numeric =
-    refined4s.modules.chimney.derivation.types.numeric
+  override protected object numericTypeClasses extends refined4s.modules.chimney.derivation.types.numeric
 
   override def tests: List[Prop] = allTests
 

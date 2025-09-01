@@ -9,197 +9,303 @@ import refined4s.types.numeric.*
   */
 trait numeric {
 
-  inline given derivedNegIntTransformer: Transformer[NegInt, Int] with {
+  inline given derivedNegIntTransformer: Transformer[NegInt, Int]               = numeric.derivedNegIntTransformer
+  inline given derivedNegIntPartialTransformer: PartialTransformer[Int, NegInt] = numeric.derivedNegIntPartialTransformer
+
+  inline given derivedNonNegIntTransformer: Transformer[NonNegInt, Int]               = numeric.derivedNonNegIntTransformer
+  inline given derivedNonNegIntPartialTransformer: PartialTransformer[Int, NonNegInt] = numeric.derivedNonNegIntPartialTransformer
+
+  inline given derivedPosIntTransformer: Transformer[PosInt, Int]               = numeric.derivedPosIntTransformer
+  inline given derivedPosIntPartialTransformer: PartialTransformer[Int, PosInt] = numeric.derivedPosIntPartialTransformer
+
+  inline given derivedNonPosIntTransformer: Transformer[NonPosInt, Int]               = numeric.derivedNonPosIntTransformer
+  inline given derivedNonPosIntPartialTransformer: PartialTransformer[Int, NonPosInt] = numeric.derivedNonPosIntPartialTransformer
+
+  inline given derivedNegLongTransformer: Transformer[NegLong, Long]               = numeric.derivedNegLongTransformer
+  inline given derivedNegLongPartialTransformer: PartialTransformer[Long, NegLong] = numeric.derivedNegLongPartialTransformer
+
+  inline given derivedNonNegLongTransformer: Transformer[NonNegLong, Long]               = numeric.derivedNonNegLongTransformer
+  inline given derivedNonNegLongPartialTransformer: PartialTransformer[Long, NonNegLong] = numeric.derivedNonNegLongPartialTransformer
+
+  inline given derivedPosLongTransformer: Transformer[PosLong, Long]               = numeric.derivedPosLongTransformer
+  inline given derivedPosLongPartialTransformer: PartialTransformer[Long, PosLong] = numeric.derivedPosLongPartialTransformer
+
+  inline given derivedNonPosLongTransformer: Transformer[NonPosLong, Long]               = numeric.derivedNonPosLongTransformer
+  inline given derivedNonPosLongPartialTransformer: PartialTransformer[Long, NonPosLong] = numeric.derivedNonPosLongPartialTransformer
+
+  inline given derivedNegShortTransformer: Transformer[NegShort, Short]               = numeric.derivedNegShortTransformer
+  inline given derivedNegShortPartialTransformer: PartialTransformer[Short, NegShort] = numeric.derivedNegShortPartialTransformer
+
+  inline given derivedNonNegShortTransformer: Transformer[NonNegShort, Short]               = numeric.derivedNonNegShortTransformer
+  inline given derivedNonNegShortPartialTransformer: PartialTransformer[Short, NonNegShort] = numeric.derivedNonNegShortPartialTransformer
+
+  inline given derivedPosShortTransformer: Transformer[PosShort, Short]               = numeric.derivedPosShortTransformer
+  inline given derivedPosShortPartialTransformer: PartialTransformer[Short, PosShort] = numeric.derivedPosShortPartialTransformer
+
+  inline given derivedNonPosShortTransformer: Transformer[NonPosShort, Short]               = numeric.derivedNonPosShortTransformer
+  inline given derivedNonPosShortPartialTransformer: PartialTransformer[Short, NonPosShort] = numeric.derivedNonPosShortPartialTransformer
+
+  inline given derivedNegByteTransformer: Transformer[NegByte, Byte]               = numeric.derivedNegByteTransformer
+  inline given derivedNegBytePartialTransformer: PartialTransformer[Byte, NegByte] = numeric.derivedNegBytePartialTransformer
+
+  inline given derivedNonNegByteTransformer: Transformer[NonNegByte, Byte]               = numeric.derivedNonNegByteTransformer
+  inline given derivedNonNegBytePartialTransformer: PartialTransformer[Byte, NonNegByte] = numeric.derivedNonNegBytePartialTransformer
+
+  inline given derivedPosByteTransformer: Transformer[PosByte, Byte]               = numeric.derivedPosByteTransformer
+  inline given derivedPosBytePartialTransformer: PartialTransformer[Byte, PosByte] = numeric.derivedPosBytePartialTransformer
+
+  inline given derivedNonPosByteTransformer: Transformer[NonPosByte, Byte]               = numeric.derivedNonPosByteTransformer
+  inline given derivedNonPosBytePartialTransformer: PartialTransformer[Byte, NonPosByte] = numeric.derivedNonPosBytePartialTransformer
+
+  inline given derivedNegFloatTransformer: Transformer[NegFloat, Float]               = numeric.derivedNegFloatTransformer
+  inline given derivedNegFloatPartialTransformer: PartialTransformer[Float, NegFloat] = numeric.derivedNegFloatPartialTransformer
+
+  inline given derivedNonNegFloatTransformer: Transformer[NonNegFloat, Float]               = numeric.derivedNonNegFloatTransformer
+  inline given derivedNonNegFloatPartialTransformer: PartialTransformer[Float, NonNegFloat] = numeric.derivedNonNegFloatPartialTransformer
+
+  inline given derivedPosFloatTransformer: Transformer[PosFloat, Float]               = numeric.derivedPosFloatTransformer
+  inline given derivedPosFloatPartialTransformer: PartialTransformer[Float, PosFloat] = numeric.derivedPosFloatPartialTransformer
+
+  inline given derivedNonPosFloatTransformer: Transformer[NonPosFloat, Float]               = numeric.derivedNonPosFloatTransformer
+  inline given derivedNonPosFloatPartialTransformer: PartialTransformer[Float, NonPosFloat] = numeric.derivedNonPosFloatPartialTransformer
+
+  inline given derivedNegDoubleTransformer: Transformer[NegDouble, Double]               = numeric.derivedNegDoubleTransformer
+  inline given derivedNegDoublePartialTransformer: PartialTransformer[Double, NegDouble] = numeric.derivedNegDoublePartialTransformer
+
+  inline given derivedNonNegDoubleTransformer: Transformer[NonNegDouble, Double]               = numeric.derivedNonNegDoubleTransformer
+  inline given derivedNonNegDoublePartialTransformer: PartialTransformer[Double, NonNegDouble] =
+    numeric.derivedNonNegDoublePartialTransformer
+
+  inline given derivedPosDoubleTransformer: Transformer[PosDouble, Double]               = numeric.derivedPosDoubleTransformer
+  inline given derivedPosDoublePartialTransformer: PartialTransformer[Double, PosDouble] = numeric.derivedPosDoublePartialTransformer
+
+  inline given derivedNonPosDoubleTransformer: Transformer[NonPosDouble, Double]               = numeric.derivedNonPosDoubleTransformer
+  inline given derivedNonPosDoublePartialTransformer: PartialTransformer[Double, NonPosDouble] =
+    numeric.derivedNonPosDoublePartialTransformer
+
+  inline given derivedNegBigIntTransformer: Transformer[NegBigInt, BigInt]               = numeric.derivedNegBigIntTransformer
+  inline given derivedNegBigIntPartialTransformer: PartialTransformer[BigInt, NegBigInt] = numeric.derivedNegBigIntPartialTransformer
+
+  inline given derivedNonNegBigIntTransformer: Transformer[NonNegBigInt, BigInt]               = numeric.derivedNonNegBigIntTransformer
+  inline given derivedNonNegBigIntPartialTransformer: PartialTransformer[BigInt, NonNegBigInt] =
+    numeric.derivedNonNegBigIntPartialTransformer
+
+  inline given derivedPosBigIntTransformer: Transformer[PosBigInt, BigInt]               = numeric.derivedPosBigIntTransformer
+  inline given derivedPosBigIntPartialTransformer: PartialTransformer[BigInt, PosBigInt] = numeric.derivedPosBigIntPartialTransformer
+
+  inline given derivedNonPosBigIntTransformer: Transformer[NonPosBigInt, BigInt]               = numeric.derivedNonPosBigIntTransformer
+  inline given derivedNonPosBigIntPartialTransformer: PartialTransformer[BigInt, NonPosBigInt] =
+    numeric.derivedNonPosBigIntPartialTransformer
+
+  inline given derivedNegBigDecimalTransformer: Transformer[NegBigDecimal, BigDecimal] = numeric.derivedNegBigDecimalTransformer
+  inline given derivedNegBigDecimalPartialTransformer: PartialTransformer[BigDecimal, NegBigDecimal] =
+    numeric.derivedNegBigDecimalPartialTransformer
+
+  inline given derivedNonNegBigDecimalTransformer: Transformer[NonNegBigDecimal, BigDecimal] = numeric.derivedNonNegBigDecimalTransformer
+  inline given derivedNonNegBigDecimalPartialTransformer: PartialTransformer[BigDecimal, NonNegBigDecimal] =
+    numeric.derivedNonNegBigDecimalPartialTransformer
+
+  inline given derivedPosBigDecimalTransformer: Transformer[PosBigDecimal, BigDecimal] = numeric.derivedPosBigDecimalTransformer
+  inline given derivedPosBigDecimalPartialTransformer: PartialTransformer[BigDecimal, PosBigDecimal] =
+    numeric.derivedPosBigDecimalPartialTransformer
+
+  inline given derivedNonPosBigDecimalTransformer: Transformer[NonPosBigDecimal, BigDecimal] = numeric.derivedNonPosBigDecimalTransformer
+  inline given derivedNonPosBigDecimalPartialTransformer: PartialTransformer[BigDecimal, NonPosBigDecimal] =
+    numeric.derivedNonPosBigDecimalPartialTransformer
+
+}
+object numeric {
+
+  given derivedNegIntTransformer: Transformer[NegInt, Int] with {
     override def transform(src: NegInt): Int = src.value
   }
-  inline given derivedNegIntPartialTransformer: PartialTransformer[Int, NegInt] =
+  given derivedNegIntPartialTransformer: PartialTransformer[Int, NegInt] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NegInt.from(value)))
 
-  inline given derivedNonNegIntTransformer: Transformer[NonNegInt, Int] with {
+  given derivedNonNegIntTransformer: Transformer[NonNegInt, Int] with {
     override def transform(src: NonNegInt): Int = src.value
   }
-  inline given derivedNonNegIntPartialTransformer: PartialTransformer[Int, NonNegInt] =
+  given derivedNonNegIntPartialTransformer: PartialTransformer[Int, NonNegInt] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NonNegInt.from(value)))
 
-  inline given derivedPosIntTransformer: Transformer[PosInt, Int] with {
+  given derivedPosIntTransformer: Transformer[PosInt, Int] with {
     override def transform(src: PosInt): Int = src.value
   }
-  inline given derivedPosIntPartialTransformer: PartialTransformer[Int, PosInt] =
+  given derivedPosIntPartialTransformer: PartialTransformer[Int, PosInt] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(PosInt.from(value)))
 
-  inline given derivedNonPosIntTransformer: Transformer[NonPosInt, Int] with {
+  given derivedNonPosIntTransformer: Transformer[NonPosInt, Int] with {
     override def transform(src: NonPosInt): Int = src.value
   }
-  inline given derivedNonPosIntPartialTransformer: PartialTransformer[Int, NonPosInt] =
+  given derivedNonPosIntPartialTransformer: PartialTransformer[Int, NonPosInt] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NonPosInt.from(value)))
 
-  inline given derivedNegLongTransformer: Transformer[NegLong, Long] with {
+  given derivedNegLongTransformer: Transformer[NegLong, Long] with {
     override def transform(src: NegLong): Long = src.value
   }
-  inline given derivedNegLongPartialTransformer: PartialTransformer[Long, NegLong] =
+  given derivedNegLongPartialTransformer: PartialTransformer[Long, NegLong] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NegLong.from(value)))
 
-  inline given derivedNonNegLongTransformer: Transformer[NonNegLong, Long] with {
+  given derivedNonNegLongTransformer: Transformer[NonNegLong, Long] with {
     override def transform(src: NonNegLong): Long = src.value
   }
-  inline given derivedNonNegLongPartialTransformer: PartialTransformer[Long, NonNegLong] =
+  given derivedNonNegLongPartialTransformer: PartialTransformer[Long, NonNegLong] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NonNegLong.from(value)))
 
-  inline given derivedPosLongTransformer: Transformer[PosLong, Long] with {
+  given derivedPosLongTransformer: Transformer[PosLong, Long] with {
     override def transform(src: PosLong): Long = src.value
   }
-  inline given derivedPosLongPartialTransformer: PartialTransformer[Long, PosLong] =
+  given derivedPosLongPartialTransformer: PartialTransformer[Long, PosLong] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(PosLong.from(value)))
 
-  inline given derivedNonPosLongTransformer: Transformer[NonPosLong, Long] with {
+  given derivedNonPosLongTransformer: Transformer[NonPosLong, Long] with {
     override def transform(src: NonPosLong): Long = src.value
   }
-  inline given derivedNonPosLongPartialTransformer: PartialTransformer[Long, NonPosLong] =
+  given derivedNonPosLongPartialTransformer: PartialTransformer[Long, NonPosLong] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NonPosLong.from(value)))
 
-  inline given derivedNegShortTransformer: Transformer[NegShort, Short] with {
+  given derivedNegShortTransformer: Transformer[NegShort, Short] with {
     override def transform(src: NegShort): Short = src.value
   }
-  inline given derivedNegShortPartialTransformer: PartialTransformer[Short, NegShort] =
+  given derivedNegShortPartialTransformer: PartialTransformer[Short, NegShort] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NegShort.from(value)))
 
-  inline given derivedNonNegShortTransformer: Transformer[NonNegShort, Short] with {
+  given derivedNonNegShortTransformer: Transformer[NonNegShort, Short] with {
     override def transform(src: NonNegShort): Short = src.value
   }
-  inline given derivedNonNegShortPartialTransformer: PartialTransformer[Short, NonNegShort] =
+  given derivedNonNegShortPartialTransformer: PartialTransformer[Short, NonNegShort] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NonNegShort.from(value)))
 
-  inline given derivedPosShortTransformer: Transformer[PosShort, Short] with {
+  given derivedPosShortTransformer: Transformer[PosShort, Short] with {
     override def transform(src: PosShort): Short = src.value
   }
-  inline given derivedPosShortPartialTransformer: PartialTransformer[Short, PosShort] =
+  given derivedPosShortPartialTransformer: PartialTransformer[Short, PosShort] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(PosShort.from(value)))
 
-  inline given derivedNonPosShortTransformer: Transformer[NonPosShort, Short] with {
+  given derivedNonPosShortTransformer: Transformer[NonPosShort, Short] with {
     override def transform(src: NonPosShort): Short = src.value
   }
-  inline given derivedNonPosShortPartialTransformer: PartialTransformer[Short, NonPosShort] =
+  given derivedNonPosShortPartialTransformer: PartialTransformer[Short, NonPosShort] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NonPosShort.from(value)))
 
-  inline given derivedNegByteTransformer: Transformer[NegByte, Byte] with {
+  given derivedNegByteTransformer: Transformer[NegByte, Byte] with {
     override def transform(src: NegByte): Byte = src.value
   }
-  inline given derivedNegBytePartialTransformer: PartialTransformer[Byte, NegByte] =
+  given derivedNegBytePartialTransformer: PartialTransformer[Byte, NegByte] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NegByte.from(value)))
 
-  inline given derivedNonNegByteTransformer: Transformer[NonNegByte, Byte] with {
+  given derivedNonNegByteTransformer: Transformer[NonNegByte, Byte] with {
     override def transform(src: NonNegByte): Byte = src.value
   }
-  inline given derivedNonNegBytePartialTransformer: PartialTransformer[Byte, NonNegByte] =
+  given derivedNonNegBytePartialTransformer: PartialTransformer[Byte, NonNegByte] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NonNegByte.from(value)))
 
-  inline given derivedPosByteTransformer: Transformer[PosByte, Byte] with {
+  given derivedPosByteTransformer: Transformer[PosByte, Byte] with {
     override def transform(src: PosByte): Byte = src.value
   }
-  inline given derivedPosBytePartialTransformer: PartialTransformer[Byte, PosByte] =
+  given derivedPosBytePartialTransformer: PartialTransformer[Byte, PosByte] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(PosByte.from(value)))
 
-  inline given derivedNonPosByteTransformer: Transformer[NonPosByte, Byte] with {
+  given derivedNonPosByteTransformer: Transformer[NonPosByte, Byte] with {
     override def transform(src: NonPosByte): Byte = src.value
   }
-  inline given derivedNonPosBytePartialTransformer: PartialTransformer[Byte, NonPosByte] =
+  given derivedNonPosBytePartialTransformer: PartialTransformer[Byte, NonPosByte] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NonPosByte.from(value)))
 
-  inline given derivedNegFloatTransformer: Transformer[NegFloat, Float] with {
+  given derivedNegFloatTransformer: Transformer[NegFloat, Float] with {
     override def transform(src: NegFloat): Float = src.value
   }
-  inline given derivedNegFloatPartialTransformer: PartialTransformer[Float, NegFloat] =
+  given derivedNegFloatPartialTransformer: PartialTransformer[Float, NegFloat] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NegFloat.from(value)))
 
-  inline given derivedNonNegFloatTransformer: Transformer[NonNegFloat, Float] with {
+  given derivedNonNegFloatTransformer: Transformer[NonNegFloat, Float] with {
     override def transform(src: NonNegFloat): Float = src.value
   }
-  inline given derivedNonNegFloatPartialTransformer: PartialTransformer[Float, NonNegFloat] =
+  given derivedNonNegFloatPartialTransformer: PartialTransformer[Float, NonNegFloat] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NonNegFloat.from(value)))
 
-  inline given derivedPosFloatTransformer: Transformer[PosFloat, Float] with {
+  given derivedPosFloatTransformer: Transformer[PosFloat, Float] with {
     override def transform(src: PosFloat): Float = src.value
   }
-  inline given derivedPosFloatPartialTransformer: PartialTransformer[Float, PosFloat] =
+  given derivedPosFloatPartialTransformer: PartialTransformer[Float, PosFloat] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(PosFloat.from(value)))
 
-  inline given derivedNonPosFloatTransformer: Transformer[NonPosFloat, Float] with {
+  given derivedNonPosFloatTransformer: Transformer[NonPosFloat, Float] with {
     override def transform(src: NonPosFloat): Float = src.value
   }
-  inline given derivedNonPosFloatPartialTransformer: PartialTransformer[Float, NonPosFloat] =
+  given derivedNonPosFloatPartialTransformer: PartialTransformer[Float, NonPosFloat] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NonPosFloat.from(value)))
 
-  inline given derivedNegDoubleTransformer: Transformer[NegDouble, Double] with {
+  given derivedNegDoubleTransformer: Transformer[NegDouble, Double] with {
     override def transform(src: NegDouble): Double = src.value
   }
-  inline given derivedNegDoublePartialTransformer: PartialTransformer[Double, NegDouble] =
+  given derivedNegDoublePartialTransformer: PartialTransformer[Double, NegDouble] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NegDouble.from(value)))
 
-  inline given derivedNonNegDoubleTransformer: Transformer[NonNegDouble, Double] with {
+  given derivedNonNegDoubleTransformer: Transformer[NonNegDouble, Double] with {
     override def transform(src: NonNegDouble): Double = src.value
   }
-  inline given derivedNonNegDoublePartialTransformer: PartialTransformer[Double, NonNegDouble] =
+  given derivedNonNegDoublePartialTransformer: PartialTransformer[Double, NonNegDouble] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NonNegDouble.from(value)))
 
-  inline given derivedPosDoubleTransformer: Transformer[PosDouble, Double] with {
+  given derivedPosDoubleTransformer: Transformer[PosDouble, Double] with {
     override def transform(src: PosDouble): Double = src.value
   }
-  inline given derivedPosDoublePartialTransformer: PartialTransformer[Double, PosDouble] =
+  given derivedPosDoublePartialTransformer: PartialTransformer[Double, PosDouble] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(PosDouble.from(value)))
 
-  inline given derivedNonPosDoubleTransformer: Transformer[NonPosDouble, Double] with {
+  given derivedNonPosDoubleTransformer: Transformer[NonPosDouble, Double] with {
     override def transform(src: NonPosDouble): Double = src.value
   }
-  inline given derivedNonPosDoublePartialTransformer: PartialTransformer[Double, NonPosDouble] =
+  given derivedNonPosDoublePartialTransformer: PartialTransformer[Double, NonPosDouble] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NonPosDouble.from(value)))
 
-  inline given derivedNegBigIntTransformer: Transformer[NegBigInt, BigInt] with {
+  given derivedNegBigIntTransformer: Transformer[NegBigInt, BigInt] with {
     override def transform(src: NegBigInt): BigInt = src.value
   }
-  inline given derivedNegBigIntPartialTransformer: PartialTransformer[BigInt, NegBigInt] =
+  given derivedNegBigIntPartialTransformer: PartialTransformer[BigInt, NegBigInt] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NegBigInt.from(value)))
 
-  inline given derivedNonNegBigIntTransformer: Transformer[NonNegBigInt, BigInt] with {
+  given derivedNonNegBigIntTransformer: Transformer[NonNegBigInt, BigInt] with {
     override def transform(src: NonNegBigInt): BigInt = src.value
   }
-  inline given derivedNonNegBigIntPartialTransformer: PartialTransformer[BigInt, NonNegBigInt] =
+  given derivedNonNegBigIntPartialTransformer: PartialTransformer[BigInt, NonNegBigInt] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NonNegBigInt.from(value)))
 
-  inline given derivedPosBigIntTransformer: Transformer[PosBigInt, BigInt] with {
+  given derivedPosBigIntTransformer: Transformer[PosBigInt, BigInt] with {
     override def transform(src: PosBigInt): BigInt = src.value
   }
-  inline given derivedPosBigIntPartialTransformer: PartialTransformer[BigInt, PosBigInt] =
+  given derivedPosBigIntPartialTransformer: PartialTransformer[BigInt, PosBigInt] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(PosBigInt.from(value)))
 
-  inline given derivedNonPosBigIntTransformer: Transformer[NonPosBigInt, BigInt] with {
+  given derivedNonPosBigIntTransformer: Transformer[NonPosBigInt, BigInt] with {
     override def transform(src: NonPosBigInt): BigInt = src.value
   }
-  inline given derivedNonPosBigIntPartialTransformer: PartialTransformer[BigInt, NonPosBigInt] =
+  given derivedNonPosBigIntPartialTransformer: PartialTransformer[BigInt, NonPosBigInt] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NonPosBigInt.from(value)))
 
-  inline given derivedNegBigDecimalTransformer: Transformer[NegBigDecimal, BigDecimal] with {
+  given derivedNegBigDecimalTransformer: Transformer[NegBigDecimal, BigDecimal] with {
     override def transform(src: NegBigDecimal): BigDecimal = src.value
   }
-  inline given derivedNegBigDecimalPartialTransformer: PartialTransformer[BigDecimal, NegBigDecimal] =
+  given derivedNegBigDecimalPartialTransformer: PartialTransformer[BigDecimal, NegBigDecimal] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NegBigDecimal.from(value)))
 
-  inline given derivedNonNegBigDecimalTransformer: Transformer[NonNegBigDecimal, BigDecimal] with {
+  given derivedNonNegBigDecimalTransformer: Transformer[NonNegBigDecimal, BigDecimal] with {
     override def transform(src: NonNegBigDecimal): BigDecimal = src.value
   }
-  inline given derivedNonNegBigDecimalPartialTransformer: PartialTransformer[BigDecimal, NonNegBigDecimal] =
+  given derivedNonNegBigDecimalPartialTransformer: PartialTransformer[BigDecimal, NonNegBigDecimal] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NonNegBigDecimal.from(value)))
 
-  inline given derivedPosBigDecimalTransformer: Transformer[PosBigDecimal, BigDecimal] with {
+  given derivedPosBigDecimalTransformer: Transformer[PosBigDecimal, BigDecimal] with {
     override def transform(src: PosBigDecimal): BigDecimal = src.value
   }
-  inline given derivedPosBigDecimalPartialTransformer: PartialTransformer[BigDecimal, PosBigDecimal] =
+  given derivedPosBigDecimalPartialTransformer: PartialTransformer[BigDecimal, PosBigDecimal] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(PosBigDecimal.from(value)))
 
-  inline given derivedNonPosBigDecimalTransformer: Transformer[NonPosBigDecimal, BigDecimal] with {
+  given derivedNonPosBigDecimalTransformer: Transformer[NonPosBigDecimal, BigDecimal] with {
     override def transform(src: NonPosBigDecimal): BigDecimal = src.value
   }
-  inline given derivedNonPosBigDecimalPartialTransformer: PartialTransformer[BigDecimal, NonPosBigDecimal] =
+  given derivedNonPosBigDecimalPartialTransformer: PartialTransformer[BigDecimal, NonPosBigDecimal] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NonPosBigDecimal.from(value)))
 
 }
-object numeric extends numeric

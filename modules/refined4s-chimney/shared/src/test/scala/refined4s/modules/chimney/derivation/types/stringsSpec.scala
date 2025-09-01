@@ -111,8 +111,7 @@ trait stringsSpec {
 }
 object stringsSpec extends Properties, stringsSpec {
 
-  override protected val stringsTypeClasses: refined4s.modules.chimney.derivation.types.strings =
-    refined4s.modules.chimney.derivation.types.strings
+  override protected object stringsTypeClasses extends refined4s.modules.chimney.derivation.types.strings
 
   override def tests: List[Test] = allTests
 

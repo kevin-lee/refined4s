@@ -9,47 +9,77 @@ import refined4s.types.network.*
   */
 trait network {
 
-  inline given derivedUriToStringTransformer: Transformer[Uri, String] with {
+  inline given derivedUriToStringTransformer: Transformer[Uri, String]               = network.derivedUriToStringTransformer
+  inline given derivedStringToUriPartialTransformer: PartialTransformer[String, Uri] = network.derivedStringToUriPartialTransformer
+
+  inline given derivedUrlToStringTransformer: Transformer[Url, String]               = network.derivedUrlToStringTransformer
+  inline given derivedStringToUrlPartialTransformer: PartialTransformer[String, Url] = network.derivedStringToUrlPartialTransformer
+
+  inline given derivedPortNumberToIntTransformer: Transformer[PortNumber, Int]               = network.derivedPortNumberToIntTransformer
+  inline given derivedIntToPortNumberPartialTransformer: PartialTransformer[Int, PortNumber] =
+    network.derivedIntToPortNumberPartialTransformer
+
+  inline given derivedSystemPortNumberToIntTransformer: Transformer[SystemPortNumber, Int] = network.derivedSystemPortNumberToIntTransformer
+  inline given derivedIntToSystemPortNumberPartialTransformer: PartialTransformer[Int, SystemPortNumber] =
+    network.derivedIntToSystemPortNumberPartialTransformer
+
+  inline given derivedNonSystemPortNumberToIntTransformer: Transformer[NonSystemPortNumber, Int]               =
+    network.derivedNonSystemPortNumberToIntTransformer
+  inline given derivedIntToNonSystemPortNumberPartialTransformer: PartialTransformer[Int, NonSystemPortNumber] =
+    network.derivedIntToNonSystemPortNumberPartialTransformer
+
+  inline given derivedUserPortNumberToIntTransformer: Transformer[UserPortNumber, Int] = network.derivedUserPortNumberToIntTransformer
+  inline given derivedIntToUserPortNumberPartialTransformer: PartialTransformer[Int, UserPortNumber] =
+    network.derivedIntToUserPortNumberPartialTransformer
+
+  inline given derivedDynamicPortNumberToIntTransformer: Transformer[DynamicPortNumber, Int]               =
+    network.derivedDynamicPortNumberToIntTransformer
+  inline given derivedIntToDynamicPortNumberPartialTransformer: PartialTransformer[Int, DynamicPortNumber] =
+    network.derivedIntToDynamicPortNumberPartialTransformer
+
+}
+object network {
+
+  given derivedUriToStringTransformer: Transformer[Uri, String] with {
     override def transform(src: Uri): String = src.value
   }
-  inline given derivedStringToUriPartialTransformer: PartialTransformer[String, Uri] =
+  given derivedStringToUriPartialTransformer: PartialTransformer[String, Uri] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(Uri.from(value)))
 
-  inline given derivedUrlToStringTransformer: Transformer[Url, String] with {
+  given derivedUrlToStringTransformer: Transformer[Url, String] with {
     override def transform(src: Url): String = src.value
   }
-  inline given derivedStringToUrlPartialTransformer: PartialTransformer[String, Url] =
+  given derivedStringToUrlPartialTransformer: PartialTransformer[String, Url] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(Url.from(value)))
 
-  inline given derivedPortNumberToIntTransformer: Transformer[PortNumber, Int] with {
+  given derivedPortNumberToIntTransformer: Transformer[PortNumber, Int] with {
     override def transform(src: PortNumber): Int = src.value
   }
-  inline given derivedIntToPortNumberPartialTransformer: PartialTransformer[Int, PortNumber] =
+  given derivedIntToPortNumberPartialTransformer: PartialTransformer[Int, PortNumber] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(PortNumber.from(value)))
 
-  inline given derivedSystemPortNumberToIntTransformer: Transformer[SystemPortNumber, Int] with {
+  given derivedSystemPortNumberToIntTransformer: Transformer[SystemPortNumber, Int] with {
     override def transform(src: SystemPortNumber): Int = src.value
   }
-  inline given derivedIntToSystemPortNumberPartialTransformer: PartialTransformer[Int, SystemPortNumber] =
+  given derivedIntToSystemPortNumberPartialTransformer: PartialTransformer[Int, SystemPortNumber] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(SystemPortNumber.from(value)))
 
-  inline given derivedNonSystemPortNumberToIntTransformer: Transformer[NonSystemPortNumber, Int] with {
+  given derivedNonSystemPortNumberToIntTransformer: Transformer[NonSystemPortNumber, Int] with {
     override def transform(src: NonSystemPortNumber): Int = src.value
   }
-  inline given derivedIntToNonSystemPortNumberPartialTransformer: PartialTransformer[Int, NonSystemPortNumber] =
+  given derivedIntToNonSystemPortNumberPartialTransformer: PartialTransformer[Int, NonSystemPortNumber] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(NonSystemPortNumber.from(value)))
 
-  inline given derivedUserPortNumberToIntTransformer: Transformer[UserPortNumber, Int] with {
+  given derivedUserPortNumberToIntTransformer: Transformer[UserPortNumber, Int] with {
     override def transform(src: UserPortNumber): Int = src.value
   }
-  inline given derivedIntToUserPortNumberPartialTransformer: PartialTransformer[Int, UserPortNumber] =
+  given derivedIntToUserPortNumberPartialTransformer: PartialTransformer[Int, UserPortNumber] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(UserPortNumber.from(value)))
 
-  inline given derivedDynamicPortNumberToIntTransformer: Transformer[DynamicPortNumber, Int] with {
+  given derivedDynamicPortNumberToIntTransformer: Transformer[DynamicPortNumber, Int] with {
     override def transform(src: DynamicPortNumber): Int = src.value
   }
-  inline given derivedIntToDynamicPortNumberPartialTransformer: PartialTransformer[Int, DynamicPortNumber] =
+  given derivedIntToDynamicPortNumberPartialTransformer: PartialTransformer[Int, DynamicPortNumber] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(DynamicPortNumber.from(value)))
 
 }
-object network extends network
