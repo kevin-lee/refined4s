@@ -17,7 +17,11 @@ object allSpec extends Properties {
   object networkSpecWithAll extends networkSpec {
     override protected val networkTypeClasses: network = refined4s.modules.circe.derivation.types.all
   }
+  object timeSpecWithAll extends timeSpec {
+    override protected val timeTypeClasses: time = refined4s.modules.circe.derivation.types.all
+  }
 
-  override def tests: List[Test] = numericSpec.allTests ++ stringsSpec.allTests ++ networkSpec.allTests
+  override def tests: List[Test] =
+    numericSpecWithAll.allTests ++ stringsSpecWithAll.allTests ++ networkSpecWithAll.allTests ++ timeSpecWithAll.allTests
 
 }

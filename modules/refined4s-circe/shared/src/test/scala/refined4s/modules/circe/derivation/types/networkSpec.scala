@@ -504,8 +504,7 @@ trait networkSpec {
 }
 object networkSpec extends Properties, networkSpec {
 
-  override protected val networkTypeClasses: refined4s.modules.circe.derivation.types.network =
-    refined4s.modules.circe.derivation.types.network
+  override protected object networkTypeClasses extends refined4s.modules.circe.derivation.types.network
 
   override def tests: List[Test] = allTests
 

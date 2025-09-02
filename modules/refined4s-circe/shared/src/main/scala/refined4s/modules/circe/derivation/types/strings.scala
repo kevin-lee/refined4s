@@ -2,7 +2,7 @@ package refined4s.modules.circe.derivation.types
 
 import io.circe.{Decoder, Encoder, KeyDecoder, KeyEncoder}
 import refined4s.types
-import refined4s.types.all.*
+import refined4s.types.strings.*
 
 /** @author Kevin Lee
   * @since 2023-12-25
@@ -10,37 +10,59 @@ import refined4s.types.all.*
 trait strings {
 
   /* NonEmptyString */
-  inline given derivedNonEmptyStringEncoder: Encoder[NonEmptyString] = Encoder[String].contramap[NonEmptyString](_.value)
-  inline given derivedNonEmptyStringDecoder: Decoder[NonEmptyString] = Decoder[String].emap(NonEmptyString.from)
+  inline given derivedNonEmptyStringEncoder: Encoder[NonEmptyString] = strings.derivedNonEmptyStringEncoder
+  inline given derivedNonEmptyStringDecoder: Decoder[NonEmptyString] = strings.derivedNonEmptyStringDecoder
 
-  inline given derivedNonEmptyStringKeyEncoder: KeyEncoder[NonEmptyString] with {
+  inline given derivedNonEmptyStringKeyEncoder: KeyEncoder[NonEmptyString] = strings.derivedNonEmptyStringKeyEncoder
+  inline given derivedNonEmptyStringKeyDecoder: KeyDecoder[NonEmptyString] = strings.derivedNonEmptyStringKeyDecoder
+
+  /* NonBlankString */
+  inline given derivedNonBlankStringEncoder: Encoder[NonBlankString] = strings.derivedNonBlankStringEncoder
+  inline given derivedNonBlankStringDecoder: Decoder[NonBlankString] = strings.derivedNonBlankStringDecoder
+
+  inline given derivedNonBlankStringKeyEncoder: KeyEncoder[NonBlankString] = strings.derivedNonBlankStringKeyEncoder
+  inline given derivedNonBlankStringKeyDecoder: KeyDecoder[NonBlankString] = strings.derivedNonBlankStringKeyDecoder
+
+  /* Uuid */
+  inline given derivedUuidEncoder: Encoder[Uuid] = strings.derivedUuidEncoder
+  inline given derivedUuidDecoder: Decoder[Uuid] = strings.derivedUuidDecoder
+
+  inline given derivedUuidKeyEncoder: KeyEncoder[Uuid] = strings.derivedUuidKeyEncoder
+  inline given derivedUuidKeyDecoder: KeyDecoder[Uuid] = strings.derivedUuidKeyDecoder
+}
+object strings {
+
+  /* NonEmptyString */
+  given derivedNonEmptyStringEncoder: Encoder[NonEmptyString] = Encoder[String].contramap[NonEmptyString](_.value)
+  given derivedNonEmptyStringDecoder: Decoder[NonEmptyString] = Decoder[String].emap(NonEmptyString.from)
+
+  given derivedNonEmptyStringKeyEncoder: KeyEncoder[NonEmptyString] with {
     override def apply(key: NonEmptyString): String = key.value
   }
-  inline given derivedNonEmptyStringKeyDecoder: KeyDecoder[NonEmptyString] with {
+  given derivedNonEmptyStringKeyDecoder: KeyDecoder[NonEmptyString] with {
     override def apply(key: String): Option[NonEmptyString] = NonEmptyString.from(key).toOption
   }
 
   /* NonBlankString */
-  inline given derivedNonBlankStringEncoder: Encoder[NonBlankString] = Encoder[String].contramap[NonBlankString](_.value)
-  inline given derivedNonBlankStringDecoder: Decoder[NonBlankString] = Decoder[String].emap(NonBlankString.from)
+  given derivedNonBlankStringEncoder: Encoder[NonBlankString] = Encoder[String].contramap[NonBlankString](_.value)
+  given derivedNonBlankStringDecoder: Decoder[NonBlankString] = Decoder[String].emap(NonBlankString.from)
 
-  inline given derivedNonBlankStringKeyEncoder: KeyEncoder[NonBlankString] with {
+  given derivedNonBlankStringKeyEncoder: KeyEncoder[NonBlankString] with {
     override def apply(key: NonBlankString): String = key.value
   }
-  inline given derivedNonBlankStringKeyDecoder: KeyDecoder[NonBlankString] with {
+  given derivedNonBlankStringKeyDecoder: KeyDecoder[NonBlankString] with {
     override def apply(key: String): Option[NonBlankString] = NonBlankString.from(key).toOption
   }
 
   /* Uuid */
-  inline given derivedUuidEncoder: Encoder[Uuid] = Encoder[String].contramap[Uuid](_.value)
-  inline given derivedUuidDecoder: Decoder[Uuid] = Decoder[String].emap(Uuid.from)
+  given derivedUuidEncoder: Encoder[Uuid] = Encoder[String].contramap[Uuid](_.value)
+  given derivedUuidDecoder: Decoder[Uuid] = Decoder[String].emap(Uuid.from)
 
-  inline given derivedUuidKeyEncoder: KeyEncoder[Uuid] with {
+  given derivedUuidKeyEncoder: KeyEncoder[Uuid] with {
     override def apply(key: Uuid): String = key.value
   }
-  inline given derivedUuidKeyDecoder: KeyDecoder[Uuid] with {
+  given derivedUuidKeyDecoder: KeyDecoder[Uuid] with {
     override def apply(key: String): Option[Uuid] = Uuid.from(key).toOption
   }
 
 }
-object strings extends strings

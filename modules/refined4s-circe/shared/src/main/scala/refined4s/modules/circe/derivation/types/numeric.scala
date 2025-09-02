@@ -10,264 +10,454 @@ import refined4s.types.all.*
 trait numeric {
 
   /* NegInt */
-  inline given derivedNegIntEncoder: Encoder[NegInt] = Encoder[Int].contramap[NegInt](_.value)
-  inline given derivedNegIntDecoder: Decoder[NegInt] = Decoder[Int].emap(NegInt.from)
+  inline given derivedNegIntEncoder: Encoder[NegInt] = numeric.derivedNegIntEncoder
+  inline given derivedNegIntDecoder: Decoder[NegInt] = numeric.derivedNegIntDecoder
 
-  inline given derivedNegIntKeyEncoder: KeyEncoder[NegInt] = KeyEncoder[Int].contramap[NegInt](_.value)
-  inline given derivedNegIntKeyDecoder: KeyDecoder[NegInt] with {
+  inline given derivedNegIntKeyEncoder: KeyEncoder[NegInt] = numeric.derivedNegIntKeyEncoder
+  inline given derivedNegIntKeyDecoder: KeyDecoder[NegInt] = numeric.derivedNegIntKeyDecoder
+
+  /* NonNegInt */
+  inline given derivedNonNegIntEncoder: Encoder[NonNegInt] = numeric.derivedNonNegIntEncoder
+  inline given derivedNonNegIntDecoder: Decoder[NonNegInt] = numeric.derivedNonNegIntDecoder
+
+  inline given derivedNonNegIntKeyEncoder: KeyEncoder[NonNegInt] = numeric.derivedNonNegIntKeyEncoder
+  inline given derivedNonNegIntKeyDecoder: KeyDecoder[NonNegInt] = numeric.derivedNonNegIntKeyDecoder
+
+  /* PosInt */
+  inline given derivedPosIntEncoder: Encoder[PosInt] = numeric.derivedPosIntEncoder
+  inline given derivedPosIntDecoder: Decoder[PosInt] = numeric.derivedPosIntDecoder
+
+  inline given derivedPosIntKeyEncoder: KeyEncoder[PosInt] = numeric.derivedPosIntKeyEncoder
+  inline given derivedPosIntKeyDecoder: KeyDecoder[PosInt] = numeric.derivedPosIntKeyDecoder
+
+  /* NonPosInt */
+  inline given derivedNonPosIntEncoder: Encoder[NonPosInt] = numeric.derivedNonPosIntEncoder
+  inline given derivedNonPosIntDecoder: Decoder[NonPosInt] = numeric.derivedNonPosIntDecoder
+
+  inline given derivedNonPosIntKeyEncoder: KeyEncoder[NonPosInt] = numeric.derivedNonPosIntKeyEncoder
+  inline given derivedNonPosIntKeyDecoder: KeyDecoder[NonPosInt] = numeric.derivedNonPosIntKeyDecoder
+
+  /* NegLong */
+  inline given derivedNegLongEncoder: Encoder[NegLong] = numeric.derivedNegLongEncoder
+  inline given derivedNegLongDecoder: Decoder[NegLong] = numeric.derivedNegLongDecoder
+
+  inline given derivedNegLongKeyEncoder: KeyEncoder[NegLong] = numeric.derivedNegLongKeyEncoder
+  inline given derivedNegLongKeyDecoder: KeyDecoder[NegLong] = numeric.derivedNegLongKeyDecoder
+
+  /* NonNegLong */
+  inline given derivedNonNegLongEncoder: Encoder[NonNegLong] = numeric.derivedNonNegLongEncoder
+  inline given derivedNonNegLongDecoder: Decoder[NonNegLong] = numeric.derivedNonNegLongDecoder
+
+  inline given derivedNonNegLongKeyEncoder: KeyEncoder[NonNegLong] = numeric.derivedNonNegLongKeyEncoder
+  inline given derivedNonNegLongKeyDecoder: KeyDecoder[NonNegLong] = numeric.derivedNonNegLongKeyDecoder
+
+  /* PosLong */
+  inline given derivedPosLongEncoder: Encoder[PosLong] = numeric.derivedPosLongEncoder
+  inline given derivedPosLongDecoder: Decoder[PosLong] = numeric.derivedPosLongDecoder
+
+  inline given derivedPosLongKeyEncoder: KeyEncoder[PosLong] = numeric.derivedPosLongKeyEncoder
+  inline given derivedPosLongKeyDecoder: KeyDecoder[PosLong] = numeric.derivedPosLongKeyDecoder
+
+  /* NonPosLong */
+  inline given derivedNonPosLongEncoder: Encoder[NonPosLong] = numeric.derivedNonPosLongEncoder
+  inline given derivedNonPosLongDecoder: Decoder[NonPosLong] = numeric.derivedNonPosLongDecoder
+
+  inline given derivedNonPosLongKeyEncoder: KeyEncoder[NonPosLong] = numeric.derivedNonPosLongKeyEncoder
+  inline given derivedNonPosLongKeyDecoder: KeyDecoder[NonPosLong] = numeric.derivedNonPosLongKeyDecoder
+
+  /* NegShort */
+  inline given derivedNegShortEncoder: Encoder[NegShort] = numeric.derivedNegShortEncoder
+  inline given derivedNegShortDecoder: Decoder[NegShort] = numeric.derivedNegShortDecoder
+
+  inline given derivedNegShortKeyEncoder: KeyEncoder[NegShort] = numeric.derivedNegShortKeyEncoder
+  inline given derivedNegShortKeyDecoder: KeyDecoder[NegShort] = numeric.derivedNegShortKeyDecoder
+
+  /* NonNegShort */
+  inline given derivedNonNegShortEncoder: Encoder[NonNegShort] = numeric.derivedNonNegShortEncoder
+  inline given derivedNonNegShortDecoder: Decoder[NonNegShort] = numeric.derivedNonNegShortDecoder
+
+  inline given derivedNonNegShortKeyEncoder: KeyEncoder[NonNegShort] = numeric.derivedNonNegShortKeyEncoder
+  inline given derivedNonNegShortKeyDecoder: KeyDecoder[NonNegShort] = numeric.derivedNonNegShortKeyDecoder
+
+  /* PosShort */
+  inline given derivedPosShortEncoder: Encoder[PosShort] = numeric.derivedPosShortEncoder
+  inline given derivedPosShortDecoder: Decoder[PosShort] = numeric.derivedPosShortDecoder
+
+  inline given derivedPosShortKeyEncoder: KeyEncoder[PosShort] = numeric.derivedPosShortKeyEncoder
+  inline given derivedPosShortKeyDecoder: KeyDecoder[PosShort] = numeric.derivedPosShortKeyDecoder
+
+  /* NonPosShort */
+  inline given derivedNonPosShortEncoder: Encoder[NonPosShort] = numeric.derivedNonPosShortEncoder
+  inline given derivedNonPosShortDecoder: Decoder[NonPosShort] = numeric.derivedNonPosShortDecoder
+
+  inline given derivedNonPosShortKeyEncoder: KeyEncoder[NonPosShort] = numeric.derivedNonPosShortKeyEncoder
+  inline given derivedNonPosShortKeyDecoder: KeyDecoder[NonPosShort] = numeric.derivedNonPosShortKeyDecoder
+
+  /* NegByte */
+  inline given derivedNegByteEncoder: Encoder[NegByte] = numeric.derivedNegByteEncoder
+  inline given derivedNegByteDecoder: Decoder[NegByte] = numeric.derivedNegByteDecoder
+
+  inline given derivedNegByteKeyEncoder: KeyEncoder[NegByte] = numeric.derivedNegByteKeyEncoder
+  inline given derivedNegByteKeyDecoder: KeyDecoder[NegByte] = numeric.derivedNegByteKeyDecoder
+
+  /* NonNegByte */
+  inline given derivedNonNegByteEncoder: Encoder[NonNegByte] = numeric.derivedNonNegByteEncoder
+  inline given derivedNonNegByteDecoder: Decoder[NonNegByte] = numeric.derivedNonNegByteDecoder
+
+  inline given derivedNonNegByteKeyEncoder: KeyEncoder[NonNegByte] = numeric.derivedNonNegByteKeyEncoder
+  inline given derivedNonNegByteKeyDecoder: KeyDecoder[NonNegByte] = numeric.derivedNonNegByteKeyDecoder
+
+  /* PosByte */
+  inline given derivedPosByteEncoder: Encoder[PosByte] = numeric.derivedPosByteEncoder
+  inline given derivedPosByteDecoder: Decoder[PosByte] = numeric.derivedPosByteDecoder
+
+  inline given derivedPosByteKeyEncoder: KeyEncoder[PosByte] = numeric.derivedPosByteKeyEncoder
+  inline given derivedPosByteKeyDecoder: KeyDecoder[PosByte] = numeric.derivedPosByteKeyDecoder
+
+  /* NonPosByte */
+  inline given derivedNonPosByteEncoder: Encoder[NonPosByte] = numeric.derivedNonPosByteEncoder
+  inline given derivedNonPosByteDecoder: Decoder[NonPosByte] = numeric.derivedNonPosByteDecoder
+
+  inline given derivedNonPosByteKeyEncoder: KeyEncoder[NonPosByte] = numeric.derivedNonPosByteKeyEncoder
+  inline given derivedNonPosByteKeyDecoder: KeyDecoder[NonPosByte] = numeric.derivedNonPosByteKeyDecoder
+
+  /* NegFloat */
+  inline given derivedNegFloatEncoder: Encoder[NegFloat] = numeric.derivedNegFloatEncoder
+  inline given derivedNegFloatDecoder: Decoder[NegFloat] = numeric.derivedNegFloatDecoder
+
+  /* NonNegFloat */
+  inline given derivedNonNegFloatEncoder: Encoder[NonNegFloat] = numeric.derivedNonNegFloatEncoder
+  inline given derivedNonNegFloatDecoder: Decoder[NonNegFloat] = numeric.derivedNonNegFloatDecoder
+
+  /* PosFloat */
+  inline given derivedPosFloatEncoder: Encoder[PosFloat] = numeric.derivedPosFloatEncoder
+  inline given derivedPosFloatDecoder: Decoder[PosFloat] = numeric.derivedPosFloatDecoder
+
+  /* NonPosFloat */
+  inline given derivedNonPosFloatEncoder: Encoder[NonPosFloat] = numeric.derivedNonPosFloatEncoder
+  inline given derivedNonPosFloatDecoder: Decoder[NonPosFloat] = numeric.derivedNonPosFloatDecoder
+
+  /* NegDouble */
+  inline given derivedNegDoubleEncoder: Encoder[NegDouble] = numeric.derivedNegDoubleEncoder
+  inline given derivedNegDoubleDecoder: Decoder[NegDouble] = numeric.derivedNegDoubleDecoder
+
+  /* NonNegDouble */
+  inline given derivedNonNegDoubleEncoder: Encoder[NonNegDouble] = numeric.derivedNonNegDoubleEncoder
+  inline given derivedNonNegDoubleDecoder: Decoder[NonNegDouble] = numeric.derivedNonNegDoubleDecoder
+
+  /* PosDouble */
+  inline given derivedPosDoubleEncoder: Encoder[PosDouble] = numeric.derivedPosDoubleEncoder
+  inline given derivedPosDoubleDecoder: Decoder[PosDouble] = numeric.derivedPosDoubleDecoder
+
+  /* NonPosDouble */
+  inline given derivedNonPosDoubleEncoder: Encoder[NonPosDouble] = numeric.derivedNonPosDoubleEncoder
+  inline given derivedNonPosDoubleDecoder: Decoder[NonPosDouble] = numeric.derivedNonPosDoubleDecoder
+
+  /* NegBigInt */
+  inline given derivedNegBigIntEncoder: Encoder[NegBigInt] = numeric.derivedNegBigIntEncoder
+  inline given derivedNegBigIntDecoder: Decoder[NegBigInt] = numeric.derivedNegBigIntDecoder
+
+  inline given derivedNegBigIntKeyEncoder: KeyEncoder[NegBigInt] = numeric.derivedNegBigIntKeyEncoder
+  inline given derivedNegBigIntKeyDecoder: KeyDecoder[NegBigInt] = numeric.derivedNegBigIntKeyDecoder
+
+  /* NonNegBigInt */
+  inline given derivedNonNegBigIntEncoder: Encoder[NonNegBigInt] = numeric.derivedNonNegBigIntEncoder
+  inline given derivedNonNegBigIntDecoder: Decoder[NonNegBigInt] = numeric.derivedNonNegBigIntDecoder
+
+  inline given derivedNonNegBigIntKeyEncoder: KeyEncoder[NonNegBigInt] = numeric.derivedNonNegBigIntKeyEncoder
+  inline given derivedNonNegBigIntKeyDecoder: KeyDecoder[NonNegBigInt] = numeric.derivedNonNegBigIntKeyDecoder
+
+  /* PosBigInt */
+  inline given derivedPosBigIntEncoder: Encoder[PosBigInt] = numeric.derivedPosBigIntEncoder
+  inline given derivedPosBigIntDecoder: Decoder[PosBigInt] = numeric.derivedPosBigIntDecoder
+
+  inline given derivedPosBigIntKeyEncoder: KeyEncoder[PosBigInt] = numeric.derivedPosBigIntKeyEncoder
+  inline given derivedPosBigIntKeyDecoder: KeyDecoder[PosBigInt] = numeric.derivedPosBigIntKeyDecoder
+
+  /* NonPosBigInt */
+  inline given derivedNonPosBigIntEncoder: Encoder[NonPosBigInt] = numeric.derivedNonPosBigIntEncoder
+  inline given derivedNonPosBigIntDecoder: Decoder[NonPosBigInt] = numeric.derivedNonPosBigIntDecoder
+
+  inline given derivedNonPosBigIntKeyEncoder: KeyEncoder[NonPosBigInt] = numeric.derivedNonPosBigIntKeyEncoder
+  inline given derivedNonPosBigIntKeyDecoder: KeyDecoder[NonPosBigInt] = numeric.derivedNonPosBigIntKeyDecoder
+
+  /* NegBigDecimal */
+  inline given derivedNegBigDecimalEncoder: Encoder[NegBigDecimal] = numeric.derivedNegBigDecimalEncoder
+  inline given derivedNegBigDecimalDecoder: Decoder[NegBigDecimal] = numeric.derivedNegBigDecimalDecoder
+
+  /* NonNegBigDecimal */
+  inline given derivedNonNegBigDecimalEncoder: Encoder[NonNegBigDecimal] = numeric.derivedNonNegBigDecimalEncoder
+  inline given derivedNonNegBigDecimalDecoder: Decoder[NonNegBigDecimal] = numeric.derivedNonNegBigDecimalDecoder
+
+  /* PosBigDecimal */
+  inline given derivedPosBigDecimalEncoder: Encoder[PosBigDecimal] = numeric.derivedPosBigDecimalEncoder
+  inline given derivedPosBigDecimalDecoder: Decoder[PosBigDecimal] = numeric.derivedPosBigDecimalDecoder
+
+  /* NonPosBigDecimal */
+  inline given derivedNonPosBigDecimalEncoder: Encoder[NonPosBigDecimal] = numeric.derivedNonPosBigDecimalEncoder
+  inline given derivedNonPosBigDecimalDecoder: Decoder[NonPosBigDecimal] = numeric.derivedNonPosBigDecimalDecoder
+
+}
+object numeric {
+
+  /* NegInt */
+  given derivedNegIntEncoder: Encoder[NegInt] = Encoder[Int].contramap[NegInt](_.value)
+  given derivedNegIntDecoder: Decoder[NegInt] = Decoder[Int].emap(NegInt.from)
+
+  given derivedNegIntKeyEncoder: KeyEncoder[NegInt] = KeyEncoder[Int].contramap[NegInt](_.value)
+  given derivedNegIntKeyDecoder: KeyDecoder[NegInt] with {
     override def apply(key: String): Option[NegInt] =
       KeyDecoder[Int].apply(key).flatMap(NegInt.from(_).toOption)
   }
 
   /* NonNegInt */
-  inline given derivedNonNegIntEncoder: Encoder[NonNegInt] = Encoder[Int].contramap[NonNegInt](_.value)
-  inline given derivedNonNegIntDecoder: Decoder[NonNegInt] = Decoder[Int].emap(NonNegInt.from)
+  given derivedNonNegIntEncoder: Encoder[NonNegInt] = Encoder[Int].contramap[NonNegInt](_.value)
+  given derivedNonNegIntDecoder: Decoder[NonNegInt] = Decoder[Int].emap(NonNegInt.from)
 
-  inline given derivedNonNegIntKeyEncoder: KeyEncoder[NonNegInt] = KeyEncoder[Int].contramap[NonNegInt](_.value)
-  inline given derivedNonNegIntKeyDecoder: KeyDecoder[NonNegInt] with {
+  given derivedNonNegIntKeyEncoder: KeyEncoder[NonNegInt] = KeyEncoder[Int].contramap[NonNegInt](_.value)
+  given derivedNonNegIntKeyDecoder: KeyDecoder[NonNegInt] with {
     override def apply(key: String): Option[NonNegInt] =
       KeyDecoder[Int].apply(key).flatMap(NonNegInt.from(_).toOption)
   }
 
   /* PosInt */
-  inline given derivedPosIntEncoder: Encoder[PosInt] = Encoder[Int].contramap[PosInt](_.value)
-  inline given derivedPosIntDecoder: Decoder[PosInt] = Decoder[Int].emap(PosInt.from)
+  given derivedPosIntEncoder: Encoder[PosInt] = Encoder[Int].contramap[PosInt](_.value)
+  given derivedPosIntDecoder: Decoder[PosInt] = Decoder[Int].emap(PosInt.from)
 
-  inline given derivedPosIntKeyEncoder: KeyEncoder[PosInt] = KeyEncoder[Int].contramap[PosInt](_.value)
-  inline given derivedPosIntKeyDecoder: KeyDecoder[PosInt] with {
+  given derivedPosIntKeyEncoder: KeyEncoder[PosInt] = KeyEncoder[Int].contramap[PosInt](_.value)
+  given derivedPosIntKeyDecoder: KeyDecoder[PosInt] with {
     override def apply(key: String): Option[PosInt] =
       KeyDecoder[Int].apply(key).flatMap(PosInt.from(_).toOption)
   }
 
   /* NonPosInt */
-  inline given derivedNonPosIntEncoder: Encoder[NonPosInt] = Encoder[Int].contramap[NonPosInt](_.value)
-  inline given derivedNonPosIntDecoder: Decoder[NonPosInt] = Decoder[Int].emap(NonPosInt.from)
+  given derivedNonPosIntEncoder: Encoder[NonPosInt] = Encoder[Int].contramap[NonPosInt](_.value)
+  given derivedNonPosIntDecoder: Decoder[NonPosInt] = Decoder[Int].emap(NonPosInt.from)
 
-  inline given derivedNonPosIntKeyEncoder: KeyEncoder[NonPosInt] = KeyEncoder[Int].contramap[NonPosInt](_.value)
-  inline given derivedNonPosIntKeyDecoder: KeyDecoder[NonPosInt] with {
+  given derivedNonPosIntKeyEncoder: KeyEncoder[NonPosInt] = KeyEncoder[Int].contramap[NonPosInt](_.value)
+  given derivedNonPosIntKeyDecoder: KeyDecoder[NonPosInt] with {
     override def apply(key: String): Option[NonPosInt] =
       KeyDecoder[Int].apply(key).flatMap(NonPosInt.from(_).toOption)
   }
 
   /* NegLong */
-  inline given derivedNegLongEncoder: Encoder[NegLong] = Encoder[Long].contramap[NegLong](_.value)
-  inline given derivedNegLongDecoder: Decoder[NegLong] = Decoder[Long].emap(NegLong.from)
+  given derivedNegLongEncoder: Encoder[NegLong] = Encoder[Long].contramap[NegLong](_.value)
+  given derivedNegLongDecoder: Decoder[NegLong] = Decoder[Long].emap(NegLong.from)
 
-  inline given derivedNegLongKeyEncoder: KeyEncoder[NegLong] = KeyEncoder[Long].contramap[NegLong](_.value)
-  inline given derivedNegLongKeyDecoder: KeyDecoder[NegLong] with {
+  given derivedNegLongKeyEncoder: KeyEncoder[NegLong] = KeyEncoder[Long].contramap[NegLong](_.value)
+  given derivedNegLongKeyDecoder: KeyDecoder[NegLong] with {
     override def apply(key: String): Option[NegLong] =
       KeyDecoder[Long].apply(key).flatMap(NegLong.from(_).toOption)
   }
 
   /* NonNegLong */
-  inline given derivedNonNegLongEncoder: Encoder[NonNegLong] = Encoder[Long].contramap[NonNegLong](_.value)
-  inline given derivedNonNegLongDecoder: Decoder[NonNegLong] = Decoder[Long].emap(NonNegLong.from)
+  given derivedNonNegLongEncoder: Encoder[NonNegLong] = Encoder[Long].contramap[NonNegLong](_.value)
+  given derivedNonNegLongDecoder: Decoder[NonNegLong] = Decoder[Long].emap(NonNegLong.from)
 
-  inline given derivedNonNegLongKeyEncoder: KeyEncoder[NonNegLong] = KeyEncoder[Long].contramap[NonNegLong](_.value)
-  inline given derivedNonNegLongKeyDecoder: KeyDecoder[NonNegLong] with {
+  given derivedNonNegLongKeyEncoder: KeyEncoder[NonNegLong] = KeyEncoder[Long].contramap[NonNegLong](_.value)
+  given derivedNonNegLongKeyDecoder: KeyDecoder[NonNegLong] with {
     override def apply(key: String): Option[NonNegLong] =
       KeyDecoder[Long].apply(key).flatMap(NonNegLong.from(_).toOption)
   }
 
   /* PosLong */
-  inline given derivedPosLongEncoder: Encoder[PosLong] = Encoder[Long].contramap[PosLong](_.value)
-  inline given derivedPosLongDecoder: Decoder[PosLong] = Decoder[Long].emap(PosLong.from)
+  given derivedPosLongEncoder: Encoder[PosLong] = Encoder[Long].contramap[PosLong](_.value)
+  given derivedPosLongDecoder: Decoder[PosLong] = Decoder[Long].emap(PosLong.from)
 
-  inline given derivedPosLongKeyEncoder: KeyEncoder[PosLong] = KeyEncoder[Long].contramap[PosLong](_.value)
-  inline given derivedPosLongKeyDecoder: KeyDecoder[PosLong] with {
+  given derivedPosLongKeyEncoder: KeyEncoder[PosLong] = KeyEncoder[Long].contramap[PosLong](_.value)
+  given derivedPosLongKeyDecoder: KeyDecoder[PosLong] with {
     override def apply(key: String): Option[PosLong] =
       KeyDecoder[Long].apply(key).flatMap(PosLong.from(_).toOption)
   }
 
   /* NonPosLong */
-  inline given derivedNonPosLongEncoder: Encoder[NonPosLong] = Encoder[Long].contramap[NonPosLong](_.value)
-  inline given derivedNonPosLongDecoder: Decoder[NonPosLong] = Decoder[Long].emap(NonPosLong.from)
+  given derivedNonPosLongEncoder: Encoder[NonPosLong] = Encoder[Long].contramap[NonPosLong](_.value)
+  given derivedNonPosLongDecoder: Decoder[NonPosLong] = Decoder[Long].emap(NonPosLong.from)
 
-  inline given derivedNonPosLongKeyEncoder: KeyEncoder[NonPosLong] = KeyEncoder[Long].contramap[NonPosLong](_.value)
-  inline given derivedNonPosLongKeyDecoder: KeyDecoder[NonPosLong] with {
+  given derivedNonPosLongKeyEncoder: KeyEncoder[NonPosLong] = KeyEncoder[Long].contramap[NonPosLong](_.value)
+  given derivedNonPosLongKeyDecoder: KeyDecoder[NonPosLong] with {
     override def apply(key: String): Option[NonPosLong] =
       KeyDecoder[Long].apply(key).flatMap(NonPosLong.from(_).toOption)
   }
 
   /* NegShort */
-  inline given derivedNegShortEncoder: Encoder[NegShort] = Encoder[Short].contramap[NegShort](_.value)
-  inline given derivedNegShortDecoder: Decoder[NegShort] = Decoder[Short].emap(NegShort.from)
+  given derivedNegShortEncoder: Encoder[NegShort] = Encoder[Short].contramap[NegShort](_.value)
+  given derivedNegShortDecoder: Decoder[NegShort] = Decoder[Short].emap(NegShort.from)
 
-  inline given derivedNegShortKeyEncoder: KeyEncoder[NegShort] = KeyEncoder[Short].contramap[NegShort](_.value)
-  inline given derivedNegShortKeyDecoder: KeyDecoder[NegShort] with {
+  given derivedNegShortKeyEncoder: KeyEncoder[NegShort] = KeyEncoder[Short].contramap[NegShort](_.value)
+  given derivedNegShortKeyDecoder: KeyDecoder[NegShort] with {
     override def apply(key: String): Option[NegShort] =
       KeyDecoder[Short].apply(key).flatMap(NegShort.from(_).toOption)
   }
 
   /* NonNegShort */
-  inline given derivedNonNegShortEncoder: Encoder[NonNegShort] = Encoder[Short].contramap[NonNegShort](_.value)
-  inline given derivedNonNegShortDecoder: Decoder[NonNegShort] = Decoder[Short].emap(NonNegShort.from)
+  given derivedNonNegShortEncoder: Encoder[NonNegShort] = Encoder[Short].contramap[NonNegShort](_.value)
+  given derivedNonNegShortDecoder: Decoder[NonNegShort] = Decoder[Short].emap(NonNegShort.from)
 
-  inline given derivedNonNegShortKeyEncoder: KeyEncoder[NonNegShort] = KeyEncoder[Short].contramap[NonNegShort](_.value)
-  inline given derivedNonNegShortKeyDecoder: KeyDecoder[NonNegShort] with {
+  given derivedNonNegShortKeyEncoder: KeyEncoder[NonNegShort] = KeyEncoder[Short].contramap[NonNegShort](_.value)
+  given derivedNonNegShortKeyDecoder: KeyDecoder[NonNegShort] with {
     override def apply(key: String): Option[NonNegShort] =
       KeyDecoder[Short].apply(key).flatMap(NonNegShort.from(_).toOption)
   }
 
   /* PosShort */
-  inline given derivedPosShortEncoder: Encoder[PosShort] = Encoder[Short].contramap[PosShort](_.value)
-  inline given derivedPosShortDecoder: Decoder[PosShort] = Decoder[Short].emap(PosShort.from)
+  given derivedPosShortEncoder: Encoder[PosShort] = Encoder[Short].contramap[PosShort](_.value)
+  given derivedPosShortDecoder: Decoder[PosShort] = Decoder[Short].emap(PosShort.from)
 
-  inline given derivedPosShortKeyEncoder: KeyEncoder[PosShort] = KeyEncoder[Short].contramap[PosShort](_.value)
-  inline given derivedPosShortKeyDecoder: KeyDecoder[PosShort] with {
+  given derivedPosShortKeyEncoder: KeyEncoder[PosShort] = KeyEncoder[Short].contramap[PosShort](_.value)
+  given derivedPosShortKeyDecoder: KeyDecoder[PosShort] with {
     override def apply(key: String): Option[PosShort] =
       KeyDecoder[Short].apply(key).flatMap(PosShort.from(_).toOption)
   }
 
   /* NonPosShort */
-  inline given derivedNonPosShortEncoder: Encoder[NonPosShort] = Encoder[Short].contramap[NonPosShort](_.value)
-  inline given derivedNonPosShortDecoder: Decoder[NonPosShort] = Decoder[Short].emap(NonPosShort.from)
+  given derivedNonPosShortEncoder: Encoder[NonPosShort] = Encoder[Short].contramap[NonPosShort](_.value)
+  given derivedNonPosShortDecoder: Decoder[NonPosShort] = Decoder[Short].emap(NonPosShort.from)
 
-  inline given derivedNonPosShortKeyEncoder: KeyEncoder[NonPosShort] = KeyEncoder[Short].contramap[NonPosShort](_.value)
-  inline given derivedNonPosShortKeyDecoder: KeyDecoder[NonPosShort] with {
+  given derivedNonPosShortKeyEncoder: KeyEncoder[NonPosShort] = KeyEncoder[Short].contramap[NonPosShort](_.value)
+  given derivedNonPosShortKeyDecoder: KeyDecoder[NonPosShort] with {
     override def apply(key: String): Option[NonPosShort] =
       KeyDecoder[Short].apply(key).flatMap(NonPosShort.from(_).toOption)
   }
 
   /* NegByte */
-  inline given derivedNegByteEncoder: Encoder[NegByte] = Encoder[Byte].contramap[NegByte](_.value)
-  inline given derivedNegByteDecoder: Decoder[NegByte] = Decoder[Byte].emap(NegByte.from)
+  given derivedNegByteEncoder: Encoder[NegByte] = Encoder[Byte].contramap[NegByte](_.value)
+  given derivedNegByteDecoder: Decoder[NegByte] = Decoder[Byte].emap(NegByte.from)
 
-  inline given derivedNegByteKeyEncoder: KeyEncoder[NegByte] = KeyEncoder[Byte].contramap[NegByte](_.value)
-  inline given derivedNegByteKeyDecoder: KeyDecoder[NegByte] with {
+  given derivedNegByteKeyEncoder: KeyEncoder[NegByte] = KeyEncoder[Byte].contramap[NegByte](_.value)
+  given derivedNegByteKeyDecoder: KeyDecoder[NegByte] with {
     override def apply(key: String): Option[NegByte] =
       KeyDecoder[Byte].apply(key).flatMap(NegByte.from(_).toOption)
   }
 
   /* NonNegByte */
-  inline given derivedNonNegByteEncoder: Encoder[NonNegByte] = Encoder[Byte].contramap[NonNegByte](_.value)
-  inline given derivedNonNegByteDecoder: Decoder[NonNegByte] = Decoder[Byte].emap(NonNegByte.from)
+  given derivedNonNegByteEncoder: Encoder[NonNegByte] = Encoder[Byte].contramap[NonNegByte](_.value)
+  given derivedNonNegByteDecoder: Decoder[NonNegByte] = Decoder[Byte].emap(NonNegByte.from)
 
-  inline given derivedNonNegByteKeyEncoder: KeyEncoder[NonNegByte] = KeyEncoder[Byte].contramap[NonNegByte](_.value)
-  inline given derivedNonNegByteKeyDecoder: KeyDecoder[NonNegByte] with {
+  given derivedNonNegByteKeyEncoder: KeyEncoder[NonNegByte] = KeyEncoder[Byte].contramap[NonNegByte](_.value)
+  given derivedNonNegByteKeyDecoder: KeyDecoder[NonNegByte] with {
     override def apply(key: String): Option[NonNegByte] =
       KeyDecoder[Byte].apply(key).flatMap(NonNegByte.from(_).toOption)
   }
 
   /* PosByte */
-  inline given derivedPosByteEncoder: Encoder[PosByte] = Encoder[Byte].contramap[PosByte](_.value)
-  inline given derivedPosByteDecoder: Decoder[PosByte] = Decoder[Byte].emap(PosByte.from)
+  given derivedPosByteEncoder: Encoder[PosByte] = Encoder[Byte].contramap[PosByte](_.value)
+  given derivedPosByteDecoder: Decoder[PosByte] = Decoder[Byte].emap(PosByte.from)
 
-  inline given derivedPosByteKeyEncoder: KeyEncoder[PosByte] = KeyEncoder[Byte].contramap[PosByte](_.value)
-  inline given derivedPosByteKeyDecoder: KeyDecoder[PosByte] with {
+  given derivedPosByteKeyEncoder: KeyEncoder[PosByte] = KeyEncoder[Byte].contramap[PosByte](_.value)
+  given derivedPosByteKeyDecoder: KeyDecoder[PosByte] with {
     override def apply(key: String): Option[PosByte] =
       KeyDecoder[Byte].apply(key).flatMap(PosByte.from(_).toOption)
   }
 
   /* NonPosByte */
-  inline given derivedNonPosByteEncoder: Encoder[NonPosByte] = Encoder[Byte].contramap[NonPosByte](_.value)
-  inline given derivedNonPosByteDecoder: Decoder[NonPosByte] = Decoder[Byte].emap(NonPosByte.from)
+  given derivedNonPosByteEncoder: Encoder[NonPosByte] = Encoder[Byte].contramap[NonPosByte](_.value)
+  given derivedNonPosByteDecoder: Decoder[NonPosByte] = Decoder[Byte].emap(NonPosByte.from)
 
-  inline given derivedNonPosByteKeyEncoder: KeyEncoder[NonPosByte] = KeyEncoder[Byte].contramap[NonPosByte](_.value)
-  inline given derivedNonPosByteKeyDecoder: KeyDecoder[NonPosByte] with {
+  given derivedNonPosByteKeyEncoder: KeyEncoder[NonPosByte] = KeyEncoder[Byte].contramap[NonPosByte](_.value)
+  given derivedNonPosByteKeyDecoder: KeyDecoder[NonPosByte] with {
     override def apply(key: String): Option[NonPosByte] =
       KeyDecoder[Byte].apply(key).flatMap(NonPosByte.from(_).toOption)
   }
 
   /* NegFloat */
-  inline given derivedNegFloatEncoder: Encoder[NegFloat] = Encoder[Float].contramap[NegFloat](_.value)
-  inline given derivedNegFloatDecoder: Decoder[NegFloat] = Decoder[Float].emap(NegFloat.from)
+  given derivedNegFloatEncoder: Encoder[NegFloat] = Encoder[Float].contramap[NegFloat](_.value)
+  given derivedNegFloatDecoder: Decoder[NegFloat] = Decoder[Float].emap(NegFloat.from)
 
   /* NonNegFloat */
-  inline given derivedNonNegFloatEncoder: Encoder[NonNegFloat] = Encoder[Float].contramap[NonNegFloat](_.value)
-  inline given derivedNonNegFloatDecoder: Decoder[NonNegFloat] = Decoder[Float].emap(NonNegFloat.from)
+  given derivedNonNegFloatEncoder: Encoder[NonNegFloat] = Encoder[Float].contramap[NonNegFloat](_.value)
+  given derivedNonNegFloatDecoder: Decoder[NonNegFloat] = Decoder[Float].emap(NonNegFloat.from)
 
   /* PosFloat */
-  inline given derivedPosFloatEncoder: Encoder[PosFloat] = Encoder[Float].contramap[PosFloat](_.value)
-  inline given derivedPosFloatDecoder: Decoder[PosFloat] = Decoder[Float].emap(PosFloat.from)
+  given derivedPosFloatEncoder: Encoder[PosFloat] = Encoder[Float].contramap[PosFloat](_.value)
+  given derivedPosFloatDecoder: Decoder[PosFloat] = Decoder[Float].emap(PosFloat.from)
 
   /* NonPosFloat */
-  inline given derivedNonPosFloatEncoder: Encoder[NonPosFloat] = Encoder[Float].contramap[NonPosFloat](_.value)
-  inline given derivedNonPosFloatDecoder: Decoder[NonPosFloat] = Decoder[Float].emap(NonPosFloat.from)
+  given derivedNonPosFloatEncoder: Encoder[NonPosFloat] = Encoder[Float].contramap[NonPosFloat](_.value)
+  given derivedNonPosFloatDecoder: Decoder[NonPosFloat] = Decoder[Float].emap(NonPosFloat.from)
 
   /* NegDouble */
-  inline given derivedNegDoubleEncoder: Encoder[NegDouble] = Encoder[Double].contramap[NegDouble](_.value)
-  inline given derivedNegDoubleDecoder: Decoder[NegDouble] = Decoder[Double].emap(NegDouble.from)
+  given derivedNegDoubleEncoder: Encoder[NegDouble] = Encoder[Double].contramap[NegDouble](_.value)
+  given derivedNegDoubleDecoder: Decoder[NegDouble] = Decoder[Double].emap(NegDouble.from)
 
   /* NonNegDouble */
-  inline given derivedNonNegDoubleEncoder: Encoder[NonNegDouble] = Encoder[Double].contramap[NonNegDouble](_.value)
-  inline given derivedNonNegDoubleDecoder: Decoder[NonNegDouble] = Decoder[Double].emap(NonNegDouble.from)
+  given derivedNonNegDoubleEncoder: Encoder[NonNegDouble] = Encoder[Double].contramap[NonNegDouble](_.value)
+  given derivedNonNegDoubleDecoder: Decoder[NonNegDouble] = Decoder[Double].emap(NonNegDouble.from)
 
   /* PosDouble */
-  inline given derivedPosDoubleEncoder: Encoder[PosDouble] = Encoder[Double].contramap[PosDouble](_.value)
-  inline given derivedPosDoubleDecoder: Decoder[PosDouble] = Decoder[Double].emap(PosDouble.from)
+  given derivedPosDoubleEncoder: Encoder[PosDouble] = Encoder[Double].contramap[PosDouble](_.value)
+  given derivedPosDoubleDecoder: Decoder[PosDouble] = Decoder[Double].emap(PosDouble.from)
 
   /* NonPosDouble */
-  inline given derivedNonPosDoubleEncoder: Encoder[NonPosDouble] = Encoder[Double].contramap[NonPosDouble](_.value)
-  inline given derivedNonPosDoubleDecoder: Decoder[NonPosDouble] = Decoder[Double].emap(NonPosDouble.from)
+  given derivedNonPosDoubleEncoder: Encoder[NonPosDouble] = Encoder[Double].contramap[NonPosDouble](_.value)
+  given derivedNonPosDoubleDecoder: Decoder[NonPosDouble] = Decoder[Double].emap(NonPosDouble.from)
 
   /* NegBigInt */
-  inline given derivedNegBigIntEncoder: Encoder[NegBigInt] = Encoder[BigInt].contramap[NegBigInt](_.value)
-  inline given derivedNegBigIntDecoder: Decoder[NegBigInt] = Decoder[BigInt].emap(NegBigInt.from)
+  given derivedNegBigIntEncoder: Encoder[NegBigInt] = Encoder[BigInt].contramap[NegBigInt](_.value)
+  given derivedNegBigIntDecoder: Decoder[NegBigInt] = Decoder[BigInt].emap(NegBigInt.from)
 
-  inline given derivedNegBigIntKeyEncoder: KeyEncoder[NegBigInt] with {
+  given derivedNegBigIntKeyEncoder: KeyEncoder[NegBigInt] with {
     @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     override def apply(key: NegBigInt): String = key.value.toString
   }
-  inline given derivedNegBigIntKeyDecoder: KeyDecoder[NegBigInt] with {
+  given derivedNegBigIntKeyDecoder: KeyDecoder[NegBigInt] with {
     override def apply(key: String): Option[NegBigInt] =
       scala.util.Try(BigInt(key)).toOption.flatMap(NegBigInt.from(_).toOption)
   }
 
   /* NonNegBigInt */
-  inline given derivedNonNegBigIntEncoder: Encoder[NonNegBigInt] = Encoder[BigInt].contramap[NonNegBigInt](_.value)
-  inline given derivedNonNegBigIntDecoder: Decoder[NonNegBigInt] = Decoder[BigInt].emap(NonNegBigInt.from)
+  given derivedNonNegBigIntEncoder: Encoder[NonNegBigInt] = Encoder[BigInt].contramap[NonNegBigInt](_.value)
+  given derivedNonNegBigIntDecoder: Decoder[NonNegBigInt] = Decoder[BigInt].emap(NonNegBigInt.from)
 
-  inline given derivedNonNegBigIntKeyEncoder: KeyEncoder[NonNegBigInt] with {
+  given derivedNonNegBigIntKeyEncoder: KeyEncoder[NonNegBigInt] with {
     @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     override def apply(key: NonNegBigInt): String = key.value.toString
   }
-  inline given derivedNonNegBigIntKeyDecoder: KeyDecoder[NonNegBigInt] with {
+  given derivedNonNegBigIntKeyDecoder: KeyDecoder[NonNegBigInt] with {
     override def apply(key: String): Option[NonNegBigInt] =
       scala.util.Try(BigInt(key)).toOption.flatMap(NonNegBigInt.from(_).toOption)
   }
 
   /* PosBigInt */
-  inline given derivedPosBigIntEncoder: Encoder[PosBigInt] = Encoder[BigInt].contramap[PosBigInt](_.value)
-  inline given derivedPosBigIntDecoder: Decoder[PosBigInt] = Decoder[BigInt].emap(PosBigInt.from)
+  given derivedPosBigIntEncoder: Encoder[PosBigInt] = Encoder[BigInt].contramap[PosBigInt](_.value)
+  given derivedPosBigIntDecoder: Decoder[PosBigInt] = Decoder[BigInt].emap(PosBigInt.from)
 
-  inline given derivedPosBigIntKeyEncoder: KeyEncoder[PosBigInt] with {
+  given derivedPosBigIntKeyEncoder: KeyEncoder[PosBigInt] with {
     @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     override def apply(key: PosBigInt): String = key.value.toString
   }
-  inline given derivedPosBigIntKeyDecoder: KeyDecoder[PosBigInt] with {
+  given derivedPosBigIntKeyDecoder: KeyDecoder[PosBigInt] with {
     override def apply(key: String): Option[PosBigInt] =
       scala.util.Try(BigInt(key)).toOption.flatMap(PosBigInt.from(_).toOption)
   }
 
   /* NonPosBigInt */
-  inline given derivedNonPosBigIntEncoder: Encoder[NonPosBigInt] = Encoder[BigInt].contramap[NonPosBigInt](_.value)
-  inline given derivedNonPosBigIntDecoder: Decoder[NonPosBigInt] = Decoder[BigInt].emap(NonPosBigInt.from)
+  given derivedNonPosBigIntEncoder: Encoder[NonPosBigInt] = Encoder[BigInt].contramap[NonPosBigInt](_.value)
+  given derivedNonPosBigIntDecoder: Decoder[NonPosBigInt] = Decoder[BigInt].emap(NonPosBigInt.from)
 
-  inline given derivedNonPosBigIntKeyEncoder: KeyEncoder[NonPosBigInt] with {
+  given derivedNonPosBigIntKeyEncoder: KeyEncoder[NonPosBigInt] with {
     @SuppressWarnings(Array("org.wartremover.warts.ToString"))
     override def apply(key: NonPosBigInt): String = key.value.toString
   }
-  inline given derivedNonPosBigIntKeyDecoder: KeyDecoder[NonPosBigInt] with {
+  given derivedNonPosBigIntKeyDecoder: KeyDecoder[NonPosBigInt] with {
     override def apply(key: String): Option[NonPosBigInt] =
       scala.util.Try(BigInt(key)).toOption.flatMap(NonPosBigInt.from(_).toOption)
   }
 
   /* NegBigDecimal */
-  inline given derivedNegBigDecimalEncoder: Encoder[NegBigDecimal] = Encoder[BigDecimal].contramap[NegBigDecimal](_.value)
-  inline given derivedNegBigDecimalDecoder: Decoder[NegBigDecimal] = Decoder[BigDecimal].emap(NegBigDecimal.from)
+  given derivedNegBigDecimalEncoder: Encoder[NegBigDecimal] = Encoder[BigDecimal].contramap[NegBigDecimal](_.value)
+  given derivedNegBigDecimalDecoder: Decoder[NegBigDecimal] = Decoder[BigDecimal].emap(NegBigDecimal.from)
 
   /* NonNegBigDecimal */
-  inline given derivedNonNegBigDecimalEncoder: Encoder[NonNegBigDecimal] = Encoder[BigDecimal].contramap[NonNegBigDecimal](_.value)
-  inline given derivedNonNegBigDecimalDecoder: Decoder[NonNegBigDecimal] = Decoder[BigDecimal].emap(NonNegBigDecimal.from)
+  given derivedNonNegBigDecimalEncoder: Encoder[NonNegBigDecimal] = Encoder[BigDecimal].contramap[NonNegBigDecimal](_.value)
+  given derivedNonNegBigDecimalDecoder: Decoder[NonNegBigDecimal] = Decoder[BigDecimal].emap(NonNegBigDecimal.from)
 
   /* PosBigDecimal */
-  inline given derivedPosBigDecimalEncoder: Encoder[PosBigDecimal] = Encoder[BigDecimal].contramap[PosBigDecimal](_.value)
-  inline given derivedPosBigDecimalDecoder: Decoder[PosBigDecimal] = Decoder[BigDecimal].emap(PosBigDecimal.from)
+  given derivedPosBigDecimalEncoder: Encoder[PosBigDecimal] = Encoder[BigDecimal].contramap[PosBigDecimal](_.value)
+  given derivedPosBigDecimalDecoder: Decoder[PosBigDecimal] = Decoder[BigDecimal].emap(PosBigDecimal.from)
 
   /* NonPosBigDecimal */
-  inline given derivedNonPosBigDecimalEncoder: Encoder[NonPosBigDecimal] = Encoder[BigDecimal].contramap[NonPosBigDecimal](_.value)
-  inline given derivedNonPosBigDecimalDecoder: Decoder[NonPosBigDecimal] = Decoder[BigDecimal].emap(NonPosBigDecimal.from)
+  given derivedNonPosBigDecimalEncoder: Encoder[NonPosBigDecimal] = Encoder[BigDecimal].contramap[NonPosBigDecimal](_.value)
+  given derivedNonPosBigDecimalDecoder: Decoder[NonPosBigDecimal] = Decoder[BigDecimal].emap(NonPosBigDecimal.from)
 
 }
-object numeric extends numeric
