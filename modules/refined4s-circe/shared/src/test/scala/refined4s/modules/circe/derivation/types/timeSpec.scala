@@ -436,8 +436,7 @@ trait timeSpec {
 
 }
 object timeSpec extends Properties, timeSpec {
-  override protected val timeTypeClasses: refined4s.modules.circe.derivation.types.time =
-    refined4s.modules.circe.derivation.types.time
+  override protected object timeTypeClasses extends refined4s.modules.circe.derivation.types.time
 
   override def tests: List[Test] = allTests
 }

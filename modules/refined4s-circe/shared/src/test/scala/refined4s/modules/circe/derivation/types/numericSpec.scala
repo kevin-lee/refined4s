@@ -1714,8 +1714,7 @@ trait numericSpec extends NumericTestValues {
 }
 object numericSpec extends Properties, numericSpec {
 
-  override protected val numericTypeClasses: refined4s.modules.circe.derivation.types.numeric =
-    refined4s.modules.circe.derivation.types.numeric
+  override protected object numericTypeClasses extends refined4s.modules.circe.derivation.types.numeric
 
   override def tests: List[Test] = allTests
 
