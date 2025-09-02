@@ -25,23 +25,23 @@ trait network {
 }
 object network {
 
-  inline given derivedUriSchema(using actualSchema: Schema[String]): Schema[Uri] = actualSchema.map(Uri.from(_).toOption)(_.value)
+  given derivedUriSchema(using actualSchema: Schema[String]): Schema[Uri] = actualSchema.map(Uri.from(_).toOption)(_.value)
 
-  inline given derivedUrlSchema(using actualSchema: Schema[String]): Schema[Url] = actualSchema.map(Url.from(_).toOption)(_.value)
+  given derivedUrlSchema(using actualSchema: Schema[String]): Schema[Url] = actualSchema.map(Url.from(_).toOption)(_.value)
 
-  inline given derivedPortNumberSchema(using actualSchema: Schema[Int]): Schema[PortNumber] =
+  given derivedPortNumberSchema(using actualSchema: Schema[Int]): Schema[PortNumber] =
     actualSchema.map(PortNumber.from(_).toOption)(_.value)
 
-  inline given derivedSystemPortNumberSchema(using actualSchema: Schema[Int]): Schema[SystemPortNumber] =
+  given derivedSystemPortNumberSchema(using actualSchema: Schema[Int]): Schema[SystemPortNumber] =
     actualSchema.map(SystemPortNumber.from(_).toOption)(_.value)
 
-  inline given derivedNonSystemPortNumberSchema(using actualSchema: Schema[Int]): Schema[NonSystemPortNumber] =
+  given derivedNonSystemPortNumberSchema(using actualSchema: Schema[Int]): Schema[NonSystemPortNumber] =
     actualSchema.map(NonSystemPortNumber.from(_).toOption)(_.value)
 
-  inline given derivedUserPortNumberSchema(using actualSchema: Schema[Int]): Schema[UserPortNumber] =
+  given derivedUserPortNumberSchema(using actualSchema: Schema[Int]): Schema[UserPortNumber] =
     actualSchema.map(UserPortNumber.from(_).toOption)(_.value)
 
-  inline given derivedDynamicPortNumberSchema(using actualSchema: Schema[Int]): Schema[DynamicPortNumber] =
+  given derivedDynamicPortNumberSchema(using actualSchema: Schema[Int]): Schema[DynamicPortNumber] =
     actualSchema.map(DynamicPortNumber.from(_).toOption)(_.value)
 
 }
