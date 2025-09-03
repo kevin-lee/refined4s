@@ -5,5 +5,5 @@ import refined4s.*
 /** @author Kevin Lee
   * @since 2023-12-26
   */
-trait all extends numeric, strings, network
+trait all extends numeric, strings, network, time
 object all extends all
