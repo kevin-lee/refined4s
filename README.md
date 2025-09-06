@@ -14,24 +14,27 @@
 
 Newtypes and Refinement types for Scala 3
 
-Check out the doc site
-[https://refined4s.kevinly.dev](https://refined4s.kevinly.dev)
+## Check out the doc site: [https://refined4s.kevinly.dev](https://refined4s.kevinly.dev)
 
-|                 Project | Maven Central                                                                                          |
-|------------------------:|--------------------------------------------------------------------------------------------------------|
-|          refined4s-core | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-core_3)          |
-|          refined4s-cats | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-cats_3)          |
-|       refined4s-chimney | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-chimney_3)       |
-|         refined4s-circe | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-circe_3)         |
-|    refined4s-pureconfig | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-pureconfig_3)    |
-|    refined4s-doobie-ce2 | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-doobie-ce2_3)    |
-|    refined4s-doobie-ce3 | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-doobie-ce3_3)    |
-| refined4s-extras-render | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-extras-render_3) |
-|         refined4s-tapir | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-tapir_3)         |
+
+|                 Project | Maven Central                                                                                          | Scala.js | Scala Native |
+|------------------------:|--------------------------------------------------------------------------------------------------------|----------|--------------|
+|          refined4s-core | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-core_3)          | ✅        | ✅            |
+|          refined4s-cats | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-cats_3)          | ✅        | ✅            |
+|       refined4s-chimney | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-chimney_3)       | ✅        | ✅            |
+|         refined4s-circe | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-circe_3)         | ✅        | ✅            |
+|    refined4s-pureconfig | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-pureconfig_3)    | ❌        | ❌            |
+|    refined4s-doobie-ce2 | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-doobie-ce2_3)    | ❌        | ❌            |
+|    refined4s-doobie-ce3 | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-doobie-ce3_3)    | ❌        | ❌            |
+| refined4s-extras-render | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-extras-render_3) | ✅        | ✅            |
+|         refined4s-tapir | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-tapir_3)         | ✅        | ❌            |
+
 
 [![Scala.js](https://www.scala-js.org/assets/badges/scalajs-1.18.0.svg)](https://www.scala-js.org)
+[![cats-core Scala version support](https://index.scala-lang.org/kevin-lee/refined4s/refined4s-core/latest-by-scala-version.svg?platform=native0.5)](https://index.scala-lang.org/kevin-lee/refined4s/refined4s-core)
 
-Refined4s supports Scala.js.
+Refined4s also supports Scala.js and Scala Native.
+
 
 ***
 
