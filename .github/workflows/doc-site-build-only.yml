@@ -18,7 +18,7 @@ jobs:
         scala:
           - { version: "3.3.5", binary-version: "3", java-version: "17", java-distribution: "temurin" }
         node:
-          - { version: "22.17.0" }
+          - { version: "22.19.0" }
 
     steps:
       - uses: actions/checkout@v5
