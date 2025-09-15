@@ -24,17 +24,17 @@ import TabItem from '@theme/TabItem';
 
 Newtypes and Refinement types for Scala 3
 
-|                 Project | Maven Central                                                                                          | Scala.js | Scala Native |
-|------------------------:|--------------------------------------------------------------------------------------------------------|----------|--------------|
-|          refined4s-core | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-core_3)          | ✅        | ✅            |
-|          refined4s-cats | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-cats_3)          | ✅        | ✅            |
-|       refined4s-chimney | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-chimney_3)       | ✅        | ✅            |
-|         refined4s-circe | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-circe_3)         | ✅        | ✅            |
-|    refined4s-pureconfig | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-pureconfig_3)    | ❌        | ❌            |
-|    refined4s-doobie-ce2 | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-doobie-ce2_3)    | ❌        | ❌            |
-|    refined4s-doobie-ce3 | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-doobie-ce3_3)    | ❌        | ❌            |
-| refined4s-extras-render | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-extras-render_3) | ✅        | ✅            |
-|         refined4s-tapir | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-tapir_3)         | ✅        | ❌            |
+|                 Project | Maven Central                                                                                          | JVM | Scala.js | Scala Native |
+|------------------------:|--------------------------------------------------------------------------------------------------------|-----|----------|--------------|
+|          refined4s-core | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-core_3)          | ✅   | ✅        | ✅            |
+|          refined4s-cats | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-cats_3)          | ✅   | ✅        | ✅            |
+|       refined4s-chimney | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-chimney_3)       | ✅   | ✅        | ✅            |
+|         refined4s-circe | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-circe_3)         | ✅   | ✅        | ✅            |
+|    refined4s-pureconfig | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-pureconfig_3)    | ✅   | ❌        | ❌            |
+|    refined4s-doobie-ce2 | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-doobie-ce2_3)    | ✅   | ❌        | ❌            |
+|    refined4s-doobie-ce3 | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-doobie-ce3_3)    | ✅   | ❌        | ❌            |
+| refined4s-extras-render | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-extras-render_3) | ✅   | ✅        | ✅            |
+|         refined4s-tapir | ![Maven Central Version](https://img.shields.io/maven-central/v/io.kevinlee/refined4s-tapir_3)         | ✅   | ✅        | ❌            |
 
 :::info
 [![Scala.js](https://www.scala-js.org/assets/badges/scalajs-1.18.0.svg)](https://www.scala-js.org)
@@ -522,39 +522,62 @@ values={[
 In `build.sbt`,
 
 ```scala
-"io.kevinlee" %% "refined4s-core" % "@VERSION@",
-"io.kevinlee" %% "refined4s-cats" % "@VERSION@",
-"io.kevinlee" %% "refined4s-chimney" % "@VERSION@",
-"io.kevinlee" %% "refined4s-circe" % "@VERSION@",
-"io.kevinlee" %% "refined4s-pureconfig" % "@VERSION@",
-"io.kevinlee" %% "refined4s-doobie-ce2" % "@VERSION@", // Use either refined4s-doobie-ce2
-"io.kevinlee" %% "refined4s-doobie-ce3" % "@VERSION@", // OR refined4s-doobie-ce3
-"io.kevinlee" %% "refined4s-extras-render" % "@VERSION@",
-"io.kevinlee" %% "refined4s-tapir" % "@VERSION@",
-"io.kevinlee" %% "refined4s-chimney" % "@VERSION@",
+"io.kevinlee" %% "refined4s-core" % "@VERSION@"
+,
+"io.kevinlee" %% "refined4s-cats" % "@VERSION@"
+,
+"io.kevinlee" %% "refined4s-chimney" % "@VERSION@"
+,
+"io.kevinlee" %% "refined4s-circe" % "@VERSION@"
+,
+"io.kevinlee" %% "refined4s-pureconfig" % "@VERSION@"
+,
+"io.kevinlee" %% "refined4s-doobie-ce2" % "@VERSION@"
+, // Use either refined4s-doobie-ce2
+"io.kevinlee" %% "refined4s-doobie-ce3" % "@VERSION@"
+, // OR refined4s-doobie-ce3
+"io.kevinlee" %% "refined4s-extras-render" % "@VERSION@"
+,
+"io.kevinlee" %% "refined4s-tapir" % "@VERSION@"
+,
+"io.kevinlee" %% "refined4s-chimney" % "@VERSION@"
+,
 ```
 
 or for Scala.js
 
 ```scala
-"io.kevinlee" %%% "refined4s-core" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-cats" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-circe" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-tapir" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@",
+"io.kevinlee" %%% "refined4s-core" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-cats" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-circe" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-tapir" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@"
+,
 ```
 
 or for Scala Native
 
 ```scala
-"io.kevinlee" %%% "refined4s-core" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-cats" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-circe" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@",
-"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@",
+"io.kevinlee" %%% "refined4s-core" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-cats" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-circe" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-extras-render" % "@VERSION@"
+,
+"io.kevinlee" %%% "refined4s-chimney" % "@VERSION@"
+,
 ```
 
   </TabItem>
