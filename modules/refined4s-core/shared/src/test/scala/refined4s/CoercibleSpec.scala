@@ -63,7 +63,7 @@ object CoercibleSpec extends Properties {
   trait TestNewtype[A] {
     type Type
 
-    inline given unwrap: Coercible[Type, A] = Coercible.instance
+    given unwrap: Coercible[Type, A] = Coercible.instance
   }
   type TestType = TestType.Type
   object TestType extends TestNewtype[String] {

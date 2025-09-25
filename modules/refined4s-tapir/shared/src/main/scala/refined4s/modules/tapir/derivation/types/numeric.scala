@@ -8,69 +8,69 @@ import sttp.tapir.Schema
   */
 trait numeric {
 
-  inline given schemaNegInt: Schema[NegInt] = numeric.derivedNegIntSchema
+  given schemaNegInt: Schema[NegInt] = numeric.derivedNegIntSchema
 
-  inline given schemaNonNegInt: Schema[NonNegInt] = numeric.derivedNonNegIntSchema
+  given schemaNonNegInt: Schema[NonNegInt] = numeric.derivedNonNegIntSchema
 
-  inline given schemaPosInt: Schema[PosInt] = numeric.derivedPosIntSchema
+  given schemaPosInt: Schema[PosInt] = numeric.derivedPosIntSchema
 
-  inline given schemaNonPosInt: Schema[NonPosInt] = numeric.derivedNonPosIntSchema
+  given schemaNonPosInt: Schema[NonPosInt] = numeric.derivedNonPosIntSchema
 
-  inline given schemaNegLong: Schema[NegLong] = numeric.derivedNegLongSchema
+  given schemaNegLong: Schema[NegLong] = numeric.derivedNegLongSchema
 
-  inline given schemaNonNegLong: Schema[NonNegLong] = numeric.derivedNonNegLongSchema
+  given schemaNonNegLong: Schema[NonNegLong] = numeric.derivedNonNegLongSchema
 
-  inline given schemaPosLong: Schema[PosLong] = numeric.derivedPosLongSchema
+  given schemaPosLong: Schema[PosLong] = numeric.derivedPosLongSchema
 
-  inline given schemaNonPosLong: Schema[NonPosLong] = numeric.derivedNonPosLongSchema
+  given schemaNonPosLong: Schema[NonPosLong] = numeric.derivedNonPosLongSchema
 
-  inline given schemaNegShort: Schema[NegShort] = numeric.derivedNegShortSchema
+  given schemaNegShort: Schema[NegShort] = numeric.derivedNegShortSchema
 
-  inline given schemaNonNegShort: Schema[NonNegShort] = numeric.derivedNonNegShortSchema
+  given schemaNonNegShort: Schema[NonNegShort] = numeric.derivedNonNegShortSchema
 
-  inline given schemaPosShort: Schema[PosShort] = numeric.derivedPosShortSchema
+  given schemaPosShort: Schema[PosShort] = numeric.derivedPosShortSchema
 
-  inline given schemaNonPosShort: Schema[NonPosShort] = numeric.derivedNonPosShortSchema
+  given schemaNonPosShort: Schema[NonPosShort] = numeric.derivedNonPosShortSchema
 
-  inline given schemaNegByte: Schema[NegByte] = numeric.derivedNegByteSchema
+  given schemaNegByte: Schema[NegByte] = numeric.derivedNegByteSchema
 
-  inline given schemaNonNegByte: Schema[NonNegByte] = numeric.derivedNonNegByteSchema
+  given schemaNonNegByte: Schema[NonNegByte] = numeric.derivedNonNegByteSchema
 
-  inline given schemaPosByte: Schema[PosByte] = numeric.derivedPosByteSchema
+  given schemaPosByte: Schema[PosByte] = numeric.derivedPosByteSchema
 
-  inline given schemaNonPosByte: Schema[NonPosByte] = numeric.derivedNonPosByteSchema
+  given schemaNonPosByte: Schema[NonPosByte] = numeric.derivedNonPosByteSchema
 
-  inline given schemaNegFloat: Schema[NegFloat] = numeric.derivedNegFloatSchema
+  given schemaNegFloat: Schema[NegFloat] = numeric.derivedNegFloatSchema
 
-  inline given schemaNonNegFloat: Schema[NonNegFloat] = numeric.derivedNonNegFloatSchema
+  given schemaNonNegFloat: Schema[NonNegFloat] = numeric.derivedNonNegFloatSchema
 
-  inline given schemaPosFloat: Schema[PosFloat] = numeric.derivedPosFloatSchema
+  given schemaPosFloat: Schema[PosFloat] = numeric.derivedPosFloatSchema
 
-  inline given schemaNonPosFloat: Schema[NonPosFloat] = numeric.derivedNonPosFloatSchema
+  given schemaNonPosFloat: Schema[NonPosFloat] = numeric.derivedNonPosFloatSchema
 
-  inline given schemaNegDouble: Schema[NegDouble] = numeric.derivedNegDoubleSchema
+  given schemaNegDouble: Schema[NegDouble] = numeric.derivedNegDoubleSchema
 
-  inline given schemaNonNegDouble: Schema[NonNegDouble] = numeric.derivedNonNegDoubleSchema
+  given schemaNonNegDouble: Schema[NonNegDouble] = numeric.derivedNonNegDoubleSchema
 
-  inline given schemaPosDouble: Schema[PosDouble] = numeric.derivedPosDoubleSchema
+  given schemaPosDouble: Schema[PosDouble] = numeric.derivedPosDoubleSchema
 
-  inline given schemaNonPosDouble: Schema[NonPosDouble] = numeric.derivedNonPosDoubleSchema
+  given schemaNonPosDouble: Schema[NonPosDouble] = numeric.derivedNonPosDoubleSchema
 
-  inline given schemaNegBigInt: Schema[NegBigInt] = numeric.derivedNegBigIntSchema
+  given schemaNegBigInt: Schema[NegBigInt] = numeric.derivedNegBigIntSchema
 
-  inline given schemaNonNegBigInt: Schema[NonNegBigInt] = numeric.derivedNonNegBigIntSchema
+  given schemaNonNegBigInt: Schema[NonNegBigInt] = numeric.derivedNonNegBigIntSchema
 
-  inline given schemaPosBigInt: Schema[PosBigInt] = numeric.derivedPosBigIntSchema
+  given schemaPosBigInt: Schema[PosBigInt] = numeric.derivedPosBigIntSchema
 
-  inline given schemaNonPosBigInt: Schema[NonPosBigInt] = numeric.derivedNonPosBigIntSchema
+  given schemaNonPosBigInt: Schema[NonPosBigInt] = numeric.derivedNonPosBigIntSchema
 
-  inline given schemaNegBigDecimal: Schema[NegBigDecimal] = numeric.derivedNegBigDecimalSchema
+  given schemaNegBigDecimal: Schema[NegBigDecimal] = numeric.derivedNegBigDecimalSchema
 
-  inline given schemaNonNegBigDecimal: Schema[NonNegBigDecimal] = numeric.derivedNonNegBigDecimalSchema
+  given schemaNonNegBigDecimal: Schema[NonNegBigDecimal] = numeric.derivedNonNegBigDecimalSchema
 
-  inline given schemaPosBigDecimal: Schema[PosBigDecimal] = numeric.derivedPosBigDecimalSchema
+  given schemaPosBigDecimal: Schema[PosBigDecimal] = numeric.derivedPosBigDecimalSchema
 
-  inline given schemaNonPosBigDecimal: Schema[NonPosBigDecimal] = numeric.derivedNonPosBigDecimalSchema
+  given schemaNonPosBigDecimal: Schema[NonPosBigDecimal] = numeric.derivedNonPosBigDecimalSchema
 
 }
 object numeric {

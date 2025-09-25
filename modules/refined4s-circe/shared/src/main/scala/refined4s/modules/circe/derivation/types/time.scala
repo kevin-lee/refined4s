@@ -9,51 +9,51 @@ import refined4s.types.time.*
 trait time {
 
   /* Month { */
-  inline given derivedMonthEncoder: Encoder[Month] = time.derivedMonthEncoder
-  inline given derivedMonthDecoder: Decoder[Month] = time.derivedMonthDecoder
+  given derivedMonthEncoder: Encoder[Month] = time.derivedMonthEncoder
+  given derivedMonthDecoder: Decoder[Month] = time.derivedMonthDecoder
 
-  inline given derivedMonthKeyEncoder: KeyEncoder[Month] = time.derivedMonthKeyEncoder
-  inline given derivedMonthKeyDecoder: KeyDecoder[Month] = time.derivedMonthKeyDecoder
+  given derivedMonthKeyEncoder: KeyEncoder[Month] = time.derivedMonthKeyEncoder
+  given derivedMonthKeyDecoder: KeyDecoder[Month] = time.derivedMonthKeyDecoder
   /* } Month */
 
   /* Day { */
-  inline given derivedDayEncoder: Encoder[Day] = time.derivedDayEncoder
-  inline given derivedDayDecoder: Decoder[Day] = time.derivedDayDecoder
+  given derivedDayEncoder: Encoder[Day] = time.derivedDayEncoder
+  given derivedDayDecoder: Decoder[Day] = time.derivedDayDecoder
 
-  inline given derivedDayKeyEncoder: KeyEncoder[Day] = time.derivedDayKeyEncoder
-  inline given derivedDayKeyDecoder: KeyDecoder[Day] = time.derivedDayKeyDecoder
+  given derivedDayKeyEncoder: KeyEncoder[Day] = time.derivedDayKeyEncoder
+  given derivedDayKeyDecoder: KeyDecoder[Day] = time.derivedDayKeyDecoder
   /* } Day */
 
   /* Hour { */
-  inline given derivedHourEncoder: Encoder[Hour] = time.derivedHourEncoder
-  inline given derivedHourDecoder: Decoder[Hour] = time.derivedHourDecoder
+  given derivedHourEncoder: Encoder[Hour] = time.derivedHourEncoder
+  given derivedHourDecoder: Decoder[Hour] = time.derivedHourDecoder
 
-  inline given derivedHourKeyEncoder: KeyEncoder[Hour] = time.derivedHourKeyEncoder
-  inline given derivedHourKeyDecoder: KeyDecoder[Hour] = time.derivedHourKeyDecoder
+  given derivedHourKeyEncoder: KeyEncoder[Hour] = time.derivedHourKeyEncoder
+  given derivedHourKeyDecoder: KeyDecoder[Hour] = time.derivedHourKeyDecoder
   /* } Hour */
 
   /* Minute { */
-  inline given derivedMinuteEncoder: Encoder[Minute] = time.derivedMinuteEncoder
-  inline given derivedMinuteDecoder: Decoder[Minute] = time.derivedMinuteDecoder
+  given derivedMinuteEncoder: Encoder[Minute] = time.derivedMinuteEncoder
+  given derivedMinuteDecoder: Decoder[Minute] = time.derivedMinuteDecoder
 
-  inline given derivedMinuteKeyEncoder: KeyEncoder[Minute] = time.derivedMinuteKeyEncoder
-  inline given derivedMinuteKeyDecoder: KeyDecoder[Minute] = time.derivedMinuteKeyDecoder
+  given derivedMinuteKeyEncoder: KeyEncoder[Minute] = time.derivedMinuteKeyEncoder
+  given derivedMinuteKeyDecoder: KeyDecoder[Minute] = time.derivedMinuteKeyDecoder
   /* } Minute */
 
   /* Second { */
-  inline given derivedSecondEncoder: Encoder[Second] = time.derivedSecondEncoder
-  inline given derivedSecondDecoder: Decoder[Second] = time.derivedSecondDecoder
+  given derivedSecondEncoder: Encoder[Second] = time.derivedSecondEncoder
+  given derivedSecondDecoder: Decoder[Second] = time.derivedSecondDecoder
 
-  inline given derivedSecondKeyEncoder: KeyEncoder[Second] = time.derivedSecondKeyEncoder
-  inline given derivedSecondKeyDecoder: KeyDecoder[Second] = time.derivedSecondKeyDecoder
+  given derivedSecondKeyEncoder: KeyEncoder[Second] = time.derivedSecondKeyEncoder
+  given derivedSecondKeyDecoder: KeyDecoder[Second] = time.derivedSecondKeyDecoder
   /* } Second */
 
   /* Millis { */
-  inline given derivedMillisEncoder: Encoder[Millis] = time.derivedMillisEncoder
-  inline given derivedMillisDecoder: Decoder[Millis] = time.derivedMillisDecoder
+  given derivedMillisEncoder: Encoder[Millis] = time.derivedMillisEncoder
+  given derivedMillisDecoder: Decoder[Millis] = time.derivedMillisDecoder
 
-  inline given derivedMillisKeyEncoder: KeyEncoder[Millis] = time.derivedMillisKeyEncoder
-  inline given derivedMillisKeyDecoder: KeyDecoder[Millis] = time.derivedMillisKeyDecoder
+  given derivedMillisKeyEncoder: KeyEncoder[Millis] = time.derivedMillisKeyEncoder
+  given derivedMillisKeyDecoder: KeyDecoder[Millis] = time.derivedMillisKeyDecoder
   /* } Millis */
 }
 object time {

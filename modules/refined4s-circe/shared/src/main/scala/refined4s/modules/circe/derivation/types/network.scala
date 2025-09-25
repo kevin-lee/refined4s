@@ -10,53 +10,53 @@ import refined4s.types.all.*
 trait network {
 
   /* Uri */
-  inline given derivedUriEncoder: Encoder[Uri] = network.derivedUriEncoder
-  inline given derivedUriDecoder: Decoder[Uri] = network.derivedUriDecoder
+  given derivedUriEncoder: Encoder[Uri] = network.derivedUriEncoder
+  given derivedUriDecoder: Decoder[Uri] = network.derivedUriDecoder
 
-  inline given derivedUriKeyEncoder: KeyEncoder[Uri] = network.derivedUriKeyEncoder
-  inline given derivedUriKeyDecoder: KeyDecoder[Uri] = network.derivedUriKeyDecoder
+  given derivedUriKeyEncoder: KeyEncoder[Uri] = network.derivedUriKeyEncoder
+  given derivedUriKeyDecoder: KeyDecoder[Uri] = network.derivedUriKeyDecoder
 
   /* Url */
-  inline given derivedUrlEncoder: Encoder[Url] = network.derivedUrlEncoder
-  inline given derivedUrlDecoder: Decoder[Url] = network.derivedUrlDecoder
+  given derivedUrlEncoder: Encoder[Url] = network.derivedUrlEncoder
+  given derivedUrlDecoder: Decoder[Url] = network.derivedUrlDecoder
 
-  inline given derivedUrlKeyEncoder: KeyEncoder[Url] = network.derivedUrlKeyEncoder
-  inline given derivedUrlKeyDecoder: KeyDecoder[Url] = network.derivedUrlKeyDecoder
+  given derivedUrlKeyEncoder: KeyEncoder[Url] = network.derivedUrlKeyEncoder
+  given derivedUrlKeyDecoder: KeyDecoder[Url] = network.derivedUrlKeyDecoder
 
   /* PortNumber */
-  inline given derivedPortNumberEncoder: Encoder[PortNumber] = network.derivedPortNumberEncoder
-  inline given derivedPortNumberDecoder: Decoder[PortNumber] = network.derivedPortNumberDecoder
+  given derivedPortNumberEncoder: Encoder[PortNumber] = network.derivedPortNumberEncoder
+  given derivedPortNumberDecoder: Decoder[PortNumber] = network.derivedPortNumberDecoder
 
-  inline given derivedPortNumberKeyEncoder: KeyEncoder[PortNumber] = network.derivedPortNumberKeyEncoder
-  inline given derivedPortNumberKeyDecoder: KeyDecoder[PortNumber] = network.derivedPortNumberKeyDecoder
+  given derivedPortNumberKeyEncoder: KeyEncoder[PortNumber] = network.derivedPortNumberKeyEncoder
+  given derivedPortNumberKeyDecoder: KeyDecoder[PortNumber] = network.derivedPortNumberKeyDecoder
 
   /* SystemPortNumber */
-  inline given derivedSystemPortNumberEncoder: Encoder[SystemPortNumber] = network.derivedSystemPortNumberEncoder
-  inline given derivedSystemPortNumberDecoder: Decoder[SystemPortNumber] = network.derivedSystemPortNumberDecoder
+  given derivedSystemPortNumberEncoder: Encoder[SystemPortNumber] = network.derivedSystemPortNumberEncoder
+  given derivedSystemPortNumberDecoder: Decoder[SystemPortNumber] = network.derivedSystemPortNumberDecoder
 
-  inline given derivedSystemPortNumberKeyEncoder: KeyEncoder[SystemPortNumber] = network.derivedSystemPortNumberKeyEncoder
-  inline given derivedSystemPortNumberKeyDecoder: KeyDecoder[SystemPortNumber] = network.derivedSystemPortNumberKeyDecoder
+  given derivedSystemPortNumberKeyEncoder: KeyEncoder[SystemPortNumber] = network.derivedSystemPortNumberKeyEncoder
+  given derivedSystemPortNumberKeyDecoder: KeyDecoder[SystemPortNumber] = network.derivedSystemPortNumberKeyDecoder
 
   /* NonSystemPortNumber */
-  inline given derivedNonSystemPortNumberEncoder: Encoder[NonSystemPortNumber] = network.derivedNonSystemPortNumberEncoder
-  inline given derivedNonSystemPortNumberDecoder: Decoder[NonSystemPortNumber] = network.derivedNonSystemPortNumberDecoder
+  given derivedNonSystemPortNumberEncoder: Encoder[NonSystemPortNumber] = network.derivedNonSystemPortNumberEncoder
+  given derivedNonSystemPortNumberDecoder: Decoder[NonSystemPortNumber] = network.derivedNonSystemPortNumberDecoder
 
-  inline given derivedNonSystemPortNumberKeyEncoder: KeyEncoder[NonSystemPortNumber] = network.derivedNonSystemPortNumberKeyEncoder
-  inline given derivedNonSystemPortNumberKeyDecoder: KeyDecoder[NonSystemPortNumber] = network.derivedNonSystemPortNumberKeyDecoder
+  given derivedNonSystemPortNumberKeyEncoder: KeyEncoder[NonSystemPortNumber] = network.derivedNonSystemPortNumberKeyEncoder
+  given derivedNonSystemPortNumberKeyDecoder: KeyDecoder[NonSystemPortNumber] = network.derivedNonSystemPortNumberKeyDecoder
 
   /* UserPortNumber */
-  inline given derivedUserPortNumberEncoder: Encoder[UserPortNumber] = network.derivedUserPortNumberEncoder
-  inline given derivedUserPortNumberDecoder: Decoder[UserPortNumber] = network.derivedUserPortNumberDecoder
+  given derivedUserPortNumberEncoder: Encoder[UserPortNumber] = network.derivedUserPortNumberEncoder
+  given derivedUserPortNumberDecoder: Decoder[UserPortNumber] = network.derivedUserPortNumberDecoder
 
-  inline given derivedUserPortNumberKeyEncoder: KeyEncoder[UserPortNumber] = network.derivedUserPortNumberKeyEncoder
-  inline given derivedUserPortNumberKeyDecoder: KeyDecoder[UserPortNumber] = network.derivedUserPortNumberKeyDecoder
+  given derivedUserPortNumberKeyEncoder: KeyEncoder[UserPortNumber] = network.derivedUserPortNumberKeyEncoder
+  given derivedUserPortNumberKeyDecoder: KeyDecoder[UserPortNumber] = network.derivedUserPortNumberKeyDecoder
 
   /* DynamicPortNumber */
-  inline given derivedDynamicPortNumberEncoder: Encoder[DynamicPortNumber] = network.derivedDynamicPortNumberEncoder
-  inline given derivedDynamicPortNumberDecoder: Decoder[DynamicPortNumber] = network.derivedDynamicPortNumberDecoder
+  given derivedDynamicPortNumberEncoder: Encoder[DynamicPortNumber] = network.derivedDynamicPortNumberEncoder
+  given derivedDynamicPortNumberDecoder: Decoder[DynamicPortNumber] = network.derivedDynamicPortNumberDecoder
 
-  inline given derivedDynamicPortNumberKeyEncoder: KeyEncoder[DynamicPortNumber] = network.derivedDynamicPortNumberKeyEncoder
-  inline given derivedDynamicPortNumberKeyDecoder: KeyDecoder[DynamicPortNumber] = network.derivedDynamicPortNumberKeyDecoder
+  given derivedDynamicPortNumberKeyEncoder: KeyEncoder[DynamicPortNumber] = network.derivedDynamicPortNumberKeyEncoder
+  given derivedDynamicPortNumberKeyDecoder: KeyDecoder[DynamicPortNumber] = network.derivedDynamicPortNumberKeyDecoder
 
 }
 object network {

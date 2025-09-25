@@ -8,23 +8,23 @@ import refined4s.types.time.*
   */
 trait time {
 
-  inline given derivedMonthConfigReader: ConfigReader[Month] = time.derivedMonthConfigReader
-  inline given derivedMonthConfigWriter: ConfigWriter[Month] = time.derivedMonthConfigWriter
+  given derivedMonthConfigReader: ConfigReader[Month] = time.derivedMonthConfigReader
+  given derivedMonthConfigWriter: ConfigWriter[Month] = time.derivedMonthConfigWriter
 
-  inline given derivedDayConfigReader: ConfigReader[Day] = time.derivedDayConfigReader
-  inline given derivedDayConfigWriter: ConfigWriter[Day] = time.derivedDayConfigWriter
+  given derivedDayConfigReader: ConfigReader[Day] = time.derivedDayConfigReader
+  given derivedDayConfigWriter: ConfigWriter[Day] = time.derivedDayConfigWriter
 
-  inline given derivedHourConfigReader: ConfigReader[Hour] = time.derivedHourConfigReader
-  inline given derivedHourConfigWriter: ConfigWriter[Hour] = time.derivedHourConfigWriter
+  given derivedHourConfigReader: ConfigReader[Hour] = time.derivedHourConfigReader
+  given derivedHourConfigWriter: ConfigWriter[Hour] = time.derivedHourConfigWriter
 
-  inline given derivedMinuteConfigReader: ConfigReader[Minute] = time.derivedMinuteConfigReader
-  inline given derivedMinuteConfigWriter: ConfigWriter[Minute] = time.derivedMinuteConfigWriter
+  given derivedMinuteConfigReader: ConfigReader[Minute] = time.derivedMinuteConfigReader
+  given derivedMinuteConfigWriter: ConfigWriter[Minute] = time.derivedMinuteConfigWriter
 
-  inline given derivedSecondConfigReader: ConfigReader[Second] = time.derivedSecondConfigReader
-  inline given derivedSecondConfigWriter: ConfigWriter[Second] = time.derivedSecondConfigWriter
+  given derivedSecondConfigReader: ConfigReader[Second] = time.derivedSecondConfigReader
+  given derivedSecondConfigWriter: ConfigWriter[Second] = time.derivedSecondConfigWriter
 
-  inline given derivedMillisConfigReader: ConfigReader[Millis] = time.derivedMillisConfigReader
-  inline given derivedMillisConfigWriter: ConfigWriter[Millis] = time.derivedMillisConfigWriter
+  given derivedMillisConfigReader: ConfigReader[Millis] = time.derivedMillisConfigReader
+  given derivedMillisConfigWriter: ConfigWriter[Millis] = time.derivedMillisConfigWriter
 
 }
 object time {

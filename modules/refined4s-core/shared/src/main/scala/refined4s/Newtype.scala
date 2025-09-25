@@ -14,9 +14,9 @@ trait Newtype[@specialized A] extends NewtypeBase[A] {
    */
   def unapply(typ: Type): Some[A] = Some(typ)
 
-  inline given wrap: Coercible[A, Type] = Coercible.instance
+  given wrap: Coercible[A, Type] = Coercible.instance
 
-  inline given wrapTC[F[*]]: Coercible[F[A], F[Type]] = Coercible.instance
+  given wrapTC[F[*]]: Coercible[F[A], F[Type]] = Coercible.instance
 
   extension (typ: Type) {
     override inline def value: A = typ

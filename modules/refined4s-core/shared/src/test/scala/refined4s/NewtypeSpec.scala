@@ -14,6 +14,10 @@ object NewtypeSpec extends Properties {
     example("""Newtype("blah") should be equal to Newtype("blah")""", testApply),
     property("test Newtype.value", testValue),
     property("test Newtype.unapply", testUnapplyWithPatternMatching),
+    property("test Newtype.wrap", testWrap),
+    property("test Newtype.wrapTC", testWrapTC),
+    property("test Newtype.unwrap", testUnwrap),
+    property("test Newtype.unwrapTC", testUnwrapTC),
   )
 
   def testApply: Result = {
@@ -42,6 +46,66 @@ object NewtypeSpec extends Properties {
         case MyType(actual) =>
           actual ==== expected
       }
+    }
+
+  def testWrap: Property =
+    for {
+      s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+    } yield {
+      val myType   = MyType(s)
+      val expected = myType
+
+      def wrapIt[A, B](a: A)(using coercible: Coercible[A, B]): B =
+        coercible(a)
+
+      val actual = wrapIt[String, MyType](s)
+
+      actual ==== expected
+    }
+
+  def testWrapTC: Property =
+    for {
+      s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+    } yield {
+      val myType   = MyType(s)
+      val expected = myType.some
+
+      def wrapIt[F[*], A, B](fa: F[A])(using coercible: Coercible[F[A], F[B]]): F[B] =
+        coercible(fa)
+
+      val actual = wrapIt[Option, String, MyType](s.some)
+
+      actual ==== expected
+    }
+
+  def testUnwrap: Property =
+    for {
+      s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+    } yield {
+      val expected = s
+      val myType   = MyType(s)
+
+      def unwrapIt[A, B](a: A)(using coercible: Coercible[A, B]): B =
+        coercible(a)
+
+      val actual = unwrapIt(myType)
+
+      actual ==== expected
+    }
+
+  def testUnwrapTC: Property =
+    for {
+      s <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s")
+    } yield {
+      val expected = s.some
+      val myType   = MyType(s)
+
+      def unwrapIt[F[*], A, B](fa: F[A])(using coercible: Coercible[F[A], F[B]]): F[B] =
+        coercible(fa)
+
+      val actual = unwrapIt(myType.some)
+
+      actual ==== expected
     }
 
   type MyType = MyType.Type

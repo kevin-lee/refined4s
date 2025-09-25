@@ -10,101 +10,101 @@ import refined4s.types.numeric.*
   */
 trait numeric {
 
-  inline given derivedNegIntConfigReader: ConfigReader[NegInt] = numeric.derivedNegIntConfigReader
-  inline given derivedNegIntConfigWriter: ConfigWriter[NegInt] = numeric.derivedNegIntConfigWriter
+  given derivedNegIntConfigReader: ConfigReader[NegInt] = numeric.derivedNegIntConfigReader
+  given derivedNegIntConfigWriter: ConfigWriter[NegInt] = numeric.derivedNegIntConfigWriter
 
-  inline given derivedNonNegIntConfigReader: ConfigReader[NonNegInt] = numeric.derivedNonNegIntConfigReader
-  inline given derivedNonNegIntConfigWriter: ConfigWriter[NonNegInt] = numeric.derivedNonNegIntConfigWriter
+  given derivedNonNegIntConfigReader: ConfigReader[NonNegInt] = numeric.derivedNonNegIntConfigReader
+  given derivedNonNegIntConfigWriter: ConfigWriter[NonNegInt] = numeric.derivedNonNegIntConfigWriter
 
-  inline given derivedPosIntConfigReader: ConfigReader[PosInt] = numeric.derivedPosIntConfigReader
-  inline given derivedPosIntConfigWriter: ConfigWriter[PosInt] = numeric.derivedPosIntConfigWriter
+  given derivedPosIntConfigReader: ConfigReader[PosInt] = numeric.derivedPosIntConfigReader
+  given derivedPosIntConfigWriter: ConfigWriter[PosInt] = numeric.derivedPosIntConfigWriter
 
-  inline given derivedNonPosIntConfigReader: ConfigReader[NonPosInt] = numeric.derivedNonPosIntConfigReader
-  inline given derivedNonPosIntConfigWriter: ConfigWriter[NonPosInt] = numeric.derivedNonPosIntConfigWriter
+  given derivedNonPosIntConfigReader: ConfigReader[NonPosInt] = numeric.derivedNonPosIntConfigReader
+  given derivedNonPosIntConfigWriter: ConfigWriter[NonPosInt] = numeric.derivedNonPosIntConfigWriter
 
-  inline given derivedNegLongConfigReader: ConfigReader[NegLong] = numeric.derivedNegLongConfigReader
-  inline given derivedNegLongConfigWriter: ConfigWriter[NegLong] = numeric.derivedNegLongConfigWriter
+  given derivedNegLongConfigReader: ConfigReader[NegLong] = numeric.derivedNegLongConfigReader
+  given derivedNegLongConfigWriter: ConfigWriter[NegLong] = numeric.derivedNegLongConfigWriter
 
-  inline given derivedNonNegLongConfigReader: ConfigReader[NonNegLong] = numeric.derivedNonNegLongConfigReader
-  inline given derivedNonNegLongConfigWriter: ConfigWriter[NonNegLong] = numeric.derivedNonNegLongConfigWriter
+  given derivedNonNegLongConfigReader: ConfigReader[NonNegLong] = numeric.derivedNonNegLongConfigReader
+  given derivedNonNegLongConfigWriter: ConfigWriter[NonNegLong] = numeric.derivedNonNegLongConfigWriter
 
-  inline given derivedPosLongConfigReader: ConfigReader[PosLong] = numeric.derivedPosLongConfigReader
-  inline given derivedPosLongConfigWriter: ConfigWriter[PosLong] = numeric.derivedPosLongConfigWriter
+  given derivedPosLongConfigReader: ConfigReader[PosLong] = numeric.derivedPosLongConfigReader
+  given derivedPosLongConfigWriter: ConfigWriter[PosLong] = numeric.derivedPosLongConfigWriter
 
-  inline given derivedNonPosLongConfigReader: ConfigReader[NonPosLong] = numeric.derivedNonPosLongConfigReader
-  inline given derivedNonPosLongConfigWriter: ConfigWriter[NonPosLong] = numeric.derivedNonPosLongConfigWriter
+  given derivedNonPosLongConfigReader: ConfigReader[NonPosLong] = numeric.derivedNonPosLongConfigReader
+  given derivedNonPosLongConfigWriter: ConfigWriter[NonPosLong] = numeric.derivedNonPosLongConfigWriter
 
-  inline given derivedNegShortConfigReader: ConfigReader[NegShort] = numeric.derivedNegShortConfigReader
-  inline given derivedNegShortConfigWriter: ConfigWriter[NegShort] = numeric.derivedNegShortConfigWriter
+  given derivedNegShortConfigReader: ConfigReader[NegShort] = numeric.derivedNegShortConfigReader
+  given derivedNegShortConfigWriter: ConfigWriter[NegShort] = numeric.derivedNegShortConfigWriter
 
-  inline given derivedNonNegShortConfigReader: ConfigReader[NonNegShort] = numeric.derivedNonNegShortConfigReader
-  inline given derivedNonNegShortConfigWriter: ConfigWriter[NonNegShort] = numeric.derivedNonNegShortConfigWriter
+  given derivedNonNegShortConfigReader: ConfigReader[NonNegShort] = numeric.derivedNonNegShortConfigReader
+  given derivedNonNegShortConfigWriter: ConfigWriter[NonNegShort] = numeric.derivedNonNegShortConfigWriter
 
-  inline given derivedPosShortConfigReader: ConfigReader[PosShort] = numeric.derivedPosShortConfigReader
-  inline given derivedPosShortConfigWriter: ConfigWriter[PosShort] = numeric.derivedPosShortConfigWriter
+  given derivedPosShortConfigReader: ConfigReader[PosShort] = numeric.derivedPosShortConfigReader
+  given derivedPosShortConfigWriter: ConfigWriter[PosShort] = numeric.derivedPosShortConfigWriter
 
-  inline given derivedNonPosShortConfigReader: ConfigReader[NonPosShort] = numeric.derivedNonPosShortConfigReader
-  inline given derivedNonPosShortConfigWriter: ConfigWriter[NonPosShort] = numeric.derivedNonPosShortConfigWriter
+  given derivedNonPosShortConfigReader: ConfigReader[NonPosShort] = numeric.derivedNonPosShortConfigReader
+  given derivedNonPosShortConfigWriter: ConfigWriter[NonPosShort] = numeric.derivedNonPosShortConfigWriter
 
-  inline given derivedNegByteConfigReader: ConfigReader[NegByte] = numeric.derivedNegByteConfigReader
-  inline given derivedNegByteConfigWriter: ConfigWriter[NegByte] = numeric.derivedNegByteConfigWriter
+  given derivedNegByteConfigReader: ConfigReader[NegByte] = numeric.derivedNegByteConfigReader
+  given derivedNegByteConfigWriter: ConfigWriter[NegByte] = numeric.derivedNegByteConfigWriter
 
-  inline given derivedNonNegByteConfigReader: ConfigReader[NonNegByte] = numeric.derivedNonNegByteConfigReader
-  inline given derivedNonNegByteConfigWriter: ConfigWriter[NonNegByte] = numeric.derivedNonNegByteConfigWriter
+  given derivedNonNegByteConfigReader: ConfigReader[NonNegByte] = numeric.derivedNonNegByteConfigReader
+  given derivedNonNegByteConfigWriter: ConfigWriter[NonNegByte] = numeric.derivedNonNegByteConfigWriter
 
-  inline given derivedPosByteConfigReader: ConfigReader[PosByte] = numeric.derivedPosByteConfigReader
-  inline given derivedPosByteConfigWriter: ConfigWriter[PosByte] = numeric.derivedPosByteConfigWriter
+  given derivedPosByteConfigReader: ConfigReader[PosByte] = numeric.derivedPosByteConfigReader
+  given derivedPosByteConfigWriter: ConfigWriter[PosByte] = numeric.derivedPosByteConfigWriter
 
-  inline given derivedNonPosByteConfigReader: ConfigReader[NonPosByte] = numeric.derivedNonPosByteConfigReader
-  inline given derivedNonPosByteConfigWriter: ConfigWriter[NonPosByte] = numeric.derivedNonPosByteConfigWriter
+  given derivedNonPosByteConfigReader: ConfigReader[NonPosByte] = numeric.derivedNonPosByteConfigReader
+  given derivedNonPosByteConfigWriter: ConfigWriter[NonPosByte] = numeric.derivedNonPosByteConfigWriter
 
-  inline given derivedNegFloatConfigReader: ConfigReader[NegFloat] = numeric.derivedNegFloatConfigReader
-  inline given derivedNegFloatConfigWriter: ConfigWriter[NegFloat] = numeric.derivedNegFloatConfigWriter
+  given derivedNegFloatConfigReader: ConfigReader[NegFloat] = numeric.derivedNegFloatConfigReader
+  given derivedNegFloatConfigWriter: ConfigWriter[NegFloat] = numeric.derivedNegFloatConfigWriter
 
-  inline given derivedNonNegFloatConfigReader: ConfigReader[NonNegFloat] = numeric.derivedNonNegFloatConfigReader
-  inline given derivedNonNegFloatConfigWriter: ConfigWriter[NonNegFloat] = numeric.derivedNonNegFloatConfigWriter
+  given derivedNonNegFloatConfigReader: ConfigReader[NonNegFloat] = numeric.derivedNonNegFloatConfigReader
+  given derivedNonNegFloatConfigWriter: ConfigWriter[NonNegFloat] = numeric.derivedNonNegFloatConfigWriter
 
-  inline given derivedPosFloatConfigReader: ConfigReader[PosFloat] = numeric.derivedPosFloatConfigReader
-  inline given derivedPosFloatConfigWriter: ConfigWriter[PosFloat] = numeric.derivedPosFloatConfigWriter
+  given derivedPosFloatConfigReader: ConfigReader[PosFloat] = numeric.derivedPosFloatConfigReader
+  given derivedPosFloatConfigWriter: ConfigWriter[PosFloat] = numeric.derivedPosFloatConfigWriter
 
-  inline given derivedNonPosFloatConfigReader: ConfigReader[NonPosFloat] = numeric.derivedNonPosFloatConfigReader
-  inline given derivedNonPosFloatConfigWriter: ConfigWriter[NonPosFloat] = numeric.derivedNonPosFloatConfigWriter
+  given derivedNonPosFloatConfigReader: ConfigReader[NonPosFloat] = numeric.derivedNonPosFloatConfigReader
+  given derivedNonPosFloatConfigWriter: ConfigWriter[NonPosFloat] = numeric.derivedNonPosFloatConfigWriter
 
-  inline given derivedNegDoubleConfigReader: ConfigReader[NegDouble] = numeric.derivedNegDoubleConfigReader
-  inline given derivedNegDoubleConfigWriter: ConfigWriter[NegDouble] = numeric.derivedNegDoubleConfigWriter
+  given derivedNegDoubleConfigReader: ConfigReader[NegDouble] = numeric.derivedNegDoubleConfigReader
+  given derivedNegDoubleConfigWriter: ConfigWriter[NegDouble] = numeric.derivedNegDoubleConfigWriter
 
-  inline given derivedNonNegDoubleConfigReader: ConfigReader[NonNegDouble] = numeric.derivedNonNegDoubleConfigReader
-  inline given derivedNonNegDoubleConfigWriter: ConfigWriter[NonNegDouble] = numeric.derivedNonNegDoubleConfigWriter
+  given derivedNonNegDoubleConfigReader: ConfigReader[NonNegDouble] = numeric.derivedNonNegDoubleConfigReader
+  given derivedNonNegDoubleConfigWriter: ConfigWriter[NonNegDouble] = numeric.derivedNonNegDoubleConfigWriter
 
-  inline given derivedPosDoubleConfigReader: ConfigReader[PosDouble] = numeric.derivedPosDoubleConfigReader
-  inline given derivedPosDoubleConfigWriter: ConfigWriter[PosDouble] = numeric.derivedPosDoubleConfigWriter
+  given derivedPosDoubleConfigReader: ConfigReader[PosDouble] = numeric.derivedPosDoubleConfigReader
+  given derivedPosDoubleConfigWriter: ConfigWriter[PosDouble] = numeric.derivedPosDoubleConfigWriter
 
-  inline given derivedNonPosDoubleConfigReader: ConfigReader[NonPosDouble] = numeric.derivedNonPosDoubleConfigReader
-  inline given derivedNonPosDoubleConfigWriter: ConfigWriter[NonPosDouble] = numeric.derivedNonPosDoubleConfigWriter
+  given derivedNonPosDoubleConfigReader: ConfigReader[NonPosDouble] = numeric.derivedNonPosDoubleConfigReader
+  given derivedNonPosDoubleConfigWriter: ConfigWriter[NonPosDouble] = numeric.derivedNonPosDoubleConfigWriter
 
-  inline given derivedNegBigIntConfigReader: ConfigReader[NegBigInt] = numeric.derivedNegBigIntConfigReader
-  inline given derivedNegBigIntConfigWriter: ConfigWriter[NegBigInt] = numeric.derivedNegBigIntConfigWriter
+  given derivedNegBigIntConfigReader: ConfigReader[NegBigInt] = numeric.derivedNegBigIntConfigReader
+  given derivedNegBigIntConfigWriter: ConfigWriter[NegBigInt] = numeric.derivedNegBigIntConfigWriter
 
-  inline given derivedNonNegBigIntConfigReader: ConfigReader[NonNegBigInt] = numeric.derivedNonNegBigIntConfigReader
-  inline given derivedNonNegBigIntConfigWriter: ConfigWriter[NonNegBigInt] = numeric.derivedNonNegBigIntConfigWriter
+  given derivedNonNegBigIntConfigReader: ConfigReader[NonNegBigInt] = numeric.derivedNonNegBigIntConfigReader
+  given derivedNonNegBigIntConfigWriter: ConfigWriter[NonNegBigInt] = numeric.derivedNonNegBigIntConfigWriter
 
-  inline given derivedPosBigIntConfigReader: ConfigReader[PosBigInt] = numeric.derivedPosBigIntConfigReader
-  inline given derivedPosBigIntConfigWriter: ConfigWriter[PosBigInt] = numeric.derivedPosBigIntConfigWriter
+  given derivedPosBigIntConfigReader: ConfigReader[PosBigInt] = numeric.derivedPosBigIntConfigReader
+  given derivedPosBigIntConfigWriter: ConfigWriter[PosBigInt] = numeric.derivedPosBigIntConfigWriter
 
-  inline given derivedNonPosBigIntConfigReader: ConfigReader[NonPosBigInt] = numeric.derivedNonPosBigIntConfigReader
-  inline given derivedNonPosBigIntConfigWriter: ConfigWriter[NonPosBigInt] = numeric.derivedNonPosBigIntConfigWriter
+  given derivedNonPosBigIntConfigReader: ConfigReader[NonPosBigInt] = numeric.derivedNonPosBigIntConfigReader
+  given derivedNonPosBigIntConfigWriter: ConfigWriter[NonPosBigInt] = numeric.derivedNonPosBigIntConfigWriter
 
-  inline given derivedNegBigDecimalConfigReader: ConfigReader[NegBigDecimal] = numeric.derivedNegBigDecimalConfigReader
-  inline given derivedNegBigDecimalConfigWriter: ConfigWriter[NegBigDecimal] = numeric.derivedNegBigDecimalConfigWriter
+  given derivedNegBigDecimalConfigReader: ConfigReader[NegBigDecimal] = numeric.derivedNegBigDecimalConfigReader
+  given derivedNegBigDecimalConfigWriter: ConfigWriter[NegBigDecimal] = numeric.derivedNegBigDecimalConfigWriter
 
-  inline given derivedNonNegBigDecimalConfigReader: ConfigReader[NonNegBigDecimal] = numeric.derivedNonNegBigDecimalConfigReader
-  inline given derivedNonNegBigDecimalConfigWriter: ConfigWriter[NonNegBigDecimal] = numeric.derivedNonNegBigDecimalConfigWriter
+  given derivedNonNegBigDecimalConfigReader: ConfigReader[NonNegBigDecimal] = numeric.derivedNonNegBigDecimalConfigReader
+  given derivedNonNegBigDecimalConfigWriter: ConfigWriter[NonNegBigDecimal] = numeric.derivedNonNegBigDecimalConfigWriter
 
-  inline given derivedPosBigDecimalConfigReader: ConfigReader[PosBigDecimal] = numeric.derivedPosBigDecimalConfigReader
-  inline given derivedPosBigDecimalConfigWriter: ConfigWriter[PosBigDecimal] = numeric.derivedPosBigDecimalConfigWriter
+  given derivedPosBigDecimalConfigReader: ConfigReader[PosBigDecimal] = numeric.derivedPosBigDecimalConfigReader
+  given derivedPosBigDecimalConfigWriter: ConfigWriter[PosBigDecimal] = numeric.derivedPosBigDecimalConfigWriter
 
-  inline given derivedNonPosBigDecimalConfigReader: ConfigReader[NonPosBigDecimal] = numeric.derivedNonPosBigDecimalConfigReader
-  inline given derivedNonPosBigDecimalConfigWriter: ConfigWriter[NonPosBigDecimal] = numeric.derivedNonPosBigDecimalConfigWriter
+  given derivedNonPosBigDecimalConfigReader: ConfigReader[NonPosBigDecimal] = numeric.derivedNonPosBigDecimalConfigReader
+  given derivedNonPosBigDecimalConfigWriter: ConfigWriter[NonPosBigDecimal] = numeric.derivedNonPosBigDecimalConfigWriter
 
 }
 object numeric {

@@ -9,19 +9,19 @@ import refined4s.types.network.*
   */
 trait network {
 
-  inline given derivedUriRender: Render[Uri] = network.derivedUriRender
+  given derivedUriRender: Render[Uri] = network.derivedUriRender
 
-  inline given derivedUrlRender: Render[Url] = network.derivedUrlRender
+  given derivedUrlRender: Render[Url] = network.derivedUrlRender
 
-  inline given derivedPortNumberRender: Render[PortNumber] = network.derivedPortNumberRender
+  given derivedPortNumberRender: Render[PortNumber] = network.derivedPortNumberRender
 
-  inline given derivedSystemPortNumberRender: Render[SystemPortNumber] = network.derivedSystemPortNumberRender
+  given derivedSystemPortNumberRender: Render[SystemPortNumber] = network.derivedSystemPortNumberRender
 
-  inline given derivedNonSystemPortNumberRender: Render[NonSystemPortNumber] = network.derivedNonSystemPortNumberRender
+  given derivedNonSystemPortNumberRender: Render[NonSystemPortNumber] = network.derivedNonSystemPortNumberRender
 
-  inline given derivedUserPortNumberRender: Render[UserPortNumber] = network.derivedUserPortNumberRender
+  given derivedUserPortNumberRender: Render[UserPortNumber] = network.derivedUserPortNumberRender
 
-  inline given derivedDynamicPortNumberRender: Render[DynamicPortNumber] = network.derivedDynamicPortNumberRender
+  given derivedDynamicPortNumberRender: Render[DynamicPortNumber] = network.derivedDynamicPortNumberRender
 
 }
 object network {

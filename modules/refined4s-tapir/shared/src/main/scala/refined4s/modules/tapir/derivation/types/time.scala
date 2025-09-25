@@ -8,17 +8,17 @@ import refined4s.types.time.*
   */
 trait time {
 
-  inline given derivedMonthSchema: Schema[Month] = time.derivedMonthSchema
+  given derivedMonthSchema: Schema[Month] = time.derivedMonthSchema
 
-  inline given derivedDaySchema: Schema[Day] = time.derivedDaySchema
+  given derivedDaySchema: Schema[Day] = time.derivedDaySchema
 
-  inline given derivedHourSchema: Schema[Hour] = time.derivedHourSchema
+  given derivedHourSchema: Schema[Hour] = time.derivedHourSchema
 
-  inline given derivedMinuteSchema: Schema[Minute] = time.derivedMinuteSchema
+  given derivedMinuteSchema: Schema[Minute] = time.derivedMinuteSchema
 
-  inline given derivedSecondSchema: Schema[Second] = time.derivedSecondSchema
+  given derivedSecondSchema: Schema[Second] = time.derivedSecondSchema
 
-  inline given derivedMillisSchema: Schema[Millis] = time.derivedMillisSchema
+  given derivedMillisSchema: Schema[Millis] = time.derivedMillisSchema
 
 }
 object time {

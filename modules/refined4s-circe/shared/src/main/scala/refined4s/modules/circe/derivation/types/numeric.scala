@@ -10,192 +10,192 @@ import refined4s.types.all.*
 trait numeric {
 
   /* NegInt */
-  inline given derivedNegIntEncoder: Encoder[NegInt] = numeric.derivedNegIntEncoder
-  inline given derivedNegIntDecoder: Decoder[NegInt] = numeric.derivedNegIntDecoder
+  given derivedNegIntEncoder: Encoder[NegInt] = numeric.derivedNegIntEncoder
+  given derivedNegIntDecoder: Decoder[NegInt] = numeric.derivedNegIntDecoder
 
-  inline given derivedNegIntKeyEncoder: KeyEncoder[NegInt] = numeric.derivedNegIntKeyEncoder
-  inline given derivedNegIntKeyDecoder: KeyDecoder[NegInt] = numeric.derivedNegIntKeyDecoder
+  given derivedNegIntKeyEncoder: KeyEncoder[NegInt] = numeric.derivedNegIntKeyEncoder
+  given derivedNegIntKeyDecoder: KeyDecoder[NegInt] = numeric.derivedNegIntKeyDecoder
 
   /* NonNegInt */
-  inline given derivedNonNegIntEncoder: Encoder[NonNegInt] = numeric.derivedNonNegIntEncoder
-  inline given derivedNonNegIntDecoder: Decoder[NonNegInt] = numeric.derivedNonNegIntDecoder
+  given derivedNonNegIntEncoder: Encoder[NonNegInt] = numeric.derivedNonNegIntEncoder
+  given derivedNonNegIntDecoder: Decoder[NonNegInt] = numeric.derivedNonNegIntDecoder
 
-  inline given derivedNonNegIntKeyEncoder: KeyEncoder[NonNegInt] = numeric.derivedNonNegIntKeyEncoder
-  inline given derivedNonNegIntKeyDecoder: KeyDecoder[NonNegInt] = numeric.derivedNonNegIntKeyDecoder
+  given derivedNonNegIntKeyEncoder: KeyEncoder[NonNegInt] = numeric.derivedNonNegIntKeyEncoder
+  given derivedNonNegIntKeyDecoder: KeyDecoder[NonNegInt] = numeric.derivedNonNegIntKeyDecoder
 
   /* PosInt */
-  inline given derivedPosIntEncoder: Encoder[PosInt] = numeric.derivedPosIntEncoder
-  inline given derivedPosIntDecoder: Decoder[PosInt] = numeric.derivedPosIntDecoder
+  given derivedPosIntEncoder: Encoder[PosInt] = numeric.derivedPosIntEncoder
+  given derivedPosIntDecoder: Decoder[PosInt] = numeric.derivedPosIntDecoder
 
-  inline given derivedPosIntKeyEncoder: KeyEncoder[PosInt] = numeric.derivedPosIntKeyEncoder
-  inline given derivedPosIntKeyDecoder: KeyDecoder[PosInt] = numeric.derivedPosIntKeyDecoder
+  given derivedPosIntKeyEncoder: KeyEncoder[PosInt] = numeric.derivedPosIntKeyEncoder
+  given derivedPosIntKeyDecoder: KeyDecoder[PosInt] = numeric.derivedPosIntKeyDecoder
 
   /* NonPosInt */
-  inline given derivedNonPosIntEncoder: Encoder[NonPosInt] = numeric.derivedNonPosIntEncoder
-  inline given derivedNonPosIntDecoder: Decoder[NonPosInt] = numeric.derivedNonPosIntDecoder
+  given derivedNonPosIntEncoder: Encoder[NonPosInt] = numeric.derivedNonPosIntEncoder
+  given derivedNonPosIntDecoder: Decoder[NonPosInt] = numeric.derivedNonPosIntDecoder
 
-  inline given derivedNonPosIntKeyEncoder: KeyEncoder[NonPosInt] = numeric.derivedNonPosIntKeyEncoder
-  inline given derivedNonPosIntKeyDecoder: KeyDecoder[NonPosInt] = numeric.derivedNonPosIntKeyDecoder
+  given derivedNonPosIntKeyEncoder: KeyEncoder[NonPosInt] = numeric.derivedNonPosIntKeyEncoder
+  given derivedNonPosIntKeyDecoder: KeyDecoder[NonPosInt] = numeric.derivedNonPosIntKeyDecoder
 
   /* NegLong */
-  inline given derivedNegLongEncoder: Encoder[NegLong] = numeric.derivedNegLongEncoder
-  inline given derivedNegLongDecoder: Decoder[NegLong] = numeric.derivedNegLongDecoder
+  given derivedNegLongEncoder: Encoder[NegLong] = numeric.derivedNegLongEncoder
+  given derivedNegLongDecoder: Decoder[NegLong] = numeric.derivedNegLongDecoder
 
-  inline given derivedNegLongKeyEncoder: KeyEncoder[NegLong] = numeric.derivedNegLongKeyEncoder
-  inline given derivedNegLongKeyDecoder: KeyDecoder[NegLong] = numeric.derivedNegLongKeyDecoder
+  given derivedNegLongKeyEncoder: KeyEncoder[NegLong] = numeric.derivedNegLongKeyEncoder
+  given derivedNegLongKeyDecoder: KeyDecoder[NegLong] = numeric.derivedNegLongKeyDecoder
 
   /* NonNegLong */
-  inline given derivedNonNegLongEncoder: Encoder[NonNegLong] = numeric.derivedNonNegLongEncoder
-  inline given derivedNonNegLongDecoder: Decoder[NonNegLong] = numeric.derivedNonNegLongDecoder
+  given derivedNonNegLongEncoder: Encoder[NonNegLong] = numeric.derivedNonNegLongEncoder
+  given derivedNonNegLongDecoder: Decoder[NonNegLong] = numeric.derivedNonNegLongDecoder
 
-  inline given derivedNonNegLongKeyEncoder: KeyEncoder[NonNegLong] = numeric.derivedNonNegLongKeyEncoder
-  inline given derivedNonNegLongKeyDecoder: KeyDecoder[NonNegLong] = numeric.derivedNonNegLongKeyDecoder
+  given derivedNonNegLongKeyEncoder: KeyEncoder[NonNegLong] = numeric.derivedNonNegLongKeyEncoder
+  given derivedNonNegLongKeyDecoder: KeyDecoder[NonNegLong] = numeric.derivedNonNegLongKeyDecoder
 
   /* PosLong */
-  inline given derivedPosLongEncoder: Encoder[PosLong] = numeric.derivedPosLongEncoder
-  inline given derivedPosLongDecoder: Decoder[PosLong] = numeric.derivedPosLongDecoder
+  given derivedPosLongEncoder: Encoder[PosLong] = numeric.derivedPosLongEncoder
+  given derivedPosLongDecoder: Decoder[PosLong] = numeric.derivedPosLongDecoder
 
-  inline given derivedPosLongKeyEncoder: KeyEncoder[PosLong] = numeric.derivedPosLongKeyEncoder
-  inline given derivedPosLongKeyDecoder: KeyDecoder[PosLong] = numeric.derivedPosLongKeyDecoder
+  given derivedPosLongKeyEncoder: KeyEncoder[PosLong] = numeric.derivedPosLongKeyEncoder
+  given derivedPosLongKeyDecoder: KeyDecoder[PosLong] = numeric.derivedPosLongKeyDecoder
 
   /* NonPosLong */
-  inline given derivedNonPosLongEncoder: Encoder[NonPosLong] = numeric.derivedNonPosLongEncoder
-  inline given derivedNonPosLongDecoder: Decoder[NonPosLong] = numeric.derivedNonPosLongDecoder
+  given derivedNonPosLongEncoder: Encoder[NonPosLong] = numeric.derivedNonPosLongEncoder
+  given derivedNonPosLongDecoder: Decoder[NonPosLong] = numeric.derivedNonPosLongDecoder
 
-  inline given derivedNonPosLongKeyEncoder: KeyEncoder[NonPosLong] = numeric.derivedNonPosLongKeyEncoder
-  inline given derivedNonPosLongKeyDecoder: KeyDecoder[NonPosLong] = numeric.derivedNonPosLongKeyDecoder
+  given derivedNonPosLongKeyEncoder: KeyEncoder[NonPosLong] = numeric.derivedNonPosLongKeyEncoder
+  given derivedNonPosLongKeyDecoder: KeyDecoder[NonPosLong] = numeric.derivedNonPosLongKeyDecoder
 
   /* NegShort */
-  inline given derivedNegShortEncoder: Encoder[NegShort] = numeric.derivedNegShortEncoder
-  inline given derivedNegShortDecoder: Decoder[NegShort] = numeric.derivedNegShortDecoder
+  given derivedNegShortEncoder: Encoder[NegShort] = numeric.derivedNegShortEncoder
+  given derivedNegShortDecoder: Decoder[NegShort] = numeric.derivedNegShortDecoder
 
-  inline given derivedNegShortKeyEncoder: KeyEncoder[NegShort] = numeric.derivedNegShortKeyEncoder
-  inline given derivedNegShortKeyDecoder: KeyDecoder[NegShort] = numeric.derivedNegShortKeyDecoder
+  given derivedNegShortKeyEncoder: KeyEncoder[NegShort] = numeric.derivedNegShortKeyEncoder
+  given derivedNegShortKeyDecoder: KeyDecoder[NegShort] = numeric.derivedNegShortKeyDecoder
 
   /* NonNegShort */
-  inline given derivedNonNegShortEncoder: Encoder[NonNegShort] = numeric.derivedNonNegShortEncoder
-  inline given derivedNonNegShortDecoder: Decoder[NonNegShort] = numeric.derivedNonNegShortDecoder
+  given derivedNonNegShortEncoder: Encoder[NonNegShort] = numeric.derivedNonNegShortEncoder
+  given derivedNonNegShortDecoder: Decoder[NonNegShort] = numeric.derivedNonNegShortDecoder
 
-  inline given derivedNonNegShortKeyEncoder: KeyEncoder[NonNegShort] = numeric.derivedNonNegShortKeyEncoder
-  inline given derivedNonNegShortKeyDecoder: KeyDecoder[NonNegShort] = numeric.derivedNonNegShortKeyDecoder
+  given derivedNonNegShortKeyEncoder: KeyEncoder[NonNegShort] = numeric.derivedNonNegShortKeyEncoder
+  given derivedNonNegShortKeyDecoder: KeyDecoder[NonNegShort] = numeric.derivedNonNegShortKeyDecoder
 
   /* PosShort */
-  inline given derivedPosShortEncoder: Encoder[PosShort] = numeric.derivedPosShortEncoder
-  inline given derivedPosShortDecoder: Decoder[PosShort] = numeric.derivedPosShortDecoder
+  given derivedPosShortEncoder: Encoder[PosShort] = numeric.derivedPosShortEncoder
+  given derivedPosShortDecoder: Decoder[PosShort] = numeric.derivedPosShortDecoder
 
-  inline given derivedPosShortKeyEncoder: KeyEncoder[PosShort] = numeric.derivedPosShortKeyEncoder
-  inline given derivedPosShortKeyDecoder: KeyDecoder[PosShort] = numeric.derivedPosShortKeyDecoder
+  given derivedPosShortKeyEncoder: KeyEncoder[PosShort] = numeric.derivedPosShortKeyEncoder
+  given derivedPosShortKeyDecoder: KeyDecoder[PosShort] = numeric.derivedPosShortKeyDecoder
 
   /* NonPosShort */
-  inline given derivedNonPosShortEncoder: Encoder[NonPosShort] = numeric.derivedNonPosShortEncoder
-  inline given derivedNonPosShortDecoder: Decoder[NonPosShort] = numeric.derivedNonPosShortDecoder
+  given derivedNonPosShortEncoder: Encoder[NonPosShort] = numeric.derivedNonPosShortEncoder
+  given derivedNonPosShortDecoder: Decoder[NonPosShort] = numeric.derivedNonPosShortDecoder
 
-  inline given derivedNonPosShortKeyEncoder: KeyEncoder[NonPosShort] = numeric.derivedNonPosShortKeyEncoder
-  inline given derivedNonPosShortKeyDecoder: KeyDecoder[NonPosShort] = numeric.derivedNonPosShortKeyDecoder
+  given derivedNonPosShortKeyEncoder: KeyEncoder[NonPosShort] = numeric.derivedNonPosShortKeyEncoder
+  given derivedNonPosShortKeyDecoder: KeyDecoder[NonPosShort] = numeric.derivedNonPosShortKeyDecoder
 
   /* NegByte */
-  inline given derivedNegByteEncoder: Encoder[NegByte] = numeric.derivedNegByteEncoder
-  inline given derivedNegByteDecoder: Decoder[NegByte] = numeric.derivedNegByteDecoder
+  given derivedNegByteEncoder: Encoder[NegByte] = numeric.derivedNegByteEncoder
+  given derivedNegByteDecoder: Decoder[NegByte] = numeric.derivedNegByteDecoder
 
-  inline given derivedNegByteKeyEncoder: KeyEncoder[NegByte] = numeric.derivedNegByteKeyEncoder
-  inline given derivedNegByteKeyDecoder: KeyDecoder[NegByte] = numeric.derivedNegByteKeyDecoder
+  given derivedNegByteKeyEncoder: KeyEncoder[NegByte] = numeric.derivedNegByteKeyEncoder
+  given derivedNegByteKeyDecoder: KeyDecoder[NegByte] = numeric.derivedNegByteKeyDecoder
 
   /* NonNegByte */
-  inline given derivedNonNegByteEncoder: Encoder[NonNegByte] = numeric.derivedNonNegByteEncoder
-  inline given derivedNonNegByteDecoder: Decoder[NonNegByte] = numeric.derivedNonNegByteDecoder
+  given derivedNonNegByteEncoder: Encoder[NonNegByte] = numeric.derivedNonNegByteEncoder
+  given derivedNonNegByteDecoder: Decoder[NonNegByte] = numeric.derivedNonNegByteDecoder
 
-  inline given derivedNonNegByteKeyEncoder: KeyEncoder[NonNegByte] = numeric.derivedNonNegByteKeyEncoder
-  inline given derivedNonNegByteKeyDecoder: KeyDecoder[NonNegByte] = numeric.derivedNonNegByteKeyDecoder
+  given derivedNonNegByteKeyEncoder: KeyEncoder[NonNegByte] = numeric.derivedNonNegByteKeyEncoder
+  given derivedNonNegByteKeyDecoder: KeyDecoder[NonNegByte] = numeric.derivedNonNegByteKeyDecoder
 
   /* PosByte */
-  inline given derivedPosByteEncoder: Encoder[PosByte] = numeric.derivedPosByteEncoder
-  inline given derivedPosByteDecoder: Decoder[PosByte] = numeric.derivedPosByteDecoder
+  given derivedPosByteEncoder: Encoder[PosByte] = numeric.derivedPosByteEncoder
+  given derivedPosByteDecoder: Decoder[PosByte] = numeric.derivedPosByteDecoder
 
-  inline given derivedPosByteKeyEncoder: KeyEncoder[PosByte] = numeric.derivedPosByteKeyEncoder
-  inline given derivedPosByteKeyDecoder: KeyDecoder[PosByte] = numeric.derivedPosByteKeyDecoder
+  given derivedPosByteKeyEncoder: KeyEncoder[PosByte] = numeric.derivedPosByteKeyEncoder
+  given derivedPosByteKeyDecoder: KeyDecoder[PosByte] = numeric.derivedPosByteKeyDecoder
 
   /* NonPosByte */
-  inline given derivedNonPosByteEncoder: Encoder[NonPosByte] = numeric.derivedNonPosByteEncoder
-  inline given derivedNonPosByteDecoder: Decoder[NonPosByte] = numeric.derivedNonPosByteDecoder
+  given derivedNonPosByteEncoder: Encoder[NonPosByte] = numeric.derivedNonPosByteEncoder
+  given derivedNonPosByteDecoder: Decoder[NonPosByte] = numeric.derivedNonPosByteDecoder
 
-  inline given derivedNonPosByteKeyEncoder: KeyEncoder[NonPosByte] = numeric.derivedNonPosByteKeyEncoder
-  inline given derivedNonPosByteKeyDecoder: KeyDecoder[NonPosByte] = numeric.derivedNonPosByteKeyDecoder
+  given derivedNonPosByteKeyEncoder: KeyEncoder[NonPosByte] = numeric.derivedNonPosByteKeyEncoder
+  given derivedNonPosByteKeyDecoder: KeyDecoder[NonPosByte] = numeric.derivedNonPosByteKeyDecoder
 
   /* NegFloat */
-  inline given derivedNegFloatEncoder: Encoder[NegFloat] = numeric.derivedNegFloatEncoder
-  inline given derivedNegFloatDecoder: Decoder[NegFloat] = numeric.derivedNegFloatDecoder
+  given derivedNegFloatEncoder: Encoder[NegFloat] = numeric.derivedNegFloatEncoder
+  given derivedNegFloatDecoder: Decoder[NegFloat] = numeric.derivedNegFloatDecoder
 
   /* NonNegFloat */
-  inline given derivedNonNegFloatEncoder: Encoder[NonNegFloat] = numeric.derivedNonNegFloatEncoder
-  inline given derivedNonNegFloatDecoder: Decoder[NonNegFloat] = numeric.derivedNonNegFloatDecoder
+  given derivedNonNegFloatEncoder: Encoder[NonNegFloat] = numeric.derivedNonNegFloatEncoder
+  given derivedNonNegFloatDecoder: Decoder[NonNegFloat] = numeric.derivedNonNegFloatDecoder
 
   /* PosFloat */
-  inline given derivedPosFloatEncoder: Encoder[PosFloat] = numeric.derivedPosFloatEncoder
-  inline given derivedPosFloatDecoder: Decoder[PosFloat] = numeric.derivedPosFloatDecoder
+  given derivedPosFloatEncoder: Encoder[PosFloat] = numeric.derivedPosFloatEncoder
+  given derivedPosFloatDecoder: Decoder[PosFloat] = numeric.derivedPosFloatDecoder
 
   /* NonPosFloat */
-  inline given derivedNonPosFloatEncoder: Encoder[NonPosFloat] = numeric.derivedNonPosFloatEncoder
-  inline given derivedNonPosFloatDecoder: Decoder[NonPosFloat] = numeric.derivedNonPosFloatDecoder
+  given derivedNonPosFloatEncoder: Encoder[NonPosFloat] = numeric.derivedNonPosFloatEncoder
+  given derivedNonPosFloatDecoder: Decoder[NonPosFloat] = numeric.derivedNonPosFloatDecoder
 
   /* NegDouble */
-  inline given derivedNegDoubleEncoder: Encoder[NegDouble] = numeric.derivedNegDoubleEncoder
-  inline given derivedNegDoubleDecoder: Decoder[NegDouble] = numeric.derivedNegDoubleDecoder
+  given derivedNegDoubleEncoder: Encoder[NegDouble] = numeric.derivedNegDoubleEncoder
+  given derivedNegDoubleDecoder: Decoder[NegDouble] = numeric.derivedNegDoubleDecoder
 
   /* NonNegDouble */
-  inline given derivedNonNegDoubleEncoder: Encoder[NonNegDouble] = numeric.derivedNonNegDoubleEncoder
-  inline given derivedNonNegDoubleDecoder: Decoder[NonNegDouble] = numeric.derivedNonNegDoubleDecoder
+  given derivedNonNegDoubleEncoder: Encoder[NonNegDouble] = numeric.derivedNonNegDoubleEncoder
+  given derivedNonNegDoubleDecoder: Decoder[NonNegDouble] = numeric.derivedNonNegDoubleDecoder
 
   /* PosDouble */
-  inline given derivedPosDoubleEncoder: Encoder[PosDouble] = numeric.derivedPosDoubleEncoder
-  inline given derivedPosDoubleDecoder: Decoder[PosDouble] = numeric.derivedPosDoubleDecoder
+  given derivedPosDoubleEncoder: Encoder[PosDouble] = numeric.derivedPosDoubleEncoder
+  given derivedPosDoubleDecoder: Decoder[PosDouble] = numeric.derivedPosDoubleDecoder
 
   /* NonPosDouble */
-  inline given derivedNonPosDoubleEncoder: Encoder[NonPosDouble] = numeric.derivedNonPosDoubleEncoder
-  inline given derivedNonPosDoubleDecoder: Decoder[NonPosDouble] = numeric.derivedNonPosDoubleDecoder
+  given derivedNonPosDoubleEncoder: Encoder[NonPosDouble] = numeric.derivedNonPosDoubleEncoder
+  given derivedNonPosDoubleDecoder: Decoder[NonPosDouble] = numeric.derivedNonPosDoubleDecoder
 
   /* NegBigInt */
-  inline given derivedNegBigIntEncoder: Encoder[NegBigInt] = numeric.derivedNegBigIntEncoder
-  inline given derivedNegBigIntDecoder: Decoder[NegBigInt] = numeric.derivedNegBigIntDecoder
+  given derivedNegBigIntEncoder: Encoder[NegBigInt] = numeric.derivedNegBigIntEncoder
+  given derivedNegBigIntDecoder: Decoder[NegBigInt] = numeric.derivedNegBigIntDecoder
 
-  inline given derivedNegBigIntKeyEncoder: KeyEncoder[NegBigInt] = numeric.derivedNegBigIntKeyEncoder
-  inline given derivedNegBigIntKeyDecoder: KeyDecoder[NegBigInt] = numeric.derivedNegBigIntKeyDecoder
+  given derivedNegBigIntKeyEncoder: KeyEncoder[NegBigInt] = numeric.derivedNegBigIntKeyEncoder
+  given derivedNegBigIntKeyDecoder: KeyDecoder[NegBigInt] = numeric.derivedNegBigIntKeyDecoder
 
   /* NonNegBigInt */
-  inline given derivedNonNegBigIntEncoder: Encoder[NonNegBigInt] = numeric.derivedNonNegBigIntEncoder
-  inline given derivedNonNegBigIntDecoder: Decoder[NonNegBigInt] = numeric.derivedNonNegBigIntDecoder
+  given derivedNonNegBigIntEncoder: Encoder[NonNegBigInt] = numeric.derivedNonNegBigIntEncoder
+  given derivedNonNegBigIntDecoder: Decoder[NonNegBigInt] = numeric.derivedNonNegBigIntDecoder
 
-  inline given derivedNonNegBigIntKeyEncoder: KeyEncoder[NonNegBigInt] = numeric.derivedNonNegBigIntKeyEncoder
-  inline given derivedNonNegBigIntKeyDecoder: KeyDecoder[NonNegBigInt] = numeric.derivedNonNegBigIntKeyDecoder
+  given derivedNonNegBigIntKeyEncoder: KeyEncoder[NonNegBigInt] = numeric.derivedNonNegBigIntKeyEncoder
+  given derivedNonNegBigIntKeyDecoder: KeyDecoder[NonNegBigInt] = numeric.derivedNonNegBigIntKeyDecoder
 
   /* PosBigInt */
-  inline given derivedPosBigIntEncoder: Encoder[PosBigInt] = numeric.derivedPosBigIntEncoder
-  inline given derivedPosBigIntDecoder: Decoder[PosBigInt] = numeric.derivedPosBigIntDecoder
+  given derivedPosBigIntEncoder: Encoder[PosBigInt] = numeric.derivedPosBigIntEncoder
+  given derivedPosBigIntDecoder: Decoder[PosBigInt] = numeric.derivedPosBigIntDecoder
 
-  inline given derivedPosBigIntKeyEncoder: KeyEncoder[PosBigInt] = numeric.derivedPosBigIntKeyEncoder
-  inline given derivedPosBigIntKeyDecoder: KeyDecoder[PosBigInt] = numeric.derivedPosBigIntKeyDecoder
+  given derivedPosBigIntKeyEncoder: KeyEncoder[PosBigInt] = numeric.derivedPosBigIntKeyEncoder
+  given derivedPosBigIntKeyDecoder: KeyDecoder[PosBigInt] = numeric.derivedPosBigIntKeyDecoder
 
   /* NonPosBigInt */
-  inline given derivedNonPosBigIntEncoder: Encoder[NonPosBigInt] = numeric.derivedNonPosBigIntEncoder
-  inline given derivedNonPosBigIntDecoder: Decoder[NonPosBigInt] = numeric.derivedNonPosBigIntDecoder
+  given derivedNonPosBigIntEncoder: Encoder[NonPosBigInt] = numeric.derivedNonPosBigIntEncoder
+  given derivedNonPosBigIntDecoder: Decoder[NonPosBigInt] = numeric.derivedNonPosBigIntDecoder
 
-  inline given derivedNonPosBigIntKeyEncoder: KeyEncoder[NonPosBigInt] = numeric.derivedNonPosBigIntKeyEncoder
-  inline given derivedNonPosBigIntKeyDecoder: KeyDecoder[NonPosBigInt] = numeric.derivedNonPosBigIntKeyDecoder
+  given derivedNonPosBigIntKeyEncoder: KeyEncoder[NonPosBigInt] = numeric.derivedNonPosBigIntKeyEncoder
+  given derivedNonPosBigIntKeyDecoder: KeyDecoder[NonPosBigInt] = numeric.derivedNonPosBigIntKeyDecoder
 
   /* NegBigDecimal */
-  inline given derivedNegBigDecimalEncoder: Encoder[NegBigDecimal] = numeric.derivedNegBigDecimalEncoder
-  inline given derivedNegBigDecimalDecoder: Decoder[NegBigDecimal] = numeric.derivedNegBigDecimalDecoder
+  given derivedNegBigDecimalEncoder: Encoder[NegBigDecimal] = numeric.derivedNegBigDecimalEncoder
+  given derivedNegBigDecimalDecoder: Decoder[NegBigDecimal] = numeric.derivedNegBigDecimalDecoder
 
   /* NonNegBigDecimal */
-  inline given derivedNonNegBigDecimalEncoder: Encoder[NonNegBigDecimal] = numeric.derivedNonNegBigDecimalEncoder
-  inline given derivedNonNegBigDecimalDecoder: Decoder[NonNegBigDecimal] = numeric.derivedNonNegBigDecimalDecoder
+  given derivedNonNegBigDecimalEncoder: Encoder[NonNegBigDecimal] = numeric.derivedNonNegBigDecimalEncoder
+  given derivedNonNegBigDecimalDecoder: Decoder[NonNegBigDecimal] = numeric.derivedNonNegBigDecimalDecoder
 
   /* PosBigDecimal */
-  inline given derivedPosBigDecimalEncoder: Encoder[PosBigDecimal] = numeric.derivedPosBigDecimalEncoder
-  inline given derivedPosBigDecimalDecoder: Decoder[PosBigDecimal] = numeric.derivedPosBigDecimalDecoder
+  given derivedPosBigDecimalEncoder: Encoder[PosBigDecimal] = numeric.derivedPosBigDecimalEncoder
+  given derivedPosBigDecimalDecoder: Decoder[PosBigDecimal] = numeric.derivedPosBigDecimalDecoder
 
   /* NonPosBigDecimal */
-  inline given derivedNonPosBigDecimalEncoder: Encoder[NonPosBigDecimal] = numeric.derivedNonPosBigDecimalEncoder
-  inline given derivedNonPosBigDecimalDecoder: Decoder[NonPosBigDecimal] = numeric.derivedNonPosBigDecimalDecoder
+  given derivedNonPosBigDecimalEncoder: Encoder[NonPosBigDecimal] = numeric.derivedNonPosBigDecimalEncoder
+  given derivedNonPosBigDecimalDecoder: Decoder[NonPosBigDecimal] = numeric.derivedNonPosBigDecimalDecoder
 
 }
 object numeric {

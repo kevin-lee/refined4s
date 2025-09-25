@@ -10,11 +10,11 @@ import java.util.UUID
   */
 trait strings {
 
-  inline given schemaNonEmptyString: Schema[NonEmptyString] = strings.derivedNonEmptyStringSchema
+  given schemaNonEmptyString: Schema[NonEmptyString] = strings.derivedNonEmptyStringSchema
 
-  inline given schemaNonBlankString: Schema[NonBlankString] = strings.derivedNonBlankStringSchema
+  given schemaNonBlankString: Schema[NonBlankString] = strings.derivedNonBlankStringSchema
 
-  inline given schemaUuid: Schema[Uuid] = strings.derivedUuidSchema
+  given schemaUuid: Schema[Uuid] = strings.derivedUuidSchema
 
 }
 object strings {

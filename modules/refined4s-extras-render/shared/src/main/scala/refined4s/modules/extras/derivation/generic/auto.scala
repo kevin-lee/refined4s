@@ -11,7 +11,7 @@ trait auto {
   /** `Render` instance for Newtype, Refined and InlinedRefined types that delegates from the `Render`
     * instance of the base type.
     */
-  inline given derivedRender[A, B](using coercible: Coercible[A, B], renderB: Render[B]): Render[A] =
+  given derivedRender[A, B](using coercible: Coercible[A, B], renderB: Render[B]): Render[A] =
     renderB.contramap[A](coercible(_))
 
 }

@@ -47,19 +47,19 @@ object networkCompat {
   }
   private[types] trait UrlTypeClassInstances extends UrlTypeClassInstance1 {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
-    inline given derivedUrlEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[String]): F[Url] = {
+    given derivedUrlEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[String]): F[Url] = {
       internalDef.contraCoercible[cats.Eq, Url, String, cats.Contravariant](eqActual.asInstanceOf[cats.Eq[String]])
     }.asInstanceOf[F[Url]] // scalafix:ok DisableSyntax.asInstanceOf
   }
   private[types] trait UrlTypeClassInstance1 extends UrlTypeClassInstance2 {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
-    inline given derivedUrlHash[F[*]: CatsHash, G[*]: CatsHash](using hashActual: G[String]): F[Url] = {
+    given derivedUrlHash[F[*]: CatsHash, G[*]: CatsHash](using hashActual: G[String]): F[Url] = {
       internalDef.contraCoercible[cats.Hash, Url, String, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[String]])
     }.asInstanceOf[F[Url]] // scalafix:ok DisableSyntax.asInstanceOf
   }
   private[types] trait UrlTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
-    inline given derivedUrlShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[String]): F[Url] = {
+    given derivedUrlShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[String]): F[Url] = {
       internalDef.contraCoercible[cats.Show, Url, String, cats.Contravariant](showActual.asInstanceOf[cats.Show[String]])
     }.asInstanceOf[F[Url]] // scalafix:ok DisableSyntax.asInstanceOf
   }

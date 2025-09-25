@@ -9,5 +9,5 @@ import refined4s.*
 trait CatsEq[A: Eq] {
   self: NewtypeBase[A] =>
 
-  inline given derivedEq: Eq[Type] = deriving[Eq]
+  given derivedEq: Eq[Type] = deriving[Eq]
 }

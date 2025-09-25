@@ -10,26 +10,26 @@ import refined4s.types.network.*
   */
 trait network {
 
-  inline given derivedUriConfigReader: ConfigReader[Uri] = network.derivedUriConfigReader
-  inline given derivedUriConfigWriter: ConfigWriter[Uri] = network.derivedUriConfigWriter
+  given derivedUriConfigReader: ConfigReader[Uri] = network.derivedUriConfigReader
+  given derivedUriConfigWriter: ConfigWriter[Uri] = network.derivedUriConfigWriter
 
-  inline given derivedUrlConfigReader: ConfigReader[Url] = network.derivedUrlConfigReader
-  inline given derivedUrlConfigWriter: ConfigWriter[Url] = network.derivedUrlConfigWriter
+  given derivedUrlConfigReader: ConfigReader[Url] = network.derivedUrlConfigReader
+  given derivedUrlConfigWriter: ConfigWriter[Url] = network.derivedUrlConfigWriter
 
-  inline given derivedPortNumberConfigReader: ConfigReader[PortNumber] = network.derivedPortNumberConfigReader
-  inline given derivedPortNumberConfigWriter: ConfigWriter[PortNumber] = network.derivedPortNumberConfigWriter
+  given derivedPortNumberConfigReader: ConfigReader[PortNumber] = network.derivedPortNumberConfigReader
+  given derivedPortNumberConfigWriter: ConfigWriter[PortNumber] = network.derivedPortNumberConfigWriter
 
-  inline given derivedSystemPortNumberConfigReader: ConfigReader[SystemPortNumber] = network.derivedSystemPortNumberConfigReader
-  inline given derivedSystemPortNumberConfigWriter: ConfigWriter[SystemPortNumber] = network.derivedSystemPortNumberConfigWriter
+  given derivedSystemPortNumberConfigReader: ConfigReader[SystemPortNumber] = network.derivedSystemPortNumberConfigReader
+  given derivedSystemPortNumberConfigWriter: ConfigWriter[SystemPortNumber] = network.derivedSystemPortNumberConfigWriter
 
-  inline given derivedNonSystemPortNumberConfigReader: ConfigReader[NonSystemPortNumber] = network.derivedNonSystemPortNumberConfigReader
-  inline given derivedNonSystemPortNumberConfigWriter: ConfigWriter[NonSystemPortNumber] = network.derivedNonSystemPortNumberConfigWriter
+  given derivedNonSystemPortNumberConfigReader: ConfigReader[NonSystemPortNumber] = network.derivedNonSystemPortNumberConfigReader
+  given derivedNonSystemPortNumberConfigWriter: ConfigWriter[NonSystemPortNumber] = network.derivedNonSystemPortNumberConfigWriter
 
-  inline given derivedUserPortNumberConfigReader: ConfigReader[UserPortNumber] = network.derivedUserPortNumberConfigReader
-  inline given derivedUserPortNumberConfigWriter: ConfigWriter[UserPortNumber] = network.derivedUserPortNumberConfigWriter
+  given derivedUserPortNumberConfigReader: ConfigReader[UserPortNumber] = network.derivedUserPortNumberConfigReader
+  given derivedUserPortNumberConfigWriter: ConfigWriter[UserPortNumber] = network.derivedUserPortNumberConfigWriter
 
-  inline given derivedDynamicPortNumberConfigReader: ConfigReader[DynamicPortNumber] = network.derivedDynamicPortNumberConfigReader
-  inline given derivedDynamicPortNumberConfigWriter: ConfigWriter[DynamicPortNumber] = network.derivedDynamicPortNumberConfigWriter
+  given derivedDynamicPortNumberConfigReader: ConfigReader[DynamicPortNumber] = network.derivedDynamicPortNumberConfigReader
+  given derivedDynamicPortNumberConfigWriter: ConfigWriter[DynamicPortNumber] = network.derivedDynamicPortNumberConfigWriter
 
 }
 object network {
