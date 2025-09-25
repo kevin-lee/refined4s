@@ -9,22 +9,22 @@ import refined4s.{Coercible, RefinedCtor}
   */
 trait auto {
 
-  inline given derivedEncoder[A, B](using coercible: Coercible[A, B], encoder: Encoder[B]): Encoder[A] =
+  given derivedEncoder[A, B](using coercible: Coercible[A, B], encoder: Encoder[B]): Encoder[A] =
     contraCoercible(encoder)
 
-  inline given derivedNewtypeDecoder[A, B](using coercible: Coercible[A, B], decoder: Decoder[A]): Decoder[B] =
+  given derivedNewtypeDecoder[A, B](using coercible: Coercible[A, B], decoder: Decoder[A]): Decoder[B] =
     Coercible.unsafeWrapTC(decoder)
 
-  inline given derivedRefinedDecoder[A, B](using refinedCtor: RefinedCtor[B, A], decoder: Decoder[A]): Decoder[B] =
+  given derivedRefinedDecoder[A, B](using refinedCtor: RefinedCtor[B, A], decoder: Decoder[A]): Decoder[B] =
     decoder.emap(refinedCtor.create)
 
-  inline given derivedKeyEncoder[A, B](using coercible: Coercible[A, B], encoder: KeyEncoder[B]): KeyEncoder[A] =
+  given derivedKeyEncoder[A, B](using coercible: Coercible[A, B], encoder: KeyEncoder[B]): KeyEncoder[A] =
     contraCoercible(encoder)
 
-  inline given derivedNewtypeKeyDecoder[A, B](using coercible: Coercible[A, B], decoder: KeyDecoder[A]): KeyDecoder[B] =
+  given derivedNewtypeKeyDecoder[A, B](using coercible: Coercible[A, B], decoder: KeyDecoder[A]): KeyDecoder[B] =
     Coercible.unsafeWrapTC(decoder)
 
-  inline given derivedRefinedKeyDecoder[A, B](using refinedCtor: RefinedCtor[B, A], decoder: KeyDecoder[A]): KeyDecoder[B] with {
+  given derivedRefinedKeyDecoder[A, B](using refinedCtor: RefinedCtor[B, A], decoder: KeyDecoder[A]): KeyDecoder[B] with {
     override def apply(key: String): Option[B] =
       decoder.apply(key).flatMap(refinedCtor.create(_).toOption)
   }
@@ -44,7 +44,7 @@ trait auto {
     *   // The KeyDecoder is fine here, but the value Decoder `decode` uses is not Decoder[Int] but Decoder[PortNumber].
     * }}}
     */
-  inline given derivedMapDecoder[A, B](using KeyDecoder[A], Decoder[B]): Decoder[Map[A, B]] = io.circe.Decoder.decodeMap
+  given derivedMapDecoder[A, B](using KeyDecoder[A], Decoder[B]): Decoder[Map[A, B]] = io.circe.Decoder.decodeMap
 
 }
 object auto extends auto

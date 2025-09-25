@@ -9,32 +9,32 @@ import refined4s.types.network.*
   */
 trait network {
 
-  inline given derivedUriToStringTransformer: Transformer[Uri, String]               = network.derivedUriToStringTransformer
-  inline given derivedStringToUriPartialTransformer: PartialTransformer[String, Uri] = network.derivedStringToUriPartialTransformer
+  given derivedUriToStringTransformer: Transformer[Uri, String]               = network.derivedUriToStringTransformer
+  given derivedStringToUriPartialTransformer: PartialTransformer[String, Uri] = network.derivedStringToUriPartialTransformer
 
-  inline given derivedUrlToStringTransformer: Transformer[Url, String]               = network.derivedUrlToStringTransformer
-  inline given derivedStringToUrlPartialTransformer: PartialTransformer[String, Url] = network.derivedStringToUrlPartialTransformer
+  given derivedUrlToStringTransformer: Transformer[Url, String]               = network.derivedUrlToStringTransformer
+  given derivedStringToUrlPartialTransformer: PartialTransformer[String, Url] = network.derivedStringToUrlPartialTransformer
 
-  inline given derivedPortNumberToIntTransformer: Transformer[PortNumber, Int]               = network.derivedPortNumberToIntTransformer
-  inline given derivedIntToPortNumberPartialTransformer: PartialTransformer[Int, PortNumber] =
+  given derivedPortNumberToIntTransformer: Transformer[PortNumber, Int]               = network.derivedPortNumberToIntTransformer
+  given derivedIntToPortNumberPartialTransformer: PartialTransformer[Int, PortNumber] =
     network.derivedIntToPortNumberPartialTransformer
 
-  inline given derivedSystemPortNumberToIntTransformer: Transformer[SystemPortNumber, Int] = network.derivedSystemPortNumberToIntTransformer
-  inline given derivedIntToSystemPortNumberPartialTransformer: PartialTransformer[Int, SystemPortNumber] =
+  given derivedSystemPortNumberToIntTransformer: Transformer[SystemPortNumber, Int] = network.derivedSystemPortNumberToIntTransformer
+  given derivedIntToSystemPortNumberPartialTransformer: PartialTransformer[Int, SystemPortNumber] =
     network.derivedIntToSystemPortNumberPartialTransformer
 
-  inline given derivedNonSystemPortNumberToIntTransformer: Transformer[NonSystemPortNumber, Int]               =
+  given derivedNonSystemPortNumberToIntTransformer: Transformer[NonSystemPortNumber, Int]               =
     network.derivedNonSystemPortNumberToIntTransformer
-  inline given derivedIntToNonSystemPortNumberPartialTransformer: PartialTransformer[Int, NonSystemPortNumber] =
+  given derivedIntToNonSystemPortNumberPartialTransformer: PartialTransformer[Int, NonSystemPortNumber] =
     network.derivedIntToNonSystemPortNumberPartialTransformer
 
-  inline given derivedUserPortNumberToIntTransformer: Transformer[UserPortNumber, Int] = network.derivedUserPortNumberToIntTransformer
-  inline given derivedIntToUserPortNumberPartialTransformer: PartialTransformer[Int, UserPortNumber] =
+  given derivedUserPortNumberToIntTransformer: Transformer[UserPortNumber, Int] = network.derivedUserPortNumberToIntTransformer
+  given derivedIntToUserPortNumberPartialTransformer: PartialTransformer[Int, UserPortNumber] =
     network.derivedIntToUserPortNumberPartialTransformer
 
-  inline given derivedDynamicPortNumberToIntTransformer: Transformer[DynamicPortNumber, Int]               =
+  given derivedDynamicPortNumberToIntTransformer: Transformer[DynamicPortNumber, Int]               =
     network.derivedDynamicPortNumberToIntTransformer
-  inline given derivedIntToDynamicPortNumberPartialTransformer: PartialTransformer[Int, DynamicPortNumber] =
+  given derivedIntToDynamicPortNumberPartialTransformer: PartialTransformer[Int, DynamicPortNumber] =
     network.derivedIntToDynamicPortNumberPartialTransformer
 
 }

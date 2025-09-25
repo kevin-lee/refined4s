@@ -8,19 +8,19 @@ import sttp.tapir.Schema
   */
 trait network {
 
-  inline given schemaUri: Schema[Uri] = network.derivedUriSchema
+  given schemaUri: Schema[Uri] = network.derivedUriSchema
 
-  inline given schemaUrl: Schema[Url] = network.derivedUrlSchema
+  given schemaUrl: Schema[Url] = network.derivedUrlSchema
 
-  inline given schemaPortNumber: Schema[PortNumber] = network.derivedPortNumberSchema
+  given schemaPortNumber: Schema[PortNumber] = network.derivedPortNumberSchema
 
-  inline given schemaSystemPortNumber: Schema[SystemPortNumber] = network.derivedSystemPortNumberSchema
+  given schemaSystemPortNumber: Schema[SystemPortNumber] = network.derivedSystemPortNumberSchema
 
-  inline given schemaNonSystemPortNumber: Schema[NonSystemPortNumber] = network.derivedNonSystemPortNumberSchema
+  given schemaNonSystemPortNumber: Schema[NonSystemPortNumber] = network.derivedNonSystemPortNumberSchema
 
-  inline given schemaUserPortNumber: Schema[UserPortNumber] = network.derivedUserPortNumberSchema
+  given schemaUserPortNumber: Schema[UserPortNumber] = network.derivedUserPortNumberSchema
 
-  inline given schemaDynamicPortNumber: Schema[DynamicPortNumber] = network.derivedDynamicPortNumberSchema
+  given schemaDynamicPortNumber: Schema[DynamicPortNumber] = network.derivedDynamicPortNumberSchema
 
 }
 object network {

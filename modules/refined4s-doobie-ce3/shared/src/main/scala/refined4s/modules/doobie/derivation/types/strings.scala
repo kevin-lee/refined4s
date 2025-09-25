@@ -9,14 +9,14 @@ import refined4s.types.strings.*
   */
 trait strings {
 
-  inline given derivedNonEmptyStringGet: Get[NonEmptyString] = strings.derivedNonEmptyStringGet
-  inline given derivedNonEmptyStringPut: Put[NonEmptyString] = strings.derivedNonEmptyStringPut
+  given derivedNonEmptyStringGet: Get[NonEmptyString] = strings.derivedNonEmptyStringGet
+  given derivedNonEmptyStringPut: Put[NonEmptyString] = strings.derivedNonEmptyStringPut
 
-  inline given derivedNonBlankStringGet: Get[NonBlankString] = strings.derivedNonBlankStringGet
-  inline given derivedNonBlankStringPut: Put[NonBlankString] = strings.derivedNonBlankStringPut
+  given derivedNonBlankStringGet: Get[NonBlankString] = strings.derivedNonBlankStringGet
+  given derivedNonBlankStringPut: Put[NonBlankString] = strings.derivedNonBlankStringPut
 
-  inline given derivedUuidGet: Get[Uuid] = strings.derivedUuidGet
-  inline given derivedUuidPut: Put[Uuid] = strings.derivedUuidPut
+  given derivedUuidGet: Get[Uuid] = strings.derivedUuidGet
+  given derivedUuidPut: Put[Uuid] = strings.derivedUuidPut
 
 }
 object strings {

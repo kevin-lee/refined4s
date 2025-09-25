@@ -9,5 +9,5 @@ import refined4s.*
 trait CatsHash[A: Hash] {
   self: NewtypeBase[A] =>
 
-  inline given derivedHash: Hash[Type] = deriving[Hash]
+  given derivedHash: Hash[Type] = deriving[Hash]
 }

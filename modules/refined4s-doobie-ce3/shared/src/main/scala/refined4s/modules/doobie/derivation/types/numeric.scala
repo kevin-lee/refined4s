@@ -9,101 +9,101 @@ import refined4s.types.numeric.*
   */
 trait numeric {
 
-  inline given derivedNegIntGet: Get[NegInt] = numeric.derivedNegIntGet
-  inline given derivedNegIntPut: Put[NegInt] = numeric.derivedNegIntPut
+  given derivedNegIntGet: Get[NegInt] = numeric.derivedNegIntGet
+  given derivedNegIntPut: Put[NegInt] = numeric.derivedNegIntPut
 
-  inline given derivedNonNegIntGet: Get[NonNegInt] = numeric.derivedNonNegIntGet
-  inline given derivedNonNegIntPut: Put[NonNegInt] = numeric.derivedNonNegIntPut
+  given derivedNonNegIntGet: Get[NonNegInt] = numeric.derivedNonNegIntGet
+  given derivedNonNegIntPut: Put[NonNegInt] = numeric.derivedNonNegIntPut
 
-  inline given derivedPosIntGet: Get[PosInt] = numeric.derivedPosIntGet
-  inline given derivedPosIntPut: Put[PosInt] = numeric.derivedPosIntPut
+  given derivedPosIntGet: Get[PosInt] = numeric.derivedPosIntGet
+  given derivedPosIntPut: Put[PosInt] = numeric.derivedPosIntPut
 
-  inline given derivedNonPosIntGet: Get[NonPosInt] = numeric.derivedNonPosIntGet
-  inline given derivedNonPosIntPut: Put[NonPosInt] = numeric.derivedNonPosIntPut
+  given derivedNonPosIntGet: Get[NonPosInt] = numeric.derivedNonPosIntGet
+  given derivedNonPosIntPut: Put[NonPosInt] = numeric.derivedNonPosIntPut
 
-  inline given derivedNegLongGet: Get[NegLong] = numeric.derivedNegLongGet
-  inline given derivedNegLongPut: Put[NegLong] = numeric.derivedNegLongPut
+  given derivedNegLongGet: Get[NegLong] = numeric.derivedNegLongGet
+  given derivedNegLongPut: Put[NegLong] = numeric.derivedNegLongPut
 
-  inline given derivedNonNegLongGet: Get[NonNegLong] = numeric.derivedNonNegLongGet
-  inline given derivedNonNegLongPut: Put[NonNegLong] = numeric.derivedNonNegLongPut
+  given derivedNonNegLongGet: Get[NonNegLong] = numeric.derivedNonNegLongGet
+  given derivedNonNegLongPut: Put[NonNegLong] = numeric.derivedNonNegLongPut
 
-  inline given derivedPosLongGet: Get[PosLong] = numeric.derivedPosLongGet
-  inline given derivedPosLongPut: Put[PosLong] = numeric.derivedPosLongPut
+  given derivedPosLongGet: Get[PosLong] = numeric.derivedPosLongGet
+  given derivedPosLongPut: Put[PosLong] = numeric.derivedPosLongPut
 
-  inline given derivedNonPosLongGet: Get[NonPosLong] = numeric.derivedNonPosLongGet
-  inline given derivedNonPosLongPut: Put[NonPosLong] = numeric.derivedNonPosLongPut
+  given derivedNonPosLongGet: Get[NonPosLong] = numeric.derivedNonPosLongGet
+  given derivedNonPosLongPut: Put[NonPosLong] = numeric.derivedNonPosLongPut
 
-  inline given derivedNegShortGet: Get[NegShort] = numeric.derivedNegShortGet
-  inline given derivedNegShortPut: Put[NegShort] = numeric.derivedNegShortPut
+  given derivedNegShortGet: Get[NegShort] = numeric.derivedNegShortGet
+  given derivedNegShortPut: Put[NegShort] = numeric.derivedNegShortPut
 
-  inline given derivedNonNegShortGet: Get[NonNegShort] = numeric.derivedNonNegShortGet
-  inline given derivedNonNegShortPut: Put[NonNegShort] = numeric.derivedNonNegShortPut
+  given derivedNonNegShortGet: Get[NonNegShort] = numeric.derivedNonNegShortGet
+  given derivedNonNegShortPut: Put[NonNegShort] = numeric.derivedNonNegShortPut
 
-  inline given derivedPosShortGet: Get[PosShort] = numeric.derivedPosShortGet
-  inline given derivedPosShortPut: Put[PosShort] = numeric.derivedPosShortPut
+  given derivedPosShortGet: Get[PosShort] = numeric.derivedPosShortGet
+  given derivedPosShortPut: Put[PosShort] = numeric.derivedPosShortPut
 
-  inline given derivedNonPosShortGet: Get[NonPosShort] = numeric.derivedNonPosShortGet
-  inline given derivedNonPosShortPut: Put[NonPosShort] = numeric.derivedNonPosShortPut
+  given derivedNonPosShortGet: Get[NonPosShort] = numeric.derivedNonPosShortGet
+  given derivedNonPosShortPut: Put[NonPosShort] = numeric.derivedNonPosShortPut
 
-  inline given derivedNegByteGet: Get[NegByte] = numeric.derivedNegByteGet
-  inline given derivedNegBytePut: Put[NegByte] = numeric.derivedNegBytePut
+  given derivedNegByteGet: Get[NegByte] = numeric.derivedNegByteGet
+  given derivedNegBytePut: Put[NegByte] = numeric.derivedNegBytePut
 
-  inline given derivedNonNegByteGet: Get[NonNegByte] = numeric.derivedNonNegByteGet
-  inline given derivedNonNegBytePut: Put[NonNegByte] = numeric.derivedNonNegBytePut
+  given derivedNonNegByteGet: Get[NonNegByte] = numeric.derivedNonNegByteGet
+  given derivedNonNegBytePut: Put[NonNegByte] = numeric.derivedNonNegBytePut
 
-  inline given derivedPosByteGet: Get[PosByte] = numeric.derivedPosByteGet
-  inline given derivedPosBytePut: Put[PosByte] = numeric.derivedPosBytePut
+  given derivedPosByteGet: Get[PosByte] = numeric.derivedPosByteGet
+  given derivedPosBytePut: Put[PosByte] = numeric.derivedPosBytePut
 
-  inline given derivedNonPosByteGet: Get[NonPosByte] = numeric.derivedNonPosByteGet
-  inline given derivedNonPosBytePut: Put[NonPosByte] = numeric.derivedNonPosBytePut
+  given derivedNonPosByteGet: Get[NonPosByte] = numeric.derivedNonPosByteGet
+  given derivedNonPosBytePut: Put[NonPosByte] = numeric.derivedNonPosBytePut
 
-  inline given derivedNegFloatGet: Get[NegFloat] = numeric.derivedNegFloatGet
-  inline given derivedNegFloatPut: Put[NegFloat] = numeric.derivedNegFloatPut
+  given derivedNegFloatGet: Get[NegFloat] = numeric.derivedNegFloatGet
+  given derivedNegFloatPut: Put[NegFloat] = numeric.derivedNegFloatPut
 
-  inline given derivedNonNegFloatGet: Get[NonNegFloat] = numeric.derivedNonNegFloatGet
-  inline given derivedNonNegFloatPut: Put[NonNegFloat] = numeric.derivedNonNegFloatPut
+  given derivedNonNegFloatGet: Get[NonNegFloat] = numeric.derivedNonNegFloatGet
+  given derivedNonNegFloatPut: Put[NonNegFloat] = numeric.derivedNonNegFloatPut
 
-  inline given derivedPosFloatGet: Get[PosFloat] = numeric.derivedPosFloatGet
-  inline given derivedPosFloatPut: Put[PosFloat] = numeric.derivedPosFloatPut
+  given derivedPosFloatGet: Get[PosFloat] = numeric.derivedPosFloatGet
+  given derivedPosFloatPut: Put[PosFloat] = numeric.derivedPosFloatPut
 
-  inline given derivedNonPosFloatGet: Get[NonPosFloat] = numeric.derivedNonPosFloatGet
-  inline given derivedNonPosFloatPut: Put[NonPosFloat] = numeric.derivedNonPosFloatPut
+  given derivedNonPosFloatGet: Get[NonPosFloat] = numeric.derivedNonPosFloatGet
+  given derivedNonPosFloatPut: Put[NonPosFloat] = numeric.derivedNonPosFloatPut
 
-  inline given derivedNegDoubleGet: Get[NegDouble] = numeric.derivedNegDoubleGet
-  inline given derivedNegDoublePut: Put[NegDouble] = numeric.derivedNegDoublePut
+  given derivedNegDoubleGet: Get[NegDouble] = numeric.derivedNegDoubleGet
+  given derivedNegDoublePut: Put[NegDouble] = numeric.derivedNegDoublePut
 
-  inline given derivedNonNegDoubleGet: Get[NonNegDouble] = numeric.derivedNonNegDoubleGet
-  inline given derivedNonNegDoublePut: Put[NonNegDouble] = numeric.derivedNonNegDoublePut
+  given derivedNonNegDoubleGet: Get[NonNegDouble] = numeric.derivedNonNegDoubleGet
+  given derivedNonNegDoublePut: Put[NonNegDouble] = numeric.derivedNonNegDoublePut
 
-  inline given derivedPosDoubleGet: Get[PosDouble] = numeric.derivedPosDoubleGet
-  inline given derivedPosDoublePut: Put[PosDouble] = numeric.derivedPosDoublePut
+  given derivedPosDoubleGet: Get[PosDouble] = numeric.derivedPosDoubleGet
+  given derivedPosDoublePut: Put[PosDouble] = numeric.derivedPosDoublePut
 
-  inline given derivedNonPosDoubleGet: Get[NonPosDouble] = numeric.derivedNonPosDoubleGet
-  inline given derivedNonPosDoublePut: Put[NonPosDouble] = numeric.derivedNonPosDoublePut
+  given derivedNonPosDoubleGet: Get[NonPosDouble] = numeric.derivedNonPosDoubleGet
+  given derivedNonPosDoublePut: Put[NonPosDouble] = numeric.derivedNonPosDoublePut
 
-  inline given derivedNegBigIntGet: Get[NegBigInt] = numeric.derivedNegBigIntGet
-  inline given derivedNegBigIntPut: Put[NegBigInt] = numeric.derivedNegBigIntPut
+  given derivedNegBigIntGet: Get[NegBigInt] = numeric.derivedNegBigIntGet
+  given derivedNegBigIntPut: Put[NegBigInt] = numeric.derivedNegBigIntPut
 
-  inline given derivedNonNegBigIntGet: Get[NonNegBigInt] = numeric.derivedNonNegBigIntGet
-  inline given derivedNonNegBigIntPut: Put[NonNegBigInt] = numeric.derivedNonNegBigIntPut
+  given derivedNonNegBigIntGet: Get[NonNegBigInt] = numeric.derivedNonNegBigIntGet
+  given derivedNonNegBigIntPut: Put[NonNegBigInt] = numeric.derivedNonNegBigIntPut
 
-  inline given derivedPosBigIntGet: Get[PosBigInt] = numeric.derivedPosBigIntGet
-  inline given derivedPosBigIntPut: Put[PosBigInt] = numeric.derivedPosBigIntPut
+  given derivedPosBigIntGet: Get[PosBigInt] = numeric.derivedPosBigIntGet
+  given derivedPosBigIntPut: Put[PosBigInt] = numeric.derivedPosBigIntPut
 
-  inline given derivedNonPosBigIntGet: Get[NonPosBigInt] = numeric.derivedNonPosBigIntGet
-  inline given derivedNonPosBigIntPut: Put[NonPosBigInt] = numeric.derivedNonPosBigIntPut
+  given derivedNonPosBigIntGet: Get[NonPosBigInt] = numeric.derivedNonPosBigIntGet
+  given derivedNonPosBigIntPut: Put[NonPosBigInt] = numeric.derivedNonPosBigIntPut
 
-  inline given derivedNegBigDecimalGet: Get[NegBigDecimal] = numeric.derivedNegBigDecimalGet
-  inline given derivedNegBigDecimalPut: Put[NegBigDecimal] = numeric.derivedNegBigDecimalPut
+  given derivedNegBigDecimalGet: Get[NegBigDecimal] = numeric.derivedNegBigDecimalGet
+  given derivedNegBigDecimalPut: Put[NegBigDecimal] = numeric.derivedNegBigDecimalPut
 
-  inline given derivedNonNegBigDecimalGet: Get[NonNegBigDecimal] = numeric.derivedNonNegBigDecimalGet
-  inline given derivedNonNegBigDecimalPut: Put[NonNegBigDecimal] = numeric.derivedNonNegBigDecimalPut
+  given derivedNonNegBigDecimalGet: Get[NonNegBigDecimal] = numeric.derivedNonNegBigDecimalGet
+  given derivedNonNegBigDecimalPut: Put[NonNegBigDecimal] = numeric.derivedNonNegBigDecimalPut
 
-  inline given derivedPosBigDecimalGet: Get[PosBigDecimal] = numeric.derivedPosBigDecimalGet
-  inline given derivedPosBigDecimalPut: Put[PosBigDecimal] = numeric.derivedPosBigDecimalPut
+  given derivedPosBigDecimalGet: Get[PosBigDecimal] = numeric.derivedPosBigDecimalGet
+  given derivedPosBigDecimalPut: Put[PosBigDecimal] = numeric.derivedPosBigDecimalPut
 
-  inline given derivedNonPosBigDecimalGet: Get[NonPosBigDecimal] = numeric.derivedNonPosBigDecimalGet
-  inline given derivedNonPosBigDecimalPut: Put[NonPosBigDecimal] = numeric.derivedNonPosBigDecimalPut
+  given derivedNonPosBigDecimalGet: Get[NonPosBigDecimal] = numeric.derivedNonPosBigDecimalGet
+  given derivedNonPosBigDecimalPut: Put[NonPosBigDecimal] = numeric.derivedNonPosBigDecimalPut
 
 }
 object numeric {

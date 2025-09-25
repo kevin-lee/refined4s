@@ -31,7 +31,7 @@ object allSpec extends Properties {
       uuidSpec.tests ++
       uriSpec.tests ++
       urlSpec.tests ++
-      portNumberSpec.tests ++ systemPortNumberSpec.tests ++ userPortNumberSpec.tests ++ dynamicPortNumberSpec.tests ++
+      portNumberSpec.tests ++ systemPortNumberSpec.tests ++ nonSystemPortNumberSpec.tests ++ userPortNumberSpec.tests ++ dynamicPortNumberSpec.tests ++
       timeSpec.tests
 
   object negIntSpec {

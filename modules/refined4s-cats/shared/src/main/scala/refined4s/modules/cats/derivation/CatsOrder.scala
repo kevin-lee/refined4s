@@ -9,5 +9,5 @@ import refined4s.*
 trait CatsOrder[A: Order] {
   self: NewtypeBase[A] =>
 
-  inline given derivedOrder: Order[Type] = deriving[Order]
+  given derivedOrder: Order[Type] = deriving[Order]
 }

@@ -3,7 +3,6 @@ package refined4s.modules.doobie.derivation.types
 import cats.effect.ContextShift
 import cats.syntax.all.*
 import doobie.syntax.all.*
-import doobie.{Get, Put}
 import extras.doobie.RunWithDb
 import extras.doobie.ce2.DbTools
 import extras.runner.ce2.RunSyncCe2

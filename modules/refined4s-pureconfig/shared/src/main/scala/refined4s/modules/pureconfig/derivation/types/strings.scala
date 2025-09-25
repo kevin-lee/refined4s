@@ -10,14 +10,14 @@ import refined4s.types.strings.*
   */
 trait strings {
 
-  inline given derivedNonEmptyStringConfigReader: ConfigReader[NonEmptyString] = strings.derivedNonEmptyStringConfigReader
-  inline given derivedNonEmptyStringConfigWriter: ConfigWriter[NonEmptyString] = strings.derivedNonEmptyStringConfigWriter
+  given derivedNonEmptyStringConfigReader: ConfigReader[NonEmptyString] = strings.derivedNonEmptyStringConfigReader
+  given derivedNonEmptyStringConfigWriter: ConfigWriter[NonEmptyString] = strings.derivedNonEmptyStringConfigWriter
 
-  inline given derivedNonBlankStringConfigReader: ConfigReader[NonBlankString] = strings.derivedNonBlankStringConfigReader
-  inline given derivedNonBlankStringConfigWriter: ConfigWriter[NonBlankString] = strings.derivedNonBlankStringConfigWriter
+  given derivedNonBlankStringConfigReader: ConfigReader[NonBlankString] = strings.derivedNonBlankStringConfigReader
+  given derivedNonBlankStringConfigWriter: ConfigWriter[NonBlankString] = strings.derivedNonBlankStringConfigWriter
 
-  inline given derivedUuidConfigReader: ConfigReader[Uuid] = strings.derivedUuidConfigReader
-  inline given derivedUuidConfigWriter: ConfigWriter[Uuid] = strings.derivedUuidConfigWriter
+  given derivedUuidConfigReader: ConfigReader[Uuid] = strings.derivedUuidConfigReader
+  given derivedUuidConfigWriter: ConfigWriter[Uuid] = strings.derivedUuidConfigWriter
 
 }
 object strings {

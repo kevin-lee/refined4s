@@ -10,25 +10,25 @@ import refined4s.types.strings.*
 trait strings {
 
   /* NonEmptyString */
-  inline given derivedNonEmptyStringEncoder: Encoder[NonEmptyString] = strings.derivedNonEmptyStringEncoder
-  inline given derivedNonEmptyStringDecoder: Decoder[NonEmptyString] = strings.derivedNonEmptyStringDecoder
+  given derivedNonEmptyStringEncoder: Encoder[NonEmptyString] = strings.derivedNonEmptyStringEncoder
+  given derivedNonEmptyStringDecoder: Decoder[NonEmptyString] = strings.derivedNonEmptyStringDecoder
 
-  inline given derivedNonEmptyStringKeyEncoder: KeyEncoder[NonEmptyString] = strings.derivedNonEmptyStringKeyEncoder
-  inline given derivedNonEmptyStringKeyDecoder: KeyDecoder[NonEmptyString] = strings.derivedNonEmptyStringKeyDecoder
+  given derivedNonEmptyStringKeyEncoder: KeyEncoder[NonEmptyString] = strings.derivedNonEmptyStringKeyEncoder
+  given derivedNonEmptyStringKeyDecoder: KeyDecoder[NonEmptyString] = strings.derivedNonEmptyStringKeyDecoder
 
   /* NonBlankString */
-  inline given derivedNonBlankStringEncoder: Encoder[NonBlankString] = strings.derivedNonBlankStringEncoder
-  inline given derivedNonBlankStringDecoder: Decoder[NonBlankString] = strings.derivedNonBlankStringDecoder
+  given derivedNonBlankStringEncoder: Encoder[NonBlankString] = strings.derivedNonBlankStringEncoder
+  given derivedNonBlankStringDecoder: Decoder[NonBlankString] = strings.derivedNonBlankStringDecoder
 
-  inline given derivedNonBlankStringKeyEncoder: KeyEncoder[NonBlankString] = strings.derivedNonBlankStringKeyEncoder
-  inline given derivedNonBlankStringKeyDecoder: KeyDecoder[NonBlankString] = strings.derivedNonBlankStringKeyDecoder
+  given derivedNonBlankStringKeyEncoder: KeyEncoder[NonBlankString] = strings.derivedNonBlankStringKeyEncoder
+  given derivedNonBlankStringKeyDecoder: KeyDecoder[NonBlankString] = strings.derivedNonBlankStringKeyDecoder
 
   /* Uuid */
-  inline given derivedUuidEncoder: Encoder[Uuid] = strings.derivedUuidEncoder
-  inline given derivedUuidDecoder: Decoder[Uuid] = strings.derivedUuidDecoder
+  given derivedUuidEncoder: Encoder[Uuid] = strings.derivedUuidEncoder
+  given derivedUuidDecoder: Decoder[Uuid] = strings.derivedUuidDecoder
 
-  inline given derivedUuidKeyEncoder: KeyEncoder[Uuid] = strings.derivedUuidKeyEncoder
-  inline given derivedUuidKeyDecoder: KeyDecoder[Uuid] = strings.derivedUuidKeyDecoder
+  given derivedUuidKeyEncoder: KeyEncoder[Uuid] = strings.derivedUuidKeyEncoder
+  given derivedUuidKeyDecoder: KeyDecoder[Uuid] = strings.derivedUuidKeyDecoder
 }
 object strings {
 

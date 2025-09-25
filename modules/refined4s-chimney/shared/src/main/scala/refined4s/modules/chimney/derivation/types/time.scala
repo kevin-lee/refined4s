@@ -9,23 +9,23 @@ import refined4s.types.time.*
   * @since 2025-09-01
   */
 trait time {
-  inline given derivedMonthToIntTransformer: Transformer[Month, Int]               = time.derivedMonthToIntTransformer
-  inline given derivedIntToMonthPartialTransformer: PartialTransformer[Int, Month] = time.derivedIntToMonthPartialTransformer
+  given derivedMonthToIntTransformer: Transformer[Month, Int]               = time.derivedMonthToIntTransformer
+  given derivedIntToMonthPartialTransformer: PartialTransformer[Int, Month] = time.derivedIntToMonthPartialTransformer
 
-  inline given derivedDayToIntTransformer: Transformer[Day, Int]               = time.derivedDayToIntTransformer
-  inline given derivedIntToDayPartialTransformer: PartialTransformer[Int, Day] = time.derivedIntToDayPartialTransformer
+  given derivedDayToIntTransformer: Transformer[Day, Int]               = time.derivedDayToIntTransformer
+  given derivedIntToDayPartialTransformer: PartialTransformer[Int, Day] = time.derivedIntToDayPartialTransformer
 
-  inline given derivedHourToIntTransformer: Transformer[Hour, Int]               = time.derivedHourToIntTransformer
-  inline given derivedIntToHourPartialTransformer: PartialTransformer[Int, Hour] = time.derivedIntToHourPartialTransformer
+  given derivedHourToIntTransformer: Transformer[Hour, Int]               = time.derivedHourToIntTransformer
+  given derivedIntToHourPartialTransformer: PartialTransformer[Int, Hour] = time.derivedIntToHourPartialTransformer
 
-  inline given derivedMinuteToIntTransformer: Transformer[Minute, Int]               = time.derivedMinuteToIntTransformer
-  inline given derivedIntToMinutePartialTransformer: PartialTransformer[Int, Minute] = time.derivedIntToMinutePartialTransformer
+  given derivedMinuteToIntTransformer: Transformer[Minute, Int]               = time.derivedMinuteToIntTransformer
+  given derivedIntToMinutePartialTransformer: PartialTransformer[Int, Minute] = time.derivedIntToMinutePartialTransformer
 
-  inline given derivedSecondToIntTransformer: Transformer[Second, Int]               = time.derivedSecondToIntTransformer
-  inline given derivedIntToSecondPartialTransformer: PartialTransformer[Int, Second] = time.derivedIntToSecondPartialTransformer
+  given derivedSecondToIntTransformer: Transformer[Second, Int]               = time.derivedSecondToIntTransformer
+  given derivedIntToSecondPartialTransformer: PartialTransformer[Int, Second] = time.derivedIntToSecondPartialTransformer
 
-  inline given derivedMillisToIntTransformer: Transformer[Millis, Int]               = time.derivedMillisToIntTransformer
-  inline given derivedIntToMillisPartialTransformer: PartialTransformer[Int, Millis] = time.derivedIntToMillisPartialTransformer
+  given derivedMillisToIntTransformer: Transformer[Millis, Int]               = time.derivedMillisToIntTransformer
+  given derivedIntToMillisPartialTransformer: PartialTransformer[Int, Millis] = time.derivedIntToMillisPartialTransformer
 
 }
 object time {

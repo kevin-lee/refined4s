@@ -8,11 +8,11 @@ import refined4s.types.strings.*
   */
 trait strings {
 
-  inline given derivedNonEmptyStringRender: Render[NonEmptyString] = strings.derivedNonEmptyStringRender
+  given derivedNonEmptyStringRender: Render[NonEmptyString] = strings.derivedNonEmptyStringRender
 
-  inline given derivedNonBlankStringRender: Render[NonBlankString] = strings.derivedNonBlankStringRender
+  given derivedNonBlankStringRender: Render[NonBlankString] = strings.derivedNonBlankStringRender
 
-  inline given derivedUuidRender: Render[Uuid] = strings.derivedUuidRender
+  given derivedUuidRender: Render[Uuid] = strings.derivedUuidRender
 
 }
 object strings {

@@ -26,7 +26,7 @@ trait auto {
       }
     }
 
-  inline given derivedConfigWriter[A, B](using coercible: Coercible[A, B], configWriter: ConfigWriter[B]): ConfigWriter[A] with {
+  given derivedConfigWriter[A, B](using coercible: Coercible[A, B], configWriter: ConfigWriter[B]): ConfigWriter[A] with {
     override inline def to(a: A): ConfigValue =
       configWriter.to(coercible(a))
   }

@@ -147,9 +147,11 @@ object autoSpec extends Properties {
     property("test Show[NonPosBigDecimal]", testShowNonPosBigDecimal),
     //
     property("test Eq[NonEmptyString]", testEqNonEmptyString),
+    property("test Order[NonEmptyString]", testOrderNonEmptyString),
     property("test Show[NonEmptyString]", testShowNonEmptyString),
     //
     property("test Eq[NonBlankString]", testEqNonBlankString),
+    property("test Order[NonBlankString]", testOrderNonBlankString),
     property("test Show[NonBlankString]", testShowNonBlankString),
     //
     property("test Eq[Uri]", testEqUri),
@@ -179,6 +181,8 @@ object autoSpec extends Properties {
     property("test Eq[MyNum]", testEqMyNum),
     property("test Order[MyNum]", testOrderMyNum),
     property("test Show[MyNum]", testShowMyNum),
+    //
+    property("test Eq[MyType] with MyType(MyTypeWithEq) where MyTypeWithEq has its own Eq", testEqMyType),
   )
 
   def testEqNegInt: Property =
@@ -190,7 +194,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NegInt(value) === NegInt(value)", actual, expected)(_ === _)
+      Result.diffNamed("NegInt(value) === NegInt(value)", actual, expected)(Eq[NegInt].eqv(_, _))
     }
 
   def testOrderNegInt: Property =
@@ -226,7 +230,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NegInt(value) === NegInt(value)", actual, expected)(_ === _)
+      Result.diffNamed("NonNegInt(value) === NonNegInt(value)", actual, expected)(Eq[NonNegInt].eqv(_, _))
     }
 
   def testOrderNonNegInt: Property =
@@ -262,7 +266,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("PosInt(value) === PosInt(value)", actual, expected)(_ === _)
+      Result.diffNamed("PosInt(value) === PosInt(value)", actual, expected)(Eq[PosInt].eqv(_, _))
     }
 
   def testOrderPosInt: Property =
@@ -298,7 +302,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NonPosInt(value) === NonPosInt(value)", actual, expected)(_ === _)
+      Result.diffNamed("NonPosInt(value) === NonPosInt(value)", actual, expected)(Eq[NonPosInt].eqv(_, _))
     }
 
   def testOrderNonPosInt: Property =
@@ -334,7 +338,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NegLong(value) === NegLong(value)", actual, expected)(_ === _)
+      Result.diffNamed("NegLong(value) === NegLong(value)", actual, expected)(Eq[NegLong].eqv(_, _))
     }
 
   def testOrderNegLong: Property =
@@ -370,7 +374,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NonNegLong(value) === NonNegLong(value)", actual, expected)(_ === _)
+      Result.diffNamed("NonNegLong(value) === NonNegLong(value)", actual, expected)(Eq[NonNegLong].eqv(_, _))
     }
 
   def testOrderNonNegLong: Property =
@@ -406,7 +410,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("PosLong(value) === PosLong(value)", actual, expected)(_ === _)
+      Result.diffNamed("PosLong(value) === PosLong(value)", actual, expected)(Eq[PosLong].eqv(_, _))
     }
 
   def testOrderPosLong: Property =
@@ -442,7 +446,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NonPosLong(value) === NonPosLong(value)", actual, expected)(_ === _)
+      Result.diffNamed("NonPosLong(value) === NonPosLong(value)", actual, expected)(Eq[NonPosLong].eqv(_, _))
     }
 
   def testOrderNonPosLong: Property =
@@ -478,7 +482,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NegShort(value) === NegShort(value)", actual, expected)(_ === _)
+      Result.diffNamed("NegShort(value) === NegShort(value)", actual, expected)(Eq[NegShort].eqv(_, _))
     }
 
   def testOrderNegShort: Property =
@@ -514,7 +518,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NonNegShort(value) === NonNegShort(value)", actual, expected)(_ === _)
+      Result.diffNamed("NonNegShort(value) === NonNegShort(value)", actual, expected)(Eq[NonNegShort].eqv(_, _))
     }
 
   def testOrderNonNegShort: Property =
@@ -550,7 +554,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("PosShort(value) === PosShort(value)", actual, expected)(_ === _)
+      Result.diffNamed("PosShort(value) === PosShort(value)", actual, expected)(Eq[PosShort].eqv(_, _))
     }
 
   def testOrderPosShort: Property =
@@ -586,7 +590,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NonPosShort(value) === NonPosShort(value)", actual, expected)(_ === _)
+      Result.diffNamed("NonPosShort(value) === NonPosShort(value)", actual, expected)(Eq[NonPosShort].eqv(_, _))
     }
 
   def testOrderNonPosShort: Property =
@@ -622,7 +626,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NegByte(value) === NegByte(value)", actual, expected)(_ === _)
+      Result.diffNamed("NegByte(value) === NegByte(value)", actual, expected)(Eq[NegByte].eqv(_, _))
     }
 
   def testOrderNegByte: Property =
@@ -658,7 +662,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NonNegByte(value) === NonNegByte(value)", actual, expected)(_ === _)
+      Result.diffNamed("NonNegByte(value) === NonNegByte(value)", actual, expected)(Eq[NonNegByte].eqv(_, _))
     }
 
   def testOrderNonNegByte: Property =
@@ -694,7 +698,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("PosByte(value) === PosByte(value)", actual, expected)(_ === _)
+      Result.diffNamed("PosByte(value) === PosByte(value)", actual, expected)(Eq[PosByte].eqv(_, _))
     }
 
   def testOrderPosByte: Property =
@@ -730,7 +734,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NonPosByte(value) === NonPosByte(value)", actual, expected)(_ === _)
+      Result.diffNamed("NonPosByte(value) === NonPosByte(value)", actual, expected)(Eq[NonPosByte].eqv(_, _))
     }
 
   def testOrderNonPosByte: Property =
@@ -766,7 +770,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NegFloat(value) === NegFloat(value)", actual, expected)(_ === _)
+      Result.diffNamed("NegFloat(value) === NegFloat(value)", actual, expected)(Eq[NegFloat].eqv(_, _))
     }
 
   def testOrderNegFloat: Property =
@@ -802,7 +806,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NonNegFloat(value) === NonNegFloat(value)", actual, expected)(_ === _)
+      Result.diffNamed("NonNegFloat(value) === NonNegFloat(value)", actual, expected)(Eq[NonNegFloat].eqv(_, _))
     }
 
   def testOrderNonNegFloat: Property =
@@ -838,7 +842,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("PosFloat(value) === PosFloat(value)", actual, expected)(_ === _)
+      Result.diffNamed("PosFloat(value) === PosFloat(value)", actual, expected)(Eq[PosFloat].eqv(_, _))
     }
 
   def testOrderPosFloat: Property =
@@ -874,7 +878,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NonPosFloat(value) === NonPosFloat(value)", actual, expected)(_ === _)
+      Result.diffNamed("NonPosFloat(value) === NonPosFloat(value)", actual, expected)(Eq[NonPosFloat].eqv(_, _))
     }
 
   def testOrderNonPosFloat: Property =
@@ -910,7 +914,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NegDouble(value) === NegDouble(value)", actual, expected)(_ === _)
+      Result.diffNamed("NegDouble(value) === NegDouble(value)", actual, expected)(Eq[NegDouble].eqv(_, _))
     }
 
   def testOrderNegDouble: Property =
@@ -946,7 +950,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NonNegDouble(value) === NonNegDouble(value)", actual, expected)(_ === _)
+      Result.diffNamed("NonNegDouble(value) === NonNegDouble(value)", actual, expected)(Eq[NonNegDouble].eqv(_, _))
     }
 
   def testOrderNonNegDouble: Property =
@@ -982,7 +986,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("PosDouble(value) === PosDouble(value)", actual, expected)(_ === _)
+      Result.diffNamed("PosDouble(value) === PosDouble(value)", actual, expected)(Eq[PosDouble].eqv(_, _))
     }
 
   def testOrderPosDouble: Property =
@@ -1018,7 +1022,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NonPosDouble(value) === NonPosDouble(value)", actual, expected)(_ === _)
+      Result.diffNamed("NonPosDouble(value) === NonPosDouble(value)", actual, expected)(Eq[NonPosDouble].eqv(_, _))
     }
 
   def testOrderNonPosDouble: Property =
@@ -1054,7 +1058,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NegBigInt(value) === NegBigInt(value)", actual, expected)(_ === _)
+      Result.diffNamed("NegBigInt(value) === NegBigInt(value)", actual, expected)(Eq[NegBigInt].eqv(_, _))
     }
 
   def testOrderNegBigInt: Property =
@@ -1090,7 +1094,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NonNegBigInt(value) === NonNegBigInt(value)", actual, expected)(_ === _)
+      Result.diffNamed("NonNegBigInt(value) === NonNegBigInt(value)", actual, expected)(Eq[NonNegBigInt].eqv(_, _))
     }
 
   def testOrderNonNegBigInt: Property =
@@ -1126,7 +1130,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("PosBigInt(value) === PosBigInt(value)", actual, expected)(_ === _)
+      Result.diffNamed("PosBigInt(value) === PosBigInt(value)", actual, expected)(Eq[PosBigInt].eqv(_, _))
     }
 
   def testOrderPosBigInt: Property =
@@ -1162,7 +1166,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NonPosBigInt(value) === NonPosBigInt(value)", actual, expected)(_ === _)
+      Result.diffNamed("NonPosBigInt(value) === NonPosBigInt(value)", actual, expected)(Eq[NonPosBigInt].eqv(_, _))
     }
 
   def testOrderNonPosBigInt: Property =
@@ -1198,7 +1202,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NegBigDecimal(value) === NegBigDecimal(value)", actual, expected)(_ === _)
+      Result.diffNamed("NegBigDecimal(value) === NegBigDecimal(value)", actual, expected)(Eq[NegBigDecimal].eqv(_, _))
     }
 
   def testOrderNegBigDecimal: Property =
@@ -1234,7 +1238,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NonNegBigDecimal(value) === NonNegBigDecimal(value)", actual, expected)(_ === _)
+      Result.diffNamed("NonNegBigDecimal(value) === NonNegBigDecimal(value)", actual, expected)(Eq[NonNegBigDecimal].eqv(_, _))
     }
 
   def testOrderNonNegBigDecimal: Property =
@@ -1270,7 +1274,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("PosBigDecimal(value) === PosBigDecimal(value)", actual, expected)(_ === _)
+      Result.diffNamed("PosBigDecimal(value) === PosBigDecimal(value)", actual, expected)(Eq[PosBigDecimal].eqv(_, _))
     }
 
   def testOrderPosBigDecimal: Property =
@@ -1306,7 +1310,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NonPosBigDecimal(value) === NonPosBigDecimal(value)", actual, expected)(_ === _)
+      Result.diffNamed("NonPosBigDecimal(value) === NonPosBigDecimal(value)", actual, expected)(Eq[NonPosBigDecimal].eqv(_, _))
     }
 
   def testOrderNonPosBigDecimal: Property =
@@ -1342,7 +1346,22 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NonEmptyString(value) === NonEmptyString(value)", actual, expected)(_ === _)
+      Result.diffNamed("NonEmptyString(value) === NonEmptyString(value)", actual, expected)(Eq[NonEmptyString].eqv(_, _))
+    }
+
+  def testOrderNonEmptyString: Property =
+    for {
+      s1 <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s1")
+      s2 <- Gen.string(Gen.unicode, Range.linear(1, 10)).log("s2")
+    } yield {
+      val input1 = NonEmptyString.unsafeFrom(s1)
+      val input2 = NonEmptyString.unsafeFrom(s2)
+
+      val expected = s1.compare(s2)
+
+      Result.diffNamed(show"Comparing $input1 and $input2 with Order[NonEmptyString]", input1, input2)(
+        Order[NonEmptyString].compare(_, _) === expected
+      )
     }
 
   def testShowNonEmptyString: Property =
@@ -1374,7 +1393,39 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("NonEmptyString(value) === NonEmptyString(value)", actual, expected)(_ === _)
+      Result.diffNamed("NonBlankString(value) === NonBlankString(value)", actual, expected)(Eq[NonBlankString].eqv(_, _))
+    }
+
+  def testOrderNonBlankString: Property =
+    for {
+      nonWhitespaceString1 <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("nonWhitespaceString1")
+      whitespaceString1    <- Gen
+                                .string(
+                                  hedgehog.extra.Gens.genCharByRange(refined4s.types.strings.WhitespaceCharRange),
+                                  Range.linear(1, 10),
+                                )
+                                .log("whitespaceString1")
+
+      s1 <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString1 + whitespaceString1).toList).mkString).log("s1")
+
+      nonWhitespaceString2 <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("nonWhitespaceString2")
+      whitespaceString2    <- Gen
+                                .string(
+                                  hedgehog.extra.Gens.genCharByRange(refined4s.types.strings.WhitespaceCharRange),
+                                  Range.linear(1, 10),
+                                )
+                                .log("whitespaceString2")
+
+      s2 <- Gen.constant(scala.util.Random.shuffle((nonWhitespaceString2 + whitespaceString2).toList).mkString).log("s2")
+    } yield {
+      val input1 = NonBlankString.unsafeFrom(s1)
+      val input2 = NonBlankString.unsafeFrom(s2)
+
+      val expected = s1.compare(s2)
+
+      Result.diffNamed(show"Comparing $input1 and $input2 with Order[NonBlankString]", input1, input2)(
+        Order[NonBlankString].compare(_, _) === expected
+      )
     }
 
   def testShowNonBlankString: Property =
@@ -1406,7 +1457,7 @@ object autoSpec extends Properties {
       val expected = input
       val actual   = input
 
-      Result.diffNamed("Uri(value) === Uri(value)", actual, expected)(_ === _)
+      Result.diffNamed("Uri(value) === Uri(value)", actual, expected)(Eq[Uri].eqv(_, _))
     }
 
   def testShowUri: Property =
@@ -1436,8 +1487,8 @@ object autoSpec extends Properties {
       val input2 = PortNumber.unsafeFrom(portNumber2)
       Result.all(
         List(
-          Result.diffNamed("Comparing the same objects with ===", input1, input1)(_ === _),
-          Result.diffNamed("Comparing the different objects with =!=", input2, input2)(_ === _),
+          Result.diffNamed("Comparing the same objects with ===", input1, input1)(Eq[PortNumber].eqv(_, _)),
+          Result.diffNamed("Comparing the different objects with =!=", input1, input2)(Eq[PortNumber].neqv(_, _)),
         )
       )
     }
@@ -1487,8 +1538,8 @@ object autoSpec extends Properties {
       val input2 = SystemPortNumber.unsafeFrom(systemPortNumber2)
       Result.all(
         List(
-          Result.diffNamed("Comparing the same objects with ===", input1, input1)(_ === _),
-          Result.diffNamed("Comparing the different objects with =!=", input2, input2)(_ === _),
+          Result.diffNamed("Comparing the same objects with ===", input1, input1)(Eq[SystemPortNumber].eqv(_, _)),
+          Result.diffNamed("Comparing the different objects with =!=", input1, input2)(Eq[SystemPortNumber].neqv(_, _)),
         )
       )
     }
@@ -1538,8 +1589,8 @@ object autoSpec extends Properties {
       val input2 = NonSystemPortNumber.unsafeFrom(nonSystemPortNumber2)
       Result.all(
         List(
-          Result.diffNamed("Comparing the same objects with ===", input1, input1)(_ === _),
-          Result.diffNamed("Comparing the different objects with =!=", input2, input2)(_ === _),
+          Result.diffNamed("Comparing the same objects with ===", input1, input1)(Eq[NonSystemPortNumber].eqv(_, _)),
+          Result.diffNamed("Comparing the different objects with =!=", input1, input2)(Eq[NonSystemPortNumber].neqv(_, _)),
         )
       )
     }
@@ -1589,8 +1640,8 @@ object autoSpec extends Properties {
       val input2 = UserPortNumber.unsafeFrom(userPortNumber2)
       Result.all(
         List(
-          Result.diffNamed("Comparing the same objects with ===", input1, input1)(_ === _),
-          Result.diffNamed("Comparing the different objects with =!=", input2, input2)(_ === _),
+          Result.diffNamed("Comparing the same objects with ===", input1, input1)(Eq[UserPortNumber].eqv(_, _)),
+          Result.diffNamed("Comparing the different objects with =!=", input1, input2)(Eq[UserPortNumber].neqv(_, _)),
         )
       )
     }
@@ -1640,8 +1691,8 @@ object autoSpec extends Properties {
       val input2 = DynamicPortNumber.unsafeFrom(dynamicPortNumber2)
       Result.all(
         List(
-          Result.diffNamed("Comparing the same objects with ===", input1, input1)(_ === _),
-          Result.diffNamed("Comparing the different objects with =!=", input2, input2)(_ === _),
+          Result.diffNamed("Comparing the same objects with ===", input1, input1)(Eq[DynamicPortNumber].eqv(_, _)),
+          Result.diffNamed("Comparing the different objects with =!=", input1, input2)(Eq[DynamicPortNumber].neqv(_, _)),
         )
       )
     }
@@ -1688,8 +1739,8 @@ object autoSpec extends Properties {
       val input2 = MyNum(n2)
       Result.all(
         List(
-          Result.diffNamed("Comparing the same objects with ===", input1, input1)(_ === _),
-          Result.diffNamed("Comparing the different objects with =!=", input2, input2)(_ === _),
+          Result.diffNamed("Comparing the same objects with ===", input1, input1)(Eq[MyNum].eqv(_, _)),
+          Result.diffNamed("Comparing the different objects with =!=", input1, input2)(Eq[MyNum].neqv(_, _)),
         )
       )
     }
@@ -1710,7 +1761,6 @@ object autoSpec extends Properties {
     for {
       dynamicPortNumber <- networkGens.genDynamicPortNumberInt.log("dynamicPortNumber")
     } yield {
-
       val input = DynamicPortNumber.unsafeFrom(dynamicPortNumber)
 
       val expected = dynamicPortNumber.toString
@@ -1719,6 +1769,33 @@ object autoSpec extends Properties {
       actual ==== expected
     }
 
+  def testEqMyType: Property =
+    for {
+      b1 <- Gen.boolean.log("b1")
+      b2 <- Gen.constant(if b1 then false else true).log("b2")
+    } yield {
+      val input1 = MyType(MyTypeWithEq(b1))
+      val input2 = MyType(MyTypeWithEq(b2))
+      Result.all(
+        List(
+          Result.diffNamed("Comparing the same objects with ===", input1, input1)(Eq[MyType].eqv(_, _)),
+          Result.diffNamed("Comparing the different objects with =!=", input1, input2)(Eq[MyType].neqv(_, _)),
+        )
+      )
+    }
+
   type MyNum = MyNum.Type
   object MyNum extends Newtype[Int]
+
+  final case class MyTypeWithEq(value: Boolean)
+  object MyTypeWithEq {
+    given eqMyTypeWithEq: Eq[MyTypeWithEq] with {
+      override def eqv(x: MyTypeWithEq, y: MyTypeWithEq): Boolean = {
+        x.value === y.value
+      }
+    }
+  }
+
+  type MyType = MyType.Type
+  object MyType extends Newtype[MyTypeWithEq]
 }

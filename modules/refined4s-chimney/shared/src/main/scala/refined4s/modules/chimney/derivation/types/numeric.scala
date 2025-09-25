@@ -9,108 +9,108 @@ import refined4s.types.numeric.*
   */
 trait numeric {
 
-  inline given derivedNegIntTransformer: Transformer[NegInt, Int]               = numeric.derivedNegIntTransformer
-  inline given derivedNegIntPartialTransformer: PartialTransformer[Int, NegInt] = numeric.derivedNegIntPartialTransformer
+  given derivedNegIntTransformer: Transformer[NegInt, Int]               = numeric.derivedNegIntTransformer
+  given derivedNegIntPartialTransformer: PartialTransformer[Int, NegInt] = numeric.derivedNegIntPartialTransformer
 
-  inline given derivedNonNegIntTransformer: Transformer[NonNegInt, Int]               = numeric.derivedNonNegIntTransformer
-  inline given derivedNonNegIntPartialTransformer: PartialTransformer[Int, NonNegInt] = numeric.derivedNonNegIntPartialTransformer
+  given derivedNonNegIntTransformer: Transformer[NonNegInt, Int]               = numeric.derivedNonNegIntTransformer
+  given derivedNonNegIntPartialTransformer: PartialTransformer[Int, NonNegInt] = numeric.derivedNonNegIntPartialTransformer
 
-  inline given derivedPosIntTransformer: Transformer[PosInt, Int]               = numeric.derivedPosIntTransformer
-  inline given derivedPosIntPartialTransformer: PartialTransformer[Int, PosInt] = numeric.derivedPosIntPartialTransformer
+  given derivedPosIntTransformer: Transformer[PosInt, Int]               = numeric.derivedPosIntTransformer
+  given derivedPosIntPartialTransformer: PartialTransformer[Int, PosInt] = numeric.derivedPosIntPartialTransformer
 
-  inline given derivedNonPosIntTransformer: Transformer[NonPosInt, Int]               = numeric.derivedNonPosIntTransformer
-  inline given derivedNonPosIntPartialTransformer: PartialTransformer[Int, NonPosInt] = numeric.derivedNonPosIntPartialTransformer
+  given derivedNonPosIntTransformer: Transformer[NonPosInt, Int]               = numeric.derivedNonPosIntTransformer
+  given derivedNonPosIntPartialTransformer: PartialTransformer[Int, NonPosInt] = numeric.derivedNonPosIntPartialTransformer
 
-  inline given derivedNegLongTransformer: Transformer[NegLong, Long]               = numeric.derivedNegLongTransformer
-  inline given derivedNegLongPartialTransformer: PartialTransformer[Long, NegLong] = numeric.derivedNegLongPartialTransformer
+  given derivedNegLongTransformer: Transformer[NegLong, Long]               = numeric.derivedNegLongTransformer
+  given derivedNegLongPartialTransformer: PartialTransformer[Long, NegLong] = numeric.derivedNegLongPartialTransformer
 
-  inline given derivedNonNegLongTransformer: Transformer[NonNegLong, Long]               = numeric.derivedNonNegLongTransformer
-  inline given derivedNonNegLongPartialTransformer: PartialTransformer[Long, NonNegLong] = numeric.derivedNonNegLongPartialTransformer
+  given derivedNonNegLongTransformer: Transformer[NonNegLong, Long]               = numeric.derivedNonNegLongTransformer
+  given derivedNonNegLongPartialTransformer: PartialTransformer[Long, NonNegLong] = numeric.derivedNonNegLongPartialTransformer
 
-  inline given derivedPosLongTransformer: Transformer[PosLong, Long]               = numeric.derivedPosLongTransformer
-  inline given derivedPosLongPartialTransformer: PartialTransformer[Long, PosLong] = numeric.derivedPosLongPartialTransformer
+  given derivedPosLongTransformer: Transformer[PosLong, Long]               = numeric.derivedPosLongTransformer
+  given derivedPosLongPartialTransformer: PartialTransformer[Long, PosLong] = numeric.derivedPosLongPartialTransformer
 
-  inline given derivedNonPosLongTransformer: Transformer[NonPosLong, Long]               = numeric.derivedNonPosLongTransformer
-  inline given derivedNonPosLongPartialTransformer: PartialTransformer[Long, NonPosLong] = numeric.derivedNonPosLongPartialTransformer
+  given derivedNonPosLongTransformer: Transformer[NonPosLong, Long]               = numeric.derivedNonPosLongTransformer
+  given derivedNonPosLongPartialTransformer: PartialTransformer[Long, NonPosLong] = numeric.derivedNonPosLongPartialTransformer
 
-  inline given derivedNegShortTransformer: Transformer[NegShort, Short]               = numeric.derivedNegShortTransformer
-  inline given derivedNegShortPartialTransformer: PartialTransformer[Short, NegShort] = numeric.derivedNegShortPartialTransformer
+  given derivedNegShortTransformer: Transformer[NegShort, Short]               = numeric.derivedNegShortTransformer
+  given derivedNegShortPartialTransformer: PartialTransformer[Short, NegShort] = numeric.derivedNegShortPartialTransformer
 
-  inline given derivedNonNegShortTransformer: Transformer[NonNegShort, Short]               = numeric.derivedNonNegShortTransformer
-  inline given derivedNonNegShortPartialTransformer: PartialTransformer[Short, NonNegShort] = numeric.derivedNonNegShortPartialTransformer
+  given derivedNonNegShortTransformer: Transformer[NonNegShort, Short]               = numeric.derivedNonNegShortTransformer
+  given derivedNonNegShortPartialTransformer: PartialTransformer[Short, NonNegShort] = numeric.derivedNonNegShortPartialTransformer
 
-  inline given derivedPosShortTransformer: Transformer[PosShort, Short]               = numeric.derivedPosShortTransformer
-  inline given derivedPosShortPartialTransformer: PartialTransformer[Short, PosShort] = numeric.derivedPosShortPartialTransformer
+  given derivedPosShortTransformer: Transformer[PosShort, Short]               = numeric.derivedPosShortTransformer
+  given derivedPosShortPartialTransformer: PartialTransformer[Short, PosShort] = numeric.derivedPosShortPartialTransformer
 
-  inline given derivedNonPosShortTransformer: Transformer[NonPosShort, Short]               = numeric.derivedNonPosShortTransformer
-  inline given derivedNonPosShortPartialTransformer: PartialTransformer[Short, NonPosShort] = numeric.derivedNonPosShortPartialTransformer
+  given derivedNonPosShortTransformer: Transformer[NonPosShort, Short]               = numeric.derivedNonPosShortTransformer
+  given derivedNonPosShortPartialTransformer: PartialTransformer[Short, NonPosShort] = numeric.derivedNonPosShortPartialTransformer
 
-  inline given derivedNegByteTransformer: Transformer[NegByte, Byte]               = numeric.derivedNegByteTransformer
-  inline given derivedNegBytePartialTransformer: PartialTransformer[Byte, NegByte] = numeric.derivedNegBytePartialTransformer
+  given derivedNegByteTransformer: Transformer[NegByte, Byte]               = numeric.derivedNegByteTransformer
+  given derivedNegBytePartialTransformer: PartialTransformer[Byte, NegByte] = numeric.derivedNegBytePartialTransformer
 
-  inline given derivedNonNegByteTransformer: Transformer[NonNegByte, Byte]               = numeric.derivedNonNegByteTransformer
-  inline given derivedNonNegBytePartialTransformer: PartialTransformer[Byte, NonNegByte] = numeric.derivedNonNegBytePartialTransformer
+  given derivedNonNegByteTransformer: Transformer[NonNegByte, Byte]               = numeric.derivedNonNegByteTransformer
+  given derivedNonNegBytePartialTransformer: PartialTransformer[Byte, NonNegByte] = numeric.derivedNonNegBytePartialTransformer
 
-  inline given derivedPosByteTransformer: Transformer[PosByte, Byte]               = numeric.derivedPosByteTransformer
-  inline given derivedPosBytePartialTransformer: PartialTransformer[Byte, PosByte] = numeric.derivedPosBytePartialTransformer
+  given derivedPosByteTransformer: Transformer[PosByte, Byte]               = numeric.derivedPosByteTransformer
+  given derivedPosBytePartialTransformer: PartialTransformer[Byte, PosByte] = numeric.derivedPosBytePartialTransformer
 
-  inline given derivedNonPosByteTransformer: Transformer[NonPosByte, Byte]               = numeric.derivedNonPosByteTransformer
-  inline given derivedNonPosBytePartialTransformer: PartialTransformer[Byte, NonPosByte] = numeric.derivedNonPosBytePartialTransformer
+  given derivedNonPosByteTransformer: Transformer[NonPosByte, Byte]               = numeric.derivedNonPosByteTransformer
+  given derivedNonPosBytePartialTransformer: PartialTransformer[Byte, NonPosByte] = numeric.derivedNonPosBytePartialTransformer
 
-  inline given derivedNegFloatTransformer: Transformer[NegFloat, Float]               = numeric.derivedNegFloatTransformer
-  inline given derivedNegFloatPartialTransformer: PartialTransformer[Float, NegFloat] = numeric.derivedNegFloatPartialTransformer
+  given derivedNegFloatTransformer: Transformer[NegFloat, Float]               = numeric.derivedNegFloatTransformer
+  given derivedNegFloatPartialTransformer: PartialTransformer[Float, NegFloat] = numeric.derivedNegFloatPartialTransformer
 
-  inline given derivedNonNegFloatTransformer: Transformer[NonNegFloat, Float]               = numeric.derivedNonNegFloatTransformer
-  inline given derivedNonNegFloatPartialTransformer: PartialTransformer[Float, NonNegFloat] = numeric.derivedNonNegFloatPartialTransformer
+  given derivedNonNegFloatTransformer: Transformer[NonNegFloat, Float]               = numeric.derivedNonNegFloatTransformer
+  given derivedNonNegFloatPartialTransformer: PartialTransformer[Float, NonNegFloat] = numeric.derivedNonNegFloatPartialTransformer
 
-  inline given derivedPosFloatTransformer: Transformer[PosFloat, Float]               = numeric.derivedPosFloatTransformer
-  inline given derivedPosFloatPartialTransformer: PartialTransformer[Float, PosFloat] = numeric.derivedPosFloatPartialTransformer
+  given derivedPosFloatTransformer: Transformer[PosFloat, Float]               = numeric.derivedPosFloatTransformer
+  given derivedPosFloatPartialTransformer: PartialTransformer[Float, PosFloat] = numeric.derivedPosFloatPartialTransformer
 
-  inline given derivedNonPosFloatTransformer: Transformer[NonPosFloat, Float]               = numeric.derivedNonPosFloatTransformer
-  inline given derivedNonPosFloatPartialTransformer: PartialTransformer[Float, NonPosFloat] = numeric.derivedNonPosFloatPartialTransformer
+  given derivedNonPosFloatTransformer: Transformer[NonPosFloat, Float]               = numeric.derivedNonPosFloatTransformer
+  given derivedNonPosFloatPartialTransformer: PartialTransformer[Float, NonPosFloat] = numeric.derivedNonPosFloatPartialTransformer
 
-  inline given derivedNegDoubleTransformer: Transformer[NegDouble, Double]               = numeric.derivedNegDoubleTransformer
-  inline given derivedNegDoublePartialTransformer: PartialTransformer[Double, NegDouble] = numeric.derivedNegDoublePartialTransformer
+  given derivedNegDoubleTransformer: Transformer[NegDouble, Double]               = numeric.derivedNegDoubleTransformer
+  given derivedNegDoublePartialTransformer: PartialTransformer[Double, NegDouble] = numeric.derivedNegDoublePartialTransformer
 
-  inline given derivedNonNegDoubleTransformer: Transformer[NonNegDouble, Double]               = numeric.derivedNonNegDoubleTransformer
-  inline given derivedNonNegDoublePartialTransformer: PartialTransformer[Double, NonNegDouble] =
+  given derivedNonNegDoubleTransformer: Transformer[NonNegDouble, Double]               = numeric.derivedNonNegDoubleTransformer
+  given derivedNonNegDoublePartialTransformer: PartialTransformer[Double, NonNegDouble] =
     numeric.derivedNonNegDoublePartialTransformer
 
-  inline given derivedPosDoubleTransformer: Transformer[PosDouble, Double]               = numeric.derivedPosDoubleTransformer
-  inline given derivedPosDoublePartialTransformer: PartialTransformer[Double, PosDouble] = numeric.derivedPosDoublePartialTransformer
+  given derivedPosDoubleTransformer: Transformer[PosDouble, Double]               = numeric.derivedPosDoubleTransformer
+  given derivedPosDoublePartialTransformer: PartialTransformer[Double, PosDouble] = numeric.derivedPosDoublePartialTransformer
 
-  inline given derivedNonPosDoubleTransformer: Transformer[NonPosDouble, Double]               = numeric.derivedNonPosDoubleTransformer
-  inline given derivedNonPosDoublePartialTransformer: PartialTransformer[Double, NonPosDouble] =
+  given derivedNonPosDoubleTransformer: Transformer[NonPosDouble, Double]               = numeric.derivedNonPosDoubleTransformer
+  given derivedNonPosDoublePartialTransformer: PartialTransformer[Double, NonPosDouble] =
     numeric.derivedNonPosDoublePartialTransformer
 
-  inline given derivedNegBigIntTransformer: Transformer[NegBigInt, BigInt]               = numeric.derivedNegBigIntTransformer
-  inline given derivedNegBigIntPartialTransformer: PartialTransformer[BigInt, NegBigInt] = numeric.derivedNegBigIntPartialTransformer
+  given derivedNegBigIntTransformer: Transformer[NegBigInt, BigInt]               = numeric.derivedNegBigIntTransformer
+  given derivedNegBigIntPartialTransformer: PartialTransformer[BigInt, NegBigInt] = numeric.derivedNegBigIntPartialTransformer
 
-  inline given derivedNonNegBigIntTransformer: Transformer[NonNegBigInt, BigInt]               = numeric.derivedNonNegBigIntTransformer
-  inline given derivedNonNegBigIntPartialTransformer: PartialTransformer[BigInt, NonNegBigInt] =
+  given derivedNonNegBigIntTransformer: Transformer[NonNegBigInt, BigInt]               = numeric.derivedNonNegBigIntTransformer
+  given derivedNonNegBigIntPartialTransformer: PartialTransformer[BigInt, NonNegBigInt] =
     numeric.derivedNonNegBigIntPartialTransformer
 
-  inline given derivedPosBigIntTransformer: Transformer[PosBigInt, BigInt]               = numeric.derivedPosBigIntTransformer
-  inline given derivedPosBigIntPartialTransformer: PartialTransformer[BigInt, PosBigInt] = numeric.derivedPosBigIntPartialTransformer
+  given derivedPosBigIntTransformer: Transformer[PosBigInt, BigInt]               = numeric.derivedPosBigIntTransformer
+  given derivedPosBigIntPartialTransformer: PartialTransformer[BigInt, PosBigInt] = numeric.derivedPosBigIntPartialTransformer
 
-  inline given derivedNonPosBigIntTransformer: Transformer[NonPosBigInt, BigInt]               = numeric.derivedNonPosBigIntTransformer
-  inline given derivedNonPosBigIntPartialTransformer: PartialTransformer[BigInt, NonPosBigInt] =
+  given derivedNonPosBigIntTransformer: Transformer[NonPosBigInt, BigInt]               = numeric.derivedNonPosBigIntTransformer
+  given derivedNonPosBigIntPartialTransformer: PartialTransformer[BigInt, NonPosBigInt] =
     numeric.derivedNonPosBigIntPartialTransformer
 
-  inline given derivedNegBigDecimalTransformer: Transformer[NegBigDecimal, BigDecimal] = numeric.derivedNegBigDecimalTransformer
-  inline given derivedNegBigDecimalPartialTransformer: PartialTransformer[BigDecimal, NegBigDecimal] =
+  given derivedNegBigDecimalTransformer: Transformer[NegBigDecimal, BigDecimal]               = numeric.derivedNegBigDecimalTransformer
+  given derivedNegBigDecimalPartialTransformer: PartialTransformer[BigDecimal, NegBigDecimal] =
     numeric.derivedNegBigDecimalPartialTransformer
 
-  inline given derivedNonNegBigDecimalTransformer: Transformer[NonNegBigDecimal, BigDecimal] = numeric.derivedNonNegBigDecimalTransformer
-  inline given derivedNonNegBigDecimalPartialTransformer: PartialTransformer[BigDecimal, NonNegBigDecimal] =
+  given derivedNonNegBigDecimalTransformer: Transformer[NonNegBigDecimal, BigDecimal] = numeric.derivedNonNegBigDecimalTransformer
+  given derivedNonNegBigDecimalPartialTransformer: PartialTransformer[BigDecimal, NonNegBigDecimal] =
     numeric.derivedNonNegBigDecimalPartialTransformer
 
-  inline given derivedPosBigDecimalTransformer: Transformer[PosBigDecimal, BigDecimal] = numeric.derivedPosBigDecimalTransformer
-  inline given derivedPosBigDecimalPartialTransformer: PartialTransformer[BigDecimal, PosBigDecimal] =
+  given derivedPosBigDecimalTransformer: Transformer[PosBigDecimal, BigDecimal]               = numeric.derivedPosBigDecimalTransformer
+  given derivedPosBigDecimalPartialTransformer: PartialTransformer[BigDecimal, PosBigDecimal] =
     numeric.derivedPosBigDecimalPartialTransformer
 
-  inline given derivedNonPosBigDecimalTransformer: Transformer[NonPosBigDecimal, BigDecimal] = numeric.derivedNonPosBigDecimalTransformer
-  inline given derivedNonPosBigDecimalPartialTransformer: PartialTransformer[BigDecimal, NonPosBigDecimal] =
+  given derivedNonPosBigDecimalTransformer: Transformer[NonPosBigDecimal, BigDecimal] = numeric.derivedNonPosBigDecimalTransformer
+  given derivedNonPosBigDecimalPartialTransformer: PartialTransformer[BigDecimal, NonPosBigDecimal] =
     numeric.derivedNonPosBigDecimalPartialTransformer
 
 }

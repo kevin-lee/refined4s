@@ -8,69 +8,69 @@ import refined4s.types.numeric.*
   */
 trait numeric {
 
-  inline given derivedNegIntRender: Render[NegInt] = numeric.derivedNegIntRender
+  given derivedNegIntRender: Render[NegInt] = numeric.derivedNegIntRender
 
-  inline given derivedNonNegIntRender: Render[NonNegInt] = numeric.derivedNonNegIntRender
+  given derivedNonNegIntRender: Render[NonNegInt] = numeric.derivedNonNegIntRender
 
-  inline given derivedPosIntRender: Render[PosInt] = numeric.derivedPosIntRender
+  given derivedPosIntRender: Render[PosInt] = numeric.derivedPosIntRender
 
-  inline given derivedNonPosIntRender: Render[NonPosInt] = numeric.derivedNonPosIntRender
+  given derivedNonPosIntRender: Render[NonPosInt] = numeric.derivedNonPosIntRender
 
-  inline given derivedNegLongRender: Render[NegLong] = numeric.derivedNegLongRender
+  given derivedNegLongRender: Render[NegLong] = numeric.derivedNegLongRender
 
-  inline given derivedNonNegLongRender: Render[NonNegLong] = numeric.derivedNonNegLongRender
+  given derivedNonNegLongRender: Render[NonNegLong] = numeric.derivedNonNegLongRender
 
-  inline given derivedPosLongRender: Render[PosLong] = numeric.derivedPosLongRender
+  given derivedPosLongRender: Render[PosLong] = numeric.derivedPosLongRender
 
-  inline given derivedNonPosLongRender: Render[NonPosLong] = numeric.derivedNonPosLongRender
+  given derivedNonPosLongRender: Render[NonPosLong] = numeric.derivedNonPosLongRender
 
-  inline given derivedNegShortRender: Render[NegShort] = numeric.derivedNegShortRender
+  given derivedNegShortRender: Render[NegShort] = numeric.derivedNegShortRender
 
-  inline given derivedNonNegShortRender: Render[NonNegShort] = numeric.derivedNonNegShortRender
+  given derivedNonNegShortRender: Render[NonNegShort] = numeric.derivedNonNegShortRender
 
-  inline given derivedPosShortRender: Render[PosShort] = numeric.derivedPosShortRender
+  given derivedPosShortRender: Render[PosShort] = numeric.derivedPosShortRender
 
-  inline given derivedNonPosShortRender: Render[NonPosShort] = numeric.derivedNonPosShortRender
+  given derivedNonPosShortRender: Render[NonPosShort] = numeric.derivedNonPosShortRender
 
-  inline given derivedNegByteRender: Render[NegByte] = numeric.derivedNegByteRender
+  given derivedNegByteRender: Render[NegByte] = numeric.derivedNegByteRender
 
-  inline given derivedNonNegByteRender: Render[NonNegByte] = numeric.derivedNonNegByteRender
+  given derivedNonNegByteRender: Render[NonNegByte] = numeric.derivedNonNegByteRender
 
-  inline given derivedPosByteRender: Render[PosByte] = numeric.derivedPosByteRender
+  given derivedPosByteRender: Render[PosByte] = numeric.derivedPosByteRender
 
-  inline given derivedNonPosByteRender: Render[NonPosByte] = numeric.derivedNonPosByteRender
+  given derivedNonPosByteRender: Render[NonPosByte] = numeric.derivedNonPosByteRender
 
-  inline given derivedNegFloatRender: Render[NegFloat] = numeric.derivedNegFloatRender
+  given derivedNegFloatRender: Render[NegFloat] = numeric.derivedNegFloatRender
 
-  inline given derivedNonNegFloatRender: Render[NonNegFloat] = numeric.derivedNonNegFloatRender
+  given derivedNonNegFloatRender: Render[NonNegFloat] = numeric.derivedNonNegFloatRender
 
-  inline given derivedPosFloatRender: Render[PosFloat] = numeric.derivedPosFloatRender
+  given derivedPosFloatRender: Render[PosFloat] = numeric.derivedPosFloatRender
 
-  inline given derivedNonPosFloatRender: Render[NonPosFloat] = numeric.derivedNonPosFloatRender
+  given derivedNonPosFloatRender: Render[NonPosFloat] = numeric.derivedNonPosFloatRender
 
-  inline given derivedNegDoubleRender: Render[NegDouble] = numeric.derivedNegDoubleRender
+  given derivedNegDoubleRender: Render[NegDouble] = numeric.derivedNegDoubleRender
 
-  inline given derivedNonNegDoubleRender: Render[NonNegDouble] = numeric.derivedNonNegDoubleRender
+  given derivedNonNegDoubleRender: Render[NonNegDouble] = numeric.derivedNonNegDoubleRender
 
-  inline given derivedPosDoubleRender: Render[PosDouble] = numeric.derivedPosDoubleRender
+  given derivedPosDoubleRender: Render[PosDouble] = numeric.derivedPosDoubleRender
 
-  inline given derivedNonPosDoubleRender: Render[NonPosDouble] = numeric.derivedNonPosDoubleRender
+  given derivedNonPosDoubleRender: Render[NonPosDouble] = numeric.derivedNonPosDoubleRender
 
-  inline given derivedNegBigIntRender: Render[NegBigInt] = numeric.derivedNegBigIntRender
+  given derivedNegBigIntRender: Render[NegBigInt] = numeric.derivedNegBigIntRender
 
-  inline given derivedNonNegBigIntRender: Render[NonNegBigInt] = numeric.derivedNonNegBigIntRender
+  given derivedNonNegBigIntRender: Render[NonNegBigInt] = numeric.derivedNonNegBigIntRender
 
-  inline given derivedPosBigIntRender: Render[PosBigInt] = numeric.derivedPosBigIntRender
+  given derivedPosBigIntRender: Render[PosBigInt] = numeric.derivedPosBigIntRender
 
-  inline given derivedNonPosBigIntRender: Render[NonPosBigInt] = numeric.derivedNonPosBigIntRender
+  given derivedNonPosBigIntRender: Render[NonPosBigInt] = numeric.derivedNonPosBigIntRender
 
-  inline given derivedNegBigDecimalRender: Render[NegBigDecimal] = numeric.derivedNegBigDecimalRender
+  given derivedNegBigDecimalRender: Render[NegBigDecimal] = numeric.derivedNegBigDecimalRender
 
-  inline given derivedNonNegBigDecimalRender: Render[NonNegBigDecimal] = numeric.derivedNonNegBigDecimalRender
+  given derivedNonNegBigDecimalRender: Render[NonNegBigDecimal] = numeric.derivedNonNegBigDecimalRender
 
-  inline given derivedPosBigDecimalRender: Render[PosBigDecimal] = numeric.derivedPosBigDecimalRender
+  given derivedPosBigDecimalRender: Render[PosBigDecimal] = numeric.derivedPosBigDecimalRender
 
-  inline given derivedNonPosBigDecimalRender: Render[NonPosBigDecimal] = numeric.derivedNonPosBigDecimalRender
+  given derivedNonPosBigDecimalRender: Render[NonPosBigDecimal] = numeric.derivedNonPosBigDecimalRender
 
 }
 object numeric {

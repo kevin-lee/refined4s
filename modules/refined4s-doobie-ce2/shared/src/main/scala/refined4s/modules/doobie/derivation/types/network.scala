@@ -9,26 +9,26 @@ import refined4s.types.network.*
   */
 trait network {
 
-  inline given derivedUriGet: Get[Uri] = network.derivedUriGet
-  inline given derivedUriPut: Put[Uri] = network.derivedUriPut
+  given derivedUriGet: Get[Uri] = network.derivedUriGet
+  given derivedUriPut: Put[Uri] = network.derivedUriPut
 
-  inline given derivedUrlGet: Get[Url] = network.derivedUrlGet
-  inline given derivedUrlPut: Put[Url] = network.derivedUrlPut
+  given derivedUrlGet: Get[Url] = network.derivedUrlGet
+  given derivedUrlPut: Put[Url] = network.derivedUrlPut
 
-  inline given derivedPortNumberGet: Get[PortNumber] = network.derivedPortNumberGet
-  inline given derivedPortNumberPut: Put[PortNumber] = network.derivedPortNumberPut
+  given derivedPortNumberGet: Get[PortNumber] = network.derivedPortNumberGet
+  given derivedPortNumberPut: Put[PortNumber] = network.derivedPortNumberPut
 
-  inline given derivedSystemPortNumberGet: Get[SystemPortNumber] = network.derivedSystemPortNumberGet
-  inline given derivedSystemPortNumberPut: Put[SystemPortNumber] = network.derivedSystemPortNumberPut
+  given derivedSystemPortNumberGet: Get[SystemPortNumber] = network.derivedSystemPortNumberGet
+  given derivedSystemPortNumberPut: Put[SystemPortNumber] = network.derivedSystemPortNumberPut
 
-  inline given derivedNonSystemPortNumberGet: Get[NonSystemPortNumber] = network.derivedNonSystemPortNumberGet
-  inline given derivedNonSystemPortNumberPut: Put[NonSystemPortNumber] = network.derivedNonSystemPortNumberPut
+  given derivedNonSystemPortNumberGet: Get[NonSystemPortNumber] = network.derivedNonSystemPortNumberGet
+  given derivedNonSystemPortNumberPut: Put[NonSystemPortNumber] = network.derivedNonSystemPortNumberPut
 
-  inline given derivedUserPortNumberGet: Get[UserPortNumber] = network.derivedUserPortNumberGet
-  inline given derivedUserPortNumberPut: Put[UserPortNumber] = network.derivedUserPortNumberPut
+  given derivedUserPortNumberGet: Get[UserPortNumber] = network.derivedUserPortNumberGet
+  given derivedUserPortNumberPut: Put[UserPortNumber] = network.derivedUserPortNumberPut
 
-  inline given derivedDynamicPortNumberGet: Get[DynamicPortNumber] = network.derivedDynamicPortNumberGet
-  inline given derivedDynamicPortNumberPut: Put[DynamicPortNumber] = network.derivedDynamicPortNumberPut
+  given derivedDynamicPortNumberGet: Get[DynamicPortNumber] = network.derivedDynamicPortNumberGet
+  given derivedDynamicPortNumberPut: Put[DynamicPortNumber] = network.derivedDynamicPortNumberPut
 
 }
 object network {

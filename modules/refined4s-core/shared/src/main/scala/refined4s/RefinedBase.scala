@@ -8,7 +8,7 @@ trait RefinedBase[@specialized A] extends NewtypeBase[A] {
 
   override opaque type Type = A
 
-  inline given RefinedCtor[Type, A] with {
+  given RefinedCtor[Type, A] with {
     override def create(a: A): Either[String, Type] = from(a)
   }
 

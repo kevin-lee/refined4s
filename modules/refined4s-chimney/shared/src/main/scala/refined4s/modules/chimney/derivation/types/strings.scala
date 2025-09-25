@@ -10,23 +10,23 @@ import refined4s.types.strings.*
 trait strings {
 
   /* NonEmptyString */
-  inline given derivedNonEmptyStringToStringTransformer: Transformer[NonEmptyString, String] =
+  given derivedNonEmptyStringToStringTransformer: Transformer[NonEmptyString, String] =
     strings.derivedNonEmptyStringToStringTransformer
 
-  inline given derivedStringToNonEmptyStringPartialTransformer: PartialTransformer[String, NonEmptyString] =
+  given derivedStringToNonEmptyStringPartialTransformer: PartialTransformer[String, NonEmptyString] =
     strings.derivedStringToNonEmptyStringPartialTransformer
 
   /* NonBlankString */
-  inline given derivedNonBlankStringToStringTransformer: Transformer[NonBlankString, String] =
+  given derivedNonBlankStringToStringTransformer: Transformer[NonBlankString, String] =
     strings.derivedNonBlankStringToStringTransformer
 
-  inline given derivedStringToNonBlankStringPartialTransformer: PartialTransformer[String, NonBlankString] =
+  given derivedStringToNonBlankStringPartialTransformer: PartialTransformer[String, NonBlankString] =
     strings.derivedStringToNonBlankStringPartialTransformer
 
   /* Uuid */
-  inline given derivedUuidToStringTransformer: Transformer[Uuid, String] = strings.derivedUuidToStringTransformer
+  given derivedUuidToStringTransformer: Transformer[Uuid, String] = strings.derivedUuidToStringTransformer
 
-  inline given derivedStringToUuidPartialTransformer: PartialTransformer[String, Uuid] = strings.derivedStringToUuidPartialTransformer
+  given derivedStringToUuidPartialTransformer: PartialTransformer[String, Uuid] = strings.derivedStringToUuidPartialTransformer
 
 }
 object strings {

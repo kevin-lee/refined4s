@@ -8,9 +8,9 @@ trait NewtypeBase[@specialized A] {
 
   given newRefinedCanEqual: CanEqual[Type, Type] = CanEqual.derived
 
-  inline given unwrap: Coercible[Type, A] = Coercible.instance
+  given unwrap: Coercible[Type, A] = Coercible.instance
 
-  inline given unwrapTC[F[*]]: Coercible[F[Type], F[A]] = Coercible.instance
+  given unwrapTC[F[*]]: Coercible[F[Type], F[A]] = Coercible.instance
 
   extension (typ: Type) {
     def value: A

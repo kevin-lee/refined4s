@@ -9,23 +9,23 @@ import refined4s.types.time.*
   */
 trait time {
 
-  inline given derivedMonthGet: Get[Month] = time.derivedMonthGet
-  inline given derivedMonthPut: Put[Month] = time.derivedMonthPut
+  given derivedMonthGet: Get[Month] = time.derivedMonthGet
+  given derivedMonthPut: Put[Month] = time.derivedMonthPut
 
-  inline given derivedDayGet: Get[Day] = time.derivedDayGet
-  inline given derivedDayPut: Put[Day] = time.derivedDayPut
+  given derivedDayGet: Get[Day] = time.derivedDayGet
+  given derivedDayPut: Put[Day] = time.derivedDayPut
 
-  inline given derivedHourGet: Get[Hour] = time.derivedHourGet
-  inline given derivedHourPut: Put[Hour] = time.derivedHourPut
+  given derivedHourGet: Get[Hour] = time.derivedHourGet
+  given derivedHourPut: Put[Hour] = time.derivedHourPut
 
-  inline given derivedMinuteGet: Get[Minute] = time.derivedMinuteGet
-  inline given derivedMinutePut: Put[Minute] = time.derivedMinutePut
+  given derivedMinuteGet: Get[Minute] = time.derivedMinuteGet
+  given derivedMinutePut: Put[Minute] = time.derivedMinutePut
 
-  inline given derivedSecondGet: Get[Second] = time.derivedSecondGet
-  inline given derivedSecondPut: Put[Second] = time.derivedSecondPut
+  given derivedSecondGet: Get[Second] = time.derivedSecondGet
+  given derivedSecondPut: Put[Second] = time.derivedSecondPut
 
-  inline given derivedMillisGet: Get[Millis] = time.derivedMillisGet
-  inline given derivedMillisPut: Put[Millis] = time.derivedMillisPut
+  given derivedMillisGet: Get[Millis] = time.derivedMillisGet
+  given derivedMillisPut: Put[Millis] = time.derivedMillisPut
 
 }
 object time {
