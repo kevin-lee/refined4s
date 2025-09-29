@@ -20,9 +20,10 @@ object networkCompat {
     override def invalidReason(a: String): String =
       expectedMessage(inlinedExpectedValue)
 
+    @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
     override def predicate(a: String): Boolean =
       try {
-        new URI(a).toURL
+        new URL(a)
         true
       } catch {
         case NonFatal(_) =>
@@ -37,7 +38,8 @@ object networkCompat {
     def apply(a: URL): Type = unsafeFrom(a.toString)
 
     extension (url: Type) {
-      def toURL: URL = new URI(url.value).toURL
+      @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
+      def toURL: URL = new URL(url.value)
 
       def toUri: Uri = Uri(toURL.toURI)
 
@@ -64,12 +66,13 @@ object networkCompat {
     }.asInstanceOf[F[Url]] // scalafix:ok DisableSyntax.asInstanceOf
   }
 
+  @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
   def isValidateUrl(urlExpr: Expr[String])(using Quotes): Expr[Boolean] = {
     import quotes.reflect.*
     urlExpr.asTerm match {
       case Inlined(_, _, Literal(StringConstant(urlStr))) =>
         try {
-          new java.net.URI(urlStr).toURL
+          new java.net.URL(urlStr)
           Expr(true)
         } catch {
           case _: Throwable => Expr(false)
