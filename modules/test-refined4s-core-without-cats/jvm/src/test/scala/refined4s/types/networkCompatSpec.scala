@@ -84,7 +84,7 @@ trait networkCompatSpec {
   }
 
   def testUrlApplyInvalid: Result = {
-    import scala.compiletime.testing.typeChecks
+    import scala.compiletime.testing.{typeChecks, typeCheckErrors}
 
     val shouldNotCompile1 = !typeChecks(
       """
@@ -93,6 +93,14 @@ trait networkCompatSpec {
       """
     )
 
+    val expectedCompilationErrorMessage1 = """Invalid Url value: no protocol: %^<>[]`{}"""
+    val shouldNotCompile1ErrorMessage    = typeCheckErrors(
+      """
+        import network.*
+        Url("%^<>[]`{}")
+      """
+    ).map(_.message).mkString
+
     val shouldNotCompile2 = !typeChecks(
       """
         import network.*
@@ -100,10 +108,20 @@ trait networkCompatSpec {
       """
     )
 
+    val expectedCompilationErrorMessage2 = """Invalid Url value: unknown protocol: blah"""
+    val shouldNotCompile2ErrorMessage    = typeCheckErrors(
+      """
+        import network.*
+        Url("blah://www.google.com")
+      """
+    ).map(_.message).mkString
+
     Result.all(
       List(
         Result.assert(shouldNotCompile1).log("""Url("%^<>[]`{}") should have failed compilation but it succeeded."""),
+        shouldNotCompile1ErrorMessage ==== expectedCompilationErrorMessage1,
         Result.assert(shouldNotCompile2).log("""Url("blah://www.google.com") should have failed compilation but it succeeded."""),
+        shouldNotCompile2ErrorMessage ==== expectedCompilationErrorMessage2,
       )
     )
   }
@@ -267,14 +285,17 @@ trait networkCompatSpec {
   }
 
   def testNetworkIsValidateUrlInvalid: Result = {
-    val expected = false
-    val actual1  = runNetworkIsValidateUrl("%^<>[]`{}")
-    val actual2  = runNetworkIsValidateUrl("blah://www.google.com")
+    import scala.compiletime.testing.typeCheckErrors
+    val expected1 = """Invalid Url value: no protocol: %^<>[]`{}"""
+    val expected2 = """Invalid Url value: unknown protocol: blah"""
+
+    val actual1 = typeCheckErrors("""runNetworkIsValidateUrl("%^<>[]`{}")""").map(_.message).mkString
+    val actual2 = typeCheckErrors("""runNetworkIsValidateUrl("blah://www.google.com")""").map(_.message).mkString
     Result.all(
       List(
-        (actual1 ==== expected)
+        (actual1 ==== expected1)
           .log("""network.isValidateUrl("%^<>[]`{}") should return false but it returned true"""),
-        (actual2 ==== expected)
+        (actual2 ==== expected2)
           .log("""network.isValidateUrl("blah://www.google.com") should return false but it returned true"""),
       )
     )
@@ -282,7 +303,7 @@ trait networkCompatSpec {
 
   def testNetworkIsValidateUrlWithInvalidLiteral: Result = {
     import scala.compiletime.testing.typeCheckErrors
-    val expectedMessage = UriValidator.UnexpectedLiteralErrorMessage
+    val expectedMessage = UriValidator.UnexpectedLiteralErrorMessageForUrl
 
     val actual = typeCheckErrors(
       """

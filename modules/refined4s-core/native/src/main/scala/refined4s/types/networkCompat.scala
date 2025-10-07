@@ -130,13 +130,32 @@ object networkCompat {
             //            isValidHost &&
             isValidAuthority &&
             isAbsolute && isValidPath
-          Expr(validity)
+
+          if validity then Expr(validity)
+          else {
+            report.error(
+              "Invalid Url value: " +
+                List(
+                  (if isValidSchemas then "" else "invalid schema"),
+                  (if isValidAuthority then "" else "invalid authority"),
+                  (if isAbsolute then "" else "not absolute"),
+                  (if isValidPath then "" else "invalid path"),
+                ).filter(_.nonEmpty).mkString(", "),
+              urlExpr,
+            )
+            Expr(false)
+          }
         } catch {
-          case _: Throwable => Expr(false)
+          case ex: Throwable =>
+            report.error(
+              "Invalid Url value: " + ex.getMessage,
+              urlExpr,
+            )
+            Expr(false)
         }
       case _ =>
         report.error(
-          UriValidator.UnexpectedLiteralErrorMessage,
+          UriValidator.UnexpectedLiteralErrorMessageForUrl,
           urlExpr,
         )
         Expr(false)

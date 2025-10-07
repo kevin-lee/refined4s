@@ -75,11 +75,16 @@ object networkCompat {
           new java.net.URL(urlStr)
           Expr(true)
         } catch {
-          case _: Throwable => Expr(false)
+          case ex: Throwable =>
+            report.error(
+              "Invalid Url value: " + ex.getMessage,
+              urlExpr,
+            )
+            Expr(false)
         }
       case _ =>
         report.error(
-          UriValidator.UnexpectedLiteralErrorMessage,
+          UriValidator.UnexpectedLiteralErrorMessageForUrl,
           urlExpr,
         )
         Expr(false)
