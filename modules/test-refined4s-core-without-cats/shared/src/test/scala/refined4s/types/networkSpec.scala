@@ -102,7 +102,7 @@ trait networkSpec extends Properties, networkCompatSpec {
   }
 
   def testUriApplyInvalid: Result = {
-    import scala.compiletime.testing.typeChecks
+    import scala.compiletime.testing.{typeChecks, typeCheckErrors}
 
     val shouldNotCompile = !typeChecks(
       """
@@ -110,7 +110,21 @@ trait networkSpec extends Properties, networkCompatSpec {
           Uri("%^<>[]`{}")
         """
     )
-    Result.assert(shouldNotCompile).log("""Uri("%^<>[]`{}") should have failed compilation but it succeeded.""")
+
+    val expectedErrorMessage  = """Invalid Uri value: Malformed escape pair at index 0: %^<>[]`{}"""
+    val shouldNotCompileError = typeCheckErrors(
+      """
+          import network.*
+          Uri("%^<>[]`{}")
+        """
+    ).map(_.message).mkString
+
+    Result.all(
+      List(
+        Result.assert(shouldNotCompile).log("""Uri("%^<>[]`{}") should have failed compilation but it succeeded."""),
+        shouldNotCompileError ==== expectedErrorMessage,
+      )
+    )
   }
 
   def testUriFromValid: Property =
@@ -229,14 +243,15 @@ trait networkSpec extends Properties, networkCompatSpec {
   }
 
   def testNetworkIsValidateUriInvalid: Result = {
-    val expected = false
-    val actual   = runNetworkIsValidateUri("%^<>[]`{}")
+    import scala.compiletime.testing.{typeChecks, typeCheckErrors}
+    val expected = """Invalid Uri value: Malformed escape pair at index 0: %^<>[]`{}"""
+    val actual   = typeCheckErrors("""runNetworkIsValidateUri("%^<>[]`{}")""").map(_.message).mkString
     (actual ==== expected)
-      .log("""network.isValidateUri("%^<>[]`{}") should return false but it returned true""")
+      .log(s"""network.isValidateUri("%^<>[]`{}") should not compile with the expected error: $expected""")
   }
 
   def testNetworkIsValidateUriWithInvalidLiteral: Result = {
-    import scala.compiletime.testing.typeCheckErrors
+    import scala.compiletime.testing.{typeChecks, typeCheckErrors}
     val expectedMessage = UriValidator.UnexpectedLiteralErrorMessage
 
     val actual = typeCheckErrors(
@@ -267,7 +282,7 @@ trait networkSpec extends Properties, networkCompatSpec {
   }
 
   def testPortNumberApplyInvalid: Result = {
-    import scala.compiletime.testing.typeChecks
+    import scala.compiletime.testing.{typeChecks, typeCheckErrors}
 
     val shouldNotCompile  = !typeChecks(
       """
@@ -282,10 +297,28 @@ trait networkSpec extends Properties, networkCompatSpec {
         """
     )
 
+    val expectedErrorMessage         = """Invalid value: [-1]. It has to be Int between 0 and 65535 (0 <= PortNumber <= 65535)"""
+    val shouldNotCompileErrorMessage = typeCheckErrors(
+      """
+          import network.*
+          PortNumber(-1)
+        """
+    ).map(_.message).mkString
+
+    val expectedErrorMessage2         = """Invalid value: [65536]. It has to be Int between 0 and 65535 (0 <= PortNumber <= 65535)"""
+    val shouldNotCompile2ErrorMessage = typeCheckErrors(
+      """
+          import network.*
+          PortNumber(65536)
+        """
+    ).map(_.message).mkString
+
     Result.all(
       List(
         Result.assert(shouldNotCompile).log("""PortNumber(-1) should have failed compilation but it succeeded."""),
         Result.assert(shouldNotCompile2).log("""PortNumber(65536) should have failed compilation but it succeeded."""),
+        shouldNotCompileErrorMessage ==== expectedErrorMessage,
+        shouldNotCompile2ErrorMessage ==== expectedErrorMessage2,
       )
     )
   }
@@ -377,7 +410,7 @@ trait networkSpec extends Properties, networkCompatSpec {
   }
 
   def testSystemPortNumberApplyInvalid: Result = {
-    import scala.compiletime.testing.typeChecks
+    import scala.compiletime.testing.{typeChecks, typeCheckErrors}
 
     val shouldNotCompile  = !typeChecks(
       """
@@ -392,10 +425,28 @@ trait networkSpec extends Properties, networkCompatSpec {
         """
     )
 
+    val expectedErrorMessage         = "Invalid value: [-1]. It has to be Int between 0 and 1023 (0 <= SystemPortNumber <= 1023)"
+    val shouldNotCompileErrorMessage = typeCheckErrors(
+      """
+          import network.*
+          SystemPortNumber(-1)
+        """
+    ).map(_.message).mkString
+
+    val expectedErrorMessage2         = "Invalid value: [1024]. It has to be Int between 0 and 1023 (0 <= SystemPortNumber <= 1023)"
+    val shouldNotCompile2ErrorMessage = typeCheckErrors(
+      """
+          import network.*
+          SystemPortNumber(1024)
+        """
+    ).map(_.message).mkString
+
     Result.all(
       List(
         Result.assert(shouldNotCompile).log("""SystemPortNumber(-1) should have failed compilation but it succeeded."""),
         Result.assert(shouldNotCompile2).log("""SystemPortNumber(1024) should have failed compilation but it succeeded."""),
+        shouldNotCompileErrorMessage ==== expectedErrorMessage,
+        shouldNotCompile2ErrorMessage ==== expectedErrorMessage2,
       )
     )
   }
@@ -488,7 +539,7 @@ trait networkSpec extends Properties, networkCompatSpec {
   }
 
   def testNonSystemPortNumberApplyInvalid: Result = {
-    import scala.compiletime.testing.typeChecks
+    import scala.compiletime.testing.{typeChecks, typeCheckErrors}
 
     val shouldNotCompile  = !typeChecks(
       """
@@ -503,10 +554,28 @@ trait networkSpec extends Properties, networkCompatSpec {
         """
     )
 
+    val expectedErrorMessage = "Invalid value: [1023]. It has to be Int between 1024 and 65535 (1024 <= NonSystemPortNumber <= 65535)"
+    val shouldNotCompileErrorMessage = typeCheckErrors(
+      """
+          import network.*
+          NonSystemPortNumber(1023)
+        """
+    ).map(_.message).mkString
+
+    val expectedErrorMessage2 = "Invalid value: [65536]. It has to be Int between 1024 and 65535 (1024 <= NonSystemPortNumber <= 65535)"
+    val shouldNotCompile2ErrorMessage = typeCheckErrors(
+      """
+          import network.*
+          NonSystemPortNumber(65536)
+        """
+    ).map(_.message).mkString
+
     Result.all(
       List(
         Result.assert(shouldNotCompile).log("""NonSystemPortNumber(1023) should have failed compilation but it succeeded."""),
         Result.assert(shouldNotCompile2).log("""NonSystemPortNumber(65536) should have failed compilation but it succeeded."""),
+        shouldNotCompileErrorMessage ==== expectedErrorMessage,
+        shouldNotCompile2ErrorMessage ==== expectedErrorMessage2,
       )
     )
   }
@@ -598,7 +667,7 @@ trait networkSpec extends Properties, networkCompatSpec {
   }
 
   def testUserPortNumberApplyInvalid: Result = {
-    import scala.compiletime.testing.typeChecks
+    import scala.compiletime.testing.{typeChecks, typeCheckErrors}
 
     val shouldNotCompile  = !typeChecks(
       """
@@ -613,10 +682,28 @@ trait networkSpec extends Properties, networkCompatSpec {
         """
     )
 
+    val expectedErrorMessage         = "Invalid value: [1023]. It has to be Int between 1024 and 49151 (1024 <= UserPortNumber <= 49151)"
+    val shouldNotCompileErrorMessage = typeCheckErrors(
+      """
+          import network.*
+          UserPortNumber(1023)
+        """
+    ).map(_.message).mkString
+
+    val expectedErrorMessage2         = "Invalid value: [49152]. It has to be Int between 1024 and 49151 (1024 <= UserPortNumber <= 49151)"
+    val shouldNotCompile2ErrorMessage = typeCheckErrors(
+      """
+          import network.*
+          UserPortNumber(49152)
+        """
+    ).map(_.message).mkString
+
     Result.all(
       List(
         Result.assert(shouldNotCompile).log("""UserPortNumber(1023) should have failed compilation but it succeeded."""),
         Result.assert(shouldNotCompile2).log("""UserPortNumber(49152) should have failed compilation but it succeeded."""),
+        shouldNotCompileErrorMessage ==== expectedErrorMessage,
+        shouldNotCompile2ErrorMessage ==== expectedErrorMessage2,
       )
     )
   }
@@ -708,7 +795,7 @@ trait networkSpec extends Properties, networkCompatSpec {
   }
 
   def testDynamicPortNumberApplyInvalid: Result = {
-    import scala.compiletime.testing.typeChecks
+    import scala.compiletime.testing.{typeChecks, typeCheckErrors}
 
     val shouldNotCompile  = !typeChecks(
       """
@@ -723,10 +810,28 @@ trait networkSpec extends Properties, networkCompatSpec {
         """
     )
 
+    val expectedErrorMessage = "Invalid value: [49151]. It has to be Int between 49152 and 65535 (49152 <= DynamicPortNumber <= 65535)"
+    val shouldNotCompileErrorMessage = typeCheckErrors(
+      """
+          import network.*
+          DynamicPortNumber(49151)
+        """
+    ).map(_.message).mkString
+
+    val expectedErrorMessage2 = "Invalid value: [65536]. It has to be Int between 49152 and 65535 (49152 <= DynamicPortNumber <= 65535)"
+    val shouldNotCompile2ErrorMessage = typeCheckErrors(
+      """
+          import network.*
+          DynamicPortNumber(65536)
+        """
+    ).map(_.message).mkString
+
     Result.all(
       List(
         Result.assert(shouldNotCompile).log("""DynamicPortNumber(49151) should have failed compilation but it succeeded."""),
         Result.assert(shouldNotCompile2).log("""DynamicPortNumber(65536) should have failed compilation but it succeeded."""),
+        shouldNotCompileErrorMessage ==== expectedErrorMessage,
+        shouldNotCompile2ErrorMessage ==== expectedErrorMessage2,
       )
     )
   }
