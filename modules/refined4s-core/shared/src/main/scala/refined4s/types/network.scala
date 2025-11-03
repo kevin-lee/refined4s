@@ -51,16 +51,19 @@ object network {
   type Uri = Uri.Type
   object Uri extends InlinedRefined[String], UriTypeClassInstances {
 
-    override def invalidReason(a: String): String =
-      expectedMessage(inlinedExpectedValue)
+    override def invalidReason(a: String): String = s"Invalid Uri value: [$a]."
 
     override def predicate(a: String): Boolean =
+      from(a).isRight
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    override def from(a: String): Either[String, Uri] =
       try {
         new URI(a)
-        true
+        Right(a.asInstanceOf[Uri]) // scalafix:ok DisableSyntax.asInstanceOf
       } catch {
-        case NonFatal(_) =>
-          false
+        case NonFatal(ex) =>
+          Left(s"${invalidReason(a)} ${ex.getMessage}")
       }
 
     override inline val inlinedExpectedValue = "a URI String"

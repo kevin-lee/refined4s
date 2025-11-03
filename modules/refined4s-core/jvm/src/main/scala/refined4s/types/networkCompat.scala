@@ -1,7 +1,7 @@
 package refined4s.types
 
 import orphan.{OrphanCats, OrphanCatsKernel}
-import refined4s.InlinedRefined
+import refined4s.{types, InlinedRefined}
 import refined4s.types.network.Uri
 
 import scala.quoted.*
@@ -17,17 +17,23 @@ object networkCompat {
   type Url = Url.Type
   object Url extends InlinedRefined[String], UrlTypeClassInstances {
 
-    override def invalidReason(a: String): String =
-      expectedMessage(inlinedExpectedValue)
+    override def invalidReason(a: String): String = s"Invalid Url value: [$a]."
 
     @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
-    override def predicate(a: String): Boolean =
+    override def predicate(a: String): Boolean = validate(a).isRight
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    override def from(a: String): Either[String, Url] =
+      validate(a).map(_.asInstanceOf[Url]) // scalafix:ok DisableSyntax.asInstanceOf
+
+    @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
+    def validate(url: String): Either[String, String] =
       try {
-        new URL(a)
-        true
+        new URL(url)
+        Right(url)
       } catch {
-        case NonFatal(_) =>
-          false
+        case NonFatal(ex) =>
+          Left(s"${invalidReason(url)} ${ex.getMessage}")
       }
 
     override inline val inlinedExpectedValue = "a URL String"
@@ -77,7 +83,7 @@ object networkCompat {
         } catch {
           case ex: Throwable =>
             report.error(
-              "Invalid Url value: " + ex.getMessage,
+              "Invalid Url value: [" + urlStr + "]. " + ex.getMessage,
               urlExpr,
             )
             Expr(false)

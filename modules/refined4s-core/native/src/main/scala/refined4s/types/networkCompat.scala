@@ -18,18 +18,14 @@ object networkCompat {
   type Url = Url.Type
   object Url extends InlinedRefined[String], UrlTypeClassInstances {
 
-    override def invalidReason(a: String): String =
-      expectedMessage(inlinedExpectedValue)
+    override def invalidReason(a: String): String = s"Invalid Url value: [$a]."
 
     @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
-    override def predicate(a: String): Boolean =
-      validate(a) match {
-        case Left(err) =>
-          //          println(err)
-          false
-        case Right(_) =>
-          true
-      }
+    override def predicate(a: String): Boolean = validate(a).isRight
+
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    override def from(a: String): Either[String, Url] =
+      validate(a).map(_.asInstanceOf[Url]) // scalafix:ok DisableSyntax.asInstanceOf
 
     def validate(url: String): Either[String, String] =
       try {
@@ -57,11 +53,11 @@ object networkCompat {
         then Right(url)
         else
           Left(
-            s"Invalid URL. URL: $url, The following propert${if errors.lengthIs > 1 then "ies are" else "y is"} invalid: ${errors.mkString("[", ", ", "]")}"
+            s"${invalidReason(url)} The following propert${if errors.lengthIs > 1 then "ies are" else "y is"} invalid: ${errors.mkString("[", ", ", "]")}"
           )
       } catch {
         case NonFatal(err) =>
-          Left(s"Invalid URL. URL: $url, Error: ${err.getMessage}")
+          Left(s"${invalidReason(url)} ${err.getMessage}")
       }
 
     override inline val inlinedExpectedValue = "a URL String"
@@ -134,7 +130,7 @@ object networkCompat {
           if validity then Expr(validity)
           else {
             report.error(
-              "Invalid Url value: " +
+              "Invalid Url value: [" + urlStr + "]. " +
                 List(
                   (if isValidSchemas then "" else "invalid schema"),
                   (if isValidAuthority then "" else "invalid authority"),
@@ -148,7 +144,7 @@ object networkCompat {
         } catch {
           case ex: Throwable =>
             report.error(
-              "Invalid Url value: " + ex.getMessage,
+              "Invalid Url value: [" + urlStr + "]. " + ex.getMessage,
               urlExpr,
             )
             Expr(false)

@@ -19,6 +19,8 @@ trait networkSpec extends Properties, networkCompatSpec {
     example("test Uri(valid URI String)", testUriApply),
     example("test Uri(URI)", testUriApplyURI),
     example("test Uri(invalid URI String)", testUriApplyInvalid),
+    property("test Uri.predicate(valid)", testUriPredicateValid),
+    property("test Uri.predicate(invalid)", testUriPredicateInvalid),
     property("test Uri.from(valid)", testUriFromValid),
     property("test Uri.from(invalid)", testUriFromInvalid),
     property("test Uri.unsafeFrom(valid)", testUriUnsafeFromValid),
@@ -127,6 +129,27 @@ trait networkSpec extends Properties, networkCompatSpec {
     )
   }
 
+  def testUriPredicateValid: Property =
+    for {
+      uri <- networkGens.genUriString.log("uri")
+    } yield {
+      val expected = true
+      val actual   = Uri.predicate(uri)
+
+      actual ==== expected
+    }
+
+  @SuppressWarnings(Array("org.wartremover.warts.Throw"))
+  def testUriPredicateInvalid: Property =
+    for {
+      input <- Gen.string(Gen.element1('%', '^', '<', '>', '[', ']', '`', '{', '}'), Range.linear(1, 5)).log("input")
+    } yield {
+      val expected = false
+      val actual   = Uri.predicate(input)
+
+      actual ==== expected
+    }
+
   def testUriFromValid: Property =
     for {
       uri <- networkGens.genUriString.log("uri")
@@ -145,12 +168,20 @@ trait networkSpec extends Properties, networkCompatSpec {
       )
     }
 
+  @SuppressWarnings(Array("org.wartremover.warts.Throw"))
   def testUriFromInvalid: Property =
     for {
       input <- Gen.string(Gen.element1('%', '^', '<', '>', '[', ']', '`', '{', '}'), Range.linear(1, 5)).log("input")
     } yield {
-      val expected = s"Invalid value: [$input]. It must be a URI String".asLeft
-      val actual   = Uri.from(input)
+      val invalidUriMessage =
+        try {
+          new URI(input)
+          throw new AssertionError("new URI(input) should have failed but it succeeded.") // scalafix:ok DisableSyntax.throw
+        } catch {
+          case scala.util.control.NonFatal(ex) => s"Invalid Uri value: [$input]. ${ex.getMessage}"
+        }
+      val expected          = invalidUriMessage.asLeft
+      val actual            = Uri.from(input)
 
       actual ==== expected
     }
@@ -173,11 +204,18 @@ trait networkSpec extends Properties, networkCompatSpec {
       )
     }
 
+  @SuppressWarnings(Array("org.wartremover.warts.Throw"))
   def testUriUnsafeFromInvalid: Property =
     for {
       input <- Gen.string(Gen.element1('%', '^', '<', '>', '[', ']', '`', '{', '}'), Range.linear(1, 5)).log("input")
     } yield {
-      val expected = s"Invalid value: [$input]. It must be a URI String"
+      val expected =
+        try {
+          new URI(input)
+          throw new AssertionError("new URI(input) should have failed but it succeeded.") // scalafix:ok DisableSyntax.throw
+        } catch {
+          case scala.util.control.NonFatal(ex) => s"Invalid Uri value: [$input]. ${ex.getMessage}"
+        }
 
       try {
         val _ = Uri.unsafeFrom(input)
