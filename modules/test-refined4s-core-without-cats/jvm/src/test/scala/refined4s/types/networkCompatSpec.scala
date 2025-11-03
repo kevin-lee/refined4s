@@ -20,6 +20,8 @@ trait networkCompatSpec {
     example("test Url(valid URL String)", testUrlApply),
     example("test Url(URL)", testUrlApplyURL),
     example("test Url(invalid URL String)", testUrlApplyInvalid),
+    property("test Url.predicate(valid)", testUrlPredicateValid),
+    property("test Url.predicate(invalid)", testUrlPredicateInvalid),
     property("test Url.from(valid)", testUrlFromValid),
     property("test Url.from(invalid)", testUrlFromInvalid),
     property("test Url.unsafeFrom(valid)", testUrlUnsafeFromValid),
@@ -93,7 +95,7 @@ trait networkCompatSpec {
       """
     )
 
-    val expectedCompilationErrorMessage1 = """Invalid Url value: no protocol: %^<>[]`{}"""
+    val expectedCompilationErrorMessage1 = """Invalid Url value: [%^<>[]`{}]. no protocol: %^<>[]`{}"""
     val shouldNotCompile1ErrorMessage    = typeCheckErrors(
       """
         import network.*
@@ -108,7 +110,7 @@ trait networkCompatSpec {
       """
     )
 
-    val expectedCompilationErrorMessage2 = """Invalid Url value: unknown protocol: blah"""
+    val expectedCompilationErrorMessage2 = """Invalid Url value: [blah://www.google.com]. unknown protocol: blah"""
     val shouldNotCompile2ErrorMessage    = typeCheckErrors(
       """
         import network.*
@@ -125,6 +127,41 @@ trait networkCompatSpec {
       )
     )
   }
+
+  def testUrlPredicateValid: Property =
+    for {
+      uri <- networkGens.genUrlString.log("uri")
+    } yield {
+      val expected = true
+      val actual   = Url.predicate(uri)
+
+      actual ==== expected
+    }
+
+  def testUrlPredicateInvalid: Property =
+    for {
+      input <- Gen
+                 .frequency1(
+                   30 ->
+                     Gen.string(Gen.element1('%', '^', '<', '>', '[', ']', '`', '{', '}'), Range.linear(1, 5)),
+                   70 -> (for {
+                     scheme    <- Gen.string(Gen.alpha, Range.linear(3, 10)).map {
+                                    case "http" | "https" | "ftp" | "file" => "blah"
+                                    case anythingElse => anythingElse
+                                  }
+                     authority <- Gen
+                                    .string(Gen.alphaNum, Range.linear(3, 10))
+                                    .list(Range.linear(1, 4))
+                                    .map(_.mkString("."))
+                   } yield s"$scheme/$authority"),
+                 )
+                 .log("input")
+    } yield {
+      val expected = false
+      val actual   = Url.predicate(input)
+
+      actual ==== expected
+    }
 
   def testUrlFromValid: Property =
     for {
@@ -164,10 +201,26 @@ trait networkCompatSpec {
                  )
                  .log("input")
     } yield {
-      val expected = s"Invalid value: [$input]. It must be a URL String".asLeft
-      val actual   = Url.from(input)
+      val expected = Url.validate(input)
 
-      actual ==== expected
+      val expectedStartWith = s"Invalid Url value: [$input]"
+
+      val actual = Url.from(input)
+
+      Result.all(
+        List(
+          actual
+            .left
+            .map(err => {
+              Result
+                .assert(err.startsWith(expectedStartWith))
+                .log(s"The error message, $err, doesn't start with '$expectedStartWith'")
+            })
+            .swap
+            .getOrElse(Result.failure.log(s"expected Left(error message) but get $actual instead")),
+          actual ==== expected,
+        )
+      )
     }
 
   def testUrlUnsafeFromValid: Property =
@@ -208,7 +261,7 @@ trait networkCompatSpec {
                  )
                  .log("input")
     } yield {
-      val expected = s"Invalid value: [$input]. It must be a URL String"
+      val expectedMessage = Url.validate(input)
 
       try {
         val _ = Url.unsafeFrom(input)
@@ -219,8 +272,28 @@ trait networkCompatSpec {
           )
       } catch {
         case ex: IllegalArgumentException =>
-          ex.getMessage ==== expected
+          val expectedStartWith = s"Invalid Url value: [$input]"
+
+          val actual = ex.getMessage
+          Result.all(
+            List(
+              Result.assert(ex.getMessage.startsWith(expectedStartWith)).log(s"The error message doesn't start with '$expectedStartWith'"),
+              expectedMessage
+                .left
+                .map(expected => actual ==== expected)
+                .swap
+                .getOrElse(
+                  Result
+                    .failure
+                    .log(
+                      s"""expected error message generation failed. Expected Left(error message) but get $expectedMessage instead.
+                         |  NOTE: It's not the failure of Url.unsafeFrom but Url.validate.""".stripMargin
+                    )
+                ),
+            )
+          )
       }
+
     }
 
   def testUrlValue: Property =
@@ -286,8 +359,8 @@ trait networkCompatSpec {
 
   def testNetworkIsValidateUrlInvalid: Result = {
     import scala.compiletime.testing.typeCheckErrors
-    val expected1 = """Invalid Url value: no protocol: %^<>[]`{}"""
-    val expected2 = """Invalid Url value: unknown protocol: blah"""
+    val expected1 = """Invalid Url value: [%^<>[]`{}]. no protocol: %^<>[]`{}"""
+    val expected2 = """Invalid Url value: [blah://www.google.com]. unknown protocol: blah"""
 
     val actual1 = typeCheckErrors("""runNetworkIsValidateUrl("%^<>[]`{}")""").map(_.message).mkString
     val actual2 = typeCheckErrors("""runNetworkIsValidateUrl("blah://www.google.com")""").map(_.message).mkString
