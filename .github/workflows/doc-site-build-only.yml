@@ -56,8 +56,8 @@ jobs:
             ++${{ matrix.scala.version }}! \
             docsV0/clean \
             docs/clean \
-            docsV0/mdoc \
             docs/mdoc \
+            docsV0/mdoc \
             docs/docusaurGenerateAlgoliaConfigFile \
             docs/docusaurGenerateGoogleAnalyticsConfigFile \
             docs/docusaurInstall \

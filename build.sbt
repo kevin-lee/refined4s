@@ -1,4 +1,6 @@
+import just.semver.SemVer
 import sbtcrossproject.CrossProject
+import extras.scala.io.syntax.color._
 
 ThisBuild / scalaVersion := props.ProjectScalaVersion
 ThisBuild / organization := props.Org
@@ -363,23 +365,35 @@ lazy val docs = (project in file("docs-gen-tmp/docs"))
       )
     },
     mdocVariables := {
-      val latestVersion = {
-        import sys.process.*
-        "git fetch --tags".!
-        val tag = "git rev-list --tags --max-count=1".!!.trim
-        s"git describe --tags $tag".!!.trim.stripPrefix("v")
-      }
-      val websiteDir    = docusaurDir.value
+      implicit val logger: Logger = sLog.value
 
-      val latestVersionFile = websiteDir / "latestVersion.json"
-      val latestVersionJson = s"""{"version":"$latestVersion"}"""
-      IO.write(latestVersionFile, latestVersionJson)
-      Map(
-        "VERSION" -> latestVersion
-      )
+      val latestVersion = getTheLatestTaggedVersion(version.value)
+      createMdocVariables(latestVersion)
     },
     docusaurDir := (ThisBuild / baseDirectory).value / "website",
     docusaurBuildDir := docusaurDir.value / "build",
+    mdoc := {
+      implicit val logger: Logger = sLog.value
+
+      val latestVersion = getTheLatestTaggedVersion(version.value)
+
+      val envVarCi = sys.env.get("CI")
+      val ciResult = s"""sys.env.get("CI")=${envVarCi}"""
+      envVarCi match {
+        case Some("true") =>
+          logger.info(
+            s">> ${ciResult.yellow} so ${"run".green} `${"writeLatestVersion".blue}` and `${"writeVersionsArchived".blue}`."
+          )
+          val websiteDir = docusaurDir.value
+          writeLatestVersion(websiteDir, latestVersion)
+          writeVersionsArchived(websiteDir, latestVersion)
+        case Some(_) | None =>
+          logger.info(
+            s">> ${ciResult.yellow} so it will ${"not run".red} `${"writeLatestVersion".cyan}` and `${"writeVersionsArchived".cyan}`."
+          )
+      }
+      mdoc.evaluated
+    },
   )
   .settings(noPublish)
 
@@ -408,11 +422,79 @@ lazy val docsV0 = (project in file("docs-gen-tmp/docs-v0"))
         libs.circeParser.value,
       )
     },
-    mdocVariables := Map(
-      "VERSION" -> "0.19.0"
-    ),
+    mdocVariables := createMdocVariables("0.19.0"),
   )
   .settings(noPublish)
+
+def getTheLatestTaggedVersion(version: String)(implicit logger: Logger): String = {
+  import sys.process._
+  val envVarCi = sys.env.get("CI")
+  val ciResult = s"""sys.env.get("CI")=${envVarCi}"""
+  envVarCi match {
+    case Some("true") =>
+      val gitFetchTagsCmd = "git fetch --tags"
+      logger.info(s">> ${ciResult.yellow} so ${"run".green} `${gitFetchTagsCmd.blue}`")
+      gitFetchTagsCmd.!
+    case Some(_) | None =>
+      logger.info(s">> ${ciResult.yellow} so ${"skip fetching tags".red}")
+  }
+
+  val tag = "git rev-list --tags --max-count=1".!!.trim
+  if (tag.nonEmpty)
+    s"git describe --tags $tag".!!.trim.stripPrefix("v")
+  else
+    version
+}
+
+def writeLatestVersion(websiteDir: File, latestVersion: String)(implicit logger: Logger): Unit = {
+  val latestVersionFile = websiteDir / "latestVersion.json"
+  val latestVersionJson = raw"""{"version":"$latestVersion"}"""
+
+  val websiteDirRelativePath =
+    s"${latestVersionFile.getParentFile.getParentFile.getName.cyan}/${latestVersionFile.getParentFile.getName.yellow}"
+  logger.info(
+    s""">> Writing ${"the latest version".blue} to $websiteDirRelativePath/${latestVersionFile.getName.green}.
+       |>> Content: ${latestVersionJson.blue}
+       |""".stripMargin
+  )
+  IO.write(latestVersionFile, latestVersionJson)
+}
+
+def writeVersionsArchived(websiteDir: File, latestVersion: String): Unit = {
+  import sys.process._
+  "git fetch --tags".!
+  val tags = "git tag".!!.trim
+
+  val versions = tags
+    .split("\n")
+    .map(_.stripPrefix("v"))
+    .map(SemVer.parse)
+    .collect { case Right(v) => v }
+    .sorted(Ordering[SemVer].reverse)
+    .map(_.render)
+    .filter(_ != latestVersion)
+
+  val versionsArchivedFile = websiteDir / "src" / "pages" / "versionsArchived.json"
+
+  val versionsInJson = versions
+    .map { v =>
+      raw"""  {
+           |    "name": "$v",
+           |    "label": "$v"
+           |  }""".stripMargin
+    }
+    .mkString("[\n", ",\n", "\n]")
+
+  IO.write(versionsArchivedFile, versionsInJson)
+}
+
+def createMdocVariables(version: String): Map[String, String] = {
+  val versionForDoc = version
+
+  Map(
+    "VERSION" -> versionForDoc
+  )
+}
 
 lazy val props =
   new {
