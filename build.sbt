@@ -524,7 +524,7 @@ lazy val props =
     val HedgehogVersion      = "0.13.0"
     val HedgehogExtraVersion = "0.15.0"
 
-    val ExtrasVersion = "0.49.0"
+    val ExtrasVersion = "0.50.0"
 
     val CatsVersion = "2.12.0"
 
@@ -533,7 +533,7 @@ lazy val props =
     val PureconfigVersion = "0.17.1"
 
     val DoobieCe2Version = "0.13.4"
-    val DoobieCe3Version = "1.0.0-RC2"
+    val DoobieCe3Version = "1.0.0-RC10"
 
     val EmbeddedPostgresVersion = "2.0.7"
 

@@ -60,6 +60,7 @@ trait RunWithDb {
                                 url,
                                 user,
                                 password,
+                                none,
                               )
                             )
 
