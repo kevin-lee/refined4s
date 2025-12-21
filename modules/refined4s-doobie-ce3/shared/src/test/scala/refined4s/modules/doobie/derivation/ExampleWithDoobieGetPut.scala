@@ -1,6 +1,7 @@
 package refined4s.modules.doobie.derivation
 
 import cats.*
+import doobie.*
 import refined4s.*
 import refined4s.modules.cats.derivation.*
 import refined4s.modules.doobie.derivation.generic.auto.given
@@ -11,7 +12,8 @@ final case class ExampleWithDoobieGetPut(
   name: ExampleWithDoobieGetPut.Name,
   note: ExampleWithDoobieGetPut.Note,
   count: ExampleWithDoobieGetPut.Count,
-)
+) derives Read,
+      Write
 object ExampleWithDoobieGetPut {
 
   given eqExampleWithDoobieGetPut: Eq[ExampleWithDoobieGetPut]     = Eq.fromUniversalEquals

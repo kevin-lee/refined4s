@@ -3,7 +3,7 @@ package refined4s.modules.doobie.derivation.generic
 import cats.*
 import cats.effect.*
 import cats.syntax.all.*
-import doobie.syntax.all.*
+import doobie.implicits.*
 import extras.doobie.RunWithDb
 import extras.doobie.ce3.DbTools
 import extras.hedgehog.ce3.CatsEffectRunner
