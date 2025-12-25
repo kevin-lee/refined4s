@@ -526,9 +526,9 @@ lazy val props =
 
     val ExtrasVersion = "0.50.0"
 
-    val CatsVersion = "2.12.0"
+    val CatsVersion = "2.13.0"
 
-    val CirceVersion = "0.14.12"
+    val CirceVersion = "0.14.13"
 
     val PureconfigVersion = "0.17.1"
 
@@ -537,17 +537,17 @@ lazy val props =
 
     val EmbeddedPostgresVersion = "2.0.7"
 
-    val EffectieVersion = "2.0.0"
+    val EffectieVersion = "2.3.0"
 
     val LogbackVersion = "1.5.6"
 
     val OrphanVersion = "0.5.0"
 
-    val KittensVersion = "3.0.0"
+    val KittensVersion = "3.5.0"
 
     val TapirVersion = "1.11.28"
 
-    val ChimneyVersion = "1.3.0"
+    val ChimneyVersion = "1.6.0"
 
     val ScalajsJavaSecurerandomVersion = "1.0.0"
 
