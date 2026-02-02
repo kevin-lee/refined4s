@@ -119,14 +119,14 @@ object numeric {
     self: NewtypeBase[A] =>
     def min: Type
 
-    val MinValue: Type = min
+    lazy val MinValue: Type = min
   }
 
   trait Max[@specialized(Int, Long, Short, Byte, Float, Double) A] {
     self: NewtypeBase[A] =>
     def max: Type
 
-    val MaxValue: Type = max
+    lazy val MaxValue: Type = max
   }
 
   trait MinMax[@specialized(Int, Long, Short, Byte, Float, Double) A] extends Min[A], Max[A] {
