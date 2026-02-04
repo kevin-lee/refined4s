@@ -2,7 +2,7 @@ package refined4s.types
 
 import orphan.{OrphanCats, OrphanCatsKernel}
 import refined4s.types
-import refined4s.types.numeric.{InlinedNumeric, MinMax}
+import refined4s.types.numeric.{InlinedNumeric, InlinedNumericMinMax}
 
 /** @author Kevin Lee
   * @since 2025-08-09
@@ -29,19 +29,14 @@ trait time {
 }
 object time {
   type Month = Month.Type
-  object Month extends InlinedNumeric[Int], MinMax[Int], MonthTypeClassInstances {
+  object Month extends InlinedNumericMinMax[Int], MonthTypeClassInstances {
+
+    override inline def minValue: Int = 1
+    override inline def maxValue: Int = 12
 
     override inline val inlinedExpectedValue = "in the range from 1 to 12."
 
-    override inline def inlinedPredicate(inline a: Int): Boolean = a >= 1 && a <= 12
-
-    override def min: Type = apply(1)
-
-    override def max: Type = apply(12)
-
     override def invalidReason(a: Int): String = expectedMessage(inlinedExpectedValue)
-
-    override def predicate(a: Int): Boolean = a >= 1 && a <= 12
 
   }
   private[types] trait MonthTypeClassInstances extends MonthTypeClassInstance1 {
@@ -64,19 +59,14 @@ object time {
   }
 
   type Day = Day.Type
-  object Day extends InlinedNumeric[Int], MinMax[Int], DayTypeClassInstances {
+  object Day extends InlinedNumericMinMax[Int], DayTypeClassInstances {
+
+    override inline def minValue: Int = 1
+    override inline def maxValue: Int = 31
 
     override inline val inlinedExpectedValue = "in the range from 1 to 31."
 
-    override inline def inlinedPredicate(inline a: Int): Boolean = a >= 1 && a <= 31
-
-    override def min: Type = apply(1)
-
-    override def max: Type = apply(31)
-
     override def invalidReason(a: Int): String = expectedMessage(inlinedExpectedValue)
-
-    override def predicate(a: Int): Boolean = a >= 1 && a <= 31
 
   }
   private[types] trait DayTypeClassInstances extends DayTypeClassInstance1 {
@@ -99,19 +89,14 @@ object time {
   }
 
   type Hour = Hour.Type
-  object Hour extends InlinedNumeric[Int], MinMax[Int], HourTypeClassInstances {
+  object Hour extends InlinedNumericMinMax[Int], HourTypeClassInstances {
+
+    override inline def minValue: Int = 0
+    override inline def maxValue: Int = 23
 
     override inline val inlinedExpectedValue = "in the range from 0 to 23."
 
-    override inline def inlinedPredicate(inline a: Int): Boolean = a >= 0 && a <= 23
-
-    override def min: Type = apply(0)
-
-    override def max: Type = apply(23)
-
     override def invalidReason(a: Int): String = expectedMessage(inlinedExpectedValue)
-
-    override def predicate(a: Int): Boolean = a >= 0 && a <= 23
 
   }
   private[types] trait HourTypeClassInstances extends HourTypeClassInstance1 {
@@ -134,19 +119,14 @@ object time {
   }
 
   type Minute = Minute.Type
-  object Minute extends InlinedNumeric[Int], MinMax[Int], MinuteTypeClassInstances {
+  object Minute extends InlinedNumericMinMax[Int], MinuteTypeClassInstances {
+
+    override inline def minValue: Int = 0
+    override inline def maxValue: Int = 59
 
     override inline val inlinedExpectedValue = "in the range from 0 to 59."
 
-    override inline def inlinedPredicate(inline a: Int): Boolean = a >= 0 && a <= 59
-
-    override def min: Type = apply(0)
-
-    override def max: Type = apply(59)
-
     override def invalidReason(a: Int): String = expectedMessage(inlinedExpectedValue)
-
-    override def predicate(a: Int): Boolean = a >= 0 && a <= 59
 
   }
   private[types] trait MinuteTypeClassInstances extends MinuteTypeClassInstance1 {
@@ -169,19 +149,14 @@ object time {
   }
 
   type Second = Second.Type
-  object Second extends InlinedNumeric[Int], MinMax[Int], SecondTypeClassInstances {
+  object Second extends InlinedNumericMinMax[Int], SecondTypeClassInstances {
+
+    override inline def minValue: Int = 0
+    override inline def maxValue: Int = 59
 
     override inline val inlinedExpectedValue = "in the range from 0 to 59."
 
-    override inline def inlinedPredicate(inline a: Int): Boolean = a >= 0 && a <= 59
-
-    override def min: Type = apply(0)
-
-    override def max: Type = apply(59)
-
     override def invalidReason(a: Int): String = expectedMessage(inlinedExpectedValue)
-
-    override def predicate(a: Int): Boolean = a >= 0 && a <= 59
 
   }
   private[types] trait SecondTypeClassInstances extends SecondTypeClassInstance1 {
@@ -204,19 +179,14 @@ object time {
   }
 
   type Millis = Millis.Type
-  object Millis extends InlinedNumeric[Int], MinMax[Int], MillisTypeClassInstances {
+  object Millis extends InlinedNumericMinMax[Int], MillisTypeClassInstances {
+
+    override inline def minValue: Int = 0
+    override inline def maxValue: Int = 999
 
     override inline val inlinedExpectedValue = "in the range from 0 to 999."
 
-    override inline def inlinedPredicate(inline a: Int): Boolean = a >= 0 && a <= 999
-
-    override def min: Type = apply(0)
-
-    override def max: Type = apply(999)
-
     override def invalidReason(a: Int): String = expectedMessage(inlinedExpectedValue)
-
-    override def predicate(a: Int): Boolean = a >= 0 && a <= 999
 
   }
   private[types] trait MillisTypeClassInstances extends MillisTypeClassInstance1 {

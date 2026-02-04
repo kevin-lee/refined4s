@@ -9,21 +9,26 @@ import refined4s.types.numeric.*
   * @since 2026-02-02
   */
 object MinMaxSpec extends Properties {
-  import TestTypes.*
+
+  import MinMaxTestTypes.*
 
   override def tests: List[Test] =
     testMinInt ++
       testMaxInt ++
       testMinMaxInt ++
+      ///
       testMinIntWithVal ++
       testMaxIntWithVal ++
       testMinMaxIntWithVal ++
+      ///
       testMinLong ++
       testMaxLong ++
       testMinMaxLong ++
+      ///
       testMinLongWithVal ++
       testMaxLongWithVal ++
       testMinMaxLongWithVal
+  ///
 
   def testMinInt: List[Test] = checkMin(
     "TestMinInt",
@@ -77,6 +82,7 @@ object MinMaxSpec extends Properties {
   )
 
   ///
+
   def testMinLong: List[Test] = checkMin(
     "TestMinLong",
     TestMinLong,
@@ -183,133 +189,128 @@ object MinMaxSpec extends Properties {
     checkMin(name, minMax, gen, toValue, expectedMin) ++
       checkMax(name, minMax, gen, toValue, expectedMax)
 
-  object TestTypes {
+}
+object MinMaxTestTypes {
 
-    // Custom types for testing
-    type TestMinInt = TestMinInt.Type
-    object TestMinInt extends Refined[Int] with Min[Int] {
-      override inline def invalidReason(a: Int): String = "It must be >= 10"
+  // Custom types for testing
 
-      override inline def predicate(a: Int): Boolean = a >= 10
+  type TestMinInt = TestMinInt.Type
+  object TestMinInt extends Refined[Int] with Min[Int] {
+    override inline def invalidReason(a: Int): String = "It must be >= 10"
 
-      override def min: Type = apply(10)
-    }
+    override inline def predicate(a: Int): Boolean = a >= 10
 
-    type TestMaxInt = TestMaxInt.Type
-    object TestMaxInt extends Refined[Int] with Max[Int] {
-      override inline def invalidReason(a: Int): String = "It must be <= 100"
-
-      override inline def predicate(a: Int): Boolean = a <= 100
-
-      override def max: Type = apply(100)
-    }
-
-    type TestMinMaxInt = TestMinMaxInt.Type
-    object TestMinMaxInt extends Refined[Int] with MinMax[Int] {
-      override inline def invalidReason(a: Int): String = "It must be >= 10 && <= 100"
-
-      override inline def predicate(a: Int): Boolean = a >= 10 && a <= 100
-
-      override def min: Type = apply(10)
-
-      override def max: Type = apply(100)
-    }
-
-    ///
-
-    type TestMinIntWithVal = TestMinIntWithVal.Type
-    object TestMinIntWithVal extends Refined[Int] with Min[Int] {
-      override inline def invalidReason(a: Int): String = "It must be >= 10"
-
-      override inline def predicate(a: Int): Boolean = a >= 10
-
-      override val min: Type = apply(10)
-    }
-
-    type TestMaxIntWithVal = TestMaxIntWithVal.Type
-    object TestMaxIntWithVal extends Refined[Int] with Max[Int] {
-      override inline def invalidReason(a: Int): String = "It must be <= 100"
-
-      override inline def predicate(a: Int): Boolean = a <= 100
-
-      override val max: Type = apply(100)
-    }
-
-    type TestMinMaxIntWithVal = TestMinMaxIntWithVal.Type
-    object TestMinMaxIntWithVal extends Refined[Int] with MinMax[Int] {
-      override inline def invalidReason(a: Int): String = "It must be >= 10 && <= 100"
-
-      override inline def predicate(a: Int): Boolean = a >= 10 && a <= 100
-
-      override val min: Type = apply(10)
-      override val max: Type = apply(100)
-    }
-
-    ///
-
-    type TestMinLong = TestMinLong.Type
-
-    object TestMinLong extends Refined[Long] with Min[Long] {
-      override inline def invalidReason(a: Long): String = "It must be >= 10"
-
-      override inline def predicate(a: Long): Boolean = a >= 10L
-
-      override def min: Type = apply(10L)
-    }
-
-    type TestMaxLong = TestMaxLong.Type
-
-    object TestMaxLong extends Refined[Long] with Max[Long] {
-      override inline def invalidReason(a: Long): String = "It must be <= 100"
-
-      override inline def predicate(a: Long): Boolean = a <= 100L
-
-      override def max: Type = apply(100L)
-    }
-
-    type TestMinMaxLong = TestMinMaxLong.Type
-
-    object TestMinMaxLong extends Refined[Long] with MinMax[Long] {
-      override inline def invalidReason(a: Long): String = "It must be >= 10 && <= 100"
-
-      override inline def predicate(a: Long): Boolean = a >= 10L && a <= 100L
-
-      override def min: Type = apply(10L)
-      override def max: Type = apply(100L)
-    }
-
-    ///
-
-    type TestMinLongWithVal = TestMinLongWithVal.Type
-
-    object TestMinLongWithVal extends Refined[Long] with Min[Long] {
-      override inline def invalidReason(a: Long): String = "It must be >= 10"
-
-      override inline def predicate(a: Long): Boolean = a >= 10L
-
-      override val min: Type = apply(10L)
-    }
-
-    type TestMaxLongWithVal = TestMaxLongWithVal.Type
-
-    object TestMaxLongWithVal extends Refined[Long] with Max[Long] {
-      override inline def invalidReason(a: Long): String = "It must be <= 100"
-
-      override inline def predicate(a: Long): Boolean = a <= 100L
-
-      override val max: Type = apply(100L)
-    }
-
-    type TestMinMaxLongWithVal = TestMinMaxLongWithVal.Type
-
-    object TestMinMaxLongWithVal extends Refined[Long] with MinMax[Long] {
-      override inline def invalidReason(a: Long): String = "It must be >= 10 && <= 100"
-
-      override inline def predicate(a: Long): Boolean = a >= 10L && a <= 100L
-
-      override val min: Type = apply(10L)
-      override val max: Type = apply(100L)
-    }
-
+    override def min: Type = apply(10)
   }
+
+  type TestMaxInt = TestMaxInt.Type
+  object TestMaxInt extends Refined[Int] with Max[Int] {
+    override inline def invalidReason(a: Int): String = "It must be <= 100"
+
+    override inline def predicate(a: Int): Boolean = a <= 100
+
+    override def max: Type = apply(100)
+  }
+
+  type TestMinMaxInt = TestMinMaxInt.Type
+  object TestMinMaxInt extends Refined[Int] with MinMax[Int] {
+    override inline def invalidReason(a: Int): String = "It must be >= 10 && <= 100"
+
+    override inline def predicate(a: Int): Boolean = a >= 10 && a <= 100
+
+    override def min: Type = apply(10)
+
+    override def max: Type = apply(100)
+  }
+
+  ///
+
+  type TestMinIntWithVal = TestMinIntWithVal.Type
+  object TestMinIntWithVal extends Refined[Int] with Min[Int] {
+    override inline def invalidReason(a: Int): String = "It must be >= 10"
+
+    override inline def predicate(a: Int): Boolean = a >= 10
+
+    override val min: Type = apply(10)
+  }
+
+  type TestMaxIntWithVal = TestMaxIntWithVal.Type
+  object TestMaxIntWithVal extends Refined[Int] with Max[Int] {
+    override inline def invalidReason(a: Int): String = "It must be <= 100"
+
+    override inline def predicate(a: Int): Boolean = a <= 100
+
+    override val max: Type = apply(100)
+  }
+
+  type TestMinMaxIntWithVal = TestMinMaxIntWithVal.Type
+  object TestMinMaxIntWithVal extends Refined[Int] with MinMax[Int] {
+    override inline def invalidReason(a: Int): String = "It must be >= 10 && <= 100"
+
+    override inline def predicate(a: Int): Boolean = a >= 10 && a <= 100
+
+    override val min: Type = apply(10)
+    override val max: Type = apply(100)
+  }
+
+  ///
+
+  type TestMinLong = TestMinLong.Type
+  object TestMinLong extends Refined[Long] with Min[Long] {
+    override inline def invalidReason(a: Long): String = "It must be >= 10"
+
+    override inline def predicate(a: Long): Boolean = a >= 10L
+
+    override def min: Type = apply(10L)
+  }
+
+  type TestMaxLong = TestMaxLong.Type
+  object TestMaxLong extends Refined[Long] with Max[Long] {
+    override inline def invalidReason(a: Long): String = "It must be <= 100"
+
+    override inline def predicate(a: Long): Boolean = a <= 100L
+
+    override def max: Type = apply(100L)
+  }
+
+  type TestMinMaxLong = TestMinMaxLong.Type
+  object TestMinMaxLong extends Refined[Long] with MinMax[Long] {
+    override inline def invalidReason(a: Long): String = "It must be >= 10 && <= 100"
+
+    override inline def predicate(a: Long): Boolean = a >= 10L && a <= 100L
+
+    override def min: Type = apply(10L)
+    override def max: Type = apply(100L)
+  }
+
+  ///
+
+  type TestMinLongWithVal = TestMinLongWithVal.Type
+  object TestMinLongWithVal extends Refined[Long] with Min[Long] {
+    override inline def invalidReason(a: Long): String = "It must be >= 10"
+
+    override inline def predicate(a: Long): Boolean = a >= 10L
+
+    override val min: Type = apply(10L)
+  }
+
+  type TestMaxLongWithVal = TestMaxLongWithVal.Type
+  object TestMaxLongWithVal extends Refined[Long] with Max[Long] {
+    override inline def invalidReason(a: Long): String = "It must be <= 100"
+
+    override inline def predicate(a: Long): Boolean = a <= 100L
+
+    override val max: Type = apply(100L)
+  }
+
+  type TestMinMaxLongWithVal = TestMinMaxLongWithVal.Type
+  object TestMinMaxLongWithVal extends Refined[Long] with MinMax[Long] {
+    override inline def invalidReason(a: Long): String = "It must be >= 10 && <= 100"
+
+    override inline def predicate(a: Long): Boolean = a >= 10L && a <= 100L
+
+    override val min: Type = apply(10L)
+    override val max: Type = apply(100L)
+  }
+
 }
