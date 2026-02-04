@@ -7,7 +7,7 @@ import scala.compiletime.*
   */
 trait InlinedRefined[@specialized A] extends RefinedBase[A] {
 
-  inline val inlinedExpectedValue: String
+  inline def inlinedExpectedValue: String
 
   inline def inlinedPredicate(inline a: A): Boolean
 
