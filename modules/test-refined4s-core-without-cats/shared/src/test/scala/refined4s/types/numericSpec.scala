@@ -57,7 +57,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.int(Range.linear(0, Int.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a negative Int"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= -2147483648 && <= -1."
         val actual   = NegInt.from(n)
         actual ==== Left(expected)
       }
@@ -75,7 +75,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.int(Range.linear(0, Int.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a negative Int"
+        val expected = s"Invalid value: [$n]. It must be >= -2147483648 && <= -1."
         try {
           val _ = NegInt.unsafeFrom(n)
           Result
@@ -199,7 +199,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.int(Range.linear(Int.MinValue, -1)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a non-negative Int"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= 0 && <= 2147483647."
         val actual   = NonNegInt.from(n)
         actual ==== Left(expected)
       }
@@ -217,7 +217,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.int(Range.linear(-1, Int.MinValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a non-negative Int"
+        val expected = s"Invalid value: [$n]. It must be >= 0 && <= 2147483647."
         try {
           val _ = NonNegInt.unsafeFrom(n)
           Result
@@ -341,7 +341,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.int(Range.linear(Int.MinValue, 0)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a positive Int"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= 1 && <= 2147483647."
         val actual   = PosInt.from(n)
         actual ==== Left(expected)
       }
@@ -359,7 +359,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.int(Range.linear(Int.MinValue, 0)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a positive Int"
+        val expected = s"Invalid value: [$n]. It must be >= 1 && <= 2147483647."
         try {
           val _ = PosInt.unsafeFrom(n)
           Result
@@ -489,7 +489,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.int(Range.linear(1, Int.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a non-positive Int"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= -2147483648 && <= 0."
         val actual   = NonPosInt.from(n)
         actual ==== Left(expected)
       }
@@ -507,7 +507,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.int(Range.linear(1, Int.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a non-positive Int"
+        val expected = s"Invalid value: [$n]. It must be >= -2147483648 && <= 0."
         try {
           val _ = NonPosInt.unsafeFrom(n)
           Result
@@ -630,7 +630,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a negative Long"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= -9223372036854775808 && <= -1."
         val actual   = NegLong.from(n)
         actual ==== Left(expected)
       }
@@ -648,7 +648,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.long(Range.linear(0L, Long.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a negative Long"
+        val expected = s"Invalid value: [$n]. It must be >= -9223372036854775808 && <= -1."
         try {
           val _ = NegLong.unsafeFrom(n)
           Result
@@ -779,7 +779,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.long(Range.linear(Long.MinValue, -1L)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a non-negative Long"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= 0 && <= 9223372036854775807."
         val actual   = NonNegLong.from(n)
         actual ==== Left(expected)
       }
@@ -797,7 +797,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.long(Range.linear(Long.MinValue, -1L)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a non-negative Long"
+        val expected = s"Invalid value: [$n]. It must be >= 0 && <= 9223372036854775807."
         try {
           val _ = NonNegLong.unsafeFrom(n)
           Result
@@ -921,7 +921,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.long(Range.linear(Long.MinValue, 0L)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a positive Long"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= 1 && <= 9223372036854775807."
         val actual   = PosLong.from(n)
         actual ==== Left(expected)
       }
@@ -939,7 +939,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.long(Range.linear(Long.MinValue, 0L)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a positive Long"
+        val expected = s"Invalid value: [$n]. It must be >= 1 && <= 9223372036854775807."
         try {
           val _ = PosLong.unsafeFrom(n)
           Result
@@ -1070,7 +1070,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.long(Range.linear(1L, Long.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a non-positive Long"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= -9223372036854775808 && <= 0."
         val actual   = NonPosLong.from(n)
         actual ==== Left(expected)
       }
@@ -1088,7 +1088,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.long(Range.linear(1L, Long.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a non-positive Long"
+        val expected = s"Invalid value: [$n]. It must be >= -9223372036854775808 && <= 0."
         try {
           val _ = NonPosLong.unsafeFrom(n)
           Result
@@ -1212,7 +1212,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.short(Range.linear(0, Short.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a negative Short"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= -32768 && <= -1."
         val actual   = NegShort.from(n)
         actual ==== Left(expected)
       }
@@ -1230,7 +1230,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.short(Range.linear(0, Short.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a negative Short"
+        val expected = s"Invalid value: [$n]. It must be >= -32768 && <= -1."
         try {
           val _ = NegShort.unsafeFrom(n)
           Result
@@ -1354,7 +1354,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.short(Range.linear(Short.MinValue, -1)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a non-negative Short"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= 0 && <= 32767."
         val actual   = NonNegShort.from(n)
         actual ==== Left(expected)
       }
@@ -1372,7 +1372,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.short(Range.linear(-1, Short.MinValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a non-negative Short"
+        val expected = s"Invalid value: [$n]. It must be >= 0 && <= 32767."
         try {
           val _ = NonNegShort.unsafeFrom(n)
           Result
@@ -1496,7 +1496,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.short(Range.linear(Short.MinValue, 0)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a positive Short"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= 1 && <= 32767."
         val actual   = PosShort.from(n)
         actual ==== Left(expected)
       }
@@ -1514,7 +1514,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.short(Range.linear(Short.MinValue, 0)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a positive Short"
+        val expected = s"Invalid value: [$n]. It must be >= 1 && <= 32767."
         try {
           val _ = PosShort.unsafeFrom(n)
           Result
@@ -1645,7 +1645,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.short(Range.linear(1, Short.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a non-positive Short"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= -32768 && <= 0."
         val actual   = NonPosShort.from(n)
         actual ==== Left(expected)
       }
@@ -1663,7 +1663,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.short(Range.linear(1, Short.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a non-positive Short"
+        val expected = s"Invalid value: [$n]. It must be >= -32768 && <= 0."
         try {
           val _ = NonPosShort.unsafeFrom(n)
           Result
@@ -1787,7 +1787,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.byte(Range.linear(0, Byte.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a negative Byte"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= -128 && <= -1."
         val actual   = NegByte.from(n)
         actual ==== Left(expected)
       }
@@ -1805,7 +1805,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.byte(Range.linear(0, Byte.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a negative Byte"
+        val expected = s"Invalid value: [$n]. It must be >= -128 && <= -1."
         try {
           val _ = NegByte.unsafeFrom(n)
           Result
@@ -1929,7 +1929,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.byte(Range.linear(Byte.MinValue, -1)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a non-negative Byte"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= 0 && <= 127."
         val actual   = NonNegByte.from(n)
         actual ==== Left(expected)
       }
@@ -1947,7 +1947,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.byte(Range.linear(-1, Byte.MinValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a non-negative Byte"
+        val expected = s"Invalid value: [$n]. It must be >= 0 && <= 127."
         try {
           val _ = NonNegByte.unsafeFrom(n)
           Result
@@ -2071,7 +2071,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.byte(Range.linear(Byte.MinValue, 0)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a positive Byte"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= 1 && <= 127."
         val actual   = PosByte.from(n)
         actual ==== Left(expected)
       }
@@ -2089,7 +2089,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.byte(Range.linear(Byte.MinValue, 0)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a positive Byte"
+        val expected = s"Invalid value: [$n]. It must be >= 1 && <= 127."
         try {
           val _ = PosByte.unsafeFrom(n)
           Result
@@ -2220,7 +2220,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.byte(Range.linear(1, Byte.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a non-positive Byte"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= -128 && <= 0."
         val actual   = NonPosByte.from(n)
         actual ==== Left(expected)
       }
@@ -2238,7 +2238,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.byte(Range.linear(1, Byte.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a non-positive Byte"
+        val expected = s"Invalid value: [$n]. It must be >= -128 && <= 0."
         try {
           val _ = NonPosByte.unsafeFrom(n)
           Result
@@ -2362,7 +2362,8 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(0f, Float.MaxValue)).map(_.toFloat).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a negative Float"
+        val expected =
+          s"Invalid value: [${n.toString}]. It must be >= ${(-java.lang.Float.MAX_VALUE).toString} && <= ${math.nextDown(0f).toString}."
         val actual   = NegFloat.from(n)
         actual ==== Left(expected)
       }
@@ -2380,7 +2381,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(0f, Float.MaxValue)).map(_.toFloat).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a negative Float"
+        val expected = s"Invalid value: [$n]. It must be >= ${(-java.lang.Float.MAX_VALUE).toString} && <= ${math.nextDown(0f).toString}."
         try {
           val _ = NegFloat.unsafeFrom(n)
           Result
@@ -2504,7 +2505,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(Float.MinValue, -0.0000001f)).map(_.toFloat).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a non-negative Float"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= ${0f.toString} && <= ${Float.MaxValue.toString}."
         val actual   = NonNegFloat.from(n)
         actual ==== Left(expected)
       }
@@ -2522,7 +2523,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(-0.0000001f, Float.MinValue)).map(_.toFloat).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a non-negative Float"
+        val expected = s"Invalid value: [$n]. It must be >= ${0f.toString} && <= ${Float.MaxValue.toString}."
         try {
           val _ = NonNegFloat.unsafeFrom(n)
           Result
@@ -2646,7 +2647,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(Float.MinValue, 0f)).map(_.toFloat).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a positive Float"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= ${math.nextUp(0f).toString} && <= ${Float.MaxValue.toString}."
         val actual   = PosFloat.from(n)
         actual ==== Left(expected)
       }
@@ -2664,7 +2665,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(Float.MinValue, 0f)).map(_.toFloat).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a positive Float"
+        val expected = s"Invalid value: [$n]. It must be >= ${math.nextUp(0f).toString} && <= ${Float.MaxValue.toString}."
         try {
           val _ = PosFloat.unsafeFrom(n)
           Result
@@ -2797,7 +2798,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(0.0000001f, Float.MaxValue)).map(_.toFloat).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a non-positive Float"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= ${(-java.lang.Float.MAX_VALUE).toString} && <= ${0f.toString}."
         val actual   = NonPosFloat.from(n)
         actual ==== Left(expected)
       }
@@ -2815,7 +2816,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(0.0000001f, Float.MaxValue)).map(_.toFloat).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a non-positive Float"
+        val expected = s"Invalid value: [$n]. It must be >= ${(-java.lang.Float.MAX_VALUE).toString} && <= ${0f.toString}."
         try {
           val _ = NonPosFloat.unsafeFrom(n)
           Result
@@ -2939,7 +2940,8 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a negative Double"
+        val expected =
+          s"Invalid value: [${n.toString}]. It must be >= ${(-java.lang.Double.MAX_VALUE).toString} && <= ${math.nextDown(0d).toString}."
         val actual   = NegDouble.from(n)
         actual ==== Left(expected)
       }
@@ -2957,7 +2959,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a negative Double"
+        val expected = s"Invalid value: [$n]. It must be >= ${(-java.lang.Double.MAX_VALUE).toString} && <= ${math.nextDown(0d).toString}."
         try {
           val _ = NegDouble.unsafeFrom(n)
           Result
@@ -3081,7 +3083,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a non-negative Double"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= ${0d.toString} && <= ${Double.MaxValue.toString}."
         val actual   = NonNegDouble.from(n)
         actual ==== Left(expected)
       }
@@ -3099,7 +3101,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(-0.0000001d, Double.MinValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a non-negative Double"
+        val expected = s"Invalid value: [$n]. It must be >= ${0d.toString} && <= ${Double.MaxValue.toString}."
         try {
           val _ = NonNegDouble.unsafeFrom(n)
           Result
@@ -3223,7 +3225,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a positive Double"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= ${math.nextUp(0d).toString} && <= ${Double.MaxValue.toString}."
         val actual   = PosDouble.from(n)
         actual ==== Left(expected)
       }
@@ -3241,7 +3243,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a positive Double"
+        val expected = s"Invalid value: [$n]. It must be >= ${math.nextUp(0d).toString} && <= ${Double.MaxValue.toString}."
         try {
           val _ = PosDouble.unsafeFrom(n)
           Result
@@ -3374,7 +3376,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a non-positive Double"
+        val expected = s"Invalid value: [${n.toString}]. It must be >= ${Double.MinValue.toString} && <= ${0d.toString}."
         val actual   = NonPosDouble.from(n)
         actual ==== Left(expected)
       }
@@ -3392,7 +3394,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a non-positive Double"
+        val expected = s"Invalid value: [$n]. It must be >= ${Double.MinValue.toString} && <= ${0d.toString}."
         try {
           val _ = NonPosDouble.unsafeFrom(n)
           Result
@@ -3564,7 +3566,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.long(Range.linear(0L, Long.MaxValue)).map(BigInt(_)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a negative BigInt"
+        val expected = s"Invalid value: [${n.toString}]. It must be a negative BigInt."
         val actual   = NegBigInt.from(n)
         actual ==== Left(expected)
       }
@@ -3582,7 +3584,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.long(Range.linear(0L, Long.MaxValue)).map(BigInt(_)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a negative BigInt"
+        val expected = s"Invalid value: [$n]. It must be a negative BigInt."
         try {
           val _ = NegBigInt.unsafeFrom(n)
           Result
@@ -3725,7 +3727,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.long(Range.linear(Long.MinValue, -1L)).map(BigInt(_)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a non-negative BigInt"
+        val expected = s"Invalid value: [${n.toString}]. It must be a non-negative BigInt."
         val actual   = NonNegBigInt.from(n)
         actual ==== Left(expected)
       }
@@ -3743,7 +3745,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.long(Range.linear(-1L, Long.MinValue)).map(BigInt(_)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a non-negative BigInt"
+        val expected = s"Invalid value: [$n]. It must be a non-negative BigInt."
         try {
           val _ = NonNegBigInt.unsafeFrom(n)
           Result
@@ -3886,7 +3888,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.long(Range.linear(Long.MinValue, 0L)).map(BigInt(_)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a positive BigInt"
+        val expected = s"Invalid value: [${n.toString}]. It must be a positive BigInt."
         val actual   = PosBigInt.from(n)
         actual ==== Left(expected)
       }
@@ -3904,7 +3906,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.long(Range.linear(Long.MinValue, 0L)).map(BigInt(_)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a positive BigInt"
+        val expected = s"Invalid value: [$n]. It must be a positive BigInt."
         try {
           val _ = PosBigInt.unsafeFrom(n)
           Result
@@ -4047,7 +4049,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.long(Range.linear(1L, Long.MaxValue)).map(BigInt(_)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a non-positive BigInt"
+        val expected = s"Invalid value: [${n.toString}]. It must be a non-positive BigInt."
         val actual   = NonPosBigInt.from(n)
         actual ==== Left(expected)
       }
@@ -4065,7 +4067,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.long(Range.linear(1L, Long.MaxValue)).map(BigInt(_)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a non-positive BigInt"
+        val expected = s"Invalid value: [$n]. It must be a non-positive BigInt."
         try {
           val _ = NonPosBigInt.unsafeFrom(n)
           Result
@@ -4233,7 +4235,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).map(BigDecimal(_)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a negative BigDecimal"
+        val expected = s"Invalid value: [${n.toString}]. It must be a negative BigDecimal."
         val actual   = NegBigDecimal.from(n)
         actual ==== Left(expected)
       }
@@ -4251,7 +4253,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(0d, Double.MaxValue)).map(BigDecimal(_)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a negative BigDecimal"
+        val expected = s"Invalid value: [$n]. It must be a negative BigDecimal."
         try {
           val _ = NegBigDecimal.unsafeFrom(n)
           Result
@@ -4418,7 +4420,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(Double.MinValue, -0.0000001d)).map(BigDecimal(_)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a non-negative BigDecimal"
+        val expected = s"Invalid value: [${n.toString}]. It must be a non-negative BigDecimal."
         val actual   = NonNegBigDecimal.from(n)
         actual ==== Left(expected)
       }
@@ -4436,7 +4438,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(-0.0000001d, Double.MinValue)).map(BigDecimal(_)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a non-negative BigDecimal"
+        val expected = s"Invalid value: [$n]. It must be a non-negative BigDecimal."
         try {
           val _ = NonNegBigDecimal.unsafeFrom(n)
           Result
@@ -4603,7 +4605,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).map(BigDecimal(_)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a positive BigDecimal"
+        val expected = s"Invalid value: [${n.toString}]. It must be a positive BigDecimal."
         val actual   = PosBigDecimal.from(n)
         actual ==== Left(expected)
       }
@@ -4621,7 +4623,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(Double.MinValue, 0d)).map(BigDecimal(_)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a positive BigDecimal"
+        val expected = s"Invalid value: [$n]. It must be a positive BigDecimal."
         try {
           val _ = PosBigDecimal.unsafeFrom(n)
           Result
@@ -4788,7 +4790,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).map(BigDecimal(_)).log("n")
       } yield {
-        val expected = s"Invalid value: [${n.toString}]. It must be a non-positive BigDecimal"
+        val expected = s"Invalid value: [${n.toString}]. It must be a non-positive BigDecimal."
         val actual   = NonPosBigDecimal.from(n)
         actual ==== Left(expected)
       }
@@ -4806,7 +4808,7 @@ object numericSpec extends Properties {
       for {
         n <- Gen.double(Range.linearFrac(0.0000001d, Double.MaxValue)).map(BigDecimal(_)).log("n")
       } yield {
-        val expected = s"Invalid value: [$n]. It must be a non-positive BigDecimal"
+        val expected = s"Invalid value: [$n]. It must be a non-positive BigDecimal."
         try {
           val _ = NonPosBigDecimal.unsafeFrom(n)
           Result

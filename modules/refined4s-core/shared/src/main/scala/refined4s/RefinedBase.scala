@@ -27,7 +27,7 @@ trait RefinedBase[@specialized A] extends NewtypeBase[A] {
     from(a).fold(err => throw new IllegalArgumentException(err), identity) // scalafix:ok DisableSyntax.throw
 
   inline def expectedMessage(expected: String): String =
-    "It must be " + expected
+    "It must be " + expected + "."
 
   def invalidReason(a: A): String
 

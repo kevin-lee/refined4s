@@ -34,10 +34,6 @@ object time {
     override inline def minValue: Int = 1
     override inline def maxValue: Int = 12
 
-    override inline val inlinedExpectedValue = "in the range from 1 to 12."
-
-    override def invalidReason(a: Int): String = expectedMessage(inlinedExpectedValue)
-
   }
   private[types] trait MonthTypeClassInstances extends MonthTypeClassInstance1 {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
@@ -63,10 +59,6 @@ object time {
 
     override inline def minValue: Int = 1
     override inline def maxValue: Int = 31
-
-    override inline val inlinedExpectedValue = "in the range from 1 to 31."
-
-    override def invalidReason(a: Int): String = expectedMessage(inlinedExpectedValue)
 
   }
   private[types] trait DayTypeClassInstances extends DayTypeClassInstance1 {
@@ -94,10 +86,6 @@ object time {
     override inline def minValue: Int = 0
     override inline def maxValue: Int = 23
 
-    override inline val inlinedExpectedValue = "in the range from 0 to 23."
-
-    override def invalidReason(a: Int): String = expectedMessage(inlinedExpectedValue)
-
   }
   private[types] trait HourTypeClassInstances extends HourTypeClassInstance1 {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
@@ -123,10 +111,6 @@ object time {
 
     override inline def minValue: Int = 0
     override inline def maxValue: Int = 59
-
-    override inline val inlinedExpectedValue = "in the range from 0 to 59."
-
-    override def invalidReason(a: Int): String = expectedMessage(inlinedExpectedValue)
 
   }
   private[types] trait MinuteTypeClassInstances extends MinuteTypeClassInstance1 {
@@ -154,10 +138,6 @@ object time {
     override inline def minValue: Int = 0
     override inline def maxValue: Int = 59
 
-    override inline val inlinedExpectedValue = "in the range from 0 to 59."
-
-    override def invalidReason(a: Int): String = expectedMessage(inlinedExpectedValue)
-
   }
   private[types] trait SecondTypeClassInstances extends SecondTypeClassInstance1 {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
@@ -183,10 +163,6 @@ object time {
 
     override inline def minValue: Int = 0
     override inline def maxValue: Int = 999
-
-    override inline val inlinedExpectedValue = "in the range from 0 to 999."
-
-    override def invalidReason(a: Int): String = expectedMessage(inlinedExpectedValue)
 
   }
   private[types] trait MillisTypeClassInstances extends MillisTypeClassInstance1 {

@@ -45,7 +45,7 @@ object stringsSpec extends Properties {
       }
 
     def testFromInvalid: Result = {
-      val expected = "Invalid value: []. It must be a non-empty String"
+      val expected = "Invalid value: []. It must be a non-empty String."
       val actual   = NonEmptyString.from("")
       actual ==== Left(expected)
     }
@@ -60,7 +60,7 @@ object stringsSpec extends Properties {
       }
 
     def testUnsafeFromInvalid: Result = {
-      val expected = "Invalid value: []. It must be a non-empty String"
+      val expected = "Invalid value: []. It must be a non-empty String."
       try {
         val _ = NonEmptyString.unsafeFrom("")
         Result
@@ -278,7 +278,7 @@ object stringsSpec extends Properties {
       } yield {
         val expected =
           s"Invalid value: [$s], unicode=[${s.map(c => "\\u%04x".format(c.toInt)).mkString}]. " +
-            "It must be not all whitespace non-empty String"
+            "It must be not all whitespace non-empty String."
         val actual   = NonBlankString.from(s)
         actual ==== Left(expected)
       }
@@ -308,7 +308,7 @@ object stringsSpec extends Properties {
       } yield {
         val expected =
           s"Invalid value: [$s], unicode=[${s.map(c => "\\u%04x".format(c.toInt)).mkString}]. " +
-            "It must be not all whitespace non-empty String"
+            "It must be not all whitespace non-empty String."
         try {
           val _ = NonBlankString.unsafeFrom(s)
           Result
@@ -563,8 +563,8 @@ object stringsSpec extends Properties {
       }
 
     def testFromInvalid: Result = {
-      val expected1 = "Invalid value: [blah]. It must be UUID"
-      val expected2 = "Invalid value: []. It must be UUID"
+      val expected1 = "Invalid value: [blah]. It must be UUID."
+      val expected2 = "Invalid value: []. It must be UUID."
       val actual1   = Uuid.from("blah")
       val actual2   = Uuid.from("")
       Result.all(
@@ -586,7 +586,7 @@ object stringsSpec extends Properties {
       }
 
     def testUnsafeFromInvalid: Result = {
-      val expected = "Invalid value: [blah]. It must be UUID"
+      val expected = "Invalid value: [blah]. It must be UUID."
       try {
         val _ = Uuid.unsafeFrom("blah")
         Result

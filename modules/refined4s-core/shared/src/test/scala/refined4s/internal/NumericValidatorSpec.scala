@@ -23,6 +23,15 @@ object NumericValidatorSpec extends Properties {
   inline def gteq[A](inline a: A, inline b: A): Boolean =
     ${ NumericValidator.gteqImpl[A]('a, 'b) }
 
+  inline def minMaxToString[A](inline min: A, inline max: A): String =
+    ${ NumericValidator.minMaxToStringImpl[A]('min, 'max) }
+
+  inline def minToString[A](inline min: A): String =
+    ${ NumericValidator.minToStringImpl[A]('min) }
+
+  inline def maxToString[A](inline max: A): String =
+    ${ NumericValidator.maxToStringImpl[A]('max) }
+
   inline def withinMinMax[A](inline a: A, inline min: A, inline max: A): Boolean =
     ${ NumericValidator.withinMinMaxImpl[A]('a, 'min, 'max) }
 
@@ -88,7 +97,8 @@ object NumericValidatorSpec extends Properties {
       runtimeTests("Byte", byteGen, byteMin, byteMax) ++
       compileTimeTests("Char", charA, charB, charMin, charMax) ++
       runtimeTests("Char", charGen, charMin, charMax) ++
-      errorMessageTests
+      errorMessageTests ++
+      toStringTests
 
   private[internal] inline def compileTimeTests[A](
     name: String,
@@ -98,12 +108,20 @@ object NumericValidatorSpec extends Properties {
     inline max: A,
   ): List[Test] =
     List(
-      example(s"$name lt compile-time", Result.assert(lt(a, b))),
-      example(s"$name lteq compile-time", Result.assert(lteq(a, b))),
-      example(s"$name equiv compile-time", Result.assert(equiv(a, a))),
-      example(s"$name gt compile-time", Result.assert(gt(b, a))),
-      example(s"$name gteq compile-time", Result.assert(gteq(a, a))),
-      example(s"$name withinMinMax compile-time", Result.assert(withinMinMax(a, min, max))),
+      example(s"$name lt compile-time", Result.assert(lt(a, b)).log(s"lt($a, $b) should return true")),
+      example(s"$name lteq compile-time", Result.assert(lteq(a, b)).log(s"lteq($a, $b) should return true")),
+      example(s"$name lteq compile-time", Result.assert(lteq(a, a)).log(s"lteq($a, $a) should return true")),
+      example(s"$name equiv compile-time", Result.assert(equiv(a, a)).log(s"equiv($a, $a) should return true")),
+      example(s"$name equiv compile-time", (equiv(a, b) ==== false).log(s"equiv($a, $b) should return false")),
+      example(s"$name gt compile-time", Result.assert(gt(b, a)).log(s"gt($b, $a) should return true")),
+      example(s"$name gteq compile-time", Result.assert(gteq(b, a)).log(s"gteq($b, $a) should return true")),
+      example(s"$name gteq compile-time", Result.assert(gteq(a, a)).log(s"gteq($a, $a) should return true")),
+      example(
+        s"$name withinMinMax compile-time",
+        Result
+          .assert(withinMinMax(a, min, max))
+          .log(s"withinMinMax($a, $min, $max) should return true"),
+      ),
     )
 
   private def runtimeTests[A: Ordering](
@@ -224,5 +242,36 @@ object NumericValidatorSpec extends Properties {
       ),
     )
   }
+
+  private[internal] def toStringTests: List[Test] =
+    List(
+      example("minMaxToString[Int](0, 10)", minMaxToString(0, 10) ==== ">= 0 && <= 10"),
+      example("minToString[Int](0)", minToString(0) ==== ">= 0"),
+      example("maxToString[Int](10)", maxToString(10) ==== "<= 10"),
+      // Long
+      example("minMaxToString[Long](0L, 10L)", minMaxToString(0L, 10L) ==== ">= 0L && <= 10L"),
+      example("minToString[Long](0L)", minToString(0L) ==== ">= 0L"),
+      example("maxToString[Long](10L)", maxToString(10L) ==== "<= 10L"),
+      // Double
+      example("minMaxToString[Double](0.0, 10.0)", minMaxToString(0.0, 10.0) ==== ">= 0.0d && <= 10.0d"),
+      example("minToString[Double](0.0)", minToString(0.0) ==== ">= 0.0d"),
+      example("maxToString[Double](10.0)", maxToString(10.0) ==== "<= 10.0d"),
+      // Float
+      example("minMaxToString[Float](0.0f, 10.0f)", minMaxToString(0.0f, 10.0f) ==== ">= 0.0f && <= 10.0f"),
+      example("minToString[Float](0.0f)", minToString(0.0f) ==== ">= 0.0f"),
+      example("maxToString[Float](10.0f)", maxToString(10.0f) ==== "<= 10.0f"),
+      // Short
+      example("minMaxToString[Short](0.toShort, 10.toShort)", minMaxToString(0.toShort, 10.toShort) ==== ">= 0 && <= 10"),
+      example("minToString[Short](0.toShort)", minToString(0.toShort) ==== ">= 0"),
+      example("maxToString[Short](10.toShort)", maxToString(10.toShort) ==== "<= 10"),
+      // Byte
+      example("minMaxToString[Byte](0.toByte, 10.toByte)", minMaxToString(0.toByte, 10.toByte) ==== ">= 0 && <= 10"),
+      example("minToString[Byte](0.toByte)", minToString(0.toByte) ==== ">= 0"),
+      example("maxToString[Byte](10.toByte)", maxToString(10.toByte) ==== "<= 10"),
+      // Char
+      example("minMaxToString[Char]('a', 'z')", minMaxToString('a', 'z') ==== ">= a && <= z"),
+      example("minToString[Char]('a')", minToString('a') ==== ">= a"),
+      example("maxToString[Char]('z')", maxToString('z') ==== "<= z"),
+    )
 
 }
