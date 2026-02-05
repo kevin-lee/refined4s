@@ -17,26 +17,21 @@ object InlinedNumericMinMaxSpec extends Properties {
       testInlinedNumericMaxInt ++
       testInlinedNumericMinMaxInt ++
       ///
-      // NOTE: apply in InlinedNumericMinMax can't handle non-primitive numeric types yet
-      // So InlinedNumericMinMax[BigInt].apply() does not work.
-      testInlinedNumericMinBigInt ++
-      testInlinedNumericMaxBigInt ++
-      testInlinedNumericMinMaxBigInt ++
-      ///
       testInlinedNumericMinLong ++
       testInlinedNumericMaxLong ++
       testInlinedNumericMinMaxLong
 
   ///
 
-  def testInlinedNumericMinInt: List[Test] = checkMin(
-    "TestInlinedNumericMinInt",
-    TestInlinedNumericMinInt,
-    Gen.int(Range.linear(10, 1000)).map(TestInlinedNumericMinInt.unsafeFrom),
-    _.value,
-    10,
-  ) ++ List(
-    {
+  def testInlinedNumericMinInt: List[Test] = {
+    val name = "TestInlinedNumericMinInt"
+    checkMin(
+      name,
+      TestInlinedNumericMinInt,
+      Gen.int(Range.linear(10, 1000)).map(TestInlinedNumericMinInt.unsafeFrom),
+      _.value,
+      10,
+    ) ++ List(
       example(
         "Test TestInlinedNumericMinInt with min - 1 value", {
 
@@ -54,7 +49,7 @@ object InlinedNumericMinMaxSpec extends Properties {
           """
           ).map(_.message).mkString
 
-          val expectedErrorMessage = """Invalid value: [9]. It must be >= 10"""
+          val expectedErrorMessage = """Invalid value: [9]. It must be >= 10."""
 
           Result.all(
             List(
@@ -63,18 +58,41 @@ object InlinedNumericMinMaxSpec extends Properties {
             )
           )
         },
-      )
-    }
-  )
+      ),
+      example(
+        s"test $name.from with invalid value", {
+          val expected = s"Invalid value: [${10 - 1}]. It must be >= 10."
+          val actual   = TestInlinedNumericMinInt.from(10 - 1)
+          actual ==== Left(expected)
+        },
+      ),
+      example(
+        s"test $name.unsafeFrom with invalid value", {
+          val expected =
+            s"Invalid value: [${10 - 1}]. It must be >= 10."
+          val actual   = scala.util.Try(TestInlinedNumericMinInt.unsafeFrom(10 - 1)).toEither
+          Result.all(
+            List(
+              actual.matchPattern {
+                case Left(err: IllegalArgumentException) =>
+              },
+              actual.left.map(_.getMessage) ==== Left(expected),
+            )
+          )
+        },
+      ),
+    )
+  }
 
-  def testInlinedNumericMaxInt: List[Test] = checkMax(
-    "TestInlinedNumericMaxInt",
-    TestInlinedNumericMaxInt,
-    Gen.int(Range.linear(-1000, 100)).map(TestInlinedNumericMaxInt.unsafeFrom),
-    _.value,
-    100,
-  ) ++ List(
-    {
+  def testInlinedNumericMaxInt: List[Test] = {
+    val name = "TestInlinedNumericMaxInt"
+    checkMax(
+      name,
+      TestInlinedNumericMaxInt,
+      Gen.int(Range.linear(-1000, 100)).map(TestInlinedNumericMaxInt.unsafeFrom),
+      _.value,
+      100,
+    ) ++ List(
       example(
         "Test TestInlinedNumericMaxInt with max + 1 value", {
 
@@ -92,7 +110,7 @@ object InlinedNumericMinMaxSpec extends Properties {
           """
           ).map(_.message).mkString
 
-          val expectedErrorMessage = """Invalid value: [101]. It must be <= 100"""
+          val expectedErrorMessage = """Invalid value: [101]. It must be <= 100."""
 
           Result.all(
             List(
@@ -101,19 +119,41 @@ object InlinedNumericMinMaxSpec extends Properties {
             )
           )
         },
-      )
-    }
-  )
+      ),
+      example(
+        s"test $name.from with invalid value", {
+          val expected = s"Invalid value: [${100 + 1}]. It must be <= 100."
+          val actual   = TestInlinedNumericMaxInt.from(100 + 1)
+          actual ==== Left(expected)
+        },
+      ),
+      example(
+        s"test $name.unsafeFrom with invalid value", {
+          val expected = s"Invalid value: [${100 + 1}]. It must be <= 100."
+          val actual   = scala.util.Try(TestInlinedNumericMaxInt.unsafeFrom(100 + 1)).toEither
+          Result.all(
+            List(
+              actual.matchPattern {
+                case Left(err: IllegalArgumentException) =>
+              },
+              actual.left.map(_.getMessage) ==== Left(expected),
+            )
+          )
+        },
+      ),
+    )
+  }
 
-  def testInlinedNumericMinMaxInt: List[Test] = checkMinMax(
-    "TestInlinedNumericMinMaxInt",
-    TestInlinedNumericMinMaxInt,
-    Gen.int(Range.linear(10, 100)).map(TestInlinedNumericMinMaxInt.unsafeFrom),
-    _.value,
-    10,
-    100,
-  ) ++ List(
-    {
+  def testInlinedNumericMinMaxInt: List[Test] = {
+    val name = "TestInlinedNumericMinMaxInt"
+    checkMinMax(
+      name,
+      TestInlinedNumericMinMaxInt,
+      Gen.int(Range.linear(10, 100)).map(TestInlinedNumericMinMaxInt.unsafeFrom),
+      _.value,
+      10,
+      100,
+    ) ++ List(
       example(
         "Test TestInlinedNumericMinMaxInt with min - 1 value", {
 
@@ -131,7 +171,7 @@ object InlinedNumericMinMaxSpec extends Properties {
           """
           ).map(_.message).mkString
 
-          val expectedErrorMessage = """Invalid value: [9]. It must be >= 10 && <= 100"""
+          val expectedErrorMessage = """Invalid value: [9]. It must be >= 10 && <= 100."""
 
           Result.all(
             List(
@@ -142,8 +182,7 @@ object InlinedNumericMinMaxSpec extends Properties {
             )
           )
         },
-      )
-    }, {
+      ),
       example(
         "Test TestInlinedNumericMinMaxInt with max + 1 value", {
 
@@ -161,7 +200,7 @@ object InlinedNumericMinMaxSpec extends Properties {
           """
           ).map(_.message).mkString
 
-          val expectedErrorMessage = """Invalid value: [101]. It must be >= 10 && <= 100"""
+          val expectedErrorMessage = """Invalid value: [101]. It must be >= 10 && <= 100."""
 
           Result.all(
             List(
@@ -172,69 +211,312 @@ object InlinedNumericMinMaxSpec extends Properties {
             )
           )
         },
-      )
-    },
-  )
+      ),
+      example(
+        s"test $name.from with invalid value", {
+          val expected = s"Invalid value: [${10 - 1}]. It must be >= 10 && <= 100."
+          val actual   = TestInlinedNumericMinMaxInt.from(10 - 1)
+          actual ==== Left(expected)
+        },
+      ),
+      example(
+        s"test $name.unsafeFrom with invalid value", {
+          val expected =
+            s"Invalid value: [${10 - 1}]. It must be >= 10 && <= 100."
+          val actual   = scala.util.Try(TestInlinedNumericMinMaxInt.unsafeFrom(10 - 1)).toEither
+          Result.all(
+            List(
+              actual.matchPattern {
+                case Left(err: IllegalArgumentException) =>
+              },
+              actual.left.map(_.getMessage) ==== Left(expected),
+            )
+          )
+        },
+      ),
+      example(
+        s"test $name.from with invalid value", {
+          val expected = s"Invalid value: [${100 + 1}]. It must be >= 10 && <= 100."
+          val actual   = TestInlinedNumericMinMaxInt.from(100 + 1)
+          actual ==== Left(expected)
+        },
+      ),
+      example(
+        s"test $name.unsafeFrom with invalid value", {
+          val expected = s"Invalid value: [${100 + 1}]. It must be >= 10 && <= 100."
+          val actual   = scala.util.Try(TestInlinedNumericMinMaxInt.unsafeFrom(100 + 1)).toEither
+          Result.all(
+            List(
+              actual.matchPattern {
+                case Left(err: IllegalArgumentException) =>
+              },
+              actual.left.map(_.getMessage) ==== Left(expected),
+            )
+          )
+        },
+      ),
+    )
+  }
 
   ///
 
-  def testInlinedNumericMinBigInt: List[Test] = checkMin(
-    "TestInlinedNumericMinBigInt",
-    TestInlinedNumericMinBigInt,
-    Gen.int(Range.linear(10, 1000)).map(BigInt(_)).map(TestInlinedNumericMinBigInt.unsafeFrom),
-    _.value,
-    10,
-  )
+  def testInlinedNumericMinLong: List[Test] = {
+    val name = "TestInlinedNumericMinLong"
 
-  def testInlinedNumericMaxBigInt: List[Test] = checkMax(
-    "TestInlinedNumericMaxBigInt",
-    TestInlinedNumericMaxBigInt,
-    Gen
-      .long(Range.linear(-1000L, 100L))
-      .map { n =>
-        if n > 0 then BigInt(n) + BigInt(n)
-        else BigInt(n)
-      }
-      .map(TestInlinedNumericMaxBigInt.unsafeFrom),
-    _.value,
-    BigInt(Long.MaxValue) + BigInt(Long.MaxValue),
-  )
+    checkMin(
+      name,
+      TestInlinedNumericMinLong,
+      Gen.long(Range.linear(Long.MinValue + 1L, Long.MaxValue)).map(TestInlinedNumericMinLong.unsafeFrom),
+      _.value,
+      Long.MinValue + 1L,
+    ) ++ List(
+      example(
+        "Test TestInlinedNumericMinLong with min - 1 value", {
 
-  def testInlinedNumericMinMaxBigInt: List[Test] = checkMinMax(
-    "TestInlinedNumericMinMaxBigInt",
-    TestInlinedNumericMinMaxBigInt,
-    Gen.int(Range.linear(10, 100)).map(BigInt(_)).map(TestInlinedNumericMinMaxBigInt.unsafeFrom),
-    _.value,
-    10,
-    100,
-  )
+          import scala.compiletime.testing.{typeChecks, typeCheckErrors}
 
-  ///
+          val shouldNotCompile = !typeChecks(
+            """
+            TestInlinedNumericMinLong(0x8000_0000_0000_0000L)
+          """
+          )
 
-  def testInlinedNumericMinLong: List[Test] = checkMin(
-    "TestInlinedNumericMinLong",
-    TestInlinedNumericMinLong,
-    Gen.long(Range.linear(10L, 1000L)).map(TestInlinedNumericMinLong.unsafeFrom),
-    _.value,
-    10L,
-  )
+          val shouldNotCompileError = typeCheckErrors(
+            """
+            TestInlinedNumericMinLong(0x8000_0000_0000_0000L)
+          """
+          ).map(_.message).mkString
 
-  def testInlinedNumericMaxLong: List[Test] = checkMax(
-    "TestInlinedNumericMaxLong",
-    TestInlinedNumericMaxLong,
-    Gen.long(Range.linear(-1000L, 100L)).map(TestInlinedNumericMaxLong.unsafeFrom),
-    _.value,
-    100L,
-  )
+          val expectedErrorMessage =
+            """Invalid value: [-9223372036854775808L]. It must be >= -9223372036854775807L."""
 
-  def testInlinedNumericMinMaxLong: List[Test] = checkMinMax(
-    "TestInlinedNumericMinMaxLong",
-    TestInlinedNumericMinMaxLong,
-    Gen.long(Range.linear(10L, 100L)).map(TestInlinedNumericMinMaxLong.unsafeFrom),
-    _.value,
-    10L,
-    100L,
-  )
+          Result.all(
+            List(
+              Result
+                .assert(shouldNotCompile)
+                .log("""TestInlinedNumericMinLong(0x8000_0000_0000_0000L) should have failed compilation but it succeeded."""),
+              (shouldNotCompileError ==== expectedErrorMessage).log("""The error message doesn't match with the expected error message."""),
+            )
+          )
+        },
+      ),
+      example(
+        s"test $name.from with invalid value", {
+          val expected = s"Invalid value: [${Long.MinValue.toString}]. It must be >= ${(Long.MinValue + 1L).toString}."
+          val actual   = TestInlinedNumericMinLong.from(Long.MinValue)
+          actual ==== Left(expected)
+        },
+      ),
+      example(
+        s"test $name.unsafeFrom with invalid value", {
+          val expected =
+            s"Invalid value: [${Long.MinValue.toString}]. It must be >= ${(Long.MinValue + 1L).toString}."
+          val actual   = scala.util.Try(TestInlinedNumericMinLong.unsafeFrom(Long.MinValue)).toEither
+          Result.all(
+            List(
+              actual.matchPattern {
+                case Left(err: IllegalArgumentException) =>
+              },
+              actual.left.map(_.getMessage) ==== Left(expected),
+            )
+          )
+        },
+      ),
+    )
+  }
+
+  def testInlinedNumericMaxLong: List[Test] = {
+    val name = "TestInlinedNumericMaxLong"
+    checkMax(
+      name,
+      TestInlinedNumericMaxLong,
+      Gen.long(Range.linear(Long.MinValue, Long.MaxValue - 1)).map(TestInlinedNumericMaxLong.unsafeFrom),
+      _.value,
+      Long.MaxValue - 1,
+    ) ++ List(
+      {
+        example(
+          "Test TestInlinedNumericMaxLong with max + 1 value", {
+
+            import scala.compiletime.testing.{typeChecks, typeCheckErrors}
+
+            val shouldNotCompile = !typeChecks(
+              """
+            TestInlinedNumericMaxLong(0x7fff_ffff_ffff_ffffL)
+          """
+            )
+
+            val shouldNotCompileError = typeCheckErrors(
+              """
+            TestInlinedNumericMaxLong(0x7fff_ffff_ffff_ffffL)
+          """
+            ).map(_.message).mkString
+
+            val expectedErrorMessage =
+              """Invalid value: [9223372036854775807L]. It must be <= 9223372036854775806L."""
+
+            Result.all(
+              List(
+                Result
+                  .assert(shouldNotCompile)
+                  .log("""TestInlinedNumericMaxLong(0x7fff_ffff_ffff_ffffL) should have failed compilation but it succeeded."""),
+                (shouldNotCompileError ==== expectedErrorMessage).log(
+                  """The error message doesn't match with the expected error message."""
+                ),
+              )
+            )
+          },
+        )
+      },
+      example(
+        s"test $name.from with invalid value", {
+          val expected = s"Invalid value: [${Long.MaxValue.toString}]. It must be <= ${(Long.MaxValue - 1L).toString}."
+          val actual   = TestInlinedNumericMaxLong.from(Long.MaxValue)
+          actual ==== Left(expected)
+        },
+      ),
+      example(
+        s"test $name.unsafeFrom with invalid value", {
+          val expected = s"Invalid value: [${Long.MaxValue.toString}]. It must be <= ${(Long.MaxValue - 1L).toString}."
+          val actual   = scala.util.Try(TestInlinedNumericMaxLong.unsafeFrom(Long.MaxValue)).toEither
+          Result.all(
+            List(
+              actual.matchPattern {
+                case Left(err: IllegalArgumentException) =>
+              },
+              actual.left.map(_.getMessage) ==== Left(expected),
+            )
+          )
+        },
+      ),
+    )
+  }
+
+  def testInlinedNumericMinMaxLong: List[Test] = {
+    val name = "TestInlinedNumericMinMaxLong"
+    checkMinMax(
+      name,
+      TestInlinedNumericMinMaxLong,
+      Gen.long(Range.linear(Long.MinValue + 1, Long.MaxValue - 1)).map(TestInlinedNumericMinMaxLong.unsafeFrom),
+      _.value,
+      Long.MinValue + 1,
+      Long.MaxValue - 1,
+    ) ++ List(
+      {
+        example(
+          "Test TestInlinedNumericMinMaxLong with min - 1 value", {
+
+            import scala.compiletime.testing.{typeChecks, typeCheckErrors}
+
+            val shouldNotCompile = !typeChecks(
+              """
+            TestInlinedNumericMinMaxLong(0x8000_0000_0000_0000L)
+          """
+            )
+
+            val shouldNotCompileError = typeCheckErrors(
+              """
+            TestInlinedNumericMinMaxLong(0x8000_0000_0000_0000L)
+          """
+            ).map(_.message).mkString
+
+            val expectedErrorMessage =
+              """Invalid value: [-9223372036854775808L]. It must be >= -9223372036854775807L && <= 9223372036854775806L."""
+
+            Result.all(
+              List(
+                Result
+                  .assert(shouldNotCompile)
+                  .log("""TestInlinedNumericMinMaxLong(10L - 1L) should have failed compilation but it succeeded."""),
+                (shouldNotCompileError ==== expectedErrorMessage).log(
+                  """The error message doesn't match with the expected error message."""
+                ),
+              )
+            )
+          },
+        )
+      }, {
+        example(
+          "Test TestInlinedNumericMinMaxLong with max + 1 value", {
+
+            import scala.compiletime.testing.{typeChecks, typeCheckErrors}
+
+            val shouldNotCompile = !typeChecks(
+              """
+            TestInlinedNumericMinMaxLong(0x7fff_ffff_ffff_ffffL)
+          """
+            )
+
+            val shouldNotCompileError = typeCheckErrors(
+              """
+            TestInlinedNumericMinMaxLong(0x7fff_ffff_ffff_ffffL)
+          """
+            ).map(_.message).mkString
+
+            val expectedErrorMessage =
+              """Invalid value: [9223372036854775807L]. It must be >= -9223372036854775807L && <= 9223372036854775806L."""
+
+            Result.all(
+              List(
+                Result
+                  .assert(shouldNotCompile)
+                  .log("""TestInlinedNumericMinMaxLong(100L + 1L) should have failed compilation but it succeeded."""),
+                (shouldNotCompileError ==== expectedErrorMessage).log(
+                  """The error message doesn't match with the expected error message."""
+                ),
+              )
+            )
+          },
+        )
+      },
+      example(
+        s"test $name.from with invalid value", {
+          val expected =
+            s"Invalid value: [${Long.MinValue.toString}]. It must be >= ${(Long.MinValue + 1L).toString} && <= ${(Long.MaxValue - 1L).toString}."
+          val actual   = TestInlinedNumericMinMaxLong.from(Long.MinValue)
+          actual ==== Left(expected)
+        },
+      ),
+      example(
+        s"test $name.unsafeFrom with invalid value", {
+          val expected =
+            s"Invalid value: [${Long.MinValue.toString}]. It must be >= ${(Long.MinValue + 1L).toString} && <= ${(Long.MaxValue - 1L).toString}."
+          val actual   = scala.util.Try(TestInlinedNumericMinMaxLong.unsafeFrom(Long.MinValue)).toEither
+          Result.all(
+            List(
+              actual.matchPattern {
+                case Left(err: IllegalArgumentException) =>
+              },
+              actual.left.map(_.getMessage) ==== Left(expected),
+            )
+          )
+        },
+      ),
+      example(
+        s"test $name.from with invalid value", {
+          val expected =
+            s"Invalid value: [${Long.MaxValue.toString}]. It must be >= ${(Long.MinValue + 1L).toString} && <= ${(Long.MaxValue - 1L).toString}."
+          val actual   = TestInlinedNumericMinMaxLong.from(Long.MaxValue)
+          actual ==== Left(expected)
+        },
+      ),
+      example(
+        s"test $name.unsafeFrom with invalid value", {
+          val expected =
+            s"Invalid value: [${Long.MaxValue.toString}]. It must be >= ${(Long.MinValue + 1L).toString} && <= ${(Long.MaxValue - 1L).toString}."
+          val actual   = scala.util.Try(TestInlinedNumericMinMaxLong.unsafeFrom(Long.MaxValue)).toEither
+          Result.all(
+            List(
+              actual.matchPattern {
+                case Left(err: IllegalArgumentException) =>
+              },
+              actual.left.map(_.getMessage) ==== Left(expected),
+            )
+          )
+        },
+      ),
+    )
+  }
 
   /* Test helpers */
 
@@ -299,93 +581,22 @@ object InlinedNumericMinMaxTestTypes {
   type TestInlinedNumericMinInt = TestInlinedNumericMinInt.Type
   object TestInlinedNumericMinInt extends InlinedNumericMin[Int] {
 
-    import scala.compiletime.*
-    import scala.compiletime.ops.any.ToString
-    import scala.compiletime.ops.string.*
-
-    private type MinV          = 10
-    private type ExpectedValue = ">= " + ToString[MinV]
-
-    override inline def minValue: Int = constValue[MinV]
-
-    override inline def inlinedExpectedValue: String = constValue[ExpectedValue]
-
-    override inline def invalidReason(a: Int): String = "It must be >= " + minValue.toString
+    override inline def minValue: Int = 10
 
   }
 
   type TestInlinedNumericMaxInt = TestInlinedNumericMaxInt.Type
   object TestInlinedNumericMaxInt extends InlinedNumericMax[Int] {
-    import scala.compiletime.*
-    import scala.compiletime.ops.any.ToString
-    import scala.compiletime.ops.string.*
 
-    private type MaxV          = 100
-    private type ExpectedValue = "<= " + ToString[MaxV]
-
-    override inline def maxValue: Int = constValue[MaxV]
-
-    @SuppressWarnings(Array("org.wartremover.warts.StringPlusAny"))
-    override inline def inlinedExpectedValue: String = constValue[ExpectedValue]
-
-    override inline def invalidReason(a: Int): String = "It must be <= " + maxValue.toString
+    override inline def maxValue: Int = 100
 
   }
 
   type TestInlinedNumericMinMaxInt = TestInlinedNumericMinMaxInt.Type
   object TestInlinedNumericMinMaxInt extends InlinedNumericMinMax[Int] {
 
-    import scala.compiletime.*
-    import scala.compiletime.ops.any.ToString
-    import scala.compiletime.ops.string.*
-
-    private type MinV = 10
-    private type MaxV = 100
-
-    override inline def minValue: Int = constValue[MinV]
-    override inline def maxValue: Int = constValue[MaxV]
-
-    private type ExpectedValue = ">= " + ToString[MinV] + " && <= " + ToString[MaxV]
-
-    override inline def inlinedExpectedValue: String = constValue[ExpectedValue]
-
-    override inline def invalidReason(a: Int): String = "It must be >= " + minValue.toString + " && <= " + maxValue.toString
-
-  }
-
-  ///
-
-  type TestInlinedNumericMinBigInt = TestInlinedNumericMinBigInt.Type
-  object TestInlinedNumericMinBigInt extends InlinedNumericMin[BigInt] {
-
-    override inline def minValue = BigInt(10)
-
-    override inline def inlinedExpectedValue: String = ">= 10"
-
-    override inline def invalidReason(a: BigInt): String = "It must be >= 10"
-
-  }
-
-  type TestInlinedNumericMaxBigInt = TestInlinedNumericMaxBigInt.Type
-  object TestInlinedNumericMaxBigInt extends InlinedNumericMax[BigInt] {
-
-    override inline def maxValue: BigInt = BigInt(Long.MaxValue) + BigInt(Long.MaxValue)
-
-    override inline def inlinedExpectedValue: String = "<= 100"
-
-    override inline def invalidReason(a: BigInt): String = "It must be <= " + maxValue.toString
-
-  }
-
-  type TestInlinedNumericMinMaxBigInt = TestInlinedNumericMinMaxBigInt.Type
-  object TestInlinedNumericMinMaxBigInt extends InlinedNumericMinMax[BigInt] {
-
-    override inline def minValue: BigInt = BigInt(10)
-    override inline def maxValue: BigInt = BigInt(100)
-
-    override inline def inlinedExpectedValue: String = ">= 10 && <= 100"
-
-    override inline def invalidReason(a: BigInt): String = "It must be >= 10 && <= 100"
+    override inline def minValue: Int = 10
+    override inline def maxValue: Int = 100
 
   }
 
@@ -394,33 +605,23 @@ object InlinedNumericMinMaxTestTypes {
   type TestInlinedNumericMinLong = TestInlinedNumericMinLong.Type
   object TestInlinedNumericMinLong extends InlinedNumericMin[Long] {
 
-    override inline def minValue = 10L
+    override inline def minValue = 0x8000_0000_0000_0001L
 
-    override inline def inlinedExpectedValue: String = ">= 10"
-
-    override inline def invalidReason(a: Long): String = "It must be >= 10"
   }
 
   type TestInlinedNumericMaxLong = TestInlinedNumericMaxLong.Type
   object TestInlinedNumericMaxLong extends InlinedNumericMax[Long] {
 
-    override inline def maxValue = 100L
-
-    override inline def inlinedExpectedValue: String = "<= 100"
-
-    override inline def invalidReason(a: Long): String = "It must be <= 100"
+    override inline def maxValue = 0x7fff_ffff_ffff_fffeL
 
   }
 
   type TestInlinedNumericMinMaxLong = TestInlinedNumericMinMaxLong.Type
   object TestInlinedNumericMinMaxLong extends InlinedNumericMinMax[Long] {
 
-    override inline def minValue = 10L
-    override inline def maxValue = 100L
+    override inline def minValue: Long = 0x8000_0000_0000_0001L
 
-    override inline def inlinedExpectedValue: String = ">= 10 && <= 100"
-
-    override inline def invalidReason(a: Long): String = "It must be >= 10 && <= 100"
+    override inline def maxValue: Long = 0x7fff_ffff_ffff_fffeL
 
   }
 

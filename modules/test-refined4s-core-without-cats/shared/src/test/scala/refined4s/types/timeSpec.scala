@@ -41,9 +41,9 @@ object timeSpec extends Properties {
 
       import scala.compiletime.testing.typeCheckErrors
 
-      val expected1 = "Invalid value: [-1]. It must be in the range from 1 to 12."
-      val expected2 = "Invalid value: [0]. It must be in the range from 1 to 12."
-      val expected3 = "Invalid value: [13]. It must be in the range from 1 to 12."
+      val expected1 = "Invalid value: [-1]. It must be >= 1 && <= 12."
+      val expected2 = "Invalid value: [0]. It must be >= 1 && <= 12."
+      val expected3 = "Invalid value: [13]. It must be >= 1 && <= 12."
 
       val compilationResult1 = typeCheckErrors(
         """
@@ -91,7 +91,7 @@ object timeSpec extends Properties {
     def testFromInvalid: Property = for {
       month <- Gen.choice1(Gen.int(Range.linear(Int.MinValue, 0)), Gen.int(Range.linear(13, Int.MaxValue))).log("month")
     } yield {
-      val expected = s"Invalid value: [${month.toString}]. It must be in the range from 1 to 12."
+      val expected = s"Invalid value: [${month.toString}]. It must be >= 1 && <= 12."
       val actual   = Month.from(month)
       actual ==== Left(expected)
     }
@@ -108,7 +108,7 @@ object timeSpec extends Properties {
     def testUnsafeFromInvalid: Property = for {
       month <- Gen.choice1(Gen.int(Range.linear(Int.MinValue, 0)), Gen.int(Range.linear(13, Int.MaxValue))).log("month")
     } yield {
-      val expected = s"Invalid value: [${month.toString}]. It must be in the range from 1 to 12."
+      val expected = s"Invalid value: [${month.toString}]. It must be >= 1 && <= 12."
       val actual   = Try(Month.unsafeFrom(month)).toEither
 
       Result.all(
@@ -265,7 +265,7 @@ object timeSpec extends Properties {
     def testFromInvalid: Property = for {
       day <- Gen.choice1(Gen.int(Range.linear(Int.MinValue, 0)), Gen.int(Range.linear(32, Int.MaxValue))).log("day")
     } yield {
-      val expected = s"Invalid value: [${day.toString}]. It must be in the range from 1 to 31."
+      val expected = s"Invalid value: [${day.toString}]. It must be >= 1 && <= 31."
       val actual   = Day.from(day)
       actual ==== Left(expected)
     }
@@ -282,7 +282,7 @@ object timeSpec extends Properties {
     def testUnsafeFromInvalid: Property = for {
       day <- Gen.choice1(Gen.int(Range.linear(Int.MinValue, 0)), Gen.int(Range.linear(32, Int.MaxValue))).log("day")
     } yield {
-      val expected = s"Invalid value: [${day.toString}]. It must be in the range from 1 to 31."
+      val expected = s"Invalid value: [${day.toString}]. It must be >= 1 && <= 31."
       val actual   = Try(Day.unsafeFrom(day)).toEither
 
       Result.all(
@@ -431,7 +431,7 @@ object timeSpec extends Properties {
     def testFromInvalid: Property = for {
       hour <- Gen.choice1(Gen.int(Range.linear(Int.MinValue, -1)), Gen.int(Range.linear(24, Int.MaxValue))).log("hour")
     } yield {
-      val expected = s"Invalid value: [${hour.toString}]. It must be in the range from 0 to 23."
+      val expected = s"Invalid value: [${hour.toString}]. It must be >= 0 && <= 23."
       val actual   = Hour.from(hour)
       actual ==== Left(expected)
     }
@@ -448,7 +448,7 @@ object timeSpec extends Properties {
     def testUnsafeFromInvalid: Property = for {
       hour <- Gen.choice1(Gen.int(Range.linear(Int.MinValue, -1)), Gen.int(Range.linear(24, Int.MaxValue))).log("hour")
     } yield {
-      val expected = s"Invalid value: [${hour.toString}]. It must be in the range from 0 to 23."
+      val expected = s"Invalid value: [${hour.toString}]. It must be >= 0 && <= 23."
       val actual   = Try(Hour.unsafeFrom(hour)).toEither
 
       Result.all(
@@ -600,7 +600,7 @@ object timeSpec extends Properties {
     def testFromInvalid: Property = for {
       minute <- Gen.choice1(Gen.int(Range.linear(Int.MinValue, -1)), Gen.int(Range.linear(60, Int.MaxValue))).log("minute")
     } yield {
-      val expected = s"Invalid value: [${minute.toString}]. It must be in the range from 0 to 59."
+      val expected = s"Invalid value: [${minute.toString}]. It must be >= 0 && <= 59."
       val actual   = Minute.from(minute)
       actual ==== Left(expected)
     }
@@ -617,7 +617,7 @@ object timeSpec extends Properties {
     def testUnsafeFromInvalid: Property = for {
       minute <- Gen.choice1(Gen.int(Range.linear(Int.MinValue, -1)), Gen.int(Range.linear(60, Int.MaxValue))).log("minute")
     } yield {
-      val expected = s"Invalid value: [${minute.toString}]. It must be in the range from 0 to 59."
+      val expected = s"Invalid value: [${minute.toString}]. It must be >= 0 && <= 59."
       val actual   = Try(Minute.unsafeFrom(minute)).toEither
 
       Result.all(
@@ -735,8 +735,8 @@ object timeSpec extends Properties {
 
       import scala.compiletime.testing.typeCheckErrors
 
-      val expected1 = "Invalid value: [-1]. It must be in the range from 0 to 59."
-      val expected2 = "Invalid value: [60]. It must be in the range from 0 to 59."
+      val expected1 = "Invalid value: [-1]. It must be >= 0 && <= 59."
+      val expected2 = "Invalid value: [60]. It must be >= 0 && <= 59."
 
       val compilationResult1 = typeCheckErrors(
         """
@@ -775,7 +775,7 @@ object timeSpec extends Properties {
     def testFromInvalid: Property = for {
       second <- Gen.choice1(Gen.int(Range.linear(Int.MinValue, -1)), Gen.int(Range.linear(60, Int.MaxValue))).log("second")
     } yield {
-      val expected = s"Invalid value: [${second.toString}]. It must be in the range from 0 to 59."
+      val expected = s"Invalid value: [${second.toString}]. It must be >= 0 && <= 59."
       val actual   = Second.from(second)
       actual ==== Left(expected)
     }
@@ -792,7 +792,7 @@ object timeSpec extends Properties {
     def testUnsafeFromInvalid: Property = for {
       second <- Gen.choice1(Gen.int(Range.linear(Int.MinValue, -1)), Gen.int(Range.linear(60, Int.MaxValue))).log("second")
     } yield {
-      val expected = s"Invalid value: [${second.toString}]. It must be in the range from 0 to 59."
+      val expected = s"Invalid value: [${second.toString}]. It must be >= 0 && <= 59."
       val actual   = Try(Second.unsafeFrom(second)).toEither
 
       Result.all(
@@ -1003,8 +1003,8 @@ object timeSpec extends Properties {
     def testApplyInvalid: Result = {
       import scala.compiletime.testing.typeCheckErrors
 
-      val expected1 = "Invalid value: [-1]. It must be in the range from 0 to 999."
-      val expected2 = "Invalid value: [1000]. It must be in the range from 0 to 999."
+      val expected1 = "Invalid value: [-1]. It must be >= 0 && <= 999."
+      val expected2 = "Invalid value: [1000]. It must be >= 0 && <= 999."
 
       val compilationResult1 = typeCheckErrors(
         """
@@ -1043,7 +1043,7 @@ object timeSpec extends Properties {
     def testFromInvalid: Property = for {
       n <- Gen.choice1(Gen.int(Range.linear(Int.MinValue, -1)), Gen.int(Range.linear(1000, Int.MaxValue))).log("n")
     } yield {
-      val expected = s"Invalid value: [${n.toString}]. It must be in the range from 0 to 999."
+      val expected = s"Invalid value: [${n.toString}]. It must be >= 0 && <= 999."
       val actual   = Millis.from(n)
       actual ==== Left(expected)
     }
@@ -1059,7 +1059,7 @@ object timeSpec extends Properties {
     def testUnsafeFromInvalid: Property = for {
       n <- Gen.choice1(Gen.int(Range.linear(Int.MinValue, -1)), Gen.int(Range.linear(1000, Int.MaxValue))).log("n")
     } yield {
-      val expected = s"Invalid value: [${n.toString}]. It must be in the range from 0 to 999."
+      val expected = s"Invalid value: [${n.toString}]. It must be >= 0 && <= 999."
       val actual   = Try(Millis.unsafeFrom(n)).toEither
       Result.all(
         List(

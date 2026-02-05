@@ -140,10 +140,16 @@ object numeric {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     override def min: Type = minValue.asInstanceOf[Type] // scalafix:ok DisableSyntax.asInstanceOf
 
-    override def predicate(a: A): Boolean                      = {
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+    def invalidReason(a: A): String = expectedMessage(">= " + minValue.toString)
+
+    inline def inlinedExpectedValue: String = ${ NumericValidator.minToStringImpl[A]('minValue) }
+
+    override def predicate(a: A): Boolean = {
       import math.Ordered.given
       a >= minValue
     }
+
     override inline def inlinedPredicate(inline a: A): Boolean =
       ${ NumericValidator.gteqImpl[A]('a, 'minValue) }
 
@@ -156,10 +162,16 @@ object numeric {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     override def max: Type = maxValue.asInstanceOf[Type] // scalafix:ok DisableSyntax.asInstanceOf
 
-    override def predicate(a: A): Boolean                      = {
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+    def invalidReason(a: A): String = expectedMessage("<= " + maxValue.toString)
+
+    inline def inlinedExpectedValue: String = ${ NumericValidator.maxToStringImpl[A]('maxValue) }
+
+    override def predicate(a: A): Boolean = {
       import math.Ordered.given
       a <= maxValue
     }
+
     override inline def inlinedPredicate(inline a: A): Boolean =
       ${ NumericValidator.lteqImpl[A]('a, 'maxValue) }
   }
@@ -176,6 +188,11 @@ object numeric {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     override def max: Type = maxValue.asInstanceOf[Type] // scalafix:ok DisableSyntax.asInstanceOf
 
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+    def invalidReason(a: A): String = expectedMessage(">= " + minValue.toString + " && <= " + maxValue.toString)
+
+    inline def inlinedExpectedValue: String = ${ NumericValidator.minMaxToStringImpl[A]('minValue, 'maxValue) }
+
     override def predicate(a: A): Boolean = {
       import math.Ordered.given
       a >= minValue && a <= maxValue
@@ -188,14 +205,10 @@ object numeric {
 
   type NegInt = NegInt.Type
   object NegInt extends InlinedNumericMinMax[Int], NegIntTypeClassInstances {
-    @SuppressWarnings(Array("org.wartremover.warts.FinalVal"))
-    override inline def minValue = Int.MinValue
-    @SuppressWarnings(Array("org.wartremover.warts.FinalVal"))
-    override inline def maxValue = -1
 
-    override inline def invalidReason(a: Int): String = expectedMessage("a negative Int")
+    override inline def minValue: Int = Int.MinValue
+    override inline def maxValue: Int = -1
 
-    override inline val inlinedExpectedValue = "a negative Int"
   }
   private[types] trait NegIntTypeClassInstances extends NegIntTypeClassInstance1 {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
@@ -218,12 +231,9 @@ object numeric {
 
   type NonNegInt = NonNegInt.Type
   object NonNegInt extends InlinedNumericMinMax[Int], NonNegIntTypeClassInstances {
+
     override inline def minValue: Int = 0
     override inline def maxValue: Int = Int.MaxValue
-
-    override inline def invalidReason(a: Int): String = expectedMessage("a non-negative Int")
-
-    override inline val inlinedExpectedValue = "a non-negative Int"
 
   }
   private[types] trait NonNegIntTypeClassInstances extends NonNegIntTypeClassInstance1 {
@@ -247,12 +257,9 @@ object numeric {
 
   type PosInt = PosInt.Type
   object PosInt extends InlinedNumericMinMax[Int], PosIntTypeClassInstances {
+
     override inline def minValue: Int = 1
     override inline def maxValue: Int = Int.MaxValue
-
-    override inline def invalidReason(a: Int): String = expectedMessage("a positive Int")
-
-    override inline val inlinedExpectedValue = "a positive Int"
 
   }
   private[types] trait PosIntTypeClassInstances extends PosIntTypeClassInstance1 {
@@ -276,12 +283,9 @@ object numeric {
 
   type NonPosInt = NonPosInt.Type
   object NonPosInt extends InlinedNumericMinMax[Int], NonPosIntTypeClassInstances {
+
     override inline def minValue: Int = Int.MinValue
     override inline def maxValue: Int = 0
-
-    override inline def invalidReason(a: Int): String = expectedMessage("a non-positive Int")
-
-    override inline val inlinedExpectedValue = "a non-positive Int"
 
   }
   private[types] trait NonPosIntTypeClassInstances extends NonPosIntTypeClassInstance1 {
@@ -305,12 +309,9 @@ object numeric {
 
   type NegLong = NegLong.Type
   object NegLong extends InlinedNumericMinMax[Long], NegLongTypeClassInstances {
+
     override inline def minValue: Long = Long.MinValue
     override inline def maxValue: Long = -1L
-
-    override inline def invalidReason(a: Long): String = expectedMessage("a negative Long")
-
-    override inline val inlinedExpectedValue = "a negative Long"
 
   }
   private[types] trait NegLongTypeClassInstances extends NegLongTypeClassInstance1 {
@@ -334,12 +335,9 @@ object numeric {
 
   type NonNegLong = NonNegLong.Type
   object NonNegLong extends InlinedNumericMinMax[Long], NonNegLongTypeClassInstances {
+
     override inline def minValue: Long = 0L
     override inline def maxValue: Long = Long.MaxValue
-
-    override inline def invalidReason(a: Long): String = expectedMessage("a non-negative Long")
-
-    override inline val inlinedExpectedValue = "a non-negative Long"
 
   }
   private[types] trait NonNegLongTypeClassInstances extends NonNegLongTypeClassInstance1 {
@@ -363,12 +361,9 @@ object numeric {
 
   type PosLong = PosLong.Type
   object PosLong extends InlinedNumericMinMax[Long], PosLongTypeClassInstances {
+
     override inline def minValue: Long = 1L
     override inline def maxValue: Long = Long.MaxValue
-
-    override inline def invalidReason(a: Long): String = expectedMessage("a positive Long")
-
-    override inline val inlinedExpectedValue = "a positive Long"
 
   }
   private[types] trait PosLongTypeClassInstances extends PosLongTypeClassInstance1 {
@@ -392,12 +387,9 @@ object numeric {
 
   type NonPosLong = NonPosLong.Type
   object NonPosLong extends InlinedNumericMinMax[Long], NonPosLongTypeClassInstances {
+
     override inline def minValue: Long = Long.MinValue
     override inline def maxValue: Long = 0L
-
-    override inline def invalidReason(a: Long): String = expectedMessage("a non-positive Long")
-
-    override inline val inlinedExpectedValue = "a non-positive Long"
 
   }
   private[types] trait NonPosLongTypeClassInstances extends NonPosLongTypeClassInstance1 {
@@ -421,12 +413,9 @@ object numeric {
 
   type NegShort = NegShort.Type
   object NegShort extends InlinedNumericMinMax[Short], NegShortTypeClassInstances {
+
     override inline def minValue: Short = Short.MinValue
     override inline def maxValue: Short = -1
-
-    override inline def invalidReason(a: Short): String = expectedMessage("a negative Short")
-
-    override inline val inlinedExpectedValue = "a negative Short"
 
   }
   private[types] trait NegShortTypeClassInstances extends NegShortTypeClassInstance1 {
@@ -450,12 +439,9 @@ object numeric {
 
   type NonNegShort = NonNegShort.Type
   object NonNegShort extends InlinedNumericMinMax[Short], NonNegShortTypeClassInstances {
+
     override inline def minValue: Short = 0
     override inline def maxValue: Short = Short.MaxValue
-
-    override inline def invalidReason(a: Short): String = expectedMessage("a non-negative Short")
-
-    override inline val inlinedExpectedValue = "a non-negative Short"
 
   }
   private[types] trait NonNegShortTypeClassInstances extends NonNegShortTypeClassInstance1 {
@@ -479,12 +465,9 @@ object numeric {
 
   type PosShort = PosShort.Type
   object PosShort extends InlinedNumericMinMax[Short], PosShortTypeClassInstances {
+
     override inline def minValue: Short = 1
     override inline def maxValue: Short = Short.MaxValue
-
-    override inline def invalidReason(a: Short): String = expectedMessage("a positive Short")
-
-    override inline val inlinedExpectedValue = "a positive Short"
 
   }
   private[types] trait PosShortTypeClassInstances extends PosShortTypeClassInstance1 {
@@ -508,12 +491,9 @@ object numeric {
 
   type NonPosShort = NonPosShort.Type
   object NonPosShort extends InlinedNumericMinMax[Short], NonPosShortTypeClassInstances {
+
     override inline def minValue: Short = Short.MinValue
     override inline def maxValue: Short = 0
-
-    override inline def invalidReason(a: Short): String = expectedMessage("a non-positive Short")
-
-    override inline val inlinedExpectedValue = "a non-positive Short"
 
   }
   private[types] trait NonPosShortTypeClassInstances extends NonPosShortTypeClassInstance1 {
@@ -537,12 +517,9 @@ object numeric {
 
   type NegByte = NegByte.Type
   object NegByte extends InlinedNumericMinMax[Byte], NegByteTypeClassInstances {
+
     override inline def minValue: Byte = Byte.MinValue
     override inline def maxValue: Byte = -1
-
-    override inline def invalidReason(a: Byte): String = expectedMessage("a negative Byte")
-
-    override inline val inlinedExpectedValue = "a negative Byte"
 
   }
   private[types] trait NegByteTypeClassInstances extends NegByteTypeClassInstance1 {
@@ -566,12 +543,9 @@ object numeric {
 
   type NonNegByte = NonNegByte.Type
   object NonNegByte extends InlinedNumericMinMax[Byte], NonNegByteTypeClassInstances {
+
     override inline def minValue: Byte = 0
     override inline def maxValue: Byte = Byte.MaxValue
-
-    override inline def invalidReason(a: Byte): String = expectedMessage("a non-negative Byte")
-
-    override inline val inlinedExpectedValue = "a non-negative Byte"
 
   }
   private[types] trait NonNegByteTypeClassInstances extends NonNegByteTypeClassInstance1 {
@@ -595,12 +569,9 @@ object numeric {
 
   type PosByte = PosByte.Type
   object PosByte extends InlinedNumericMinMax[Byte], PosByteTypeClassInstances {
+
     override inline def minValue: Byte = 1
     override inline def maxValue: Byte = Byte.MaxValue
-
-    override inline def invalidReason(a: Byte): String = expectedMessage("a positive Byte")
-
-    override inline val inlinedExpectedValue = "a positive Byte"
 
   }
   private[types] trait PosByteTypeClassInstances extends PosByteTypeClassInstance1 {
@@ -624,12 +595,9 @@ object numeric {
 
   type NonPosByte = NonPosByte.Type
   object NonPosByte extends InlinedNumericMinMax[Byte], NonPosByteTypeClassInstances {
+
     override inline def minValue: Byte = Byte.MinValue
     override inline def maxValue: Byte = 0
-
-    override inline def invalidReason(a: Byte): String = expectedMessage("a non-positive Byte")
-
-    override inline val inlinedExpectedValue = "a non-positive Byte"
 
   }
   private[types] trait NonPosByteTypeClassInstances extends NonPosByteTypeClassInstance1 {
@@ -653,12 +621,9 @@ object numeric {
 
   type NegFloat = NegFloat.Type
   object NegFloat extends InlinedNumericMinMax[Float], NegFloatTypeClassInstances {
+
     override inline def minValue: Float = -java.lang.Float.MAX_VALUE // Float.MinValue
     override inline def maxValue: Float = -1.4e-45f // math.nextDown(0f)
-
-    override inline def invalidReason(a: Float): String = expectedMessage("a negative Float")
-
-    override inline val inlinedExpectedValue = "a negative Float"
 
   }
   private[types] trait NegFloatTypeClassInstances extends NegFloatTypeClassInstance1 {
@@ -682,12 +647,9 @@ object numeric {
 
   type NonNegFloat = NonNegFloat.Type
   object NonNegFloat extends InlinedNumericMinMax[Float], NonNegFloatTypeClassInstances {
+
     override inline def minValue: Float = 0f
     override inline def maxValue: Float = Float.MaxValue
-
-    override inline def invalidReason(a: Float): String = expectedMessage("a non-negative Float")
-
-    override inline val inlinedExpectedValue = "a non-negative Float"
 
   }
   private[types] trait NonNegFloatTypeClassInstances extends NonNegFloatTypeClassInstance1 {
@@ -711,12 +673,9 @@ object numeric {
 
   type PosFloat = PosFloat.Type
   object PosFloat extends InlinedNumericMinMax[Float], PosFloatTypeClassInstances {
+
     override inline def minValue: Float = 1.4e-45f // math.nextUp(0f)
     override inline def maxValue: Float = Float.MaxValue
-
-    override inline def invalidReason(a: Float): String = expectedMessage("a positive Float")
-
-    override inline val inlinedExpectedValue = "a positive Float"
 
   }
   private[types] trait PosFloatTypeClassInstances extends PosFloatTypeClassInstance1 {
@@ -740,12 +699,9 @@ object numeric {
 
   type NonPosFloat = NonPosFloat.Type
   object NonPosFloat extends InlinedNumericMinMax[Float], NonPosFloatTypeClassInstances {
+
     override inline def minValue: Float = -java.lang.Float.MAX_VALUE
     override inline def maxValue: Float = 0f
-
-    override inline def invalidReason(a: Float): String = expectedMessage("a non-positive Float")
-
-    override inline val inlinedExpectedValue = "a non-positive Float"
 
   }
   private[types] trait NonPosFloatTypeClassInstances extends NonPosFloatTypeClassInstance1 {
@@ -769,12 +725,9 @@ object numeric {
 
   type NegDouble = NegDouble.Type
   object NegDouble extends InlinedNumericMinMax[Double], NegDoubleTypeClassInstances {
+
     override inline def minValue: Double = -java.lang.Double.MAX_VALUE // Double.MinValue
     override inline def maxValue: Double = -4.9e-324d // math.nextDown(0d)
-
-    override inline def invalidReason(a: Double): String = expectedMessage("a negative Double")
-
-    override inline val inlinedExpectedValue = "a negative Double"
 
   }
   private[types] trait NegDoubleTypeClassInstances extends NegDoubleTypeClassInstance1 {
@@ -798,12 +751,9 @@ object numeric {
 
   type NonNegDouble = NonNegDouble.Type
   object NonNegDouble extends InlinedNumericMinMax[Double], NonNegDoubleTypeClassInstances {
+
     override inline def minValue: Double = 0d
     override inline def maxValue: Double = Double.MaxValue
-
-    override inline def invalidReason(a: Double): String = expectedMessage("a non-negative Double")
-
-    override inline val inlinedExpectedValue = "a non-negative Double"
 
   }
   private[types] trait NonNegDoubleTypeClassInstances extends NonNegDoubleTypeClassInstance1 {
@@ -827,12 +777,9 @@ object numeric {
 
   type PosDouble = PosDouble.Type
   object PosDouble extends InlinedNumericMinMax[Double], PosDoubleTypeClassInstances {
+
     override inline def minValue: Double = 4.9e-324d // math.nextUp(0d)
     override inline def maxValue: Double = Double.MaxValue
-
-    override inline def invalidReason(a: Double): String = expectedMessage("a positive Double")
-
-    override inline val inlinedExpectedValue = "a positive Double"
 
   }
   private[types] trait PosDoubleTypeClassInstances extends PosDoubleTypeClassInstance1 {
@@ -856,12 +803,9 @@ object numeric {
 
   type NonPosDouble = NonPosDouble.Type
   object NonPosDouble extends InlinedNumericMinMax[Double], NonPosDoubleTypeClassInstances {
+
     override inline def minValue: Double = -java.lang.Double.MAX_VALUE // Double.MinValue
     override inline def maxValue: Double = 0d
-
-    override inline def invalidReason(a: Double): String = expectedMessage("a non-positive Double")
-
-    override inline val inlinedExpectedValue = "a non-positive Double"
 
   }
   private[types] trait NonPosDoubleTypeClassInstances extends NonPosDoubleTypeClassInstance1 {

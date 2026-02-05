@@ -376,4 +376,23 @@ object NumericValidator {
     }
   }
 
+  def minMaxToStringImpl[A: Type](
+    exprMin: Expr[A],
+    exprMax: Expr[A],
+  )(using Quotes): Expr[String] = {
+    Expr(s">= ${refined4s.internal.RefinedMacros.exprToString(exprMin)} && <= ${refined4s.internal.RefinedMacros.exprToString(exprMax)}")
+  }
+
+  def minToStringImpl[A: Type](
+    exprMin: Expr[A]
+  )(using Quotes): Expr[String] = {
+    Expr(s">= ${refined4s.internal.RefinedMacros.exprToString(exprMin)}")
+  }
+
+  def maxToStringImpl[A: Type](
+    exprMax: Expr[A]
+  )(using Quotes): Expr[String] = {
+    Expr(s"<= ${refined4s.internal.RefinedMacros.exprToString(exprMax)}")
+  }
+
 }
