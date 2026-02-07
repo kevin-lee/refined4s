@@ -11,6 +11,19 @@ trait numeric {
 
   // scalafix:off DisableSyntax.noFinalVal
 
+  final type Numeric[A]        = numeric.Numeric[A]
+  final type InlinedNumeric[A] = numeric.InlinedNumeric[A]
+
+  final type Min[A]    = numeric.Min[A]
+  final type Max[A]    = numeric.Max[A]
+  final type MinMax[A] = numeric.MinMax[A]
+
+  final type InlinedNumericMin[A]    = numeric.InlinedNumericMin[A]
+  final type InlinedNumericMax[A]    = numeric.InlinedNumericMax[A]
+  final type InlinedNumericMinMax[A] = numeric.InlinedNumericMinMax[A]
+
+  ////
+
   final type NegInt = numeric.NegInt
   final val NegInt = numeric.NegInt
 
