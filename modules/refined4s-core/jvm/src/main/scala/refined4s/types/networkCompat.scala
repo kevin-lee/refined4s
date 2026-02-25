@@ -29,7 +29,7 @@ object networkCompat {
     @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
     def validate(url: String): Either[String, String] =
       try {
-        new URL(url)
+        new URI(url).toURL
         Right(url)
       } catch {
         case NonFatal(ex) =>
@@ -45,11 +45,11 @@ object networkCompat {
 
     extension (url: Type) {
       @SuppressWarnings(Array("org.wartremover.warts.JavaNetURLConstructors"))
-      def toURL: URL = new URL(url.value)
+      def toURL: URL = toURI.toURL
 
-      def toUri: Uri = Uri(toURL.toURI)
+      def toUri: Uri = Uri(toURI)
 
-      def toURI: URI = toURL.toURI
+      def toURI: URI = new URI(url.value)
     }
 
   }
@@ -78,7 +78,7 @@ object networkCompat {
     urlExpr.asTerm match {
       case Inlined(_, _, Literal(StringConstant(urlStr))) =>
         try {
-          new java.net.URL(urlStr)
+          new java.net.URI(urlStr).toURL
           Expr(true)
         } catch {
           case ex: Throwable =>
