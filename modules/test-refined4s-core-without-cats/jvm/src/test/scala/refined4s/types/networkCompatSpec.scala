@@ -95,7 +95,7 @@ trait networkCompatSpec {
       """
     )
 
-    val expectedCompilationErrorMessage1 = """Invalid Url value: [%^<>[]`{}]. no protocol: %^<>[]`{}"""
+    val expectedCompilationErrorMessage1 = """Invalid Url value: [%^<>[]`{}]. Malformed escape pair at index 0: %^<>[]`{}"""
     val shouldNotCompile1ErrorMessage    = typeCheckErrors(
       """
         import network.*
@@ -359,7 +359,7 @@ trait networkCompatSpec {
 
   def testNetworkIsValidateUrlInvalid: Result = {
     import scala.compiletime.testing.typeCheckErrors
-    val expected1 = """Invalid Url value: [%^<>[]`{}]. no protocol: %^<>[]`{}"""
+    val expected1 = """Invalid Url value: [%^<>[]`{}]. Malformed escape pair at index 0: %^<>[]`{}"""
     val expected2 = """Invalid Url value: [blah://www.google.com]. unknown protocol: blah"""
 
     val actual1 = typeCheckErrors("""runNetworkIsValidateUrl("%^<>[]`{}")""").map(_.message).mkString
