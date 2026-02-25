@@ -5,4 +5,5 @@ ignore:
   - "modules/refined4s-core/shared/src/main/scala/refined4s/internal/numericTools.scala"
   - "modules/refined4s-core/shared/src/main/scala/refined4s/internal/NumericValidator.scala"
   - "modules/refined4s-core/shared/src/main/scala/refined4s/internal/RefinedMacros.scala"
+  - "modules/refined4s-core/shared/src/main/scala/refined4s/internal/UuidV7Macros.scala"
   - "modules/refined4s-refined-compat-scala2/shared/src/main/scala-2/refined4s/compat/RefinedTypesCompat.scala"
