@@ -25,6 +25,9 @@ trait strings {
   final type Uuid = strings.Uuid
   final val Uuid = strings.Uuid
 
+  final type UuidV7 = strings.UuidV7
+  final val UuidV7 = strings.UuidV7
+
   // scalafix:on
 
 }
@@ -172,6 +175,132 @@ object strings {
     given derivedUuidShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[String]): F[Uuid] = {
       internalDef.contraCoercible[cats.Show, Uuid, String, cats.Contravariant](showActual.asInstanceOf[cats.Show[String]])
     }.asInstanceOf[F[Uuid]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+
+  type UuidV7 = UuidV7.Type
+  object UuidV7 extends InlinedRefined[UUID], CanBeOrdered[UUID], UuidV7Instances {
+    override inline val inlinedExpectedValue =
+      "UUID v7 (RFC 9562) - For more info, see https://www.rfc-editor.org/rfc/rfc9562#name-uuid-version-7"
+
+    private inline def inlinedPredicateForString(inline a: String): Boolean = ${ refined4s.internal.UuidV7Macros.isValidateUuidV7('a) }
+
+    override inline def inlinedPredicate(inline a: UUID): Boolean =
+      ${ refined4s.internal.UuidV7Macros.isValidateJavaUuidV7('a, "UuidV7") }
+
+    override def invalidReason(a: UUID): String = expectedMessage(inlinedExpectedValue)
+
+    override def predicate(a: UUID): Boolean = a.version() == 7 && a.variant() == 2
+
+    @SuppressWarnings(Array("org.wartremover.warts.ToString", "org.wartremover.warts.Overloading", "org.wartremover.warts.AsInstanceOf"))
+    inline def apply(inline a: String): Type = {
+      inline if inlinedPredicateForString(a) then UUID.fromString(a).asInstanceOf[Type] // scalafix:ok DisableSyntax.asInstanceOf
+      else refined4s.internal.RefinedMacros.internalError(a, inlinedExpectedValue)
+    }
+
+    def fromString(uuidString: String): Either[String, Type] = {
+      scala
+        .util
+        .Try(UUID.fromString(uuidString))
+        .toEither
+        .left
+        .map(err => "Invalid value: [" + uuidString + "]. " + expectedMessage(inlinedExpectedValue))
+        .flatMap(from)
+    }
+
+    @SuppressWarnings(Array("org.wartremover.warts.Throw"))
+    def unsafeFromString(uuidString: String): Type =
+      fromString(uuidString).fold(err => throw new IllegalArgumentException(err), identity) // scalafix:ok DisableSyntax.throw
+
+    extension (uuid: UuidV7) {
+      def toUuid: Uuid = Uuid(uuid.value)
+      def toUUID: UUID = uuid.value
+    }
+
+    private val timestampAndSequence = new java.util.concurrent.atomic.AtomicLong()
+    private lazy val entropy         = new java.security.SecureRandom()
+    private val Version              = 7L
+    private val Variant              = 2L // RFC 9562 uses 10x for the variant, which is 2 in UUID API
+
+    @scala.annotation.tailrec
+    private def updateAndGetState(): (Long, Long) = {
+      val state         = timestampAndSequence.get()
+      val lastTimestamp = state >>> 16
+      val lastSequence  = state & 0xffffL
+
+      val currentTimestamp = System.currentTimeMillis()
+
+      val (newTimestamp, newSequence) =
+        if (currentTimestamp > lastTimestamp) {
+          (currentTimestamp, 0L)
+        } else if (currentTimestamp == lastTimestamp) {
+          val nextSequence = lastSequence + 1
+          if (nextSequence > 0xfffL) { // Exceeded 12 bits allocated for rand_a
+            (lastTimestamp + 1, 0L)
+          } else {
+            (lastTimestamp, nextSequence)
+          }
+        } else {
+          /* Clock moved backwards. To maintain monotonicity, we use the last timestamp and increment sequence */
+          val nextSequence = lastSequence + 1
+          if (nextSequence > 0xfffL) {
+            (lastTimestamp + 1, 0L)
+          } else {
+            (lastTimestamp, nextSequence)
+          }
+        }
+
+      val newState = (newTimestamp << 16) | newSequence
+      if (timestampAndSequence.compareAndSet(state, newState)) {
+        (newTimestamp, newSequence)
+      } else {
+        updateAndGetState()
+      }
+    }
+
+    def generate(): Type = {
+      val (newTimestamp, newSequence) = updateAndGetState()
+
+      val randA = newSequence & 0xfffL
+
+      /* mostSigBits:
+       * 48 bits: timestamp
+       * 4 bits: version (7)
+       * 12 bits: rand_a (sequence)
+       */
+      val mostSigBits = (newTimestamp << 16) | (Version << 12) | randA
+
+      /*
+       * leastSigBits:
+       * 2 bits: variant (10)
+       * 62 bits: rand_b (random)
+       */
+      val randB        = entropy.nextLong() & 0x3fffffffffffffffL // 62 bits
+      val leastSigBits = (Variant << 62) | randB
+
+      val uuid = new UUID(mostSigBits, leastSigBits)
+      unsafeFrom(uuid)
+    }
+  }
+
+  private[types] trait UuidV7Instances extends UuidV7Instance2 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedUuidV7Eq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[UUID]): F[UuidV7] = {
+      internalDef.contraCoercible[cats.Eq, UuidV7, UUID, cats.Contravariant](eqActual.asInstanceOf[cats.Eq[UUID]])
+    }.asInstanceOf[F[UuidV7]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+
+  private[types] trait UuidV7Instance2 extends UuidV7Instance1 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedUuidV7Hash[F[*]: CatsHash, G[*]: CatsHash](using hashActual: G[UUID]): F[UuidV7] = {
+      internalDef.contraCoercible[cats.Hash, UuidV7, UUID, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[UUID]])
+    }.asInstanceOf[F[UuidV7]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+
+  private[types] trait UuidV7Instance1 extends OrphanCats, OrphanCatsKernel {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedUuidV7Show[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[UUID]): F[UuidV7] = {
+      internalDef.contraCoercible[cats.Show, UuidV7, UUID, cats.Contravariant](showActual.asInstanceOf[cats.Show[UUID]])
+    }.asInstanceOf[F[UuidV7]] // scalafix:ok DisableSyntax.asInstanceOf
   }
 
   @SuppressWarnings(Array("org.wartremover.warts.Equals"))
