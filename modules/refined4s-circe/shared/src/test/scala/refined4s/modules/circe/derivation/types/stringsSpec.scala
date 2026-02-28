@@ -6,6 +6,7 @@ import hedgehog.runner.*
 import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.*
+import refined4s.types.UuidV7TestTools
 import refined4s.types.all.*
 
 import java.util.UUID
@@ -35,6 +36,10 @@ trait stringsSpec {
     property("test KeyEncoder[Uuid]", testKeyEncoderUuid),
     property("test KeyDecoder[Uuid]", testKeyDecoderUuid),
     //
+    property("test Encoder[UuidV7]", testEncoderUuidV7),
+    property("test Decoder[UuidV7]", testDecoderUuidV7),
+    property("test KeyEncoder[UuidV7]", testKeyEncoderUuidV7),
+    property("test KeyDecoder[UuidV7]", testKeyDecoderUuidV7),
   )
 
   def testEncoderNonEmptyString: Property =
@@ -269,6 +274,70 @@ trait stringsSpec {
     }
 
   //
+
+  def testEncoderUuidV7: Property =
+    for {
+      uuid <- Gen.elementUnsafe(UuidV7TestTools.validUuidV7Strings).log("uuid")
+    } yield {
+      val input = UuidV7.unsafeFromString(uuid)
+
+      val expected = uuid.asJson
+      val actual   = input.asJson
+
+      actual ==== expected
+    }
+
+  def testDecoderUuidV7: Property =
+    for {
+      uuid <- Gen.elementUnsafe(UuidV7TestTools.validUuidV7Strings).log("uuid")
+    } yield {
+      import io.circe.parser.decode
+
+      val input = uuid.asJson
+
+      val expected = UuidV7.unsafeFromString(uuid)
+      val actual   = decode[UuidV7](input.noSpaces)
+
+      actual ==== Right(expected)
+    }
+
+  def testKeyEncoderUuidV7: Property =
+    for {
+      uuids  <- Gen.constant(UuidV7TestTools.validUuidV7Strings).log("uuids")
+      values <- Gen
+                  .int(Range.linear(0, Int.MaxValue))
+                  .list(Range.singleton(uuids.length))
+                  .map(_.zipWithIndex.map { (v, index) => s"$index-$v" })
+                  .log("values")
+      map    <- Gen.constant(uuids.zip(values).toMap).log("map")
+      input  <- Gen.constant(map.map { case (key, value) => UuidV7.unsafeFromString(key) -> value }).log("input")
+    } yield {
+
+      val expected = map.map { case (key, value) => key -> value }.asJson
+      val actual   = input.asJson
+
+      actual ==== expected
+    }
+
+  def testKeyDecoderUuidV7: Property =
+    for {
+      uuids    <- Gen.constant(UuidV7TestTools.validUuidV7Strings).log("uuids")
+      values   <- Gen
+                    .int(Range.linear(0, Int.MaxValue))
+                    .list(Range.singleton(uuids.length))
+                    .map(_.zipWithIndex.map { (v, index) => s"$index-$v" })
+                    .log("values")
+      map      <- Gen.constant(uuids.zip(values).toMap).log("map")
+      expected <- Gen.constant(map.map { case (key, value) => UuidV7.unsafeFromString(key) -> value }).log("expected")
+      input    <- Gen.constant(map.map { case (key, value) => key -> value }.asJson).log("input")
+    } yield {
+      import io.circe.parser.decode
+
+      val actual = decode[Map[UuidV7, String]](input.noSpaces)
+
+      actual ==== Right(expected)
+    }
+
 }
 object stringsSpec extends Properties, stringsSpec {
 

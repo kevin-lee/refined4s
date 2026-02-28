@@ -14,6 +14,8 @@ trait strings {
 
   given derivedUuidRender: Render[Uuid] = strings.derivedUuidRender
 
+  given derivedUuidV7Render: Render[UuidV7] = strings.derivedUuidV7Render
+
 }
 object strings {
 
@@ -25,5 +27,7 @@ object strings {
 
   given derivedUuidRender(using renderActual: Render[String]): Render[Uuid] =
     renderActual.contramap(_.value)
+
+  given derivedUuidV7Render: Render[UuidV7] = Render.uuidRender.contramap(_.value)
 
 }

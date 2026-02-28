@@ -19,6 +19,9 @@ trait strings {
   given derivedUuidConfigReader: ConfigReader[Uuid] = strings.derivedUuidConfigReader
   given derivedUuidConfigWriter: ConfigWriter[Uuid] = strings.derivedUuidConfigWriter
 
+  given derivedUuidV7ConfigReader: ConfigReader[UuidV7] = strings.derivedUuidV7ConfigReader
+  given derivedUuidV7ConfigWriter: ConfigWriter[UuidV7] = strings.derivedUuidV7ConfigWriter
+
 }
 object strings {
 
@@ -64,6 +67,24 @@ object strings {
   given derivedUuidConfigWriter: ConfigWriter[Uuid] with {
     override inline def to(a: Uuid): ConfigValue =
       ConfigWriter[String].to(a.value)
+  }
+
+  given derivedUuidV7ConfigReader: ConfigReader[UuidV7] = ConfigReader.stringConfigReader.emap { a =>
+    UuidV7.fromString(a).left.map { err =>
+      val expectedType = getTypeName[UuidV7]
+      pureconfig
+        .error
+        .CannotConvert(
+          value = a,
+          toType = expectedType,
+          because = s"The value $a cannot be created as the expected type, $expectedType, due to the following error: $err",
+        )
+    }
+  }
+
+  given derivedUuidV7ConfigWriter: ConfigWriter[UuidV7] with {
+    override inline def to(a: UuidV7): ConfigValue =
+      ConfigWriter.stringConfigWriter.to(a.value.toString)
   }
 
 }

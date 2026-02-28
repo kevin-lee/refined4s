@@ -1,13 +1,15 @@
 package refined4s.modules.chimney.derivation.generic
 
-import cats.syntax.all.*
 import hedgehog.*
 import hedgehog.extra.refined4s.gens.NumGens
 import hedgehog.runner.*
 import io.scalaland.chimney
 import refined4s.modules.chimney.derivation.generic.auto.given
-import refined4s.types.all.PosInt
+import refined4s.types.UuidV7TestTools
+import refined4s.types.all.*
 import refined4s.{Newtype, Refined}
+
+import java.util.UUID
 
 /** @author Kevin Lee
   * @since 2024-08-04
@@ -21,7 +23,7 @@ object autoSpec extends Properties {
     property("test Refined (partial into)", testRefined),
     property("test case class", testCaseClass),
     property("test case class (partial into)", testCaseClassPartial),
-  )
+  ) ++ uuidV7Spec.tests
 
   def testNewtype: Property =
     for {
@@ -112,6 +114,40 @@ object autoSpec extends Properties {
       val actual = Foo(id, Foo.Baz(name, email)).intoPartial[Bar].transform
       expected ==== actual
     }
+
+  object uuidV7Spec {
+    import io.scalaland.chimney.dsl.*
+
+    def tests: List[Test] = List(
+      property("test from UuidV7 to UUID", testFromUuidV7),
+      property("test from UUID to UuidV7", testToUuidV7),
+    )
+
+    def testFromUuidV7: Property =
+      for {
+        uuid <- Gen.elementUnsafe(UuidV7TestTools.validUuidV7Strings).log("uuid")
+      } yield {
+        val input = UuidV7.unsafeFromString(uuid)
+
+        val expected = UUID.fromString(uuid)
+        val actual   = input.into[UUID].transform
+
+        actual ==== expected
+      }
+
+    def testToUuidV7: Property =
+      for {
+        uuid <- Gen.elementUnsafe(UuidV7TestTools.validUuidV7Strings).log("uuid")
+      } yield {
+        val input = UUID.fromString(uuid)
+
+        val expected = chimney.partial.Result.fromEitherString(UuidV7.fromString(uuid))
+        val actual   = input.intoPartial[UuidV7].transform
+
+        actual ==== expected
+      }
+
+  }
 
 }
 

@@ -7,7 +7,7 @@ import refined4s.types.numeric.*
 import refined4s.types.network.*
 import refined4s.types.strings.*
 import refined4s.types.time.*
-import refined4s.types.networkGens
+import refined4s.types.{networkGens, UuidV7TestTools}
 
 import java.util.UUID
 
@@ -29,6 +29,7 @@ object allSpec extends Properties {
       nonEmptyStringSpec.tests ++
       nonBlankStringSpec.tests ++
       uuidSpec.tests ++
+      uuidV7Spec.tests ++
       uriSpec.tests ++
       urlSpec.tests ++
       portNumberSpec.tests ++ systemPortNumberSpec.tests ++ nonSystemPortNumberSpec.tests ++ userPortNumberSpec.tests ++ dynamicPortNumberSpec.tests ++
@@ -2725,6 +2726,79 @@ object allSpec extends Properties {
       }
 
   }
+
+  /* strings.UuidV7 { */
+
+  object uuidV7Spec {
+    def tests: List[Test] = List(
+      property("test   Eq[UuidV7] === case", testEq),
+      property("test   Eq[UuidV7] =!= case", testEqNotEqual),
+      property("test Hash[UuidV7]", testHash),
+      property("test Show[UuidV7]", testShow),
+    )
+
+    def testEq: Property =
+      for {
+        uuid1 <- Gen.constant(UuidV7TestTools.ValidUuidV7).log("uuid1")
+        uuid2 <- Gen.constant("018f2f2c-e160-7000-8000-000000000001").log("uuid2")
+      } yield {
+        val input1 = UuidV7.unsafeFromString(uuid1)
+        val input2 = UuidV7.unsafeFromString(uuid2)
+
+        val expected1 = input1
+        val actual1   = input1
+
+        Result.all(
+          List(
+            Result.diffNamed("UuidV7(value) === UuidV7(value)", actual1, expected1)(_ === _),
+            Result.diffNamed("UuidV7(value) =!= UuidV7(different value)", input1, input2)(_ =!= _),
+          )
+        )
+      }
+
+    def testEqNotEqual: Property =
+      for {
+        uuid1 <- Gen.constant(UuidV7TestTools.ValidUuidV7).log("uuid1")
+        uuid2 <- Gen.constant("018f2f2c-e160-7000-8000-000000000001").log("uuid2")
+      } yield {
+        val input1 = UuidV7.unsafeFromString(uuid1)
+        val input2 = UuidV7.unsafeFromString(uuid2)
+
+        Result.diffNamed("UuidV7(value) =!= UuidV7(different value)", input1, input2)(_ =!= _)
+      }
+
+    def testHash: Property =
+      for {
+        uuid <- Gen.elementUnsafe(UuidV7TestTools.validUuidV7Strings).log("uuid")
+      } yield {
+        val input = UuidV7.unsafeFromString(uuid)
+
+        val expected       = UUID.fromString(uuid).hashCode
+        val actual         = input.hash
+        val actualHashCode = input.##
+
+        Result.all(
+          List(
+            Result.diffNamed("UuidV7(value).hash === UUID(value).hashCode", actual, expected)(_ === _),
+            Result.diffNamed("UuidV7(value).## === UUID(value).hashCode", actualHashCode, expected)(_ === _),
+          )
+        )
+      }
+
+    def testShow: Property =
+      for {
+        uuid <- Gen.elementUnsafe(UuidV7TestTools.validUuidV7Strings).log("uuid")
+      } yield {
+        val input = UuidV7.unsafeFromString(uuid)
+
+        val expected = uuid
+        val actual   = input.show
+
+        Result.diffNamed("UuidV7(value).show === value: String", actual, expected)(_ === _)
+      }
+  }
+
+  /* strings.UuidV7 } */
 
   /* network.Uri */
 

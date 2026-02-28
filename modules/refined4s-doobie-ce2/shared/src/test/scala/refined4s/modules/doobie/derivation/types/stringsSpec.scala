@@ -10,6 +10,7 @@ import extras.runner.ce2.RunSyncCe2
 import hedgehog.*
 import hedgehog.runner.*
 import refined4s.types.strings.*
+import refined4s.types.UuidV7TestTools
 
 import java.nio.charset.StandardCharsets
 import java.util.UUID
@@ -36,6 +37,7 @@ trait stringsSpec extends RunSyncCe2, RunWithDb {
     propertyWithDb("test Get[NonBlankString] and Put[NonBlankString]", postgresPortNumber.getAndIncrement(), testGetAndPutNonBlankString),
     //
     propertyWithDb("test Get[Uuid] and Put[Uuid]", postgresPortNumber.getAndIncrement(), testGetAndPutUuid),
+    propertyWithDb("test Get[UuidV7] and Put[UuidV7]", postgresPortNumber.getAndIncrement(), testGetAndPutUuidV7),
   )
 
   def testGetAndPutNonEmptyString(testName: String, postgresPortNumber: Int): Property =
@@ -184,6 +186,57 @@ trait stringsSpec extends RunSyncCe2, RunWithDb {
       val expectedFetchAfter  = expected.some
 
       val fetch = DbTools.fetchSingleRow[F][Uuid](
+        sql"""
+            SELECT value
+              FROM db_tools_test.example
+        """
+      )(transactor)
+
+      val insert = DbTools.updateSingle[F](
+        sql"""
+             INSERT INTO db_tools_test.example (value) VALUES ($expected)
+        """
+      )(transactor)
+
+      for {
+        fetchResultBefore <- fetch.map(_ ==== expectedFetchBefore)
+        insertResult      <- insert.map(_ ==== expectedInsert)
+        fetchResultAfter  <- fetch.map(_ ==== expectedFetchAfter)
+      } yield Result.all(
+        List(
+          fetchResultBefore.log("Failed: fetch before"),
+          insertResult.log("Failed: insert"),
+          fetchResultAfter.log("Failed: fetch after"),
+        )
+      )
+
+    }
+
+  ///
+
+  def testGetAndPutUuidV7(testName: String, postgresPortNumber: Int): Property =
+    for {
+      uuid <- Gen.elementUnsafe(UuidV7TestTools.validUuidV7Strings).log("uuid")
+    } yield withDb[F](
+      testName,
+      postgresPortNumber,
+      sql"""CREATE SCHEMA IF NOT EXISTS db_tools_test""",
+      sql"""
+        CREATE TABLE IF NOT EXISTS db_tools_test.example
+        (
+           id SERIAL PRIMARY KEY,
+           value TEXT NOT NULL
+        )
+      """,
+    ) { transactor =>
+
+      val expected = UuidV7.unsafeFromString(uuid)
+
+      val expectedFetchBefore = none[UuidV7]
+      val expectedInsert      = 1
+      val expectedFetchAfter  = expected.some
+
+      val fetch = DbTools.fetchSingleRow[F][UuidV7](
         sql"""
             SELECT value
               FROM db_tools_test.example

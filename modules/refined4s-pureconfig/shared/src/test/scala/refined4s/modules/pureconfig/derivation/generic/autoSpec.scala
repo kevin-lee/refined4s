@@ -10,7 +10,7 @@ import pureconfig.{ConfigReader, ConfigSource, ConfigWriter}
 import refined4s.*
 import refined4s.internal.typeTools
 import refined4s.modules.pureconfig.derivation.generic.auto.given
-import refined4s.types.networkGens
+import refined4s.types.{networkGens, UuidV7TestTools}
 import refined4s.types.all.*
 
 import java.util.UUID
@@ -163,6 +163,12 @@ object autoSpec extends Properties {
       property("test ConfigReader[Uuid] with invalid value", testConfigReaderUuidInvalid),
       property("test ConfigWriter[Uuid]", testConfigWriterUuid),
       //
+      property("test ConfigReader[UuidV7]", testConfigReaderUuidV7),
+      property("test ConfigReader[UuidV7] with invalid value", testConfigReaderUuidV7Invalid),
+      property("test ConfigReader[UuidV7] with UUID v4 (invalid UUID v7)", testConfigReaderUuidV7WithUuidV4),
+      property("test ConfigWriter[UuidV7]", testConfigWriterUuidV7),
+      //
+
       property("test ConfigReader[Uri]", testConfigReaderUri),
       property("test ConfigReader[Uri] with invalid value", testConfigReaderUriInvalid),
       property("test ConfigWriter[Uri]", testConfigWriterUri),
@@ -2710,6 +2716,95 @@ object autoSpec extends Properties {
       }
 
     final case class UuidConfig(id: Uuid) derives ConfigReader
+
+    ///
+
+    def testConfigReaderUuidV7: Property =
+      for {
+        uuid <- Gen.elementUnsafe(UuidV7TestTools.validUuidV7Strings).log("uuid")
+      } yield {
+
+        val confString = s"""id = "$uuid""""
+
+        val expected = UuidV7Config(UuidV7.unsafeFromString(uuid))
+        val actual   = ConfigSource.string(confString).load[UuidV7Config]
+
+        actual ==== Right(expected)
+      }
+
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+    def testConfigReaderUuidV7Invalid: Property =
+      for {
+        s <- Gen.string(Gen.alphaNum, Range.linear(1, 10)).log("s")
+      } yield {
+        val confString = s"""id = "$s""""
+
+        val expected = s"java.lang.IllegalArgumentException: Invalid UUID string: $s"
+
+        val expectedType = "java.util.UUID"
+
+        ConfigSource
+          .string(confString)
+          .load[UuidV7Config] match {
+          case Right(UuidV7Config(actual)) =>
+            Result.failure.log("Should have failed but it succeeded")
+
+          case Left(ConfigReaderFailures(ConvertFailure(pureconfig.error.CannotConvert(value, actualType, err), Some(_), field))) =>
+            Result.all(
+              List(
+                (value ==== s).log(s"value=$value, s=$s"),
+                (actualType ==== expectedType).log(s"actualType=$actualType, expectedType=$expectedType"),
+                (err ==== expected).log(s"err=$err, expected=$expected"),
+                (field ==== "id").log("field"),
+              )
+            )
+
+          case unexpected =>
+            Result.failure.log(s"Unexpected result: ${unexpected.toString}")
+
+        }
+      }
+
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+    def testConfigReaderUuidV7WithUuidV4: Property =
+      for {
+        s <- Gen.constant(UUID.randomUUID().toString).log("s")
+      } yield {
+        val confString = s"""id = "$s""""
+
+        val expected =
+          s"Invalid value: [$s]. It must be UUID v7 (RFC 9562) - For more info, see https://www.rfc-editor.org/rfc/rfc9562#name-uuid-version-7."
+
+//        val expectedType = "refined4s.types.strings.UuidV7"
+
+        ConfigSource
+          .string(confString)
+          .load[UuidV7Config] match {
+          case Right(UuidV7Config(actual)) =>
+            Result.failure.log("Should have failed but it succeeded")
+
+          case Left(ConfigReaderFailures(ConvertFailure(UserValidationFailed(err), _, _))) =>
+            Result.assert(err.contains(expected)).log(s"\"$err\" doesn't contain \"$expected\"")
+
+          case unexpected =>
+            Result.failure.log(s"Unexpected result: ${unexpected.toString}")
+
+        }
+      }
+
+    def testConfigWriterUuidV7: Property =
+      for {
+        uuid <- Gen.elementUnsafe(UuidV7TestTools.validUuidV7Strings).log("uuid")
+      } yield {
+        val input = UuidV7.unsafeFromString(uuid)
+
+        val expected = ConfigValueFactory.fromAnyRef(uuid)
+        val actual   = ConfigWriter[UuidV7].to(input)
+
+        actual ==== expected
+      }
+
+    final case class UuidV7Config(id: UuidV7) derives ConfigReader
 
     ///
 
