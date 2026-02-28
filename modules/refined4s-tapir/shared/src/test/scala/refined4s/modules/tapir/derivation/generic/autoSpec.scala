@@ -5,7 +5,7 @@ import hedgehog.runner.*
 import refined4s.*
 import refined4s.modules.tapir.derivation.generic.auto.given
 import refined4s.types.all.*
-import refined4s.types.networkGens
+import refined4s.types.{networkGens, UuidV7TestTools}
 import sttp.tapir.{Schema, ValidationError}
 
 import java.nio.charset.StandardCharsets
@@ -86,6 +86,8 @@ object autoSpec extends Properties {
     property("test Schema[NonBlankString]", testSchemaNonBlankString),
     //
     property("test Schema[Uuid]", testSchemaUuid),
+    //
+    property("test Schema[UuidV7]", testSchemaUuidV7),
     //
     property("test Schema[Uri]", testSchemaUri),
     //
@@ -539,6 +541,20 @@ object autoSpec extends Properties {
 
       actual ==== expected
     }
+
+  def testSchemaUuidV7: Property =
+    for {
+      uuid <- Gen.elementUnsafe(UuidV7TestTools.validUuidV7Strings).log("uuid")
+    } yield {
+      val input = UuidV7.unsafeFromString(uuid)
+
+      val expected = List.empty[ValidationError[?]]
+      val actual   = summon[Schema[UuidV7]].applyValidation(input)
+
+      actual ==== expected
+    }
+
+  ///
 
   def testSchemaUri: Property =
     for {
