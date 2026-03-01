@@ -691,6 +691,7 @@ object stringsSpec extends Properties {
       property("test UuidV7.generate() should return unique UUID v7", testGenerateUnique),
       property("test UuidV7.generate() is monotonic", testGenerateMonotonic),
       property("test UuidV7.generate() is monotonic (using UuidV7.compareTo)", testGenerateMonotonicWithUuidV7CompareTo),
+      property("test UuidV7.generate() rand_a is randomly seeded per RFC 9562 section 6.2", testGenerateRandARandomlySeeded),
     )
 
     def testApplyValid: Result = {
@@ -1014,6 +1015,67 @@ object stringsSpec extends Properties {
            |""".stripMargin
         )
     }
+
+    def testGenerateRandARandomlySeeded: Property =
+      for {
+        generated <- Gen.constant((1 to 100).map(_ => UuidV7.generate())).log("generated")
+      } yield {
+        val uuidV7AndRandAValues = generated.map(uuidV7 => (uuidV7, uuidV7.toUUID.getMostSignificantBits & 0xfffL))
+
+        val expectedUniqueCount = generated.length
+        val groupedByRandA      = uuidV7AndRandAValues.groupBy { case ((_, randA)) => randA }
+        val uniqueCount         = groupedByRandA.values.count(_.lengthIs == 1)
+
+//      println(
+//        s""">> generated
+//           |  ${generated.mkString("- ", "\n  - ", "\n")}
+//           |""".stripMargin
+//      )
+
+        Result.all(
+          List(
+            Result
+              .assert(uuidV7AndRandAValues.exists { case (_, randA) => randA != 0L })
+              .log(
+                s"""rand_a should be randomly seeded (RFC 9562 section 6.2), not always 0x000
+                 |  rand_a values: ${uuidV7AndRandAValues.map { case (_, randA) => f"0x$randA%03X" }.mkString(", ")}
+                 |""".stripMargin
+              ),
+            (
+              (uniqueCount ==== expectedUniqueCount)
+                .log(s"uniqueCount=$uniqueCount should be equal to expectedUniqueCount=$expectedUniqueCount")
+                .or({
+                  val nonUniqueUuidV7AndRandAValues = groupedByRandA
+                    .filter { case (_, values) => values.lengthIs > 1 }
+                    .filter {
+                      case (randA, values) =>
+                        val expextedUniqueUuidV7Length = values.length
+                        val uniqueUuidV7Length         = values.distinct.length
+
+                        uniqueUuidV7Length != expextedUniqueUuidV7Length
+                    }
+
+                  Result
+                    .assert(nonUniqueUuidV7AndRandAValues.isEmpty)
+                    .log(
+                      s"""There should be no non-unique rand_a values, but found ${expectedUniqueCount - uniqueCount} non-unique rand_a values.
+                       |  Among those non-unique rand_a values, there are ${nonUniqueUuidV7AndRandAValues
+                          .size
+                          .toString} non-unique UUIDv7 values.
+                       |  Non-unique rand_a values and their corresponding UUIDv7 values:
+                       |  ${nonUniqueUuidV7AndRandAValues
+                          .map {
+                            case (randA, values) =>
+                              f"rand_a=0x$randA%03X: ${values.map { case (uuidV7, _) => uuidV7 }.mkString("[", ", ", "]")}"
+                          }
+                          .mkString("  ", "\n  ", "")}
+                       |""".stripMargin
+                    )
+                })
+            ),
+          )
+        )
+      }
 
   }
 
