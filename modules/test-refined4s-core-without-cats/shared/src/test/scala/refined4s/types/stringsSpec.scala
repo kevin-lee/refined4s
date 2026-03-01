@@ -1049,10 +1049,10 @@ object stringsSpec extends Properties {
                     .filter { case (_, values) => values.lengthIs > 1 }
                     .filter {
                       case (randA, values) =>
-                        val expextedUniqueUuidV7Length = values.length
+                        val expectedUniqueUuidV7Length = values.length
                         val uniqueUuidV7Length         = values.distinct.length
 
-                        uniqueUuidV7Length != expextedUniqueUuidV7Length
+                        uniqueUuidV7Length != expectedUniqueUuidV7Length
                     }
 
                   Result
