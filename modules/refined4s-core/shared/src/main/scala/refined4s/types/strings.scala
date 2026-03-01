@@ -221,6 +221,8 @@ object strings {
     private val Version              = 7L
     private val Variant              = 2L // RFC 9562 uses 10x for the variant, which is 2 in UUID API
 
+    private def randomSeed(): Long = entropy.nextInt(0x800).toLong // `0` to `0x7ff` = 0 to 2047
+
     @scala.annotation.tailrec
     private def updateAndGetState(): (Long, Long) = {
       val state         = timestampAndSequence.get()
@@ -231,11 +233,11 @@ object strings {
 
       val (newTimestamp, newSequence) =
         if (currentTimestamp > lastTimestamp) {
-          (currentTimestamp, 0L)
+          (currentTimestamp, randomSeed())
         } else if (currentTimestamp == lastTimestamp) {
           val nextSequence = lastSequence + 1
           if (nextSequence > 0xfffL) { // Exceeded 12 bits allocated for rand_a
-            (lastTimestamp + 1, 0L)
+            (lastTimestamp + 1, randomSeed())
           } else {
             (lastTimestamp, nextSequence)
           }
@@ -243,7 +245,7 @@ object strings {
           /* Clock moved backwards. To maintain monotonicity, we use the last timestamp and increment sequence */
           val nextSequence = lastSequence + 1
           if (nextSequence > 0xfffL) {
-            (lastTimestamp + 1, 0L)
+            (lastTimestamp + 1, randomSeed())
           } else {
             (lastTimestamp, nextSequence)
           }
