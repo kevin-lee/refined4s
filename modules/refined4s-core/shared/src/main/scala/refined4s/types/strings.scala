@@ -311,7 +311,7 @@ object strings {
          * 2 bits: variant (10)
          * 62 bits: rand_b (random)
          */
-        val randB        = entropy.nextLong() & 0x3fffffffffffffffL // 62 bits
+        val randB        = entropy.nextLong() & 0x3fff_ffff_ffff_ffffL // 62 bits
         val leastSigBits = (Variant << 62) | randB
 
         val uuid = new UUID(mostSigBits, leastSigBits)
