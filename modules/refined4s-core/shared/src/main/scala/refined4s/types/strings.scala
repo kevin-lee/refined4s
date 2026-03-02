@@ -28,6 +28,9 @@ trait strings {
   final type UuidV7 = strings.UuidV7
   final val UuidV7 = strings.UuidV7
 
+  final type UuidV7Generator = strings.UuidV7Generator
+  final val UuidV7Generator = strings.UuidV7Generator
+
   // scalafix:on
 
 }
@@ -216,72 +219,6 @@ object strings {
       def toUUID: UUID = uuid.value
     }
 
-    private val timestampAndSequence = new java.util.concurrent.atomic.AtomicLong()
-    private lazy val entropy         = new java.security.SecureRandom()
-    private val Version              = 7L
-    private val Variant              = 2L // RFC 9562 uses 10x for the variant, which is 2 in UUID API
-
-    private def randomSeed(): Long = entropy.nextInt(0x800).toLong // `0` to `0x7ff` = 0 to 2047
-
-    @scala.annotation.tailrec
-    private def updateAndGetState(): (Long, Long) = {
-      val state         = timestampAndSequence.get()
-      val lastTimestamp = state >>> 16
-      val lastSequence  = state & 0xffffL
-
-      val currentTimestamp = System.currentTimeMillis()
-
-      val (newTimestamp, newSequence) =
-        if (currentTimestamp > lastTimestamp) {
-          (currentTimestamp, randomSeed())
-        } else if (currentTimestamp == lastTimestamp) {
-          val nextSequence = lastSequence + 1
-          if (nextSequence > 0xfffL) { // Exceeded 12 bits allocated for rand_a
-            (lastTimestamp + 1, randomSeed())
-          } else {
-            (lastTimestamp, nextSequence)
-          }
-        } else {
-          /* Clock moved backwards. To maintain monotonicity, we use the last timestamp and increment sequence */
-          val nextSequence = lastSequence + 1
-          if (nextSequence > 0xfffL) {
-            (lastTimestamp + 1, randomSeed())
-          } else {
-            (lastTimestamp, nextSequence)
-          }
-        }
-
-      val newState = (newTimestamp << 16) | newSequence
-      if (timestampAndSequence.compareAndSet(state, newState)) {
-        (newTimestamp, newSequence)
-      } else {
-        updateAndGetState()
-      }
-    }
-
-    def generate(): Type = {
-      val (newTimestamp, newSequence) = updateAndGetState()
-
-      val randA = newSequence & 0xfffL
-
-      /* mostSigBits:
-       * 48 bits: timestamp
-       * 4 bits: version (7)
-       * 12 bits: rand_a (sequence)
-       */
-      val mostSigBits = (newTimestamp << 16) | (Version << 12) | randA
-
-      /*
-       * leastSigBits:
-       * 2 bits: variant (10)
-       * 62 bits: rand_b (random)
-       */
-      val randB        = entropy.nextLong() & 0x3fffffffffffffffL // 62 bits
-      val leastSigBits = (Variant << 62) | randB
-
-      val uuid = new UUID(mostSigBits, leastSigBits)
-      unsafeFrom(uuid)
-    }
   }
 
   private[types] trait UuidV7Instances extends UuidV7Instance2 {
@@ -303,6 +240,84 @@ object strings {
     given derivedUuidV7Show[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[UUID]): F[UuidV7] = {
       internalDef.contraCoercible[cats.Show, UuidV7, UUID, cats.Contravariant](showActual.asInstanceOf[cats.Show[UUID]])
     }.asInstanceOf[F[UuidV7]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+
+  trait UuidV7Generator {
+    def generate(): UuidV7.Type
+  }
+  object UuidV7Generator {
+    final lazy val global: UuidV7Generator = newGenerator() // scalafix:ok DisableSyntax.noFinalVal
+
+    def newGenerator(): UuidV7Generator = new DefaultUuidV7Generator()
+
+    final private class DefaultUuidV7Generator extends UuidV7Generator {
+      private val timestampAndSequence = new java.util.concurrent.atomic.AtomicLong()
+      private lazy val entropy         = new java.security.SecureRandom()
+      private val Version              = 7L
+      private val Variant              = 2L // RFC 9562 uses 10x for the variant, which is 2 in UUID API
+
+      private def randomSeed(): Long = entropy.nextInt(0x800).toLong // `0` to `0x7ff` = 0 to 2047
+
+      @scala.annotation.tailrec
+      private def updateAndGetState(): (Long, Long) = {
+        val state         = timestampAndSequence.get()
+        val lastTimestamp = state >>> 16
+        val lastSequence  = state & 0xffffL
+
+        val currentTimestamp = System.currentTimeMillis()
+
+        val (newTimestamp, newSequence) =
+          if (currentTimestamp > lastTimestamp) {
+            (currentTimestamp, randomSeed())
+          } else if (currentTimestamp == lastTimestamp) {
+            val nextSequence = lastSequence + 1
+            if (nextSequence > 0xfffL) { // Exceeded 12 bits allocated for rand_a
+              (lastTimestamp + 1, randomSeed())
+            } else {
+              (lastTimestamp, nextSequence)
+            }
+          } else {
+            /* Clock moved backwards. To maintain monotonicity, we use the last timestamp and increment sequence */
+            val nextSequence = lastSequence + 1
+            if (nextSequence > 0xfffL) {
+              (lastTimestamp + 1, randomSeed())
+            } else {
+              (lastTimestamp, nextSequence)
+            }
+          }
+
+        val newState = (newTimestamp << 16) | newSequence
+        if (timestampAndSequence.compareAndSet(state, newState)) {
+          (newTimestamp, newSequence)
+        } else {
+          updateAndGetState()
+        }
+      }
+
+      def generate(): UuidV7.Type = {
+        val (newTimestamp, newSequence) = updateAndGetState()
+
+        val randA = newSequence & 0xfffL
+
+        /* mostSigBits:
+         * 48 bits: timestamp
+         * 4 bits: version (7)
+         * 12 bits: rand_a (sequence)
+         */
+        val mostSigBits = (newTimestamp << 16) | (Version << 12) | randA
+
+        /*
+         * leastSigBits:
+         * 2 bits: variant (10)
+         * 62 bits: rand_b (random)
+         */
+        val randB        = entropy.nextLong() & 0x3fffffffffffffffL // 62 bits
+        val leastSigBits = (Variant << 62) | randB
+
+        val uuid = new UUID(mostSigBits, leastSigBits)
+        UuidV7.unsafeFrom(uuid)
+      }
+    }
   }
 
   @SuppressWarnings(Array("org.wartremover.warts.Equals"))
