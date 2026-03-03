@@ -688,11 +688,17 @@ object stringsSpec extends Properties {
       property("test UuidV7.toUUID", testToUUID),
       property("test Ordering[UuidV7]", testOrdering),
       property("test Ordered[UuidV7]", testOrdered),
-      property("test UuidV7Generator.global.generate() valid format", testGenerateValidFormat),
-      property("test UuidV7Generator.global.generate() should return unique UUID v7", testGenerateUnique),
-      property("test UuidV7Generator.global.generate() is monotonic", testGenerateMonotonic),
-      property("test UuidV7Generator.global.generate() is monotonic (using UuidV7.compareTo)", testGenerateMonotonicWithUuidV7CompareTo),
-      property("test UuidV7Generator.global.generate() rand_a is randomly seeded per RFC 9562 section 6.2", testGenerateRandARandomlySeeded),
+      property("test UuidV7Generator.globalDefaultGenerator.generate() valid format", testGenerateValidFormat),
+      property("test UuidV7Generator.globalDefaultGenerator.generate() should return unique UUID v7", testGenerateUnique),
+      property("test UuidV7Generator.globalDefaultGenerator.generate() is monotonic", testGenerateMonotonic),
+      property(
+        "test UuidV7Generator.globalDefaultGenerator.generate() is monotonic (using UuidV7.compareTo)",
+        testGenerateMonotonicWithUuidV7CompareTo,
+      ),
+      property(
+        "test UuidV7Generator.globalDefaultGenerator.generate() rand_a is randomly seeded per RFC 9562 section 6.2",
+        testGenerateRandARandomlySeeded,
+      ),
     )
 
     def testApplyValid: Result = {
@@ -951,7 +957,7 @@ object stringsSpec extends Properties {
       }
 
     def testGenerateValidFormat: Property = for {
-      generated <- Gen.constant(UuidV7Generator.global.generate()).log("generated")
+      generated <- Gen.constant(UuidV7Generator.globalDefaultGenerator.generate()).log("generated")
     } yield {
       val uuid = generated.toUUID
       Result.all(
@@ -963,14 +969,14 @@ object stringsSpec extends Properties {
     }
 
     def testGenerateUnique: Property = for {
-      generated <- Gen.constant((1 to 10_000).map(_ => UuidV7Generator.global.generate())).log("generated")
+      generated <- Gen.constant((1 to 10_000).map(_ => UuidV7Generator.globalDefaultGenerator.generate())).log("generated")
     } yield {
       val uuids = generated.distinct
-      Result.diffNamed("UuidV7Generator.global.generate() should return a unique UUID v7", uuids.length, 10_000)(_ == _)
+      Result.diffNamed("UuidV7Generator.globalDefaultGenerator.generate() should return a unique UUID v7", uuids.length, 10_000)(_ == _)
     }
 
     def testGenerateMonotonic: Property = for {
-      generated <- Gen.constant((1 to 10_000).map(_ => UuidV7Generator.global.generate())).log("generated")
+      generated <- Gen.constant((1 to 10_000).map(_ => UuidV7Generator.globalDefaultGenerator.generate())).log("generated")
     } yield {
 
       val nonMonotonicIdPairs = generated.sliding(2).flatMap {
@@ -995,7 +1001,7 @@ object stringsSpec extends Properties {
     }
 
     def testGenerateMonotonicWithUuidV7CompareTo: Property = for {
-      generated <- Gen.constant((1 to 10_000).map(_ => UuidV7Generator.global.generate())).log("generated")
+      generated <- Gen.constant((1 to 10_000).map(_ => UuidV7Generator.globalDefaultGenerator.generate())).log("generated")
     } yield {
 
       val nonMonotonicIdPairs = generated.sliding(2).flatMap {
@@ -1019,7 +1025,7 @@ object stringsSpec extends Properties {
 
     def testGenerateRandARandomlySeeded: Property =
       for {
-        generated <- Gen.constant((1 to 100).map(_ => UuidV7Generator.global.generate())).log("generated")
+        generated <- Gen.constant((1 to 100).map(_ => UuidV7Generator.globalDefaultGenerator.generate())).log("generated")
       } yield {
         val uuidV7AndRandAValues = generated.map(uuidV7 => (uuidV7, uuidV7.toUUID.getMostSignificantBits & 0xfffL))
 

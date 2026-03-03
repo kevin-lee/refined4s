@@ -246,17 +246,49 @@ object strings {
     def generate(): UuidV7.Type
   }
   object UuidV7Generator {
-    final lazy val global: UuidV7Generator = newGenerator() // scalafix:ok DisableSyntax.noFinalVal
+    final lazy val globalDefaultGenerator: UuidV7Generator = newDefaultGenerator() // scalafix:ok DisableSyntax.noFinalVal
 
-    def newGenerator(): UuidV7Generator = new DefaultUuidV7Generator()
+    def newGenerator(randomSource: RandomSource, timestampSource: TimestampSource): UuidV7Generator =
+      new DefaultUuidV7Generator(randomSource, timestampSource)
 
-    final private class DefaultUuidV7Generator extends UuidV7Generator {
+    def newDefaultGenerator(): UuidV7Generator =
+      newGenerator(RandomSource.newDefaultRandomSource(), TimestampSource.newDefaultTimestampSource())
+
+    trait RandomSource {
+      def nextLong(): Long
+      def nextInt(upperBound: Int): Int
+    }
+    object RandomSource {
+      def newDefaultRandomSource(): RandomSource = new DefaultRandomSource
+
+      final private class DefaultRandomSource extends RandomSource {
+        private lazy val secureRandom = new java.security.SecureRandom()
+
+        def nextLong(): Long              = secureRandom.nextLong()
+        def nextInt(upperBound: Int): Int = secureRandom.nextInt(upperBound)
+      }
+    }
+
+    trait TimestampSource {
+      def timestamp(): Long
+    }
+    object TimestampSource {
+      def newDefaultTimestampSource(): TimestampSource = new DefaultTimestampSource
+
+      final private class DefaultTimestampSource extends TimestampSource {
+        def timestamp(): Long = System.currentTimeMillis()
+      }
+    }
+
+    final private class DefaultUuidV7Generator(
+      randomSource: RandomSource,
+      timestampSource: TimestampSource,
+    ) extends UuidV7Generator {
       private val timestampAndSequence = new java.util.concurrent.atomic.AtomicLong()
-      private lazy val entropy         = new java.security.SecureRandom()
       private val Version              = 7L
       private val Variant              = 2L // RFC 9562 uses 10x for the variant, which is 2 in UUID API
 
-      private def randomSeed(): Long = entropy.nextInt(0x800).toLong // `0` to `0x7ff` = 0 to 2047
+      private def randomSeed(): Long = randomSource.nextInt(0x800).toLong // `0` to `0x7ff` = 0 to 2047
 
       @scala.annotation.tailrec
       private def updateAndGetState(): (Long, Long) = {
@@ -264,7 +296,7 @@ object strings {
         val lastTimestamp = state >>> 16
         val lastSequence  = state & 0xffffL
 
-        val currentTimestamp = System.currentTimeMillis()
+        val currentTimestamp = timestampSource.timestamp()
 
         val (newTimestamp, newSequence) =
           if (currentTimestamp > lastTimestamp) {
@@ -311,7 +343,7 @@ object strings {
          * 2 bits: variant (10)
          * 62 bits: rand_b (random)
          */
-        val randB        = entropy.nextLong() & 0x3fff_ffff_ffff_ffffL // 62 bits
+        val randB        = randomSource.nextLong() & 0x3fff_ffff_ffff_ffffL // 62 bits
         val leastSigBits = (Variant << 62) | randB
 
         val uuid = new UUID(mostSigBits, leastSigBits)
