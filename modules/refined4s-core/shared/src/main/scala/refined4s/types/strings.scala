@@ -28,7 +28,7 @@ trait strings {
   final type UuidV7 = strings.UuidV7
   final val UuidV7 = strings.UuidV7
 
-  final type UuidV7Generator = strings.UuidV7Generator
+  final type UuidV7Generator[F[*]] = strings.UuidV7Generator[F]
   final val UuidV7Generator = strings.UuidV7Generator
 
   // scalafix:on
@@ -242,113 +242,86 @@ object strings {
     }.asInstanceOf[F[UuidV7]] // scalafix:ok DisableSyntax.asInstanceOf
   }
 
-  trait UuidV7Generator {
-    def generate(): UuidV7.Type
+  trait UuidV7Generator[F[*]] {
+    def generate(): F[UuidV7]
   }
   object UuidV7Generator {
-    final lazy val globalDefaultGenerator: UuidV7Generator = newDefaultGenerator() // scalafix:ok DisableSyntax.noFinalVal
+    import refined4s.internal.types.{Bind, Identity, RandomSource, StateRef, TimestampSource}
 
-    def newGenerator(randomSource: RandomSource, timestampSource: TimestampSource): UuidV7Generator =
-      new DefaultUuidV7Generator(randomSource, timestampSource)
+    val Version: Long = 7L
+    val Variant: Long = 2L // RFC 9562 uses 10x for the variant, which is 2 in UUID API
 
-    def newDefaultGenerator(): UuidV7Generator =
-      newGenerator(RandomSource.newDefaultRandomSource(), TimestampSource.newDefaultTimestampSource())
+    final lazy val globalDefaultGenerator: UuidV7Generator[Identity] = newDefaultGenerator() // scalafix:ok DisableSyntax.noFinalVal
 
-    trait RandomSource {
-      def nextLong(): Long
-      def nextInt(upperBound: Int): Int
-    }
-    object RandomSource {
-      def newDefaultRandomSource(): RandomSource = new DefaultRandomSource
+    def newGenerator[F[*]: Bind](
+      randomSource: RandomSource[F],
+      timestampSource: TimestampSource[F],
+      stateRef: StateRef[F, Long],
+    ): UuidV7Generator[F] =
+      new DefaultUuidV7Generator[F](randomSource, timestampSource, stateRef)
 
-      final private class DefaultRandomSource extends RandomSource {
-        private lazy val secureRandom = new java.security.SecureRandom()
+    def newDefaultGenerator(): UuidV7Generator[Identity] =
+      newGenerator[Identity](
+        RandomSource.newDefaultRandomSource(),
+        TimestampSource.newDefaultTimestampSource(),
+        StateRef.newAtomicLongStateRef(),
+      )
 
-        def nextLong(): Long              = secureRandom.nextLong()
-        def nextInt(upperBound: Int): Int = secureRandom.nextInt(upperBound)
-      }
-    }
+    final private class DefaultUuidV7Generator[F[*]](
+      randomSource: RandomSource[F],
+      timestampSource: TimestampSource[F],
+      stateRef: StateRef[F, Long],
+    )(using B: Bind[F])
+        extends UuidV7Generator[F] {
+      import refined4s.internal.types.Bind.*
 
-    trait TimestampSource {
-      def timestamp(): Long
-    }
-    object TimestampSource {
-      def newDefaultTimestampSource(): TimestampSource = new DefaultTimestampSource
+      def generate(): F[UuidV7] =
+        for {
+          currentTimestamp <- timestampSource.timestamp()
 
-      final private class DefaultTimestampSource extends TimestampSource {
-        def timestamp(): Long = System.currentTimeMillis()
-      }
-    }
+          seedInt <- randomSource.nextInt(0x800)
 
-    final private class DefaultUuidV7Generator(
-      randomSource: RandomSource,
-      timestampSource: TimestampSource,
-    ) extends UuidV7Generator {
-      private val timestampAndSequence = new java.util.concurrent.atomic.AtomicLong()
-      private val Version              = 7L
-      private val Variant              = 2L // RFC 9562 uses 10x for the variant, which is 2 in UUID API
+          seed = seedInt.toLong
 
-      private def randomSeed(): Long = randomSource.nextInt(0x800).toLong // `0` to `0x7ff` = 0 to 2047
+          newTimestampAndNewSequence <- stateRef.modify({ state =>
+                                          val lastTimestamp = state >>> 16
+                                          val lastSequence  = state & 0xffffL
 
-      @scala.annotation.tailrec
-      private def updateAndGetState(): (Long, Long) = {
-        val state         = timestampAndSequence.get()
-        val lastTimestamp = state >>> 16
-        val lastSequence  = state & 0xffffL
+                                          val (newTimestamp, newSequence) =
+                                            if currentTimestamp > lastTimestamp then {
+                                              (currentTimestamp, seed)
+                                            } else if currentTimestamp == lastTimestamp then {
+                                              val nextSequence = lastSequence + 1
+                                              if nextSequence > 0xfffL // Exceeded 12 bits allocated for rand_a
+                                              then (lastTimestamp + 1, seed)
+                                              else (lastTimestamp, nextSequence)
+                                            } else {
+                                              /* Clock moved backwards. To maintain monotonicity,
+                                               * we use the last timestamp and increment sequence
+                                               */
+                                              val nextSequence = lastSequence + 1
+                                              if nextSequence > 0xfffL
+                                              then (lastTimestamp + 1, seed)
+                                              else (lastTimestamp, nextSequence)
+                                            }
 
-        val currentTimestamp = timestampSource.timestamp()
+                                          val newState = (newTimestamp << 16) | newSequence
+                                          (newState, (newTimestamp, newSequence))
+                                        })
 
-        val (newTimestamp, newSequence) =
-          if (currentTimestamp > lastTimestamp) {
-            (currentTimestamp, randomSeed())
-          } else if (currentTimestamp == lastTimestamp) {
-            val nextSequence = lastSequence + 1
-            if (nextSequence > 0xfffL) { // Exceeded 12 bits allocated for rand_a
-              (lastTimestamp + 1, randomSeed())
-            } else {
-              (lastTimestamp, nextSequence)
-            }
-          } else {
-            /* Clock moved backwards. To maintain monotonicity, we use the last timestamp and increment sequence */
-            val nextSequence = lastSequence + 1
-            if (nextSequence > 0xfffL) {
-              (lastTimestamp + 1, randomSeed())
-            } else {
-              (lastTimestamp, nextSequence)
-            }
-          }
+          (newTimestamp, newSequence) = newTimestampAndNewSequence
 
-        val newState = (newTimestamp << 16) | newSequence
-        if (timestampAndSequence.compareAndSet(state, newState)) {
-          (newTimestamp, newSequence)
-        } else {
-          updateAndGetState()
-        }
-      }
+          randA = newSequence & 0xfffL
 
-      def generate(): UuidV7.Type = {
-        val (newTimestamp, newSequence) = updateAndGetState()
+          mostSigBits = (newTimestamp << 16) | (Version << 12) | randA
 
-        val randA = newSequence & 0xfffL
+          randBRaw <- randomSource.nextLong()
 
-        /* mostSigBits:
-         * 48 bits: timestamp
-         * 4 bits: version (7)
-         * 12 bits: rand_a (sequence)
-         */
-        val mostSigBits = (newTimestamp << 16) | (Version << 12) | randA
+          randB        = randBRaw & 0x3fff_ffff_ffff_ffffL // 62 bits
+          leastSigBits = (Variant << 62) | randB
+          uuid         = new UUID(mostSigBits, leastSigBits)
 
-        /*
-         * leastSigBits:
-         * 2 bits: variant (10)
-         * 62 bits: rand_b (random)
-         */
-        val randB        = randomSource.nextLong() & 0x3fff_ffff_ffff_ffffL // 62 bits
-        val leastSigBits = (Variant << 62) | randB
-
-        val uuid = new UUID(mostSigBits, leastSigBits)
-        UuidV7.unsafeFrom(uuid)
-      }
+        } yield UuidV7.unsafeFrom(uuid)
     }
   }
 
