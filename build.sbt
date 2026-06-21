@@ -264,7 +264,7 @@ lazy val chimneyNative = chimney.native.settings(nativeSettings)
 
 lazy val refinedCompatScala2       = module("refined-compat-scala2", crossProject(JVMPlatform, JSPlatform, NativePlatform))
   .settings(
-    crossScalaVersions := List("2.12.18", "2.13.16")
+    crossScalaVersions := List("2.12.19", "2.13.17")
   )
 lazy val refinedCompatScala2Jvm    = refinedCompatScala2
   .jvm
