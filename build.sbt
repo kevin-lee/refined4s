@@ -214,6 +214,7 @@ lazy val doobieCe2Jvm = doobieCe2.jvm
 lazy val doobieCe3    = module("doobie-ce3", crossProject(JVMPlatform))
   .settings(
     libraryDependencies ++= List(
+      libs.doobieFreeCe3,
       libs.doobieCoreCe3,
       libs.embeddedPostgres           % Test,
       libs.effectieCe3.value          % Test,
@@ -372,7 +373,8 @@ lazy val props =
     val PureconfigVersion = "0.17.1"
 
     val DoobieCe2Version = "0.13.4"
-    val DoobieCe3Version = "1.0.0-RC10"
+
+    val DoobieCe3Version = "1.0.0-RC11"
 
     val EmbeddedPostgresVersion = "2.0.7"
 
@@ -418,6 +420,8 @@ lazy val libs = new {
   lazy val pureconfigGeneric = "com.github.pureconfig" %% "pureconfig-generic" % props.PureconfigVersion
 
   lazy val doobieCoreCe2 = "org.tpolecat" %% "doobie-core" % props.DoobieCe2Version
+
+  lazy val doobieFreeCe3 = "org.tpolecat" %% "doobie-free" % props.DoobieCe3Version
   lazy val doobieCoreCe3 = "org.tpolecat" %% "doobie-core" % props.DoobieCe3Version
 
   lazy val embeddedPostgres = "io.zonky.test" % "embedded-postgres" % props.EmbeddedPostgresVersion
