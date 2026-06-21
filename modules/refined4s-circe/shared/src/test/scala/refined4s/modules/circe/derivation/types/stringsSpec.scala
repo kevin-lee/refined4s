@@ -6,7 +6,7 @@ import hedgehog.runner.*
 import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.*
-import refined4s.types.UuidV7TestTools
+//import refined4s.types.UuidV7TestTools
 import refined4s.types.all.*
 
 import java.util.UUID
@@ -36,10 +36,12 @@ trait stringsSpec {
     property("test KeyEncoder[Uuid]", testKeyEncoderUuid),
     property("test KeyDecoder[Uuid]", testKeyDecoderUuid),
     //
+    /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
     property("test Encoder[UuidV7]", testEncoderUuidV7),
     property("test Decoder[UuidV7]", testDecoderUuidV7),
     property("test KeyEncoder[UuidV7]", testKeyEncoderUuidV7),
     property("test KeyDecoder[UuidV7]", testKeyDecoderUuidV7),
+     */
   )
 
   def testEncoderNonEmptyString: Property =
@@ -274,7 +276,7 @@ trait stringsSpec {
     }
 
   //
-
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
   def testEncoderUuidV7: Property =
     for {
       uuid <- Gen.elementUnsafe(UuidV7TestTools.validUuidV7Strings).log("uuid")
@@ -337,6 +339,7 @@ trait stringsSpec {
 
       actual ==== Right(expected)
     }
+   */
 
 }
 object stringsSpec extends Properties, stringsSpec {

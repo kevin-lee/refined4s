@@ -7,7 +7,8 @@ import pureconfig.error.{ConfigReaderFailures, ConvertFailure, UserValidationFai
 import pureconfig.generic.derivation.default.*
 import pureconfig.{ConfigReader, ConfigSource, ConfigWriter}
 import refined4s.internal.typeTools
-import refined4s.types.{strings, UuidV7TestTools}
+//import refined4s.types.{strings, UuidV7TestTools}
+import refined4s.types.strings
 import refined4s.types.strings.*
 
 import java.util.UUID
@@ -34,10 +35,12 @@ trait stringsSpec {
     property("test ConfigReader[Uuid] with invalid value", testConfigReaderUuidInvalid),
     property("test ConfigWriter[Uuid]", testConfigWriterUuid),
     //
+    /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
     property("test ConfigReader[UuidV7]", testConfigReaderUuidV7),
     property("test ConfigReader[UuidV7] with invalid value", testConfigReaderUuidV7Invalid),
     property("test ConfigReader[UuidV7] with UUID v4 (invalid UUID v7)", testConfigReaderUuidV7WithUuidV4),
     property("test ConfigWriter[UuidV7]", testConfigWriterUuidV7),
+     */
   )
 
   def testConfigReaderNonEmptyString: Property =
@@ -308,6 +311,7 @@ trait stringsSpec {
     }
   final case class UuidConfig(id: Uuid) derives ConfigReader
 
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
   @SuppressWarnings(Array("org.wartremover.warts.ToString"))
   def testConfigReaderUuidV7: Property =
     for {
@@ -420,6 +424,7 @@ trait stringsSpec {
 
     }
   final case class UuidV7Config(id: UuidV7) derives ConfigReader
+   */
 
 }
 object stringsSpec extends Properties, stringsSpec {

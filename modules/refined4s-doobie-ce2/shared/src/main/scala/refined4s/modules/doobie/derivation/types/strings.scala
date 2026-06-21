@@ -18,8 +18,10 @@ trait strings {
   given derivedUuidGet: Get[Uuid] = strings.derivedUuidGet
   given derivedUuidPut: Put[Uuid] = strings.derivedUuidPut
 
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
   given derivedUuidV7Get: Get[UuidV7] = strings.derivedUuidV7Get
   given derivedUuidV7Put: Put[UuidV7] = strings.derivedUuidV7Put
+   */
 
 }
 object strings {
@@ -33,7 +35,9 @@ object strings {
   given derivedUuidGet(using Show[String]): Get[Uuid] = Get[String].temap(Uuid.from)
   given derivedUuidPut: Put[Uuid]                     = Put[String].contramap(_.value)
 
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
   given derivedUuidV7Get(using Show[String]): Get[UuidV7] = Get[String].temap(UuidV7.fromString)
   given derivedUuidV7Put: Put[UuidV7]                     = Put[String].contramap(_.value.toString)
+   */
 
 }

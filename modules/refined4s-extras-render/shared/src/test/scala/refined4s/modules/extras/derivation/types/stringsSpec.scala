@@ -3,8 +3,9 @@ package refined4s.modules.extras.derivation.types
 import extras.render.syntax.*
 import hedgehog.*
 import hedgehog.runner.*
-import refined4s.types.UuidV7TestTools
-import refined4s.types.all.{NonBlankString, NonEmptyString, Uuid, UuidV7}
+//import refined4s.types.UuidV7TestTools
+import refined4s.types.all.{NonBlankString, NonEmptyString, Uuid}
+//import refined4s.types.all.UuidV7
 
 import java.nio.charset.StandardCharsets
 import java.util.UUID
@@ -22,7 +23,9 @@ trait stringsSpec {
     //
     property("test Render[Uuid]", testRenderUuid),
     //
+    /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
     property("test Render[UuidV7]", testRenderUuidV7),
+     */
   )
 
   def testRenderNonEmptyString: Property =
@@ -72,6 +75,7 @@ trait stringsSpec {
       actual ==== expected
     }
 
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
   def testRenderUuidV7: Property =
     for {
       uuid <- Gen.elementUnsafe(UuidV7TestTools.validUuidV7Strings).log("uuid")
@@ -83,6 +87,7 @@ trait stringsSpec {
 
       actual ==== expected
     }
+   */
 
 }
 object stringsSpec extends Properties, stringsSpec {

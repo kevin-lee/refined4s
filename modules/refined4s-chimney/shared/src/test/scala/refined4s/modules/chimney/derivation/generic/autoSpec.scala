@@ -5,11 +5,11 @@ import hedgehog.extra.refined4s.gens.NumGens
 import hedgehog.runner.*
 import io.scalaland.chimney
 import refined4s.modules.chimney.derivation.generic.auto.given
-import refined4s.types.UuidV7TestTools
+//import refined4s.types.UuidV7TestTools
 import refined4s.types.all.*
 import refined4s.{Newtype, Refined}
 
-import java.util.UUID
+//import java.util.UUID
 
 /** @author Kevin Lee
   * @since 2024-08-04
@@ -23,7 +23,10 @@ object autoSpec extends Properties {
     property("test Refined (partial into)", testRefined),
     property("test case class", testCaseClass),
     property("test case class (partial into)", testCaseClassPartial),
-  ) ++ uuidV7Spec.tests
+  )
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
+    ++ uuidV7Spec.tests
+   */
 
   def testNewtype: Property =
     for {
@@ -115,6 +118,7 @@ object autoSpec extends Properties {
       expected ==== actual
     }
 
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
   object uuidV7Spec {
     import io.scalaland.chimney.dsl.*
 
@@ -148,6 +152,7 @@ object autoSpec extends Properties {
       }
 
   }
+   */
 
 }
 

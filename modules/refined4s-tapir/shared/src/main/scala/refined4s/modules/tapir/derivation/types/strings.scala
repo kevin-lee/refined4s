@@ -1,8 +1,10 @@
 package refined4s.modules.tapir.derivation.types
 
-import refined4s.types.strings.{NonBlankString, NonEmptyString, Uuid, UuidV7}
-import sttp.tapir.Codec.PlainCodec
-import sttp.tapir.{Codec, DecodeResult, Schema}
+import refined4s.types.strings.{NonBlankString, NonEmptyString, Uuid}
+//import refined4s.types.strings.UuidV7
+//import sttp.tapir.Codec.PlainCodec
+//import sttp.tapir.{Codec, DecodeResult, Schema}
+import sttp.tapir.Schema
 
 import java.util.UUID
 
@@ -17,9 +19,11 @@ trait strings {
 
   given schemaUuid: Schema[Uuid] = strings.derivedUuidSchema
 
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
   given schemaUuidV7: Schema[UuidV7] = strings.derivedUuidV7Schema
 
   given codecUuidV7: PlainCodec[UuidV7] = strings.derivedUuidV7Codec
+   */
 
 }
 object strings {
@@ -32,6 +36,7 @@ object strings {
   given derivedUuidSchema: Schema[Uuid] =
     summon[Schema[UUID]].map(uuid => Some(Uuid.apply(uuid)))(_.toUUID)
 
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
   given derivedUuidV7Schema: Schema[UuidV7] =
     summon[Schema[UUID]].map(uuid => UuidV7.from(uuid).toOption)(_.value)
 
@@ -40,5 +45,6 @@ object strings {
     .mapDecode { uuid =>
       DecodeResult.fromEitherString(uuid.toString, UuidV7.from(uuid))
     }(_.toUUID)
+   */
 
 }

@@ -30,12 +30,14 @@ trait strings {
   given derivedUuidKeyEncoder: KeyEncoder[Uuid] = strings.derivedUuidKeyEncoder
   given derivedUuidKeyDecoder: KeyDecoder[Uuid] = strings.derivedUuidKeyDecoder
 
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
   /* UuidV7 */
   given derivedUuidV7Encoder: Encoder[UuidV7] = strings.derivedUuidV7Encoder
   given derivedUuidV7Decoder: Decoder[UuidV7] = strings.derivedUuidV7Decoder
 
   given derivedUuidV7KeyEncoder: KeyEncoder[UuidV7] = strings.derivedUuidV7KeyEncoder
   given derivedUuidV7KeyDecoder: KeyDecoder[UuidV7] = strings.derivedUuidV7KeyDecoder
+   */
 
 }
 object strings {
@@ -73,6 +75,7 @@ object strings {
     override def apply(key: String): Option[Uuid] = Uuid.from(key).toOption
   }
 
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
   /* UuidV7 */
   @SuppressWarnings(Array("org.wartremover.warts.ToString"))
   given derivedUuidV7Encoder: Encoder[UuidV7] = Encoder.encodeUUID.contramap[UuidV7](_.value)
@@ -85,5 +88,6 @@ object strings {
   given derivedUuidV7KeyDecoder: KeyDecoder[UuidV7] with {
     override def apply(key: String): Option[UuidV7] = UuidV7.fromString(key).toOption
   }
+   */
 
 }

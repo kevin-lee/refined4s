@@ -5,13 +5,16 @@ import hedgehog.runner.*
 import refined4s.*
 
 import java.util.UUID
-import refined4s.internal.UuidV7Macros
+//import refined4s.internal.UuidV7Macros
 
 /** @author Kevin Lee
   * @since 2023-04-25
   */
 object stringsSpec extends Properties {
-  override def tests: List[Test] = NonEmptyStringSpec.tests ++ NonBlankStringSpec.tests ++ UuidSpec.tests ++ UuidV7Spec.tests
+  override def tests: List[Test] = NonEmptyStringSpec.tests ++ NonBlankStringSpec.tests ++ UuidSpec.tests
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
+    ++ UuidV7Spec.tests
+   */
 
   object NonEmptyStringSpec {
     import all.NonEmptyString
@@ -663,6 +666,7 @@ object stringsSpec extends Properties {
 
   }
 
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
   @SuppressWarnings(Array("org.wartremover.warts.ToString"))
   object UuidV7Spec {
 
@@ -1085,5 +1089,6 @@ object stringsSpec extends Properties {
       }
 
   }
+   */
 
 }

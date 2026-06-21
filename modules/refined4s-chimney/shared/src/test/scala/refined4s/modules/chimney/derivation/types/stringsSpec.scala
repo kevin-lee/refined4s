@@ -5,11 +5,11 @@ import hedgehog.extra.refined4s.gens.StringGens
 import hedgehog.runner.*
 import io.scalaland.chimney
 import io.scalaland.chimney.dsl.*
-import refined4s.types.UuidV7TestTools
+//import refined4s.types.UuidV7TestTools
 import refined4s.types.numeric.PosInt
 import refined4s.types.strings.*
 
-import java.util.UUID
+//import java.util.UUID
 
 /** @author Kevin Lee
   * @since 2024-08-06
@@ -123,15 +123,20 @@ trait uuidV7Spec {
 
   protected val stringsTypeClasses: refined4s.modules.chimney.derivation.types.strings
 
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
   import stringsTypeClasses.given
+   */
 
   def allTests: List[Test] = List(
+    /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
     property("test from UuidV7 to String", testFromUuidV7),
     property("test from String to UuidV7", testToUuidV7),
     property("test from UuidV7 to UUID", testFromUuidV7ToJavaUuid),
     property("test from UUID to UuidV7", testFromJavaUuidToUuidV7),
+     */
   )
 
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
   def testFromUuidV7: Property =
     for {
       uuid <- Gen.elementUnsafe(UuidV7TestTools.validUuidV7Strings).log("uuid")
@@ -179,5 +184,6 @@ trait uuidV7Spec {
 
       actual ==== expected
     }
+   */
 
 }
