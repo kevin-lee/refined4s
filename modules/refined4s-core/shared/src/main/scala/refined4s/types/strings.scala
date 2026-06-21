@@ -25,11 +25,13 @@ trait strings {
   final type Uuid = strings.Uuid
   final val Uuid = strings.Uuid
 
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
   final type UuidV7 = strings.UuidV7
   final val UuidV7 = strings.UuidV7
 
   final type UuidV7Generator[F[*]] = strings.UuidV7Generator[F]
   final val UuidV7Generator = strings.UuidV7Generator
+   */
 
   // scalafix:on
 
@@ -180,6 +182,7 @@ object strings {
     }.asInstanceOf[F[Uuid]] // scalafix:ok DisableSyntax.asInstanceOf
   }
 
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
   type UuidV7 = UuidV7.Type
   object UuidV7 extends InlinedRefined[UUID], CanBeOrdered[UUID], UuidV7Instances {
     override inline val inlinedExpectedValue =
@@ -297,8 +300,8 @@ object strings {
                                               else (lastTimestamp, nextSequence)
                                             } else {
                                               /* Clock moved backwards. To maintain monotonicity,
-                                               * we use the last timestamp and increment sequence
-                                               */
+   * we use the last timestamp and increment sequence
+   */
                                               val nextSequence = lastSequence + 1
                                               if nextSequence > 0xfffL
                                               then (lastTimestamp + 1, seed)
@@ -324,6 +327,7 @@ object strings {
         } yield UuidV7.unsafeFrom(uuid)
     }
   }
+   */
 
   @SuppressWarnings(Array("org.wartremover.warts.Equals"))
   def isValidNotAllWhitespaceNonEmptyString(stringExpr: Expr[String])(using Quotes): Expr[Boolean] = {

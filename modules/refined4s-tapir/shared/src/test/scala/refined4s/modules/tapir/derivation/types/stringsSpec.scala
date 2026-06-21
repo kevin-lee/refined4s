@@ -2,10 +2,11 @@ package refined4s.modules.tapir.derivation.types
 
 import hedgehog.*
 import hedgehog.runner.*
-import refined4s.types.UuidV7TestTools
+//import refined4s.types.UuidV7TestTools
 import refined4s.types.strings.*
-import sttp.tapir.Codec.PlainCodec
-import sttp.tapir.{Codec, DecodeResult, Schema, ValidationError}
+//import sttp.tapir.Codec.PlainCodec
+//import sttp.tapir.{Codec, DecodeResult, Schema, ValidationError}
+import sttp.tapir.{Schema, ValidationError}
 
 import java.nio.charset.StandardCharsets
 import java.util.UUID
@@ -26,8 +27,10 @@ trait stringsSpec {
     //
     property("test Schema[Uuid]", testSchemaUuid),
     //
+    /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
     property("test Schema[UuidV7]", testSchemaUuidV7),
     property("test Codec[String, UuidV7, CodecFormat.TextPlain]", testCodecUuidV7),
+     */
   )
 
   def testSchemaNonEmptyString: Property =
@@ -79,6 +82,7 @@ trait stringsSpec {
 
   ///
 
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
   def testSchemaUuidV7: Property =
     for {
       uuid <- Gen.elementUnsafe(UuidV7TestTools.validUuidV7Strings).log("uuid")
@@ -132,6 +136,7 @@ trait stringsSpec {
         )
       )
     }
+   */
 
 }
 object stringsSpec extends Properties, stringsSpec {

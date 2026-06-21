@@ -3,7 +3,7 @@ package refined4s.modules.chimney.derivation.types
 import io.scalaland.chimney
 import io.scalaland.chimney.{PartialTransformer, Transformer}
 import refined4s.types.strings.*
-import java.util.UUID
+//import java.util.UUID
 
 /** @author Kevin Lee
   * @since 2023-12-25
@@ -29,6 +29,7 @@ trait strings {
 
   given derivedStringToUuidPartialTransformer: PartialTransformer[String, Uuid] = strings.derivedStringToUuidPartialTransformer
 
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
   /* UuidV7 */
   given derivedUuidV7ToStringTransformer: Transformer[UuidV7, String] = strings.derivedUuidV7ToStringTransformer
 
@@ -37,6 +38,7 @@ trait strings {
   given derivedUuidV7ToJvmUUIDTransformer: Transformer[UuidV7, UUID] = strings.derivedUuidV7ToJvmUUIDTransformer
 
   given derivedJvmUUIDToUuidV7PartialTransformer: PartialTransformer[UUID, UuidV7] = strings.derivedJvmUUIDToUuidV7PartialTransformer
+   */
 
 }
 object strings {
@@ -59,6 +61,7 @@ object strings {
   given derivedStringToUuidPartialTransformer: PartialTransformer[String, Uuid] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(Uuid.from(value)))
 
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
   given derivedUuidV7ToStringTransformer: Transformer[UuidV7, String] with {
     override def transform(src: UuidV7): String = src.value.toString
   }
@@ -70,5 +73,7 @@ object strings {
   }
   given derivedJvmUUIDToUuidV7PartialTransformer: PartialTransformer[UUID, UuidV7] =
     PartialTransformer(value => chimney.partial.Result.fromEitherString(UuidV7.from(value)))
+
+   */
 
 }

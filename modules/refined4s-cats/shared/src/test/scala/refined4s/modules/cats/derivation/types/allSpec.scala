@@ -7,7 +7,8 @@ import refined4s.types.numeric.*
 import refined4s.types.network.*
 import refined4s.types.strings.*
 import refined4s.types.time.*
-import refined4s.types.{networkGens, UuidV7TestTools}
+import refined4s.types.networkGens
+//import refined4s.types.UuidV7TestTools
 
 import java.util.UUID
 
@@ -29,7 +30,9 @@ object allSpec extends Properties {
       nonEmptyStringSpec.tests ++
       nonBlankStringSpec.tests ++
       uuidSpec.tests ++
+      /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
       uuidV7Spec.tests ++
+       */
       uriSpec.tests ++
       urlSpec.tests ++
       portNumberSpec.tests ++ systemPortNumberSpec.tests ++ nonSystemPortNumberSpec.tests ++ userPortNumberSpec.tests ++ dynamicPortNumberSpec.tests ++
@@ -2729,6 +2732,7 @@ object allSpec extends Properties {
 
   /* strings.UuidV7 { */
 
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
   object uuidV7Spec {
     def tests: List[Test] = List(
       property("test   Eq[UuidV7] === case", testEq),
@@ -2797,6 +2801,7 @@ object allSpec extends Properties {
         Result.diffNamed("UuidV7(value).show === value: String", actual, expected)(_ === _)
       }
   }
+   */
 
   /* strings.UuidV7 } */
 

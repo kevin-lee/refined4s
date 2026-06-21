@@ -10,7 +10,7 @@ import extras.hedgehog.ce3.CatsEffectRunner
 import hedgehog.*
 import hedgehog.runner.*
 import refined4s.*
-import refined4s.types.UuidV7TestTools
+//import refined4s.types.UuidV7TestTools
 import refined4s.types.all.*
 
 import java.nio.charset.StandardCharsets
@@ -38,7 +38,9 @@ trait stringsSpec extends CatsEffectRunner, RunWithDb {
     propertyWithDb("test Get[NonBlankString] and Put[NonBlankString]", postgresPortNumber.getAndIncrement(), testGetAndPutNonBlankString),
     //
     propertyWithDb("test Get[Uuid] and Put[Uuid]", postgresPortNumber.getAndIncrement(), testGetAndPutUuid),
+    /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
     propertyWithDb("test Get[UuidV7] and Put[UuidV7]", postgresPortNumber.getAndIncrement(), testGetAndPutUuidV7),
+     */
   )
 
   def testGetAndPutNonEmptyString(testName: String, postgresPortNumber: Int): Property =
@@ -221,6 +223,7 @@ trait stringsSpec extends CatsEffectRunner, RunWithDb {
 
   ///
 
+  /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
   def testGetAndPutUuidV7(testName: String, postgresPortNumber: Int): Property =
     for {
       uuid <- Gen.elementUnsafe(UuidV7TestTools.validUuidV7Strings).log("uuid")
@@ -271,6 +274,7 @@ trait stringsSpec extends CatsEffectRunner, RunWithDb {
 
       }
     )
+   */
 
 }
 object stringsSpec extends Properties, stringsSpec {

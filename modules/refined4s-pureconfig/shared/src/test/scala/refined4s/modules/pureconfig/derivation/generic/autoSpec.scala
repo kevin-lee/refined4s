@@ -10,7 +10,8 @@ import pureconfig.{ConfigReader, ConfigSource, ConfigWriter}
 import refined4s.*
 import refined4s.internal.typeTools
 import refined4s.modules.pureconfig.derivation.generic.auto.given
-import refined4s.types.{networkGens, UuidV7TestTools}
+//import refined4s.types.{networkGens, UuidV7TestTools}
+import refined4s.types.networkGens
 import refined4s.types.all.*
 
 import java.util.UUID
@@ -163,10 +164,12 @@ object autoSpec extends Properties {
       property("test ConfigReader[Uuid] with invalid value", testConfigReaderUuidInvalid),
       property("test ConfigWriter[Uuid]", testConfigWriterUuid),
       //
+      /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
       property("test ConfigReader[UuidV7]", testConfigReaderUuidV7),
       property("test ConfigReader[UuidV7] with invalid value", testConfigReaderUuidV7Invalid),
       property("test ConfigReader[UuidV7] with UUID v4 (invalid UUID v7)", testConfigReaderUuidV7WithUuidV4),
       property("test ConfigWriter[UuidV7]", testConfigWriterUuidV7),
+       */
       //
 
       property("test ConfigReader[Uri]", testConfigReaderUri),
@@ -2719,6 +2722,7 @@ object autoSpec extends Properties {
 
     ///
 
+    /* TODO: #597 - Temporarily hide UuidV7 until it's ready for use.
     def testConfigReaderUuidV7: Property =
       for {
         uuid <- Gen.elementUnsafe(UuidV7TestTools.validUuidV7Strings).log("uuid")
@@ -2805,6 +2809,7 @@ object autoSpec extends Properties {
       }
 
     final case class UuidV7Config(id: UuidV7) derives ConfigReader
+     */
 
     ///
 
