@@ -6,7 +6,6 @@ import refined4s.types.network.Uri
 
 import scala.quoted.*
 import java.net.{URI, URL}
-import scala.quoted.{Expr, Quotes}
 import scala.util.control.NonFatal
 
 /** @author Kevin Lee

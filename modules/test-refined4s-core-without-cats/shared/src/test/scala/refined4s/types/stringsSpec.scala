@@ -111,6 +111,7 @@ object stringsSpec extends Properties {
         actual ==== expected
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.Equals"))
     def testOrdering: Property =
       for {
         s1 <- Gen.string(Gen.alphaNum, Range.linear(1, 10)).log("s1")
@@ -122,6 +123,7 @@ object stringsSpec extends Properties {
         Result.diff(input1, input2)(Ordering[NonEmptyString].compare(_, _) == expected)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.Equals"))
     def testOrdered: Property =
       for {
         s1 <- Gen.string(Gen.alphaNum, Range.linear(1, 10)).log("s1")
@@ -391,6 +393,7 @@ object stringsSpec extends Properties {
         actual ==== expected
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.Equals"))
     def testOrdering: Property =
       for {
         s1 <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("s1")
@@ -402,6 +405,7 @@ object stringsSpec extends Properties {
         Result.diff(input1, input2)(Ordering[NonBlankString].compare(_, _) == expected)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.Equals"))
     def testOrdered: Property =
       for {
         s1 <- Gen.string(hedgehog.extra.Gens.genNonWhitespaceChar, Range.linear(1, 10)).log("s1")
@@ -638,6 +642,7 @@ object stringsSpec extends Properties {
         actual ==== expected
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.Equals"))
     def testOrdering: Property =
       for {
         uuid1 <- Gen.constant(UUID.randomUUID()).log("uuid1")
@@ -651,6 +656,7 @@ object stringsSpec extends Properties {
         Result.diff(input1, input2)(Ordering[Uuid].compare(_, _) == expected)
       }
 
+    @SuppressWarnings(Array("org.wartremover.warts.Equals"))
     def testOrdered: Property =
       for {
         uuid1 <- Gen.constant(UUID.randomUUID()).log("uuid1")
