@@ -23,6 +23,7 @@ object UuidV7Macros {
       case Inlined(_, _, Literal(StringConstant(uuidStr))) =>
         try {
           val uuid          = java.util.UUID.fromString(uuidStr)
+          @SuppressWarnings(Array("org.wartremover.warts.Equals"))
           val isValidUuidV7 = uuid.version() == 7 && uuid.variant() == 2
           if isValidUuidV7 then ()
           else
@@ -102,6 +103,7 @@ object UuidV7Macros {
       case Literal(StringConstant(uuidStr)) =>
         try {
           val uuid          = java.util.UUID.fromString(uuidStr)
+          @SuppressWarnings(Array("org.wartremover.warts.Equals"))
           val isValidUuidV7 = uuid.version() == 7 && uuid.variant() == 2
           if isValidUuidV7 then ()
           else

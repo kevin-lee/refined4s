@@ -12,6 +12,7 @@ object CanBeOrderedSpec extends Properties {
     property("test Ordered from CanBeOrdered", testOrdered),
   )
 
+  @SuppressWarnings(Array("org.wartremover.warts.Equals"))
   def testOrdering: Property =
     for {
       n1 <- Gen.int(Range.linear(Int.MinValue, Int.MaxValue)).log("n1")
@@ -24,6 +25,7 @@ object CanBeOrderedSpec extends Properties {
       Result.diff(input1, input2)(Ordering[MyNum].compare(_, _) == expected)
     }
 
+  @SuppressWarnings(Array("org.wartremover.warts.Equals"))
   def testOrdered: Property =
     for {
       n1 <- Gen.int(Range.linear(Int.MinValue, Int.MaxValue)).log("n1")

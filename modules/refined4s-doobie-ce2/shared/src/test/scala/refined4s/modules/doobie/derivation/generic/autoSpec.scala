@@ -11,7 +11,6 @@ import hedgehog.runner.*
 import refined4s.*
 import refined4s.modules.doobie.derivation.generic.auto.given
 import refined4s.modules.doobie.derivation.{Example, Gens}
-import refined4s.types.all.*
 
 import java.util.concurrent.atomic.AtomicInteger
 

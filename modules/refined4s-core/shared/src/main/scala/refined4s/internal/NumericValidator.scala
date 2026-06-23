@@ -151,6 +151,7 @@ object NumericValidator {
     }
   }
 
+  @SuppressWarnings(Array("org.wartremover.warts.Equals"))
   def equivImpl[A: Type](
     expr1: Expr[A],
     expr2: Expr[A],
