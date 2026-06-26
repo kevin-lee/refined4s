@@ -374,9 +374,9 @@ lazy val props =
 
     val DoobieCe2Version = "0.13.4"
 
-    val DoobieCe3Version = "1.0.0-RC11"
+    val DoobieCe3Version = "1.0.0-RC12"
 
-    val EmbeddedPostgresVersion = "2.0.7"
+    val EmbeddedPostgresVersion = "2.2.0"
 
     val EffectieVersion = "2.3.0"
 
