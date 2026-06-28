@@ -361,10 +361,10 @@ lazy val props =
 
     val IncludeTest = "compile->compile;test->test"
 
-    val HedgehogVersion      = "0.13.0"
-    val HedgehogExtraVersion = "0.15.0"
+    val HedgehogVersion      = "0.13.1"
+    val HedgehogExtraVersion = "0.21.0"
 
-    val ExtrasVersion = "0.53.0"
+    val ExtrasVersion = "0.54.0"
 
     val CatsVersion = "2.13.0"
 
@@ -378,7 +378,7 @@ lazy val props =
 
     val EmbeddedPostgresVersion = "2.2.0"
 
-    val EffectieVersion = "2.3.0"
+    val EffectieVersion = "2.4.0"
 
     val LogbackVersion = "1.5.6"
 
