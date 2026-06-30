@@ -2,7 +2,7 @@ package refined4s.modules.doobie.derivation.types
 
 import cats.effect.IO
 import cats.syntax.all.*
-import doobie.syntax.all.*
+import org.typelevel.doobie.syntax.all.*
 import extras.doobie.RunWithDb
 import extras.doobie.ce3.DbTools
 import extras.hedgehog.ce3.CatsEffectRunner

@@ -28,13 +28,26 @@ ThisBuild / scmInfo :=
   )
 ThisBuild / licenses := props.licenses
 
-ThisBuild / scalafixDependencies += "com.github.xuwei-k" %% "scalafix-rules" % "0.6.11"
-
 ThisBuild / scalafixConfig := (
   if (scalaVersion.value.startsWith("3"))
     ((ThisBuild / baseDirectory).value / ".scalafix-scala3.conf").some
   else
     ((ThisBuild / baseDirectory).value / ".scalafix-scala2.conf").some
+)
+
+
+//ThisBuild / scalaVersion := scalaVersion.value
+ThisBuild / semanticdbEnabled := true
+ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
+scalacOptions += (
+      if (scalaVersion.value.startsWith("3."))
+        "-Xsemanticdb"
+      else
+        "-Yrangepos"
+    )
+
+ThisBuild / scalafixDependencies ++= List(
+  "com.github.xuwei-k" %% "scalafix-rules" % "0.6.28"
 )
 
 lazy val refined4s = (project in file("."))
@@ -364,7 +377,7 @@ lazy val props =
     val HedgehogVersion      = "0.13.1"
     val HedgehogExtraVersion = "0.21.0"
 
-    val ExtrasVersion = "0.54.0"
+    val ExtrasVersion = "0.55.0"
 
     val CatsVersion = "2.13.0"
 
@@ -374,7 +387,7 @@ lazy val props =
 
     val DoobieCe2Version = "0.13.4"
 
-    val DoobieCe3Version = "1.0.0-RC12"
+    val DoobieCe3Version = "1.0.0-RC13"
 
     val EmbeddedPostgresVersion = "2.2.0"
 
@@ -421,8 +434,8 @@ lazy val libs = new {
 
   lazy val doobieCoreCe2 = "org.tpolecat" %% "doobie-core" % props.DoobieCe2Version
 
-  lazy val doobieFreeCe3 = "org.tpolecat" %% "doobie-free" % props.DoobieCe3Version
-  lazy val doobieCoreCe3 = "org.tpolecat" %% "doobie-core" % props.DoobieCe3Version
+  lazy val doobieFreeCe3 = "org.typelevel" %% "doobie-free" % props.DoobieCe3Version
+  lazy val doobieCoreCe3 = "org.typelevel" %% "doobie-core" % props.DoobieCe3Version
 
   lazy val embeddedPostgres = "io.zonky.test" % "embedded-postgres" % props.EmbeddedPostgresVersion
 

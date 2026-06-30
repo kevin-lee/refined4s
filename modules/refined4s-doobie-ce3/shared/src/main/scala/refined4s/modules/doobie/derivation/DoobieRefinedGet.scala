@@ -1,7 +1,7 @@
 package refined4s.modules.doobie.derivation
 
 import cats.Show
-import doobie.Get
+import org.typelevel.doobie.Get
 import refined4s.RefinedBase
 
 /** @author Kevin Lee
