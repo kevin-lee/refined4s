@@ -2,7 +2,7 @@ addSbtPlugin("com.github.sbt" % "sbt-ci-release" % "1.11.2")
 
 addSbtPlugin("org.wartremover" % "sbt-wartremover" % "3.5.0")
 
-addSbtPlugin("ch.epfl.scala" % "sbt-scalafix"  % "0.14.3")
+addSbtPlugin("ch.epfl.scala" % "sbt-scalafix"  % "0.14.6")
 addSbtPlugin("org.scalameta" % "sbt-scalafmt"  % "2.5.5")
 addSbtPlugin("org.scoverage" % "sbt-scoverage" % "2.2.2")
 

@@ -1,7 +1,7 @@
 package refined4s.modules.doobie.derivation.generic
 
 import cats.*
-import doobie.{Get, Put}
+import org.typelevel.doobie.{Get, Put}
 import refined4s.{Coercible, RefinedCtor}
 
 /** @author Kevin Lee

@@ -1,7 +1,7 @@
 package refined4s.modules.doobie.derivation.types
 
 import cats.Show
-import doobie.{Get, Put}
+import org.typelevel.doobie.{Get, Put}
 import refined4s.types.network.*
 
 /** @author Kevin Lee

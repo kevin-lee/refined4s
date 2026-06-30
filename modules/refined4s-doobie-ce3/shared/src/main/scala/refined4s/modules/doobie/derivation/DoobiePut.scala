@@ -1,6 +1,6 @@
 package refined4s.modules.doobie.derivation
 
-import doobie.Put
+import org.typelevel.doobie.Put
 import refined4s.NewtypeBase
 
 /** @author Kevin Lee
