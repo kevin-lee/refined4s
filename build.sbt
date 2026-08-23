@@ -1,13 +1,8 @@
-import just.semver.SemVer
 import sbtcrossproject.CrossProject
-import extras.scala.io.syntax.color._
 
 ThisBuild / scalaVersion := props.ProjectScalaVersion
 ThisBuild / organization := props.Org
 ThisBuild / organizationName := "Kevin's Code"
-
-ThisBuild / testFrameworks ~=
-  (frameworks => (TestFramework("hedgehog.sbt.Framework") +: frameworks).distinct)
 
 ThisBuild / developers := List(
   Developer(
@@ -35,16 +30,15 @@ ThisBuild / scalafixConfig := (
     ((ThisBuild / baseDirectory).value / ".scalafix-scala2.conf").some
 )
 
-
 //ThisBuild / scalaVersion := scalaVersion.value
 ThisBuild / semanticdbEnabled := true
 ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
 scalacOptions += (
-      if (scalaVersion.value.startsWith("3."))
-        "-Xsemanticdb"
-      else
-        "-Yrangepos"
-    )
+  if (scalaVersion.value.startsWith("3."))
+    "-Xsemanticdb"
+  else
+    "-Yrangepos"
+)
 
 ThisBuild / scalafixDependencies ++= List(
   "com.github.xuwei-k" %% "scalafix-rules" % "0.6.28"
@@ -91,8 +85,8 @@ lazy val core       = module("core", crossProject(JVMPlatform, JSPlatform, Nativ
     scalacOptions ++= List("-Xprint-suspension"),
     libraryDependencies ++= List(
       libs.orphanCats.value,
-      libs.cats.value       % Optional,
-      libs.extrasCore.value % Test,
+      libs.cats.value % Optional,
+      libs.tests.extrasCore.value,
     ),
   )
 lazy val coreJvm    = core
@@ -148,7 +142,7 @@ lazy val cats       = module("cats", crossProject(JVMPlatform, JSPlatform, Nativ
   .settings(
     libraryDependencies ++= List(
       libs.cats.value,
-      libs.extrasCore.value % Test,
+      libs.tests.extrasCore.value,
     )
   )
   .dependsOn(
@@ -170,10 +164,10 @@ lazy val circe       = module("circe", crossProject(JVMPlatform, JSPlatform, Nat
   .settings(
     libraryDependencies ++= List(
       libs.circeCore.value,
-      libs.circeParser.value         % Test,
-      libs.circeLiteral.value        % Test,
-      libs.extrasCore.value          % Test,
-      libs.extrasHedgehogCirce.value % Test,
+      libs.tests.circeParser.value,
+      libs.tests.circeLiteral.value,
+      libs.tests.extrasCore.value,
+      libs.tests.extrasHedgehogCirce.value,
     )
   )
   .dependsOn(
@@ -196,8 +190,8 @@ lazy val pureconfig    = module("pureconfig", crossProject(JVMPlatform))
   .settings(
     libraryDependencies ++= List(
       libs.pureconfigCore,
-      libs.cats.value       % Test,
-      libs.extrasCore.value % Test,
+      libs.cats.value % Test,
+      libs.tests.extrasCore.value,
     )
   )
   .dependsOn(
@@ -210,11 +204,11 @@ lazy val doobieCe2    = module("doobie-ce2", crossProject(JVMPlatform))
   .settings(
     libraryDependencies ++= List(
       libs.doobieCoreCe2,
-      libs.embeddedPostgres           % Test,
-      libs.effectieCe2.value          % Test,
-      libs.extrasDoobieToolsCe2.value % Test,
-      libs.logback                    % Test,
-//      libs.kittens              % Test,
+      libs.tests.embeddedPostgres,
+      libs.tests.effectieCe2.value,
+      libs.tests.extrasDoobieToolsCe2.value,
+      libs.tests.logback,
+//      libs.tests.kittens,
     )
   )
   .dependsOn(
@@ -229,11 +223,11 @@ lazy val doobieCe3    = module("doobie-ce3", crossProject(JVMPlatform))
     libraryDependencies ++= List(
       libs.doobieFreeCe3,
       libs.doobieCoreCe3,
-      libs.embeddedPostgres           % Test,
-      libs.effectieCe3.value          % Test,
-      libs.extrasDoobieToolsCe3.value % Test,
-      libs.logback                    % Test,
-//      libs.kittens              % Test,
+      libs.tests.embeddedPostgres,
+      libs.tests.effectieCe3.value,
+      libs.tests.extrasDoobieToolsCe3.value,
+      libs.tests.logback,
+//      libs.tests.kittens,
     )
   )
   .dependsOn(
@@ -377,7 +371,7 @@ lazy val props =
     val HedgehogVersion      = "0.13.1"
     val HedgehogExtraVersion = "0.21.0"
 
-    val ExtrasVersion = "0.55.0"
+    val ExtrasVersion = "0.56.0"
 
     val CatsVersion = "2.13.0"
 
@@ -391,9 +385,9 @@ lazy val props =
 
     val EmbeddedPostgresVersion = "2.2.0"
 
-    val EffectieVersion = "2.4.0"
+    val EffectieVersion = "2.5.0"
 
-    val LogbackVersion = "1.5.6"
+    val LogbackVersion = "1.5.13"
 
     val OrphanVersion = "0.7.0"
 
@@ -415,19 +409,11 @@ lazy val libs = new {
 
   lazy val orphanCats = Def.setting("io.kevinlee" %%% "orphan-cats" % props.OrphanVersion)
 
-  lazy val extrasCore           = Def.setting("io.kevinlee" %%% "extras-core" % props.ExtrasVersion)
-  lazy val extrasHedgehogCirce  = Def.setting("io.kevinlee" %%% "extras-hedgehog-circe" % props.ExtrasVersion)
-  lazy val extrasDoobieToolsCe2 = Def.setting("io.kevinlee" %%% "extras-doobie-tools-ce2" % props.ExtrasVersion)
-  lazy val extrasDoobieToolsCe3 = Def.setting("io.kevinlee" %%% "extras-doobie-tools-ce3" % props.ExtrasVersion)
-  lazy val extrasRender         = Def.setting("io.kevinlee" %%% "extras-render" % props.ExtrasVersion)
+  lazy val extrasRender = Def.setting("io.kevinlee" %%% "extras-render" % props.ExtrasVersion)
 
   lazy val cats = Def.setting("org.typelevel" %%% "cats-core" % props.CatsVersion)
 
-  lazy val kittens = Def.setting("org.typelevel" %%% "kittens" % props.KittensVersion)
-
-  lazy val circeCore    = Def.setting("io.circe" %%% "circe-core" % props.CirceVersion)
-  lazy val circeParser  = Def.setting("io.circe" %%% "circe-parser" % props.CirceVersion)
-  lazy val circeLiteral = Def.setting("io.circe" %%% "circe-literal" % props.CirceVersion)
+  lazy val circeCore = Def.setting("io.circe" %%% "circe-core" % props.CirceVersion)
 
   lazy val pureconfigCore    = "com.github.pureconfig" %% "pureconfig-core"    % props.PureconfigVersion
   lazy val pureconfigGeneric = "com.github.pureconfig" %% "pureconfig-generic" % props.PureconfigVersion
@@ -436,15 +422,6 @@ lazy val libs = new {
 
   lazy val doobieFreeCe3 = "org.typelevel" %% "doobie-free" % props.DoobieCe3Version
   lazy val doobieCoreCe3 = "org.typelevel" %% "doobie-core" % props.DoobieCe3Version
-
-  lazy val embeddedPostgres = "io.zonky.test" % "embedded-postgres" % props.EmbeddedPostgresVersion
-
-  lazy val effectieCore   = Def.setting("io.kevinlee" %%% "effectie-core" % props.EffectieVersion)
-  lazy val effectieSyntax = Def.setting("io.kevinlee" %%% "effectie-syntax" % props.EffectieVersion)
-  lazy val effectieCe2    = Def.setting("io.kevinlee" %%% "effectie-cats-effect2" % props.EffectieVersion)
-  lazy val effectieCe3    = Def.setting("io.kevinlee" %%% "effectie-cats-effect3" % props.EffectieVersion)
-
-  lazy val logback = "ch.qos.logback" % "logback-classic" % props.LogbackVersion
 
   lazy val tapirCore = Def.setting("com.softwaremill.sttp.tapir" %%% "tapir-core" % props.TapirVersion)
 
@@ -466,6 +443,23 @@ lazy val libs = new {
     lazy val hedgehogExtraCore = Def.setting("io.kevinlee" %%% "hedgehog-extra-core" % props.HedgehogExtraVersion % Test)
 
     lazy val hedgehogExtraRefined4s = Def.setting("io.kevinlee" %%% "hedgehog-extra-refined4s" % props.HedgehogExtraVersion % Test)
+
+    lazy val extrasCore           = Def.setting("io.kevinlee" %%% "extras-core" % props.ExtrasVersion % Test)
+    lazy val extrasDoobieToolsCe2 = Def.setting("io.kevinlee" %%% "extras-doobie-tools-ce2" % props.ExtrasVersion % Test)
+    lazy val extrasDoobieToolsCe3 = Def.setting("io.kevinlee" %%% "extras-doobie-tools-ce3" % props.ExtrasVersion % Test)
+    lazy val extrasHedgehogCirce  = Def.setting("io.kevinlee" %%% "extras-hedgehog-circe" % props.ExtrasVersion % Test)
+
+    lazy val effectieCe2 = Def.setting("io.kevinlee" %%% "effectie-cats-effect2" % props.EffectieVersion % Test)
+    lazy val effectieCe3 = Def.setting("io.kevinlee" %%% "effectie-cats-effect3" % props.EffectieVersion % Test)
+
+    lazy val kittens = Def.setting("org.typelevel" %%% "kittens" % props.KittensVersion % Test)
+
+    lazy val circeParser  = Def.setting("io.circe" %%% "circe-parser" % props.CirceVersion % Test)
+    lazy val circeLiteral = Def.setting("io.circe" %%% "circe-literal" % props.CirceVersion % Test)
+
+    lazy val logback = "ch.qos.logback" % "logback-classic" % props.LogbackVersion % Test
+
+    lazy val embeddedPostgres = "io.zonky.test" % "embedded-postgres" % props.EmbeddedPostgresVersion % Test
 
     lazy val scalaNativeCrypto =
       Def.setting("com.github.lolgab" %%% "scala-native-crypto" % props.ScalaNativeCryptoVersion % Test)

@@ -3,6 +3,7 @@ package refined4s.modules.doobie.derivation.types
 import cats.effect.IO
 import cats.syntax.all.*
 import org.typelevel.doobie.syntax.all.*
+import effectie.instances.ce3.resource.ioUseResource
 import extras.core.syntax.all.*
 import extras.doobie.RunWithDb
 import extras.doobie.ce3.DbTools

@@ -2,16 +2,16 @@ package extras.doobie
 
 import cats.effect.*
 import cats.syntax.all.*
-import org.typelevel.doobie.Fragment
-import org.typelevel.doobie.implicits.*
-import org.typelevel.doobie.util.transactor.Transactor
 import effectie.core.*
-import effectie.resource.Ce3Resource
+import effectie.resource.{ReleasableResource, UseResource}
 import effectie.syntax.all.*
 import extras.tools.*
 import hedgehog.*
 import hedgehog.runner.*
 import io.zonky.test.db.postgres.embedded.EmbeddedPostgres
+import org.typelevel.doobie.Fragment
+import org.typelevel.doobie.implicits.*
+import org.typelevel.doobie.util.transactor.Transactor
 
 import java.nio.file.Files
 
@@ -28,17 +28,17 @@ trait RunWithDb {
   ): Test =
     property(name, stringToProperty(name, portNumber)).withTests(count = 1).noShrinking
 
-  def withDb[F[*]: Fx: Async](
+  def withDb[F[*]: Fx: Async: UseResource](
     testName: String,
     portNumber: Int,
     createSchemaFragment: Fragment,
     createTableFragment: Fragment,
   )(test: Transactor[F] => F[Result]): F[Result] = {
-    Ce3Resource
+    ReleasableResource
       .fromAutoCloseable(effectOf(AutoDeletingFile(Files.createTempDirectory("pg-test").toFile)))
       .use { autoDeletingWorkingDir =>
         val workingDir = autoDeletingWorkingDir.file
-        Ce3Resource
+        ReleasableResource
           .fromAutoCloseable(
             effectOf(
               EmbeddedPostgres
