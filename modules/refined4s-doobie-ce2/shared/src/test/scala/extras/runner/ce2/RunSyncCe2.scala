@@ -1,6 +1,7 @@
 package extras.runner.ce2
 
 import cats.effect.IO
+import effectie.resource.UseResource
 import extras.runner.RunSync
 
 /** Copied from [extras](https://github.com/kevin-lee/extras/tree/d7d64a7276fc2041463323109ee7dcd3c2bd2b69/modules/extras-doobie-tools-ce2/shared/src/test/scala/extras)
@@ -15,4 +16,6 @@ trait RunSyncCe2 {
   given RunSyncIo: RunSync[IO] with {
     override def runSync[A](fa: IO[A]): A = fa.unsafeRunSync()
   }
+
+  given UseResourceIo: UseResource[IO] = effectie.instances.ce2.resource.ioUseResource
 }

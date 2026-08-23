@@ -6,7 +6,7 @@ import doobie.Fragment
 import doobie.implicits.*
 import doobie.util.transactor.Transactor
 import effectie.core.*
-import effectie.resource.Ce2Resource
+import effectie.resource.{ReleasableResource, UseResource}
 import effectie.syntax.all.*
 import extras.runner.RunSync
 import extras.tools.*
@@ -29,18 +29,18 @@ trait RunWithDb {
   ): Test =
     property(name, stringToProperty(name, portNumber)).withTests(count = 1).noShrinking
 
-  def withDb[F[*]: Fx: Async: ContextShift: RunSync](
+  def withDb[F[*]: Fx: Async: ContextShift: RunSync: UseResource](
     testName: String,
     portNumber: Int,
     createSchemaFragment: Fragment,
     createTableFragment: Fragment,
   )(test: Transactor[F] => F[Result]): Result =
     RunSync[F].runSync(
-      Ce2Resource
+      ReleasableResource
         .fromAutoCloseable(effectOf(AutoDeletingFile(Files.createTempDirectory("pg-test").toFile)))
         .use { autoDeletingWorkingDir =>
           val workingDir = autoDeletingWorkingDir.file
-          Ce2Resource
+          ReleasableResource
             .fromAutoCloseable(
               effectOf(
                 EmbeddedPostgres
