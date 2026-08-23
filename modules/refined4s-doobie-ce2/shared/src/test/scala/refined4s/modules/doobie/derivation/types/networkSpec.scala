@@ -78,7 +78,6 @@ trait networkSpec extends RunSyncCe2, RunWithDb {
         )
       """,
     ) { transactor =>
-
       val uri = Uri.unsafeFrom(uriString)
 
       val expectedFetchBefore = none[Uri]
@@ -130,7 +129,6 @@ trait networkSpec extends RunSyncCe2, RunWithDb {
         )
       """,
     ) { transactor =>
-
       val url = Url.unsafeFrom(urlString)
 
       val expectedFetchBefore = none[Url]
@@ -182,7 +180,6 @@ trait networkSpec extends RunSyncCe2, RunWithDb {
         )
       """,
     ) { transactor =>
-
       val expected = PortNumber.unsafeFrom(portNumber)
 
       val expectedFetchBefore = none[PortNumber]
@@ -233,7 +230,6 @@ trait networkSpec extends RunSyncCe2, RunWithDb {
         )
       """,
     ) { transactor =>
-
       val expected = SystemPortNumber.unsafeFrom(systemPortNumber)
 
       val expectedFetchBefore = none[SystemPortNumber]
@@ -284,7 +280,6 @@ trait networkSpec extends RunSyncCe2, RunWithDb {
         )
       """,
     ) { transactor =>
-
       val expected = NonSystemPortNumber.unsafeFrom(nonSystemPortNumber)
 
       val expectedFetchBefore = none[NonSystemPortNumber]
@@ -335,7 +330,6 @@ trait networkSpec extends RunSyncCe2, RunWithDb {
         )
       """,
     ) { transactor =>
-
       val expected = UserPortNumber.unsafeFrom(userPortNumber)
 
       val expectedFetchBefore = none[UserPortNumber]
@@ -386,7 +380,6 @@ trait networkSpec extends RunSyncCe2, RunWithDb {
         )
       """,
     ) { transactor =>
-
       val expected = DynamicPortNumber.unsafeFrom(dynamicPortNumber)
 
       val expectedFetchBefore = none[DynamicPortNumber]

@@ -2531,7 +2531,7 @@ object autoSpec extends Properties {
                                      or you may be able to rename the file .properties rather than .conf),Some(ConfigOrigin(String))))
                                      ```
                                      It happens to '\t' (tab), '\n' (newline), '\r' (control character 0xd), '\b' (control character 0x8), and possibly more.
-                                 */
+                                    */
                                    Gen.choice1(
                                      Gen.char(32, 32),
                                      Gen.char(8192, 8198),

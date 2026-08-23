@@ -60,7 +60,6 @@ trait stringsSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = NonEmptyString.unsafeFrom(s)
 
         val expectedFetchBefore = none[NonEmptyString]
@@ -125,7 +124,6 @@ trait stringsSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = NonBlankString.unsafeFrom(s)
 
         val expectedFetchBefore = none[NonBlankString]
@@ -187,7 +185,6 @@ trait stringsSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = Uuid(uuid)
 
         val expectedFetchBefore = none[Uuid]

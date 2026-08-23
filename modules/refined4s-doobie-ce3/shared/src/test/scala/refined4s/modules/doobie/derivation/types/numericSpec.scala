@@ -119,7 +119,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
           )
         """,
       ) { transactor =>
-
         val expected = NegInt.unsafeFrom(n)
 
         val expectedFetchBefore = none[NegInt]
@@ -171,7 +170,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
           )
         """,
       ) { transactor =>
-
         val expected = NonNegInt.unsafeFrom(n)
 
         val expectedFetchBefore = none[NonNegInt]
@@ -224,7 +222,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
           )
         """,
       ) { transactor =>
-
         val expected = PosInt.unsafeFrom(n)
 
         val expectedFetchBefore = none[PosInt]
@@ -276,7 +273,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
           )
         """,
       ) { transactor =>
-
         val expected = NonPosInt.unsafeFrom(n)
 
         val expectedFetchBefore = none[NonPosInt]
@@ -329,7 +325,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
           )
         """,
       ) { transactor =>
-
         val expected = NegLong.unsafeFrom(n)
 
         val expectedFetchBefore = none[NegLong]
@@ -382,7 +377,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
           )
         """,
       ) { transactor =>
-
         val expected = NonNegLong.unsafeFrom(n)
 
         val expectedFetchBefore = none[NonNegLong]
@@ -435,7 +429,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
           )
         """,
       ) { transactor =>
-
         val expected = PosLong.unsafeFrom(n)
 
         val expectedFetchBefore = none[PosLong]
@@ -488,7 +481,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
           )
         """,
       ) { transactor =>
-
         val expected = NonPosLong.unsafeFrom(n)
 
         val expectedFetchBefore = none[NonPosLong]
@@ -541,7 +533,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = NegShort.unsafeFrom(n)
 
         val expectedFetchBefore = none[NegShort]
@@ -594,7 +585,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = NonNegShort.unsafeFrom(n)
 
         val expectedFetchBefore = none[NonNegShort]
@@ -647,7 +637,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = PosShort.unsafeFrom(n)
 
         val expectedFetchBefore = none[PosShort]
@@ -700,7 +689,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = NonPosShort.unsafeFrom(n)
 
         val expectedFetchBefore = none[NonPosShort]
@@ -753,7 +741,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = NegByte.unsafeFrom(n)
 
         val expectedFetchBefore = none[NegByte]
@@ -806,7 +793,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = NonNegByte.unsafeFrom(n)
 
         val expectedFetchBefore = none[NonNegByte]
@@ -859,7 +845,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = PosByte.unsafeFrom(n)
 
         val expectedFetchBefore = none[PosByte]
@@ -912,7 +897,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = NonPosByte.unsafeFrom(n)
 
         val expectedFetchBefore = none[NonPosByte]
@@ -965,7 +949,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = NegFloat.unsafeFrom(n)
 
         val expectedFetchBefore = none[NegFloat]
@@ -1018,7 +1001,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = NonNegFloat.unsafeFrom(n)
 
         val expectedFetchBefore = none[NonNegFloat]
@@ -1071,7 +1053,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = PosFloat.unsafeFrom(n)
 
         val expectedFetchBefore = none[PosFloat]
@@ -1124,7 +1105,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = NonPosFloat.unsafeFrom(n)
 
         val expectedFetchBefore = none[NonPosFloat]
@@ -1177,7 +1157,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = NegDouble.unsafeFrom(n)
 
         val expectedFetchBefore = none[NegDouble]
@@ -1230,7 +1209,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = NonNegDouble.unsafeFrom(n)
 
         val expectedFetchBefore = none[NonNegDouble]
@@ -1283,7 +1261,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = PosDouble.unsafeFrom(n)
 
         val expectedFetchBefore = none[PosDouble]
@@ -1336,7 +1313,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = NonPosDouble.unsafeFrom(n)
 
         val expectedFetchBefore = none[NonPosDouble]
@@ -1389,7 +1365,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = NegBigInt.unsafeFrom(n)
 
         val expectedFetchBefore = none[NegBigInt]
@@ -1442,7 +1417,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = NonNegBigInt.unsafeFrom(n)
 
         val expectedFetchBefore = none[NonNegBigInt]
@@ -1495,7 +1469,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = PosBigInt.unsafeFrom(n)
 
         val expectedFetchBefore = none[PosBigInt]
@@ -1548,7 +1521,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = NonPosBigInt.unsafeFrom(n)
 
         val expectedFetchBefore = none[NonPosBigInt]
@@ -1601,7 +1573,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = NegBigDecimal.unsafeFrom(n)
 
         val expectedFetchBefore = none[NegBigDecimal]
@@ -1654,7 +1625,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = NonNegBigDecimal.unsafeFrom(n)
 
         val expectedFetchBefore = none[NonNegBigDecimal]
@@ -1707,7 +1677,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = PosBigDecimal.unsafeFrom(n)
 
         val expectedFetchBefore = none[PosBigDecimal]
@@ -1760,7 +1729,6 @@ trait numericSpec extends CatsEffectRunner, RunWithDb {
         )
       """,
       ) { transactor =>
-
         val expected = NonPosBigDecimal.unsafeFrom(n)
 
         val expectedFetchBefore = none[NonPosBigDecimal]
