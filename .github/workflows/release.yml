@@ -126,6 +126,35 @@ jobs:
             +packagedArtifacts \
             ci-release
 
+  generate-release-notes:
+    needs: publish
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v5
+        with:
+          java-version: ${{ env.GH_JAVA_VERSION }}
+          distribution: ${{ env.GH_JAVA_DISTRIBUTION }}
+          cache: sbt
+      - uses: sbt/setup-sbt@v1
+
+      - name: sbt Append Generated Release Notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SBT_OPTS: ${{ env.GH_JVM_OPTS }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          sbt \
+            "devOopsReleaseFromTag ${TAG_NAME}"
+
 
   publish-snapshot:
     needs: build
