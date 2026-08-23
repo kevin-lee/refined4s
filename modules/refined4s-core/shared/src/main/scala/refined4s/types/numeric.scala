@@ -235,7 +235,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NegInt, Int, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Int]])
     }.asInstanceOf[F[NegInt]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NegIntTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NegIntTypeClassInstance2 extends NegIntTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNegIntOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Int]): F[NegInt] = {
+      internalDef.contraCoercible[cats.Order, NegInt, Int, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Int]])
+    }.asInstanceOf[F[NegInt]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NegIntTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNegIntShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[NegInt] = {
       internalDef.contraCoercible[cats.Show, NegInt, Int, cats.Contravariant](showActual.asInstanceOf[cats.Show[Int]])
@@ -261,7 +267,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NonNegInt, Int, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Int]])
     }.asInstanceOf[F[NonNegInt]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonNegIntTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NonNegIntTypeClassInstance2 extends NonNegIntTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonNegIntOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Int]): F[NonNegInt] = {
+      internalDef.contraCoercible[cats.Order, NonNegInt, Int, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Int]])
+    }.asInstanceOf[F[NonNegInt]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NonNegIntTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonNegIntShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[NonNegInt] = {
       internalDef.contraCoercible[cats.Show, NonNegInt, Int, cats.Contravariant](showActual.asInstanceOf[cats.Show[Int]])
@@ -287,7 +299,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, PosInt, Int, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Int]])
     }.asInstanceOf[F[PosInt]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait PosIntTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait PosIntTypeClassInstance2 extends PosIntTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedPosIntOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Int]): F[PosInt] = {
+      internalDef.contraCoercible[cats.Order, PosInt, Int, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Int]])
+    }.asInstanceOf[F[PosInt]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait PosIntTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedPosIntShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[PosInt] = {
       internalDef.contraCoercible[cats.Show, PosInt, Int, cats.Contravariant](showActual.asInstanceOf[cats.Show[Int]])
@@ -313,7 +331,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NonPosInt, Int, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Int]])
     }.asInstanceOf[F[NonPosInt]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonPosIntTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NonPosIntTypeClassInstance2 extends NonPosIntTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonPosIntOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Int]): F[NonPosInt] = {
+      internalDef.contraCoercible[cats.Order, NonPosInt, Int, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Int]])
+    }.asInstanceOf[F[NonPosInt]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NonPosIntTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonPosIntShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[NonPosInt] = {
       internalDef.contraCoercible[cats.Show, NonPosInt, Int, cats.Contravariant](showActual.asInstanceOf[cats.Show[Int]])
@@ -339,7 +363,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NegLong, Long, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Long]])
     }.asInstanceOf[F[NegLong]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NegLongTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NegLongTypeClassInstance2 extends NegLongTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNegLongOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Long]): F[NegLong] = {
+      internalDef.contraCoercible[cats.Order, NegLong, Long, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Long]])
+    }.asInstanceOf[F[NegLong]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NegLongTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNegLongShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Long]): F[NegLong] = {
       internalDef.contraCoercible[cats.Show, NegLong, Long, cats.Contravariant](showActual.asInstanceOf[cats.Show[Long]])
@@ -365,7 +395,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NonNegLong, Long, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Long]])
     }.asInstanceOf[F[NonNegLong]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonNegLongTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NonNegLongTypeClassInstance2 extends NonNegLongTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonNegLongOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Long]): F[NonNegLong] = {
+      internalDef.contraCoercible[cats.Order, NonNegLong, Long, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Long]])
+    }.asInstanceOf[F[NonNegLong]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NonNegLongTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonNegLongShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Long]): F[NonNegLong] = {
       internalDef.contraCoercible[cats.Show, NonNegLong, Long, cats.Contravariant](showActual.asInstanceOf[cats.Show[Long]])
@@ -391,7 +427,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, PosLong, Long, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Long]])
     }.asInstanceOf[F[PosLong]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait PosLongTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait PosLongTypeClassInstance2 extends PosLongTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedPosLongOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Long]): F[PosLong] = {
+      internalDef.contraCoercible[cats.Order, PosLong, Long, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Long]])
+    }.asInstanceOf[F[PosLong]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait PosLongTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedPosLongShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Long]): F[PosLong] = {
       internalDef.contraCoercible[cats.Show, PosLong, Long, cats.Contravariant](showActual.asInstanceOf[cats.Show[Long]])
@@ -417,7 +459,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NonPosLong, Long, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Long]])
     }.asInstanceOf[F[NonPosLong]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonPosLongTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NonPosLongTypeClassInstance2 extends NonPosLongTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonPosLongOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Long]): F[NonPosLong] = {
+      internalDef.contraCoercible[cats.Order, NonPosLong, Long, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Long]])
+    }.asInstanceOf[F[NonPosLong]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NonPosLongTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonPosLongShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Long]): F[NonPosLong] = {
       internalDef.contraCoercible[cats.Show, NonPosLong, Long, cats.Contravariant](showActual.asInstanceOf[cats.Show[Long]])
@@ -443,7 +491,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NegShort, Short, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Short]])
     }.asInstanceOf[F[NegShort]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NegShortTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NegShortTypeClassInstance2 extends NegShortTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNegShortOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Short]): F[NegShort] = {
+      internalDef.contraCoercible[cats.Order, NegShort, Short, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Short]])
+    }.asInstanceOf[F[NegShort]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NegShortTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNegShortShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Short]): F[NegShort] = {
       internalDef.contraCoercible[cats.Show, NegShort, Short, cats.Contravariant](showActual.asInstanceOf[cats.Show[Short]])
@@ -469,7 +523,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NonNegShort, Short, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Short]])
     }.asInstanceOf[F[NonNegShort]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonNegShortTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NonNegShortTypeClassInstance2 extends NonNegShortTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonNegShortOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Short]): F[NonNegShort] = {
+      internalDef.contraCoercible[cats.Order, NonNegShort, Short, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Short]])
+    }.asInstanceOf[F[NonNegShort]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NonNegShortTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonNegShortShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Short]): F[NonNegShort] = {
       internalDef.contraCoercible[cats.Show, NonNegShort, Short, cats.Contravariant](showActual.asInstanceOf[cats.Show[Short]])
@@ -495,7 +555,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, PosShort, Short, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Short]])
     }.asInstanceOf[F[PosShort]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait PosShortTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait PosShortTypeClassInstance2 extends PosShortTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedPosShortOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Short]): F[PosShort] = {
+      internalDef.contraCoercible[cats.Order, PosShort, Short, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Short]])
+    }.asInstanceOf[F[PosShort]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait PosShortTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedPosShortShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Short]): F[PosShort] = {
       internalDef.contraCoercible[cats.Show, PosShort, Short, cats.Contravariant](showActual.asInstanceOf[cats.Show[Short]])
@@ -521,7 +587,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NonPosShort, Short, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Short]])
     }.asInstanceOf[F[NonPosShort]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonPosShortTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NonPosShortTypeClassInstance2 extends NonPosShortTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonPosShortOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Short]): F[NonPosShort] = {
+      internalDef.contraCoercible[cats.Order, NonPosShort, Short, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Short]])
+    }.asInstanceOf[F[NonPosShort]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NonPosShortTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonPosShortShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Short]): F[NonPosShort] = {
       internalDef.contraCoercible[cats.Show, NonPosShort, Short, cats.Contravariant](showActual.asInstanceOf[cats.Show[Short]])
@@ -547,7 +619,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NegByte, Byte, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Byte]])
     }.asInstanceOf[F[NegByte]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NegByteTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NegByteTypeClassInstance2 extends NegByteTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNegByteOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Byte]): F[NegByte] = {
+      internalDef.contraCoercible[cats.Order, NegByte, Byte, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Byte]])
+    }.asInstanceOf[F[NegByte]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NegByteTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNegByteShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Byte]): F[NegByte] = {
       internalDef.contraCoercible[cats.Show, NegByte, Byte, cats.Contravariant](showActual.asInstanceOf[cats.Show[Byte]])
@@ -573,7 +651,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NonNegByte, Byte, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Byte]])
     }.asInstanceOf[F[NonNegByte]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonNegByteTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NonNegByteTypeClassInstance2 extends NonNegByteTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonNegByteOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Byte]): F[NonNegByte] = {
+      internalDef.contraCoercible[cats.Order, NonNegByte, Byte, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Byte]])
+    }.asInstanceOf[F[NonNegByte]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NonNegByteTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonNegByteShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Byte]): F[NonNegByte] = {
       internalDef.contraCoercible[cats.Show, NonNegByte, Byte, cats.Contravariant](showActual.asInstanceOf[cats.Show[Byte]])
@@ -599,7 +683,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, PosByte, Byte, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Byte]])
     }.asInstanceOf[F[PosByte]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait PosByteTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait PosByteTypeClassInstance2 extends PosByteTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedPosByteOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Byte]): F[PosByte] = {
+      internalDef.contraCoercible[cats.Order, PosByte, Byte, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Byte]])
+    }.asInstanceOf[F[PosByte]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait PosByteTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedPosByteShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Byte]): F[PosByte] = {
       internalDef.contraCoercible[cats.Show, PosByte, Byte, cats.Contravariant](showActual.asInstanceOf[cats.Show[Byte]])
@@ -625,7 +715,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NonPosByte, Byte, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Byte]])
     }.asInstanceOf[F[NonPosByte]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonPosByteTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NonPosByteTypeClassInstance2 extends NonPosByteTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonPosByteOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Byte]): F[NonPosByte] = {
+      internalDef.contraCoercible[cats.Order, NonPosByte, Byte, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Byte]])
+    }.asInstanceOf[F[NonPosByte]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NonPosByteTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonPosByteShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Byte]): F[NonPosByte] = {
       internalDef.contraCoercible[cats.Show, NonPosByte, Byte, cats.Contravariant](showActual.asInstanceOf[cats.Show[Byte]])
@@ -651,7 +747,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NegFloat, Float, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Float]])
     }.asInstanceOf[F[NegFloat]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NegFloatTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NegFloatTypeClassInstance2 extends NegFloatTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNegFloatOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Float]): F[NegFloat] = {
+      internalDef.contraCoercible[cats.Order, NegFloat, Float, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Float]])
+    }.asInstanceOf[F[NegFloat]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NegFloatTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNegFloatShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Float]): F[NegFloat] = {
       internalDef.contraCoercible[cats.Show, NegFloat, Float, cats.Contravariant](showActual.asInstanceOf[cats.Show[Float]])
@@ -677,7 +779,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NonNegFloat, Float, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Float]])
     }.asInstanceOf[F[NonNegFloat]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonNegFloatTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NonNegFloatTypeClassInstance2 extends NonNegFloatTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonNegFloatOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Float]): F[NonNegFloat] = {
+      internalDef.contraCoercible[cats.Order, NonNegFloat, Float, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Float]])
+    }.asInstanceOf[F[NonNegFloat]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NonNegFloatTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonNegFloatShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Float]): F[NonNegFloat] = {
       internalDef.contraCoercible[cats.Show, NonNegFloat, Float, cats.Contravariant](showActual.asInstanceOf[cats.Show[Float]])
@@ -703,7 +811,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, PosFloat, Float, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Float]])
     }.asInstanceOf[F[PosFloat]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait PosFloatTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait PosFloatTypeClassInstance2 extends PosFloatTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedPosFloatOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Float]): F[PosFloat] = {
+      internalDef.contraCoercible[cats.Order, PosFloat, Float, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Float]])
+    }.asInstanceOf[F[PosFloat]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait PosFloatTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedPosFloatShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Float]): F[PosFloat] = {
       internalDef.contraCoercible[cats.Show, PosFloat, Float, cats.Contravariant](showActual.asInstanceOf[cats.Show[Float]])
@@ -729,7 +843,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NonPosFloat, Float, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Float]])
     }.asInstanceOf[F[NonPosFloat]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonPosFloatTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NonPosFloatTypeClassInstance2 extends NonPosFloatTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonPosFloatOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Float]): F[NonPosFloat] = {
+      internalDef.contraCoercible[cats.Order, NonPosFloat, Float, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Float]])
+    }.asInstanceOf[F[NonPosFloat]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NonPosFloatTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonPosFloatShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Float]): F[NonPosFloat] = {
       internalDef.contraCoercible[cats.Show, NonPosFloat, Float, cats.Contravariant](showActual.asInstanceOf[cats.Show[Float]])
@@ -755,7 +875,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NegDouble, Double, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Double]])
     }.asInstanceOf[F[NegDouble]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NegDoubleTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NegDoubleTypeClassInstance2 extends NegDoubleTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNegDoubleOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Double]): F[NegDouble] = {
+      internalDef.contraCoercible[cats.Order, NegDouble, Double, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Double]])
+    }.asInstanceOf[F[NegDouble]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NegDoubleTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNegDoubleShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Double]): F[NegDouble] = {
       internalDef.contraCoercible[cats.Show, NegDouble, Double, cats.Contravariant](showActual.asInstanceOf[cats.Show[Double]])
@@ -781,7 +907,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NonNegDouble, Double, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Double]])
     }.asInstanceOf[F[NonNegDouble]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonNegDoubleTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NonNegDoubleTypeClassInstance2 extends NonNegDoubleTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonNegDoubleOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Double]): F[NonNegDouble] = {
+      internalDef.contraCoercible[cats.Order, NonNegDouble, Double, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Double]])
+    }.asInstanceOf[F[NonNegDouble]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NonNegDoubleTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonNegDoubleShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Double]): F[NonNegDouble] = {
       internalDef.contraCoercible[cats.Show, NonNegDouble, Double, cats.Contravariant](showActual.asInstanceOf[cats.Show[Double]])
@@ -807,7 +939,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, PosDouble, Double, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Double]])
     }.asInstanceOf[F[PosDouble]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait PosDoubleTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait PosDoubleTypeClassInstance2 extends PosDoubleTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedPosDoubleOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Double]): F[PosDouble] = {
+      internalDef.contraCoercible[cats.Order, PosDouble, Double, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Double]])
+    }.asInstanceOf[F[PosDouble]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait PosDoubleTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedPosDoubleShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Double]): F[PosDouble] = {
       internalDef.contraCoercible[cats.Show, PosDouble, Double, cats.Contravariant](showActual.asInstanceOf[cats.Show[Double]])
@@ -833,7 +971,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NonPosDouble, Double, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Double]])
     }.asInstanceOf[F[NonPosDouble]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonPosDoubleTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NonPosDoubleTypeClassInstance2 extends NonPosDoubleTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonPosDoubleOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Double]): F[NonPosDouble] = {
+      internalDef.contraCoercible[cats.Order, NonPosDouble, Double, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Double]])
+    }.asInstanceOf[F[NonPosDouble]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NonPosDoubleTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonPosDoubleShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Double]): F[NonPosDouble] = {
       internalDef.contraCoercible[cats.Show, NonPosDouble, Double, cats.Contravariant](showActual.asInstanceOf[cats.Show[Double]])
@@ -876,7 +1020,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NegBigInt, BigInt, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[BigInt]])
     }.asInstanceOf[F[NegBigInt]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NegBigIntTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NegBigIntTypeClassInstance2 extends NegBigIntTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNegBigIntOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[BigInt]): F[NegBigInt] = {
+      internalDef.contraCoercible[cats.Order, NegBigInt, BigInt, cats.Contravariant](orderActual.asInstanceOf[cats.Order[BigInt]])
+    }.asInstanceOf[F[NegBigInt]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NegBigIntTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNegBigIntShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[BigInt]): F[NegBigInt] = {
       internalDef.contraCoercible[cats.Show, NegBigInt, BigInt, cats.Contravariant](showActual.asInstanceOf[cats.Show[BigInt]])
@@ -913,7 +1063,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NonNegBigInt, BigInt, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[BigInt]])
     }.asInstanceOf[F[NonNegBigInt]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonNegBigIntTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NonNegBigIntTypeClassInstance2 extends NonNegBigIntTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonNegBigIntOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[BigInt]): F[NonNegBigInt] = {
+      internalDef.contraCoercible[cats.Order, NonNegBigInt, BigInt, cats.Contravariant](orderActual.asInstanceOf[cats.Order[BigInt]])
+    }.asInstanceOf[F[NonNegBigInt]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NonNegBigIntTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonNegBigIntShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[BigInt]): F[NonNegBigInt] = {
       internalDef.contraCoercible[cats.Show, NonNegBigInt, BigInt, cats.Contravariant](showActual.asInstanceOf[cats.Show[BigInt]])
@@ -950,7 +1106,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, PosBigInt, BigInt, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[BigInt]])
     }.asInstanceOf[F[PosBigInt]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait PosBigIntTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait PosBigIntTypeClassInstance2 extends PosBigIntTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedPosBigIntOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[BigInt]): F[PosBigInt] = {
+      internalDef.contraCoercible[cats.Order, PosBigInt, BigInt, cats.Contravariant](orderActual.asInstanceOf[cats.Order[BigInt]])
+    }.asInstanceOf[F[PosBigInt]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait PosBigIntTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedPosBigIntShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[BigInt]): F[PosBigInt] = {
       internalDef.contraCoercible[cats.Show, PosBigInt, BigInt, cats.Contravariant](showActual.asInstanceOf[cats.Show[BigInt]])
@@ -987,7 +1149,13 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NonPosBigInt, BigInt, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[BigInt]])
     }.asInstanceOf[F[NonPosBigInt]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonPosBigIntTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NonPosBigIntTypeClassInstance2 extends NonPosBigIntTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonPosBigIntOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[BigInt]): F[NonPosBigInt] = {
+      internalDef.contraCoercible[cats.Order, NonPosBigInt, BigInt, cats.Contravariant](orderActual.asInstanceOf[cats.Order[BigInt]])
+    }.asInstanceOf[F[NonPosBigInt]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NonPosBigIntTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonPosBigIntShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[BigInt]): F[NonPosBigInt] = {
       internalDef.contraCoercible[cats.Show, NonPosBigInt, BigInt, cats.Contravariant](showActual.asInstanceOf[cats.Show[BigInt]])
@@ -1028,7 +1196,15 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, NegBigDecimal, BigDecimal, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[BigDecimal]])
     }.asInstanceOf[F[NegBigDecimal]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NegBigDecimalTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NegBigDecimalTypeClassInstance2 extends NegBigDecimalTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNegBigDecimalOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[BigDecimal]): F[NegBigDecimal] = {
+      internalDef.contraCoercible[cats.Order, NegBigDecimal, BigDecimal, cats.Contravariant](
+        orderActual.asInstanceOf[cats.Order[BigDecimal]]
+      )
+    }.asInstanceOf[F[NegBigDecimal]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NegBigDecimalTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNegBigDecimalShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[BigDecimal]): F[NegBigDecimal] = {
       internalDef.contraCoercible[cats.Show, NegBigDecimal, BigDecimal, cats.Contravariant](showActual.asInstanceOf[cats.Show[BigDecimal]])
@@ -1071,7 +1247,15 @@ object numeric {
       )
     }.asInstanceOf[F[NonNegBigDecimal]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonNegBigDecimalTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NonNegBigDecimalTypeClassInstance2 extends NonNegBigDecimalTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonNegBigDecimalOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[BigDecimal]): F[NonNegBigDecimal] = {
+      internalDef.contraCoercible[cats.Order, NonNegBigDecimal, BigDecimal, cats.Contravariant](
+        orderActual.asInstanceOf[cats.Order[BigDecimal]]
+      )
+    }.asInstanceOf[F[NonNegBigDecimal]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NonNegBigDecimalTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonNegBigDecimalShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[BigDecimal]): F[NonNegBigDecimal] = {
       internalDef.contraCoercible[cats.Show, NonNegBigDecimal, BigDecimal, cats.Contravariant](
@@ -1114,7 +1298,15 @@ object numeric {
       internalDef.contraCoercible[cats.Hash, PosBigDecimal, BigDecimal, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[BigDecimal]])
     }.asInstanceOf[F[PosBigDecimal]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait PosBigDecimalTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait PosBigDecimalTypeClassInstance2 extends PosBigDecimalTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedPosBigDecimalOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[BigDecimal]): F[PosBigDecimal] = {
+      internalDef.contraCoercible[cats.Order, PosBigDecimal, BigDecimal, cats.Contravariant](
+        orderActual.asInstanceOf[cats.Order[BigDecimal]]
+      )
+    }.asInstanceOf[F[PosBigDecimal]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait PosBigDecimalTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedPosBigDecimalShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[BigDecimal]): F[PosBigDecimal] = {
       internalDef.contraCoercible[cats.Show, PosBigDecimal, BigDecimal, cats.Contravariant](showActual.asInstanceOf[cats.Show[BigDecimal]])
@@ -1157,7 +1349,15 @@ object numeric {
       )
     }.asInstanceOf[F[NonPosBigDecimal]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonPosBigDecimalTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NonPosBigDecimalTypeClassInstance2 extends NonPosBigDecimalTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonPosBigDecimalOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[BigDecimal]): F[NonPosBigDecimal] = {
+      internalDef.contraCoercible[cats.Order, NonPosBigDecimal, BigDecimal, cats.Contravariant](
+        orderActual.asInstanceOf[cats.Order[BigDecimal]]
+      )
+    }.asInstanceOf[F[NonPosBigDecimal]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NonPosBigDecimalTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonPosBigDecimalShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[BigDecimal]): F[NonPosBigDecimal] = {
       internalDef.contraCoercible[cats.Show, NonPosBigDecimal, BigDecimal, cats.Contravariant](

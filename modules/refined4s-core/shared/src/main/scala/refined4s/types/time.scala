@@ -47,7 +47,13 @@ object time {
       internalDef.contraCoercible[cats.Hash, Month, Int, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Int]])
     }.asInstanceOf[F[Month]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait MonthTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait MonthTypeClassInstance2 extends MonthTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedMonthOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Int]): F[Month] = {
+      internalDef.contraCoercible[cats.Order, Month, Int, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Int]])
+    }.asInstanceOf[F[Month]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait MonthTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedMonthShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[Month] = {
       internalDef.contraCoercible[cats.Show, Month, Int, cats.Contravariant](showActual.asInstanceOf[cats.Show[Int]])
@@ -73,7 +79,13 @@ object time {
       internalDef.contraCoercible[cats.Hash, Day, Int, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Int]])
     }.asInstanceOf[F[Day]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait DayTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait DayTypeClassInstance2 extends DayTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedDayOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Int]): F[Day] = {
+      internalDef.contraCoercible[cats.Order, Day, Int, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Int]])
+    }.asInstanceOf[F[Day]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait DayTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedDayShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[Day] = {
       internalDef.contraCoercible[cats.Show, Day, Int, cats.Contravariant](showActual.asInstanceOf[cats.Show[Int]])
@@ -99,7 +111,13 @@ object time {
       internalDef.contraCoercible[cats.Hash, Hour, Int, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Int]])
     }.asInstanceOf[F[Hour]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait HourTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait HourTypeClassInstance2 extends HourTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedHourOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Int]): F[Hour] = {
+      internalDef.contraCoercible[cats.Order, Hour, Int, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Int]])
+    }.asInstanceOf[F[Hour]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait HourTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedHourShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[Hour] = {
       internalDef.contraCoercible[cats.Show, Hour, Int, cats.Contravariant](showActual.asInstanceOf[cats.Show[Int]])
@@ -125,7 +143,13 @@ object time {
       internalDef.contraCoercible[cats.Hash, Minute, Int, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Int]])
     }.asInstanceOf[F[Minute]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait MinuteTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait MinuteTypeClassInstance2 extends MinuteTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedMinuteOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Int]): F[Minute] = {
+      internalDef.contraCoercible[cats.Order, Minute, Int, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Int]])
+    }.asInstanceOf[F[Minute]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait MinuteTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedMinuteShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[Minute] = {
       internalDef.contraCoercible[cats.Show, Minute, Int, cats.Contravariant](showActual.asInstanceOf[cats.Show[Int]])
@@ -151,7 +175,13 @@ object time {
       internalDef.contraCoercible[cats.Hash, Second, Int, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Int]])
     }.asInstanceOf[F[Second]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait SecondTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait SecondTypeClassInstance2 extends SecondTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedSecondOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Int]): F[Second] = {
+      internalDef.contraCoercible[cats.Order, Second, Int, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Int]])
+    }.asInstanceOf[F[Second]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait SecondTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedSecondShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[Second] = {
       internalDef.contraCoercible[cats.Show, Second, Int, cats.Contravariant](showActual.asInstanceOf[cats.Show[Int]])
@@ -177,7 +207,13 @@ object time {
       internalDef.contraCoercible[cats.Hash, Millis, Int, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Int]])
     }.asInstanceOf[F[Millis]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait MillisTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait MillisTypeClassInstance2 extends MillisTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedMillisOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Int]): F[Millis] = {
+      internalDef.contraCoercible[cats.Order, Millis, Int, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Int]])
+    }.asInstanceOf[F[Millis]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait MillisTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedMillisShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[Millis] = {
       internalDef.contraCoercible[cats.Show, Millis, Int, cats.Contravariant](showActual.asInstanceOf[cats.Show[Int]])
