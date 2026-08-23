@@ -53,7 +53,6 @@ trait timeSpec extends RunSyncCe2, RunWithDb {
         )
       """,
     ) { transactor =>
-
       val expected = Month.unsafeFrom(portNumber)
 
       val expectedFetchBefore = none[Month]
@@ -103,7 +102,6 @@ trait timeSpec extends RunSyncCe2, RunWithDb {
         )
       """,
     ) { transactor =>
-
       val expected = Day.unsafeFrom(portNumber)
 
       val expectedFetchBefore = none[Day]
@@ -153,7 +151,6 @@ trait timeSpec extends RunSyncCe2, RunWithDb {
         )
       """,
     ) { transactor =>
-
       val expected = Hour.unsafeFrom(portNumber)
 
       val expectedFetchBefore = none[Hour]
@@ -203,7 +200,6 @@ trait timeSpec extends RunSyncCe2, RunWithDb {
         )
       """,
     ) { transactor =>
-
       val expected = Minute.unsafeFrom(portNumber)
 
       val expectedFetchBefore = none[Minute]
@@ -253,7 +249,6 @@ trait timeSpec extends RunSyncCe2, RunWithDb {
         )
       """,
     ) { transactor =>
-
       val expected = Second.unsafeFrom(portNumber)
 
       val expectedFetchBefore = none[Second]
@@ -303,7 +298,6 @@ trait timeSpec extends RunSyncCe2, RunWithDb {
         )
       """,
     ) { transactor =>
-
       val expected = Millis.unsafeFrom(portNumber)
 
       val expectedFetchBefore = none[Millis]

@@ -240,16 +240,16 @@ object stringsSpec extends Properties {
           (shouldFail5
             .matchPattern {
               case List(
-                    scala
-                      .compiletime
-                      .testing
-                      .Error(
-                        "The argument passed to NotAllWhitespaceNonEmptyString.apply must be a string literal.",
-                        _,
-                        _,
-                        _,
-                      )
-                  ) =>
+                     scala
+                       .compiletime
+                       .testing
+                       .Error(
+                         "The argument passed to NotAllWhitespaceNonEmptyString.apply must be a string literal.",
+                         _,
+                         _,
+                         _,
+                       )
+                   ) =>
             })
             .log(
               "Compilation should have been failed but it didn't for NonBlankString(s) (non-literal String). " +
