@@ -15,6 +15,7 @@ object networkWithoutCatsSpec extends Properties {
     def tests: List[Test] = List(
       example("test   Eq[Uri]", testEq),
       example("test Hash[Uri]", testHash),
+      example("test Order[Uri]", testOrder),
       example("test Show[Uri]", testShow),
     )
 
@@ -52,6 +53,23 @@ object networkWithoutCatsSpec extends Properties {
         )
     }
 
+    def testOrder: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingOrder
+
+      val actual = typeCheckErrors(
+        """
+         val _ = refined4s.types.network.Uri.derivedUriOrder
+      """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
     def testShow: Result = {
       import scala.compiletime.testing.typeCheckErrors
       val expected = ExpectedErrorMessages.missingShow
@@ -74,6 +92,7 @@ object networkWithoutCatsSpec extends Properties {
     def tests: List[Test] = List(
       example("test   Eq[Url]", testEq),
       example("test Hash[Url]", testHash),
+      example("test Order[Url]", testOrder),
       example("test Show[Url]", testShow),
     )
 
@@ -111,6 +130,23 @@ object networkWithoutCatsSpec extends Properties {
         )
     }
 
+    def testOrder: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingOrder
+
+      val actual = typeCheckErrors(
+        """
+         val _ = refined4s.types.network.Url.derivedUrlOrder
+      """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
     def testShow: Result = {
       import scala.compiletime.testing.typeCheckErrors
       val expected = ExpectedErrorMessages.missingShow
@@ -133,6 +169,7 @@ object networkWithoutCatsSpec extends Properties {
     def tests: List[Test] = List(
       example("test   Eq[PortNumber]", testEq),
       example("test Hash[PortNumber]", testHash),
+      example("test Order[PortNumber]", testOrder),
       example("test Show[PortNumber]", testShow),
     )
 
@@ -170,6 +207,23 @@ object networkWithoutCatsSpec extends Properties {
         )
     }
 
+    def testOrder: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingOrder
+
+      val actual = typeCheckErrors(
+        """
+         val _ = refined4s.types.network.PortNumber.derivedPortNumberOrder
+      """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
     def testShow: Result = {
       import scala.compiletime.testing.typeCheckErrors
       val expected = ExpectedErrorMessages.missingShow
@@ -192,6 +246,7 @@ object networkWithoutCatsSpec extends Properties {
     def tests: List[Test] = List(
       example("test   Eq[SystemPortNumber]", testEq),
       example("test Hash[SystemPortNumber]", testHash),
+      example("test Order[SystemPortNumber]", testOrder),
       example("test Show[SystemPortNumber]", testShow),
     )
 
@@ -229,6 +284,23 @@ object networkWithoutCatsSpec extends Properties {
         )
     }
 
+    def testOrder: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingOrder
+
+      val actual = typeCheckErrors(
+        """
+         val _ = refined4s.types.network.SystemPortNumber.derivedSystemPortNumberOrder
+      """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
     def testShow: Result = {
       import scala.compiletime.testing.typeCheckErrors
       val expected = ExpectedErrorMessages.missingShow
@@ -251,6 +323,7 @@ object networkWithoutCatsSpec extends Properties {
     def tests: List[Test] = List(
       example("test   Eq[NonSystemPortNumber]", testEq),
       example("test Hash[NonSystemPortNumber]", testHash),
+      example("test Order[NonSystemPortNumber]", testOrder),
       example("test Show[NonSystemPortNumber]", testShow),
     )
 
@@ -288,6 +361,23 @@ object networkWithoutCatsSpec extends Properties {
         )
     }
 
+    def testOrder: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingOrder
+
+      val actual = typeCheckErrors(
+        """
+         val _ = refined4s.types.network.NonSystemPortNumber.derivedNonSystemPortNumberOrder
+      """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
     def testShow: Result = {
       import scala.compiletime.testing.typeCheckErrors
       val expected = ExpectedErrorMessages.missingShow
@@ -310,6 +400,7 @@ object networkWithoutCatsSpec extends Properties {
     def tests: List[Test] = List(
       example("test   Eq[UserPortNumber]", testEq),
       example("test Hash[UserPortNumber]", testHash),
+      example("test Order[UserPortNumber]", testOrder),
       example("test Show[UserPortNumber]", testShow),
     )
 
@@ -347,6 +438,23 @@ object networkWithoutCatsSpec extends Properties {
         )
     }
 
+    def testOrder: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingOrder
+
+      val actual = typeCheckErrors(
+        """
+         val _ = refined4s.types.network.UserPortNumber.derivedUserPortNumberOrder
+      """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
     def testShow: Result = {
       import scala.compiletime.testing.typeCheckErrors
       val expected = ExpectedErrorMessages.missingShow
@@ -369,6 +477,7 @@ object networkWithoutCatsSpec extends Properties {
     def tests: List[Test] = List(
       example("test   Eq[DynamicPortNumber]", testEq),
       example("test Hash[DynamicPortNumber]", testHash),
+      example("test Order[DynamicPortNumber]", testOrder),
       example("test Show[DynamicPortNumber]", testShow),
     )
 
@@ -396,6 +505,23 @@ object networkWithoutCatsSpec extends Properties {
       val actual = typeCheckErrors(
         """
          val _ = refined4s.types.network.DynamicPortNumber.derivedDynamicPortNumberHash
+      """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testOrder: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingOrder
+
+      val actual = typeCheckErrors(
+        """
+         val _ = refined4s.types.network.DynamicPortNumber.derivedDynamicPortNumberOrder
       """
       ).map(_.message).mkString
 

@@ -94,7 +94,13 @@ object network {
       internalDef.contraCoercible[cats.Hash, Uri, String, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[String]])
     }.asInstanceOf[F[Uri]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait UriTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait UriTypeClassInstance2 extends UriTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedUriOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[String]): F[Uri] = {
+      internalDef.contraCoercible[cats.Order, Uri, String, cats.Contravariant](orderActual.asInstanceOf[cats.Order[String]])
+    }.asInstanceOf[F[Uri]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait UriTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedUriShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[String]): F[Uri] = {
       internalDef.contraCoercible[cats.Show, Uri, String, cats.Contravariant](showActual.asInstanceOf[cats.Show[String]])
@@ -123,7 +129,13 @@ object network {
       internalDef.contraCoercible[cats.Hash, PortNumber, Int, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Int]])
     }.asInstanceOf[F[PortNumber]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait PortNumberTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait PortNumberTypeClassInstance2 extends PortNumberTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedPortNumberOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Int]): F[PortNumber] = {
+      internalDef.contraCoercible[cats.Order, PortNumber, Int, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Int]])
+    }.asInstanceOf[F[PortNumber]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait PortNumberTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedPortNumberShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[PortNumber] = {
       internalDef.contraCoercible[cats.Show, PortNumber, Int, cats.Contravariant](showActual.asInstanceOf[cats.Show[Int]])
@@ -152,7 +164,13 @@ object network {
       internalDef.contraCoercible[cats.Hash, SystemPortNumber, Int, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Int]])
     }.asInstanceOf[F[SystemPortNumber]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait SystemPortNumberTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait SystemPortNumberTypeClassInstance2 extends SystemPortNumberTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedSystemPortNumberOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Int]): F[SystemPortNumber] = {
+      internalDef.contraCoercible[cats.Order, SystemPortNumber, Int, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Int]])
+    }.asInstanceOf[F[SystemPortNumber]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait SystemPortNumberTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedSystemPortNumberShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[SystemPortNumber] = {
       internalDef.contraCoercible[cats.Show, SystemPortNumber, Int, cats.Contravariant](showActual.asInstanceOf[cats.Show[Int]])
@@ -181,7 +199,13 @@ object network {
       internalDef.contraCoercible[cats.Hash, NonSystemPortNumber, Int, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Int]])
     }.asInstanceOf[F[NonSystemPortNumber]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonSystemPortNumberTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NonSystemPortNumberTypeClassInstance2 extends NonSystemPortNumberTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonSystemPortNumberOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Int]): F[NonSystemPortNumber] = {
+      internalDef.contraCoercible[cats.Order, NonSystemPortNumber, Int, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Int]])
+    }.asInstanceOf[F[NonSystemPortNumber]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NonSystemPortNumberTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonSystemPortNumberShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[NonSystemPortNumber] = {
       internalDef.contraCoercible[cats.Show, NonSystemPortNumber, Int, cats.Contravariant](showActual.asInstanceOf[cats.Show[Int]])
@@ -210,7 +234,13 @@ object network {
       internalDef.contraCoercible[cats.Hash, UserPortNumber, Int, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Int]])
     }.asInstanceOf[F[UserPortNumber]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait UserPortNumberTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait UserPortNumberTypeClassInstance2 extends UserPortNumberTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedUserPortNumberOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Int]): F[UserPortNumber] = {
+      internalDef.contraCoercible[cats.Order, UserPortNumber, Int, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Int]])
+    }.asInstanceOf[F[UserPortNumber]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait UserPortNumberTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedUserPortNumberShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[UserPortNumber] = {
       internalDef.contraCoercible[cats.Show, UserPortNumber, Int, cats.Contravariant](showActual.asInstanceOf[cats.Show[Int]])
@@ -239,7 +269,13 @@ object network {
       internalDef.contraCoercible[cats.Hash, DynamicPortNumber, Int, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[Int]])
     }.asInstanceOf[F[DynamicPortNumber]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait DynamicPortNumberTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait DynamicPortNumberTypeClassInstance2 extends DynamicPortNumberTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedDynamicPortNumberOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[Int]): F[DynamicPortNumber] = {
+      internalDef.contraCoercible[cats.Order, DynamicPortNumber, Int, cats.Contravariant](orderActual.asInstanceOf[cats.Order[Int]])
+    }.asInstanceOf[F[DynamicPortNumber]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait DynamicPortNumberTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedDynamicPortNumberShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[Int]): F[DynamicPortNumber] = {
       internalDef.contraCoercible[cats.Show, DynamicPortNumber, Int, cats.Contravariant](showActual.asInstanceOf[cats.Show[Int]])

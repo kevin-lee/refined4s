@@ -10,6 +10,8 @@ object ExpectedErrorMessages {
 
   def missingHash: String = OrphanCatsMessages.MissingCatsHash
 
+  def missingOrder: String = OrphanCatsMessages.MissingCatsOrder
+
   def missingShow: String = OrphanCatsMessages.MissingCatsShow
 
 }

@@ -53,19 +53,25 @@ object strings {
     }
 
   }
-  private[types] trait NonEmptyStringTypeClassInstances extends NonEmptyStringTypeClassInstance2 {
+  private[types] trait NonEmptyStringTypeClassInstances extends NonEmptyStringTypeClassInstance1 {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonEmptyStringEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[String]): F[NonEmptyString] = {
       internalDef.contraCoercible[cats.Eq, NonEmptyString, String, cats.Contravariant](eqActual.asInstanceOf[cats.Eq[String]])
     }.asInstanceOf[F[NonEmptyString]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonEmptyStringTypeClassInstance2 extends NonEmptyStringTypeClassInstance1 {
+  private[types] trait NonEmptyStringTypeClassInstance1 extends NonEmptyStringTypeClassInstance2 {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonEmptyStringHash[F[*]: CatsHash, G[*]: CatsHash](using hashActual: G[String]): F[NonEmptyString] = {
       internalDef.contraCoercible[cats.Hash, NonEmptyString, String, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[String]])
     }.asInstanceOf[F[NonEmptyString]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonEmptyStringTypeClassInstance1 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NonEmptyStringTypeClassInstance2 extends NonEmptyStringTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonEmptyStringOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[String]): F[NonEmptyString] = {
+      internalDef.contraCoercible[cats.Order, NonEmptyString, String, cats.Contravariant](orderActual.asInstanceOf[cats.Order[String]])
+    }.asInstanceOf[F[NonEmptyString]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NonEmptyStringTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonEmptyStringShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[String]): F[NonEmptyString] = {
       internalDef.contraCoercible[cats.Show, NonEmptyString, String, cats.Contravariant](showActual.asInstanceOf[cats.Show[String]])
@@ -118,19 +124,25 @@ object strings {
     }
 
   }
-  private[types] trait NonBlankStringInstances extends NonBlankStringInstance2 {
+  private[types] trait NonBlankStringInstances extends NonBlankStringInstance1 {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonBlankStringEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[String]): F[NonBlankString] = {
       internalDef.contraCoercible[cats.Eq, NonBlankString, String, cats.Contravariant](eqActual.asInstanceOf[cats.Eq[String]])
     }.asInstanceOf[F[NonBlankString]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonBlankStringInstance2 extends NonBlankStringInstance1 {
+  private[types] trait NonBlankStringInstance1 extends NonBlankStringInstance2 {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonBlankStringHash[F[*]: CatsHash, G[*]: CatsHash](using hashActual: G[String]): F[NonBlankString] = {
       internalDef.contraCoercible[cats.Hash, NonBlankString, String, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[String]])
     }.asInstanceOf[F[NonBlankString]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait NonBlankStringInstance1 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait NonBlankStringInstance2 extends NonBlankStringInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedNonBlankStringOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[String]): F[NonBlankString] = {
+      internalDef.contraCoercible[cats.Order, NonBlankString, String, cats.Contravariant](orderActual.asInstanceOf[cats.Order[String]])
+    }.asInstanceOf[F[NonBlankString]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait NonBlankStringInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedNonBlankStringShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[String]): F[NonBlankString] = {
       internalDef.contraCoercible[cats.Show, NonBlankString, String, cats.Contravariant](showActual.asInstanceOf[cats.Show[String]])
@@ -161,21 +173,28 @@ object strings {
       def toUUID: UUID = UUID.fromString(uuid.value)
     }
   }
-  private[types] trait UuidInstances extends UuidInstance2 {
+  private[types] trait UuidInstances extends UuidInstance1 {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedUuidEq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[String]): F[Uuid] = {
       internalDef.contraCoercible[cats.Eq, Uuid, String, cats.Contravariant](eqActual.asInstanceOf[cats.Eq[String]])
     }.asInstanceOf[F[Uuid]] // scalafix:ok DisableSyntax.asInstanceOf
   }
 
-  private[types] trait UuidInstance2 extends UuidInstance1 {
+  private[types] trait UuidInstance1 extends UuidInstance2 {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedUuidHash[F[*]: CatsHash, G[*]: CatsHash](using hashActual: G[String]): F[Uuid] = {
       internalDef.contraCoercible[cats.Hash, Uuid, String, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[String]])
     }.asInstanceOf[F[Uuid]] // scalafix:ok DisableSyntax.asInstanceOf
   }
 
-  private[types] trait UuidInstance1 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait UuidInstance2 extends UuidInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedUuidOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[String]): F[Uuid] = {
+      internalDef.contraCoercible[cats.Order, Uuid, String, cats.Contravariant](orderActual.asInstanceOf[cats.Order[String]])
+    }.asInstanceOf[F[Uuid]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+
+  private[types] trait UuidInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedUuidShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[String]): F[Uuid] = {
       internalDef.contraCoercible[cats.Show, Uuid, String, cats.Contravariant](showActual.asInstanceOf[cats.Show[String]])
@@ -224,21 +243,28 @@ object strings {
 
   }
 
-  private[types] trait UuidV7Instances extends UuidV7Instance2 {
+  private[types] trait UuidV7Instances extends UuidV7Instance1 {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedUuidV7Eq[F[*]: CatsEq, G[*]: CatsEq](using eqActual: G[UUID]): F[UuidV7] = {
       internalDef.contraCoercible[cats.Eq, UuidV7, UUID, cats.Contravariant](eqActual.asInstanceOf[cats.Eq[UUID]])
     }.asInstanceOf[F[UuidV7]] // scalafix:ok DisableSyntax.asInstanceOf
   }
 
-  private[types] trait UuidV7Instance2 extends UuidV7Instance1 {
+  private[types] trait UuidV7Instance1 extends UuidV7Instance2 {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedUuidV7Hash[F[*]: CatsHash, G[*]: CatsHash](using hashActual: G[UUID]): F[UuidV7] = {
       internalDef.contraCoercible[cats.Hash, UuidV7, UUID, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[UUID]])
     }.asInstanceOf[F[UuidV7]] // scalafix:ok DisableSyntax.asInstanceOf
   }
 
-  private[types] trait UuidV7Instance1 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait UuidV7Instance2 extends UuidV7Instance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedUuidV7Order[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[UUID]): F[UuidV7] = {
+      internalDef.contraCoercible[cats.Order, UuidV7, UUID, cats.Contravariant](orderActual.asInstanceOf[cats.Order[UUID]])
+    }.asInstanceOf[F[UuidV7]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+
+  private[types] trait UuidV7Instance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedUuidV7Show[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[UUID]): F[UuidV7] = {
       internalDef.contraCoercible[cats.Show, UuidV7, UUID, cats.Contravariant](showActual.asInstanceOf[cats.Show[UUID]])

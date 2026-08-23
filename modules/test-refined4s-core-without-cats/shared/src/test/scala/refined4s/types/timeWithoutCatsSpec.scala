@@ -15,6 +15,7 @@ object timeWithoutCatsSpec extends Properties {
     def tests: List[Test] = List(
       example("test   Eq[Month]", testEq),
       example("test Hash[Month]", testHash),
+      example("test Order[Month]", testOrder),
       example("test Show[Month]", testShow),
     )
 
@@ -52,6 +53,23 @@ object timeWithoutCatsSpec extends Properties {
         )
     }
 
+    def testOrder: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingOrder
+
+      val actual = typeCheckErrors(
+        """
+         val _ = refined4s.types.time.Month.derivedMonthOrder
+      """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
     def testShow: Result = {
       import scala.compiletime.testing.typeCheckErrors
       val expected = ExpectedErrorMessages.missingShow
@@ -74,6 +92,7 @@ object timeWithoutCatsSpec extends Properties {
     def tests: List[Test] = List(
       example("test   Eq[Day]", testEq),
       example("test Hash[Day]", testHash),
+      example("test Order[Day]", testOrder),
       example("test Show[Day]", testShow),
     )
 
@@ -111,6 +130,23 @@ object timeWithoutCatsSpec extends Properties {
         )
     }
 
+    def testOrder: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingOrder
+
+      val actual = typeCheckErrors(
+        """
+         val _ = refined4s.types.time.Day.derivedDayOrder
+      """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
     def testShow: Result = {
       import scala.compiletime.testing.typeCheckErrors
       val expected = ExpectedErrorMessages.missingShow
@@ -133,6 +169,7 @@ object timeWithoutCatsSpec extends Properties {
     def tests: List[Test] = List(
       example("test   Eq[Hour]", testEq),
       example("test Hash[Hour]", testHash),
+      example("test Order[Hour]", testOrder),
       example("test Show[Hour]", testShow),
     )
 
@@ -170,6 +207,23 @@ object timeWithoutCatsSpec extends Properties {
         )
     }
 
+    def testOrder: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingOrder
+
+      val actual = typeCheckErrors(
+        """
+         val _ = refined4s.types.time.Hour.derivedHourOrder
+      """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
     def testShow: Result = {
       import scala.compiletime.testing.typeCheckErrors
       val expected = ExpectedErrorMessages.missingShow
@@ -192,6 +246,7 @@ object timeWithoutCatsSpec extends Properties {
     def tests: List[Test] = List(
       example("test   Eq[Minute]", testEq),
       example("test Hash[Minute]", testHash),
+      example("test Order[Minute]", testOrder),
       example("test Show[Minute]", testShow),
     )
 
@@ -229,6 +284,23 @@ object timeWithoutCatsSpec extends Properties {
         )
     }
 
+    def testOrder: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingOrder
+
+      val actual = typeCheckErrors(
+        """
+         val _ = refined4s.types.time.Minute.derivedMinuteOrder
+      """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
     def testShow: Result = {
       import scala.compiletime.testing.typeCheckErrors
       val expected = ExpectedErrorMessages.missingShow
@@ -251,6 +323,7 @@ object timeWithoutCatsSpec extends Properties {
     def tests: List[Test] = List(
       example("test   Eq[Second]", testEq),
       example("test Hash[Second]", testHash),
+      example("test Order[Second]", testOrder),
       example("test Show[Second]", testShow),
     )
 
@@ -288,6 +361,23 @@ object timeWithoutCatsSpec extends Properties {
         )
     }
 
+    def testOrder: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingOrder
+
+      val actual = typeCheckErrors(
+        """
+         val _ = refined4s.types.time.Second.derivedSecondOrder
+      """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
     def testShow: Result = {
       import scala.compiletime.testing.typeCheckErrors
       val expected = ExpectedErrorMessages.missingShow
@@ -310,6 +400,7 @@ object timeWithoutCatsSpec extends Properties {
     def tests: List[Test] = List(
       example("test   Eq[Millis]", testEq),
       example("test Hash[Millis]", testHash),
+      example("test Order[Millis]", testOrder),
       example("test Show[Millis]", testShow),
     )
 
@@ -337,6 +428,23 @@ object timeWithoutCatsSpec extends Properties {
       val actual = typeCheckErrors(
         """
          val _ = refined4s.types.time.Millis.derivedMillisHash
+      """
+      ).map(_.message).mkString
+
+      (actual ==== expected)
+        .log(
+          """The actual error message doesn't start with the expected one.
+            |""".stripMargin
+        )
+    }
+
+    def testOrder: Result = {
+      import scala.compiletime.testing.typeCheckErrors
+      val expected = ExpectedErrorMessages.missingOrder
+
+      val actual = typeCheckErrors(
+        """
+         val _ = refined4s.types.time.Millis.derivedMillisOrder
       """
       ).map(_.message).mkString
 

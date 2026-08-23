@@ -64,7 +64,13 @@ object networkCompat {
       internalDef.contraCoercible[cats.Hash, Url, String, cats.Contravariant](hashActual.asInstanceOf[cats.Hash[String]])
     }.asInstanceOf[F[Url]] // scalafix:ok DisableSyntax.asInstanceOf
   }
-  private[types] trait UrlTypeClassInstance2 extends OrphanCats, OrphanCatsKernel {
+  private[types] trait UrlTypeClassInstance2 extends UrlTypeClassInstance3 {
+    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    given derivedUrlOrder[F[*]: CatsOrder, G[*]: CatsOrder](using orderActual: G[String]): F[Url] = {
+      internalDef.contraCoercible[cats.Order, Url, String, cats.Contravariant](orderActual.asInstanceOf[cats.Order[String]])
+    }.asInstanceOf[F[Url]] // scalafix:ok DisableSyntax.asInstanceOf
+  }
+  private[types] trait UrlTypeClassInstance3 extends OrphanCats, OrphanCatsKernel {
     @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
     given derivedUrlShow[F[*]: CatsShow, G[*]: CatsShow](using showActual: G[String]): F[Url] = {
       internalDef.contraCoercible[cats.Show, Url, String, cats.Contravariant](showActual.asInstanceOf[cats.Show[String]])
